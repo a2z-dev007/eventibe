@@ -1,5 +1,7 @@
-import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
+import logoImg from "@/assets/images/logo.png";
 
 export default function Footer() {
   return (
@@ -9,31 +11,46 @@ export default function Footer() {
           {/* Column 1 */}
           <div>
             <Link href="/" className="inline-block mb-6">
-              <span className="text-2xl font-bold tracking-tight text-white">
-                Eventibe<span className="text-accent-orange">.</span>
-              </span>
+              <Image
+                src={logoImg}
+                alt="Eventibe Logo"
+                className="h-10 md:h-14 w-auto object-contain brightness-0 invert"
+              />
             </Link>
             <p className="text-sm text-gray-300 mb-6 leading-relaxed">
-              Find. Book. Celebrate. The premier corporate venue & event service marketplace.
+              Find. Book. Celebrate. The premier corporate venue & event service
+              marketplace.
             </p>
             <ul className="space-y-3">
               <li>
-                <Link href="/about-us" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/about-us"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/how-it-works"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link href="/partner-with-us" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/partner-with-us"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Partner With Us
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/blog"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Blog
                 </Link>
               </li>
@@ -42,30 +59,47 @@ export default function Footer() {
 
           {/* Column 2 */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Venues</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+              Venues
+            </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/wedding-venues" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/wedding-venues"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Wedding Venues
                 </Link>
               </li>
               <li>
-                <Link href="/corporate-event-venues" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/corporate-event-venues"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Corporate Venues
                 </Link>
               </li>
               <li>
-                <Link href="/banquet-halls" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/banquet-halls"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Banquet Halls
                 </Link>
               </li>
               <li>
-                <Link href="/resorts" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/resorts"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Resorts
                 </Link>
               </li>
               <li>
-                <Link href="/farmhouses" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/farmhouses"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Farmhouses
                 </Link>
               </li>
@@ -74,35 +108,55 @@ export default function Footer() {
 
           {/* Column 3 */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Vendors</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+              Vendors
+            </h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/vendors/catering" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/catering"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Catering
                 </Link>
               </li>
               <li>
-                <Link href="/vendors/photography" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/photography"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Photography
                 </Link>
               </li>
               <li>
-                <Link href="/vendors/mehndi" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/mehndi"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Mehndi
                 </Link>
               </li>
               <li>
-                <Link href="/vendors/decor" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/decor"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Decor
                 </Link>
               </li>
               <li>
-                <Link href="/vendors/lighting" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/lighting"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Lighting
                 </Link>
               </li>
               <li>
-                <Link href="/vendors/event-planners" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vendors/event-planners"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Event Planners
                 </Link>
               </li>
@@ -111,31 +165,47 @@ export default function Footer() {
 
           {/* Column 4 */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">Support</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+              Support
+            </h4>
             <ul className="space-y-3 mb-8">
               <li>
-                <Link href="/contact-us" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/contact-us"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/faqs" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/faqs"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   FAQs
                 </Link>
               </li>
               <li>
-                <Link href="/terms-and-conditions" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/terms-and-conditions"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/privacy-policy"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
                   Privacy Policy
                 </Link>
               </li>
             </ul>
 
-            <h4 className="text-lg font-semibold mb-4 text-white uppercase tracking-wider">Newsletter</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white uppercase tracking-wider">
+              Newsletter
+            </h4>
             <form className="flex gap-2">
               <input
                 type="email"
@@ -159,19 +229,31 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Eventibe. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
               <Facebook size={20} />
               <span className="sr-only">Facebook</span>
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
               <Twitter size={20} />
               <span className="sr-only">Twitter</span>
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
               <Instagram size={20} />
               <span className="sr-only">Instagram</span>
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
               <Linkedin size={20} />
               <span className="sr-only">LinkedIn</span>
             </a>
