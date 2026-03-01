@@ -104,8 +104,8 @@ export function EventDetailsPage() {
   const [guests, setGuests] = useState<any>(null)
 
   // Fetch Metadata for Labels
-  const { data: venueTypesData } = useQuery({ queryKey: ['venueTypes'], queryFn: fetchVenueTypes })
-  const { data: eventTypesData } = useQuery({ queryKey: ['eventTypes'], queryFn: fetchEventTypes })
+  const { data: venueTypesData } = useQuery({ queryKey: ['venueTypes'], queryFn: () => fetchVenueTypes() })
+  const { data: eventTypesData } = useQuery({ queryKey: ['eventTypes'], queryFn: () => fetchEventTypes() })
 
   useEffect(() => {
     if (venueTypesData?.records && eventTypesData?.records) {
@@ -191,7 +191,7 @@ export function EventDetailsPage() {
 
   return (
     <main className="min-h-screen bg-[#F8FAFC] pb-32">
-      <Header withScrollEffect={false} />
+      <Header />
 
       {/* ── Hero Search Banner ────────────────────── */}
       <div

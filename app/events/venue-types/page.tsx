@@ -93,7 +93,7 @@ function VenueTypesContent() {
 
   return (
     <main className="min-h-screen bg-[#F8FAFC]">
-      <Header withScrollEffect={false} />
+      <Header />
       
       {/* Premium Hero with Shared Search */}
       <div 

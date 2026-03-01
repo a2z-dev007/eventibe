@@ -13,7 +13,7 @@ import StatStrip from '@/components/events/StatStrip'
 export default function EventVenuesClient() {
   return (
     <>
-      <Header withScrollEffect={false} />
+      <Header />
       <main className="pt-24 lg:pt-28 bg-white">
         <HeroSection />
         <VenueTypesCarousel />
