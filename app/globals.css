@@ -758,7 +758,10 @@ button[disabled]:active {
 
 /* Day Names Row */
 .event-hero-datepicker .react-datepicker__day-names {
-  margin-top: 0.5rem !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.5rem !important;   /* ← gap between labels and first date row */
+  padding-bottom: 0.25rem !important;
+  border-bottom: 1px solid rgba(148,163,184,0.15) !important;
 }
 
 .event-hero-datepicker .react-datepicker__day-name {
@@ -864,7 +867,77 @@ button[disabled]:active {
 }
 
 .event-hero-datepicker .react-datepicker__month {
-  margin: 0 !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* ── Mobile: compact calendar ─────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Panel fills the fixed-width container set in JS */
+  .event-hero-datepicker {
+    gap: 0 !important;
+    padding: 1rem 0.5rem !important;
+    background: transparent !important;
+    width: 100% !important;
+  }
+
+  /* Month container fills the panel width */
+  .event-hero-datepicker .react-datepicker__month-container {
+    padding: 0 !important;
+    width: 100% !important;
+    float: none !important;
+  }
+
+  /* Day-name header row — use space-around so cells don't stretch */
+  .event-hero-datepicker .react-datepicker__day-names {
+    display: flex !important;
+    justify-content: space-around !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+    padding: 0 0 0.35rem !important;
+    border-bottom: 1px solid rgba(148,163,184,0.15) !important;
+  }
+
+  /* Day-name cells: fixed square so they align with date cells */
+  .event-hero-datepicker .react-datepicker__day-name {
+    flex: none !important;             /* ← no stretching */
+    width: 2.2rem !important;
+    height: 2.2rem !important;
+    line-height: 2.2rem !important;
+    font-size: 0.52rem !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Date rows — distribute fixed cells evenly */
+  .event-hero-datepicker .react-datepicker__week {
+    display: flex !important;
+    justify-content: space-around !important;
+    padding: 0 !important;
+  }
+
+  /* ── KEY FIX: fixed square → border-radius:50% = perfect circle */
+  .event-hero-datepicker .react-datepicker__day {
+    flex: none !important;             /* ← no stretching */
+    width: 2.2rem !important;
+    height: 2.2rem !important;
+    line-height: 2.2rem !important;
+    font-size: 0.85rem !important;
+    margin: 0.1rem 0 !important;
+    text-align: center !important;
+    border-radius: 50% !important;
+  }
+
+  /* Month body */
+  .event-hero-datepicker .react-datepicker__month {
+    margin: 0.25rem 0 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Glass variant: keep dark bg transparent */
+  .event-hero-datepicker.glass-datepicker {
+    background: transparent !important;
+  }
 }
 
 /* React DatePicker Portal Z-index - Force maximum z-index */

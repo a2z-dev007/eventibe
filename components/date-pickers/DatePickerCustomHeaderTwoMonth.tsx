@@ -18,7 +18,7 @@ const DatePickerCustomHeaderTwoMonth = ({
   variant = 'default',
 }: CustomHeaderProps) => {
   return (
-    <div className="relative flex items-center justify-between px-4 pb-4">
+    <div className="relative flex items-center justify-between px-4 ">
       <button
         aria-label="Previous Month"
         className={`

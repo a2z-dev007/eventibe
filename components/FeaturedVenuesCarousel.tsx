@@ -152,9 +152,11 @@ export default function FeaturedVenuesCarousel() {
         {/* Carousel Track */}
         <div
           ref={trackRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0"
+          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
           style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
         >
+          {/* Left spacer — keeps first card off the edge on mobile */}
+          <div className="shrink-0 w-1 md:hidden" aria-hidden />
           {loading ? (
             [...Array(6)].map((_, i) => <SkeletonCard key={i} />)
           ) : eventTypes.length === 0 ? (
@@ -186,6 +188,8 @@ export default function FeaturedVenuesCarousel() {
               />
             ))
           )}
+          {/* Right spacer */}
+          <div className="shrink-0 w-1 md:hidden" aria-hidden />
         </div>
 
         {/* Mobile See All */}

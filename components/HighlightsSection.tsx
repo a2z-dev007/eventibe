@@ -122,9 +122,11 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
            Each card is 75vw wide × 340px tall, snaps on scroll.
            Users swipe to see all 8 cards.                                    */}
       <div
-        className="md:hidden flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+        className="md:hidden flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
       >
+        {/* Left spacer so first card has breathing room */}
+        <div className="shrink-0 w-1" aria-hidden />
         {[a, b, c, d, e, f, g, h].map((card, i) => (
           <div
             key={i}
@@ -134,6 +136,8 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
             <WeddingVenueCard {...card} variant="portrait" />
           </div>
         ))}
+        {/* Right spacer */}
+        <div className="shrink-0 w-1" aria-hidden />
       </div>
 
       {/* ── TABLET: clean 3-col uniform grid ──────────────────────────────────
@@ -275,11 +279,35 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
         {isWedding ? (
           <WeddingLayout cards={buildWeddingCards()} isDark={isDark} />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {(type === 'corporate-venue' ? buildCorpCards() : buildVendorCards()).map((card) => (
-              <PremiumCard key={card.id} {...card} />
-            ))}
-          </div>
+          <>
+            {/* ── MOBILE: horizontal snap carousel ─────────────────────────────
+                 Each card is ~72vw wide (max 280px), snaps on scroll.         */}
+            <div
+              className="md:hidden flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
+              style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+            >
+              {/* Left spacer so first card has breathing room */}
+              <div className="shrink-0 w-1" aria-hidden />
+              {(type === 'corporate-venue' ? buildCorpCards() : buildVendorCards()).map((card) => (
+                <div
+                  key={card.id}
+                  className="snap-start shrink-0"
+                  style={{ width: '72vw', maxWidth: '280px', height: '420px' }}
+                >
+                  <PremiumCard {...card} />
+                </div>
+              ))}
+              {/* Right spacer */}
+              <div className="shrink-0 w-1" aria-hidden />
+            </div>
+
+            {/* ── TABLET (md) + DESKTOP (lg+): grid layout ─────────────────── */}
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
+              {(type === 'corporate-venue' ? buildCorpCards() : buildVendorCards()).map((card) => (
+                <PremiumCard key={card.id} {...card} />
+              ))}
+            </div>
+          </>
         )}
       </div>
     </section>

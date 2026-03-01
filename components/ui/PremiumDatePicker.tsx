@@ -99,12 +99,26 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
               leaveFrom="opacity-100 translate-y-0 scale-100"
               leaveTo="opacity-0 translate-y-4 scale-95"
             >
-              <Popover.Panel className="absolute z-[9999] mt-2 top-full left-0 focus:outline-none">
-                <div className={`overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.25)] max-w-fit transition-all duration-300 ${
-                  variant === 'glass' 
-                    ? 'bg-slate-900/85 backdrop-blur-[32px] border border-white/20' 
-                    : 'bg-white border border-gray-100'
-                }`}>
+              <Popover.Panel
+                className="absolute z-[9999] mt-2 top-full focus:outline-none"
+                style={isMobile ? {
+                  // Viewport-centered: ignore the parent offset entirely
+                  position: 'fixed',
+                  top: 'auto',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: 'calc(100vw - 2rem)',
+                  maxWidth: '360px',
+                  marginTop: '0',
+                } : {}}
+              >
+                <div
+                  className={`overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.3)] transition-all duration-300 w-full ${
+                    variant === 'glass'
+                      ? 'bg-slate-900 border border-white/15'
+                      : 'bg-white border border-gray-100'
+                  }`}
+                >
                   {selectsRange ? (
                     <DatePicker
                       startDate={startDate}
