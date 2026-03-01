@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Delhi", "slug": "delhi" },
+  { "id": 2, "name": "Bangalore", "slug": "bangalore" },
+  { "id": 3, "name": "Mumbai", "slug": "mumbai" },
+  { "id": 4, "name": "Hyderabad", "slug": "hyderabad" }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Regal Business Center",
+    "slug": "regal-business-center-delhi",
+    "city": "delhi",
+    "type": "corporate-event-venues",
+    "capacity": 300,
+    "price_range": "₹1500 per person",
+    "amenities": ["WiFi", "Projector", "Parking", "AV Equipment"],
+    "description": "Premium corporate conference venue located in the heart of Delhi. Ideal for large scale corporate events, product launches, and annual general meetings. Features state-of-the-art audiovisual equipment and high-speed internet connectivity.",
+    "images": ["https://picsum.photos/seed/venue1/800/600", "https://picsum.photos/seed/venue1a/800/600"],
+    "rating": 4.8,
+    "reviews": 124
+  },
+  {
+    "id": 2,
+    "name": "TechHub Meeting Spaces",
+    "slug": "techhub-meeting-spaces-bangalore",
+    "city": "bangalore",
+    "type": "corporate-event-venues",
+    "capacity": 20,
+    "price_range": "₹800 per person",
+    "amenities": ["WiFi", "Whiteboard", "Video Conferencing", "Coffee/Tea"],
+    "description": "Modern, fully-equipped meeting rooms designed for tech startups and corporate teams. Perfect for strategy sessions, client pitches, and team offsites.",
+    "images": ["https://picsum.photos/seed/venue2/800/600"],
+    "rating": 4.9,
+    "reviews": 89
+  },
+  {
+    "id": 3,
+    "name": "Grand Exhibition Pavilion",
+    "slug": "grand-exhibition-pavilion-mumbai",
+    "city": "mumbai",
+    "type": "corporate-event-venues",
+    "capacity": 2000,
+    "price_range": "Custom Pricing",
+    "amenities": ["Large Floor Space", "Loading Dock", "Security", "Catering Available"],
+    "description": "Massive exhibition space suitable for trade shows, expos, and large corporate gatherings. Flexible layout options and dedicated event management team.",
+    "images": ["https://picsum.photos/seed/venue3/800/600"],
+    "rating": 4.7,
+    "reviews": 210
+  },
+  {
+    "id": 4,
+    "name": "Serenity Corporate Retreat",
+    "slug": "serenity-corporate-retreat-hyderabad",
+    "city": "hyderabad",
+    "type": "resorts",
+    "capacity": 100,
+    "price_range": "₹5000 per person",
+    "amenities": ["Accommodation", "Team Building Activities", "Pool", "Conference Room"],
+    "description": "Escape the city bustle at our premium corporate retreat. Designed for leadership offsites and team bonding, offering a perfect mix of work and relaxation.",
+    "images": ["https://picsum.photos/seed/venue4/800/600"],
+    "rating": 4.9,
+    "reviews": 56
+  },
+  {
+    "id": 7,
+    "name": "Ocean View Resort",
+    "slug": "ocean-view-resort-mumbai",
+    "city": "mumbai",
+    "type": "resorts",
+    "capacity": 500,
+    "price_range": "₹4000 per plate",
+    "amenities": ["Beachfront", "Luxury Rooms", "Spa", "Multiple Venues"],
+    "description": "A breathtaking beachfront resort for premium corporate retreats and offsites. Create unforgettable memories with a stunning ocean backdrop.",
+    "images": ["https://picsum.photos/seed/resort1/800/600"],
+    "rating": 5.0,
+    "reviews": 420
+  }
+]

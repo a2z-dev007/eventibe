@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Elite AV Solutions",
+    "slug": "elite-av-solutions-delhi",
+    "category": "av-services",
+    "city": "delhi",
+    "description": "Professional AV equipment provider for corporate events, conferences, and trade shows. We supply top-of-the-line LED walls, sound systems, and lighting rigs.",
+    "services": ["LED Walls", "Sound Systems", "Projectors", "Live Streaming"],
+    "images": ["https://picsum.photos/seed/vendor1/800/600"],
+    "rating": 4.8,
+    "price_range": "₹15,000 - ₹1,00,000"
+  },
+  {
+    "id": 2,
+    "name": "Gourmet Corporate Catering",
+    "slug": "gourmet-corporate-catering-bangalore",
+    "category": "catering",
+    "city": "bangalore",
+    "description": "Premium catering services tailored for corporate events. From working lunches to gala dinners, we provide exquisite menus and impeccable service.",
+    "services": ["Buffet", "Plated Dinners", "Coffee Breaks", "Live Counters"],
+    "images": ["https://picsum.photos/seed/vendor2/800/600"],
+    "rating": 4.9,
+    "price_range": "₹800 - ₹3,000 per plate"
+  },
+  {
+    "id": 3,
+    "name": "Pro Event Planners",
+    "slug": "pro-event-planners-mumbai",
+    "category": "planners",
+    "city": "mumbai",
+    "description": "End-to-end event management for corporate clients. We handle everything from venue sourcing and logistics to entertainment and branding.",
+    "services": ["Event Design", "Logistics", "Vendor Management", "On-site Coordination"],
+    "images": ["https://picsum.photos/seed/vendor3/800/600"],
+    "rating": 4.7,
+    "price_range": "Custom Quotes"
+  }
+]
