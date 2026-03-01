@@ -51,7 +51,14 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
 
   return (
     <div className="relative w-full lg:max-w-6xl mx-auto z-40 animate-fade-in-up [animation-delay:600ms] mt-4 shadow-[0_30px_60px_rgba(0,0,0,0.25)] rounded-[31px] lg:rounded-full">
-      <div className="bg-black/50 backdrop-blur-2xl border border-white/15 rounded-[31px] lg:rounded-full lg:bg-black/50 lg:backdrop-blur-xl lg:border-white/20 p-2 relative z-10 w-full">
+      <div
+        className="border border-white/20 rounded-[31px] lg:rounded-full p-2 relative z-10 w-full"
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.50)',
+          backdropFilter: 'blur(48px) saturate(160%)',
+          WebkitBackdropFilter: 'blur(48px) saturate(160%)',
+        }}
+      >
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-white/20">
           {/* Location */}
           <div className="flex-[1.5] py-2.5 lg:py-0 hover:bg-white/5 transition-colors group lg:rounded-l-[31px]">

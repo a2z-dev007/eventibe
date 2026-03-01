@@ -113,68 +113,84 @@ function buildVendorCards(): PremiumCardData[] {
   }));
 }
 
-// ── Wedding Masonry Layout ───────────────────────────────────────────────────
-
-function WeddingLayout({ cards, isDark }: { cards: WeddingVenueCardData[]; isDark: boolean }) {
-  // Layout: [feature | 2 portrait stacked ] [ landscape | landscape ] [feature | 2 portrait stacked]
-  // Row 1: col-span-2 feature + col-span-1 (two portraits stacked)
-  // Row 2: two landscapes side by side spanning 3 cols, then 1 portrait + 1 feature on right
+function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boolean }) {
   const [a, b, c, d, e, f, g, h] = cards;
 
   return (
-    <div className="space-y-4">
-      {/*
-        Strict CSS grid — heights set exclusively at grid level.
-        Cards use h-full to fill their cell. Zero fixed heights on cards.
-        Block 1: 3-col × 2-row. Feature spans both rows.
-        Block 2: 4-col × 1-row, all equal height.
-      */}
-
-      {/* BLOCK 1 — Feature left (spans 2 rows) + 2×2 grid right */}
+    <div>
+      {/* ── MOBILE: horizontal snap carousel ──────────────────────────────────
+           Each card is 75vw wide × 340px tall, snaps on scroll.
+           Users swipe to see all 8 cards.                                    */}
       <div
-        className="hidden md:grid gap-4"
-        style={{
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gridTemplateRows: '300px 200px',
-        }}
+        className="md:hidden flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
       >
-        {/* Feature — spans both rows; height = 300 + 16(gap) + 200 = 516px */}
-        <div className="h-full" style={{ gridRow: '1 / 3' }}>
-          <WeddingVenueCard {...a} variant="feature" />
-        </div>
-        {/* Row 1, cols 2–3 */}
-        <div className="h-full"><WeddingVenueCard {...b} variant="portrait" /></div>
-        <div className="h-full"><WeddingVenueCard {...c} variant="portrait" /></div>
-        {/* Row 2, cols 2–3 */}
-        <div className="h-full"><WeddingVenueCard {...d} variant="landscape" /></div>
-        <div className="h-full"><WeddingVenueCard {...e} variant="landscape" /></div>
-      </div>
-
-      {/* BLOCK 2 — 4 equal-height portrait cards */}
-      <div
-        className="hidden md:grid gap-4 mt-4"
-        style={{
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gridTemplateRows: '300px',
-        }}
-      >
-        <div className="h-full"><WeddingVenueCard {...f} variant="portrait" /></div>
-        <div className="h-full"><WeddingVenueCard {...g} variant="portrait" /></div>
-        <div className="h-full"><WeddingVenueCard {...h} variant="portrait" /></div>
-        <div className="h-full"><WeddingVenueCard {...a} variant="portrait" /></div>
-      </div>
-
-      {/* Mobile fallback: simple 2-col stack */}
-      <div className="grid grid-cols-2 gap-3 md:hidden" style={{ gridAutoRows: '240px' }}>
         {[a, b, c, d, e, f, g, h].map((card, i) => (
+          <div
+            key={i}
+            className="snap-start shrink-0"
+            style={{ width: '72vw', maxWidth: '280px', height: '340px' }}
+          >
+            <WeddingVenueCard {...card} variant="portrait" />
+          </div>
+        ))}
+      </div>
+
+      {/* ── TABLET: clean 3-col uniform grid ──────────────────────────────────
+           md only (hidden on desktop with lg:hidden, shown from md)           */}
+      <div
+        className="hidden md:grid lg:hidden gap-4"
+        style={{
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridAutoRows: '280px',
+        }}
+      >
+        {[a, b, c, d, e, f].map((card, i) => (
           <div key={i} className="h-full">
             <WeddingVenueCard {...card} variant="portrait" />
           </div>
         ))}
       </div>
+
+      {/* ── DESKTOP: masonry — Feature left + 2×2 right, then 4-col row ───────
+           lg and above                                                        */}
+      <div className="hidden lg:block space-y-4">
+        {/* Block 1: feature (spans 2 rows) + 2 portraits top + 2 landscapes bottom */}
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: '1fr 1fr 1fr',
+            gridTemplateRows: '310px 200px',
+          }}
+        >
+          <div className="h-full" style={{ gridRow: '1 / 3' }}>
+            <WeddingVenueCard {...a} variant="feature" />
+          </div>
+          <div className="h-full"><WeddingVenueCard {...b} variant="portrait" /></div>
+          <div className="h-full"><WeddingVenueCard {...c} variant="portrait" /></div>
+          <div className="h-full"><WeddingVenueCard {...d} variant="landscape" /></div>
+          <div className="h-full"><WeddingVenueCard {...e} variant="landscape" /></div>
+        </div>
+
+        {/* Block 2: 4 equal portrait cards */}
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateRows: '300px',
+          }}
+        >
+          {[f, g, h, a].map((card, i) => (
+            <div key={i} className="h-full">
+              <WeddingVenueCard {...card} variant="portrait" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
+
 
 // ── Section Header ───────────────────────────────────────────────────────────
 
