@@ -24,6 +24,14 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
+                  href="/our-story"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  Our Story
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about-us"
                   className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
@@ -207,6 +215,14 @@ export default function Footer() {
                   className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/disclaimer"
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  Disclaimer
                 </Link>
               </li>
             </ul>

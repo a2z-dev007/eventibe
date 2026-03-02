@@ -32,6 +32,7 @@ export default function Header() {
     { name: 'About',        href: '/about-us',     icon: Info },
     { name: 'How It Works', href: '/how-it-works', icon: Lightbulb },
     { name: 'Blog',         href: '/blog',         icon: BookOpen },
+    { name: 'Our Story',    href: '/our-story',    icon: Building2 },
     { name: 'Contact',      href: '/contact-us',   icon: Phone },
   ];
 

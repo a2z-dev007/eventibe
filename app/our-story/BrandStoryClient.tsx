@@ -253,7 +253,7 @@ export default function BrandStoryClient() {
     <div className="brand-story-page overflow-hidden bg-[#030a14]">
 
       {/* ━━━ 1. HERO ━━━ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="brand-hero">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden" id="brand-hero">
         {/* Layer 1: Slow-panning background image */}
         <div className="hero-zoom absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Event energy" className="hero-bg-pan w-full h-full object-cover scale-110" />

@@ -98,20 +98,30 @@ To ensure the platform feels fast and reliable, we use skeleton states and smoot
 
 ---
 
-## 📱 5. Responsive Standards
+## 📱 5. Responsive Standards: Native Mobile Experience
 
-### Grid System
-- **Mobile (Default)**: Horizontal snap carousels for lists (Venues/Vendors) to save vertical space.
-- **Desktop**: Multi-column grids (Typically 3 or 4 columns).
+All pages and sections must feel like a **Native Mobile App** when viewed on mobile devices. This requires meticulous attention to spacing, sizing, and touch interactions.
 
-### Spacing Constants
-- **Section Padding**: `py-20` to `py-32`.
-- **Safe Areas**: `env(safe-area-inset-bottom, 0)` applied to body/main for mobile devices.
+-   **App-Like Feel**: Use bottom-sheet drawers or full-screen overlays for complex menus. Interactive areas must be at least `44px x 44px` for touch precision.
+-   **Grid & Layout**: Use horizontal snap carousels (e.g., `embla-carousel`) for item lists to maintain a clean vertical rhythm. Use consistent `px-4` to `px-6` gutters.
+-   **Typography & Sizing**: Scale headers aggressively (H1 at `2.25rem` for mobile). Maintain large border-radii (`20px+`) to preserve the premium visual language.
+-   **Safe Areas**: Always apply `env(safe-area-inset-bottom)` to prevent OS gesture conflicts.
+
+## 💄 6. Thematic Guidelines
+
+Different event categories should evoke specific emotional responses through subtle theme shifts.
+
+1.  **Social & Wedding Themes**:
+    - **Visual Style**: Prioritize the **Wedding Theme** (as featured on the Home Page) for all Social and Wedding related sections.
+    - **Elevated Experience**: For dedicated Social/Wedding pages, use enhanced celebration-focused styling: more prominent glassmorphism, softer gradients, and celebratory accent glows.
+    - **Consistency**: Ensure that any section tagged under "Wedding" or "Social" uses these celebratory tones rather than the standard corporate blue where possible.
 
 ---
 
-## 💡 Best Practices
+## 💡 7. Best Practices
 1.  **Strict 1→2→3 Logic**: Progressions must always flow forward. Loop resets must be instant (`transition: none`).
 2.  **No Placeholders**: Use AI-generated relevant images or brand assets.
 3.  **Color Hierarchy**: Use Navy for "Trust/Corporate" and Orange for "Excitement/Call to Action".
 4.  **Premium Feedback**: Every interactive element should have a hover/press response (Scale, Glow, or Color Shift).
+5.  **Thematic Alignment**: Match the page theme (Corporate vs. Social) to the content being displayed to maintain emotional resonance.
+6.  **Native Precision**: Mobile UI must never feel like a "shrunk-down website." It must feel like a native app designed specifically for the hand.
