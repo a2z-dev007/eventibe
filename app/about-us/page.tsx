@@ -44,7 +44,7 @@ export default function AboutUsPage() {
   return (
     <div className="flex flex-col min-h-screen  bg-white">
       {/* Hero Section */}
-      <section className="relative py-8 md:py-12 md:pt-18 flex items-start md:items-center overflow-hidden bg-primary-navy pt-8 md:pt-0">
+      <section className="relative  md:py-12 md:pt-18 flex items-start md:items-center overflow-hidden bg-primary-navy pt-8 md:pt-0">
         {/* Background Atmosphere */}
         <div className="absolute inset-0 z-0 text-white">
           <Image
