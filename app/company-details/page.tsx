@@ -38,36 +38,36 @@ const sections = [
   {
     id: "overview",
     icon: <Building2 className="w-6 h-6" />,
-    title: "1. Corporate Overview",
+    title: "Corporate Overview",
     content:
       "Homocation Asia Private Limited is an Indian hospitality technology and event marketplace company committed to building structured, scalable, and technology-driven platforms within the hospitality and event ecosystem. The company operates and manages two specialized digital brands:\n\nEventibe.com\nVenueForEvent.com\n\nBoth platforms are designed to simplify venue discovery, event planning, and vendor connectivity through a structured, inquiry-driven marketplace model.\n\nHomocation Asia Private Limited is legally incorporated under the Companies Act, 2013 (India) and operates with a long-term vision of creating integrated hospitality and event technology ecosystems across India and international markets.",
   },
   {
     id: "legal-info",
     icon: <Files className="w-6 h-6" />,
-    title: "2. Legal & Registration Information",
+    title: "Legal & Registration Information",
     content:
       "Legal Name: Homocation Asia Private Limited\nCorporate Identification Number (CIN): U55101DL2024PTC435007\nDate of Incorporation: 05 August 2024\nRegistered Office:\nPlot No-18, D Block, Qutub Vihar Phase-1, Sector 19,\nSouth West Delhi, New Delhi – 110071, India\n\nThe company operates in compliance with Indian corporate laws and regulatory frameworks applicable to private limited entities.",
   },
   {
     id: "vision-background",
     icon: <Eye className="w-6 h-6" />,
-    title: "3. Background & Foundational Vision",
+    title: "Background & Foundational Vision",
     content:
       "While the legal incorporation took place in 2024, the conceptual foundation of the company dates back to 2012. The founders identified a persistent gap in the hospitality and event industry:\n\n- Event hosts struggled to find verified venues with structured information.\n- Venue owners lacked consistent digital exposure.\n- Vendors depended heavily on offline references.\n- Corporate planners faced inefficiencies in sourcing event infrastructure.\n\nThe vision was simple but powerful:\n\nTo create a structured digital marketplace that bridges venues, vendors, and event hosts through transparent discovery and inquiry-based engagement.\n\nThis philosophy forms the core of Homocation Asia Private Limited and all its brands.",
   },
   {
     id: "ecosystem",
     icon: <Layout className="w-6 h-6" />,
-    title: "4. Brand Ecosystem",
+    title: "Brand Ecosystem",
     subsections: [
       {
-        subtitle: "4.1 Eventibe.com",
+        subtitle: "Eventibe.com",
         content:
           "Eventibe.com is positioned as a modern, premium event venue marketplace serving both social and corporate segments. It focuses on:\n\n- Wedding venues\n- Corporate conference venues\n- Banquet halls\n- Resorts\n- Farmhouses\n- Convention centers\n- Outdoor venues\n- Luxury event spaces\n\nEventibe operates primarily on an inquiry-based model rather than a direct booking model. The objective is to create meaningful conversations between venue owners and event planners.",
       },
       {
-        subtitle: "4.2 VenueForEvent.com",
+        subtitle: "VenueForEvent.com",
         content:
           "VenueForEvent.com operates under the same corporate structure but with tailored branding and positioning. It is designed to:\n\n- Strengthen search-driven venue discovery\n- Expand SEO reach\n- Serve broader city-level targeting\n- Create multi-brand digital dominance in the venue marketplace segment\n\nBoth brands are strategically aligned yet independently positioned for digital expansion.",
       },
@@ -76,27 +76,27 @@ const sections = [
   {
     id: "positioning",
     icon: <BarChart3 className="w-6 h-6" />,
-    title: "5. Industry Positioning",
+    title: "Industry Positioning",
     content:
       "Homocation Asia Private Limited operates within three interconnected sectors:\n\n- Hospitality Technology\n- Event Marketplace Platforms\n- Digital Lead Generation for Venues & Vendors\n\nThe company’s platforms aim to:\n\n- Digitize venue inventory\n- Structure inquiry management\n- Improve lead quality\n- Provide scalable marketing infrastructure for hospitality businesses\n\nThe business model emphasizes:\n\n- Marketplace efficiency\n- Structured listing architecture\n- Scalable city-wise expansion\n- Vendor integration ecosystem\n- Long-term digital brand authority",
   },
   {
     id: "core-services",
     icon: <Briefcase className="w-6 h-6" />,
-    title: "6. Core Services",
+    title: "Core Services",
     subsections: [
       {
-        subtitle: "6.1 Venue Marketplace Infrastructure",
+        subtitle: "Venue Marketplace Infrastructure",
         content:
           "The platforms offer structured listing frameworks including:\n- Venue name & branding\n- Location mapping\n- Capacity & seating formats\n- Event suitability categorization\n- Amenities & features\n- Image galleries\n- Inquiry forms with tracking",
       },
       {
-        subtitle: "6.2 Vendor Marketplace (Expansion Module)",
+        subtitle: "Vendor Marketplace (Expansion Module)",
         content:
           "Homocation Asia Private Limited is expanding into a full vendor ecosystem including:\n- Catering services\n- Photography & videography\n- Decor & theme styling\n- Lighting & sound\n- Mehndi artists\n- Event planners\n- DJ & entertainment services\n- Tenting & stage setup providers\n\nThis will create a 360-degree event ecosystem.",
       },
       {
-        subtitle: "6.3 Technology & API Integration",
+        subtitle: "Technology & API Integration",
         content:
           "Venue data can be integrated through internal APIs, enabling:\n- Scalable content management\n- Independent brand positioning\n- SEO customization per platform\n- Structured data markup\n- Inquiry tracking segmentation",
       },
@@ -105,126 +105,126 @@ const sections = [
   {
     id: "business-model",
     icon: <CreditCard className="w-6 h-6" />,
-    title: "7. Business Model",
+    title: "Business Model",
     content:
       "Homocation Asia Private Limited follows a hybrid revenue structure:\n\n- Listing subscriptions (future-ready)\n- Lead-based monetization\n- Premium visibility upgrades\n- Featured listing placement\n- Strategic partnerships\n- Vendor onboarding packages\n\nUnlike traditional OTA models, the primary focus is inquiry generation rather than instant booking transactions.",
   },
   {
     id: "vision",
     icon: <Compass className="w-6 h-6" />,
-    title: "8. Vision Statement",
+    title: "Vision Statement",
     content:
       "To become a leading hospitality and event marketplace technology company in Asia, enabling seamless discovery, connection, and growth for venues, vendors, and event organizers.",
   },
   {
     id: "mission",
     icon: <Target className="w-6 h-6" />,
-    title: "9. Mission Statement",
+    title: "Mission Statement",
     content:
       "Our mission is to:\n\n- Digitally empower venue owners.\n- Simplify event discovery.\n- Improve transparency in event planning.\n- Create structured digital infrastructure for hospitality businesses.\n- Build scalable platforms across India and international markets.",
   },
   {
     id: "values",
     icon: <Heart className="w-6 h-6" />,
-    title: "10. Core Values",
+    title: "Core Values",
     content:
       "**Innovation**\nWe continuously develop structured digital systems for venue discovery and inquiry management.\n\n**Transparency**\nClear listings, accurate descriptions, and structured communication channels.\n\n**Scalability**\nTechnology designed for multi-city and multi-country expansion.\n\n**Partner Empowerment**\nHelping venues and vendors increase visibility and growth.\n\n**Customer-Centric Design**\nUser experience focused on clarity, simplicity, and decision support.",
   },
   {
     id: "ops-structure",
     icon: <Ship className="w-6 h-6" />,
-    title: "11. Operational Structure",
+    title: "Operational Structure",
     content:
       "Homocation Asia Private Limited operates through:\n\n- Centralized corporate strategy\n- Brand-specific digital teams\n- Technology & development division\n- Content & SEO division\n- Partner onboarding team\n- Sales & relationship management\n\nThis structure allows independent brand positioning while maintaining centralized operational efficiency.",
   },
   {
     id: "tech-framework",
     icon: <Cpu className="w-6 h-6" />,
-    title: "12. Technology Framework",
+    title: "Technology Framework",
     content:
       "The company leverages modern web technologies and scalable backend systems to ensure:\n\n- Fast-loading pages\n- SEO-friendly URL structures\n- Dynamic city pages\n- Structured schema markup\n- Secure inquiry forms\n- Lead source tagging\n- Admin-level moderation\n\nThe architecture supports:\n\n- Slug-based routing\n- API-driven content\n- Independent meta management\n- Scalable CMS framework",
   },
   {
     id: "market-focus",
     icon: <Globe className="w-6 h-6" />,
-    title: "13. Market Focus",
+    title: "Market Focus",
     content:
       "**Primary Markets:**\n- India\n- Nepal (planned expansion)\n- South Asia (long-term)\n\n**Event Segments:**\n- Weddings\n- Engagement ceremonies\n- Reception events\n- Corporate conferences\n- Product launches\n- Training workshops\n- Exhibitions\n- Private celebrations",
   },
   {
     id: "differentiation",
     icon: <Sparkles className="w-6 h-6" />,
-    title: "14. Strategic Differentiation",
+    title: "Strategic Differentiation",
     content:
       "Homocation Asia Private Limited differentiates itself by:\n\n- Focusing on structured inquiry rather than transactional booking.\n- Creating SEO-rich city landing pages.\n- Providing dual-brand digital presence.\n- Designing platforms for long-term scalability.\n- Integrating vendors into venue ecosystems.",
   },
   {
     id: "governance",
     icon: <ShieldCheck className="w-6 h-6" />,
-    title: "15. Corporate Governance",
+    title: "Corporate Governance",
     content:
       "The company follows standard corporate governance practices applicable to Indian private limited entities, including:\n\n- Board-level oversight\n- Regulatory compliance\n- Financial transparency\n- Contractual clarity\n- Vendor and partner agreements",
   },
   {
     id: "data-resp",
     icon: <Lock className="w-6 h-6" />,
-    title: "16. Data Responsibility",
+    title: "Data Responsibility",
     content:
       "Homocation Asia Private Limited is committed to:\n\n- Data protection\n- Secure inquiry processing\n- Responsible partner onboarding\n- Controlled access to user information\n- Transparent privacy policies\n\nBoth Eventibe.com and VenueForEvent.com operate under unified privacy and compliance standards.",
   },
   {
     id: "roadmap",
     icon: <Flag className="w-6 h-6" />,
-    title: "17. Long-Term Expansion Roadmap",
+    title: "Long-Term Expansion Roadmap",
     content:
       "The strategic roadmap includes:\n\n- Vendor module launch\n- City-wise expansion\n- Corporate event specialization modules\n- International event venue categories\n- Event planning tools integration\n- CRM integration for venues\n- Structured analytics dashboards",
   },
   {
     id: "hospitality-growth",
     icon: <Zap className="w-6 h-6" />,
-    title: "18. Commitment to Hospitality Growth",
+    title: "Commitment to Hospitality Growth",
     content:
       "Homocation Asia Private Limited is not just a listing platform operator. It is building digital infrastructure for hospitality growth.\n\nBy enabling:\n\n- Better visibility\n- Structured lead flow\n- Improved communication\n- Digital brand positioning\n\nThe company contributes directly to the modernization of the hospitality and event industry.",
   },
   {
     id: "spodia",
     icon: <Share2 className="w-6 h-6" />,
-    title: "19. Relationship With Spodia Ecosystem",
+    title: "Relationship With Spodia Ecosystem",
     content:
       "The company also operates within a broader hospitality technology environment, including connections with platforms like Spodia.com, which focuses on hotel bookings.\n\nWhile Spodia operates as an OTA model, Eventibe and VenueForEvent operate as inquiry-based venue marketplaces. This creates a complementary ecosystem within the hospitality domain.",
   },
   {
     id: "ethical-standards",
     icon: <Scale className="w-6 h-6" />,
-    title: "20. Ethical Standards",
+    title: "Ethical Standards",
     content:
       "Homocation Asia Private Limited commits to:\n\n- Fair business practices\n- Non-discriminatory listing policies\n- Transparent partner communication\n- Ethical marketing strategies\n- Respect for user privacy",
   },
   {
     id: "corp-resp",
     icon: <Users className="w-6 h-6" />,
-    title: "21. Corporate Responsibility",
+    title: "Corporate Responsibility",
     content:
       "The company believes in:\n\n- Supporting small venue owners\n- Empowering local vendors\n- Encouraging digital transformation\n- Promoting organized event planning practices\n\nFuture initiatives may include:\n\n- Digital training for venue partners\n- Hospitality marketing workshops\n- Rural venue inclusion programs",
   },
   {
     id: "philosophy",
     icon: <Heart className="w-6 h-6" />,
-    title: "22. Brand Philosophy",
+    title: "Brand Philosophy",
     content:
       "At its core, Homocation Asia Private Limited believes:\n\nEvents are not transactions — they are experiences.\n\nVenues are not just physical spaces — they are environments where memories are created.\n\nVendors are not service providers — they are creative collaborators.\n\nThis philosophy shapes every brand decision, design structure, and expansion plan.",
   },
   {
     id: "contact",
     icon: <PhoneCall className="w-6 h-6" />,
-    title: "23. Contact & Corporate Communication",
+    title: "Contact & Corporate Communication",
     content:
       "For corporate inquiries:\n\nCompany Name: Homocation Asia Private Limited\nRegistered Office: South West Delhi, New Delhi – 110071, India\n\nOfficial Websites:\nwww.eventibe.com\nwww.venueforevent.com\n\nCorporate communication may be directed through official website contact channels.",
   },
   {
     id: "closing",
     icon: <MessageSquare className="w-6 h-6" />,
-    title: "24. Closing Statement",
+    title: "Closing Statement",
     content:
       "Homocation Asia Private Limited stands at the intersection of hospitality, technology, and event experiences. Through Eventibe.com and VenueForEvent.com, the company is building a scalable, inquiry-driven, and technology-enabled event marketplace designed for long-term growth.\n\nWith a structured foundation, a scalable architecture, and a clear vision, the company is positioned to become a strong digital player in the hospitality and event industry.",
   },
@@ -340,13 +340,32 @@ export default function CompanyDetailsPage() {
       </section>
 
       {/* Main Content with Navigation Side */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .hide-scrollbar::-webkit-scrollbar,
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+        }
+        .hide-scrollbar,
+        .scrollbar-hide {
+          -ms-overflow-style: none !important;
+          scrollbar-width: none !important;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+        }
+      `,
+        }}
+      />
       <section className="py-16 md:py-24 bg-slate-50 relative">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col lg:flex-row gap-16">
             {/* Sidebar Navigation - Sticky */}
             <aside className="lg:w-1/4 hidden lg:block">
-              <div className="sticky top-28 bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)] overflow-hidden">
-                <div className="p-8 pb-6 border-b border-slate-50">
+              <div className="sticky top-28 bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col max-h-[calc(100vh-140px)]">
+                <div className="p-8 pb-6 border-b border-slate-50 shrink-0">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-6 h-6 rounded-lg bg-accent-orange/10 flex items-center justify-center text-accent-orange">
                       <Files size={14} />
@@ -362,7 +381,7 @@ export default function CompanyDetailsPage() {
 
                 <nav
                   ref={scrollContainerRef}
-                  className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-340px)] hide-scrollbar scroll-smooth"
+                  className="p-4 space-y-1 overflow-y-auto flex-1 hide-scrollbar scrollbar-hide overscroll-contain"
                 >
                   {sections.map((section) => {
                     const isActive = activeSection === section.id;
@@ -403,7 +422,7 @@ export default function CompanyDetailsPage() {
                         <span
                           className={`text-[13px] font-bold truncate transition-all leading-snug flex-1 ${isActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}
                         >
-                          {section.title.split(". ")[1]}
+                          {section.title}
                         </span>
 
                         {isActive && (
@@ -417,7 +436,7 @@ export default function CompanyDetailsPage() {
                   })}
                 </nav>
 
-                <div className="p-6 bg-slate-50/80 mt-auto border-t border-slate-100 flex items-center justify-between">
+                <div className="p-6 bg-slate-50/80 mt-auto border-t border-slate-100 flex items-center justify-between shrink-0">
                   <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
                     Official registry
                   </span>
