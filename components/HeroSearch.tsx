@@ -130,6 +130,7 @@ export default function HeroSearch() {
               label="Date"
               containerClassName="px-4 lg:px-4 py-2.5 lg:py-2"
               variant="glass"
+              monthsShown={1}
             />
           </div>
 

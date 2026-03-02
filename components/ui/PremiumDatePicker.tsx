@@ -102,7 +102,6 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
               <Popover.Panel
                 className="absolute z-[9999] mt-2 top-full focus:outline-none"
                 style={isMobile ? {
-                  // Viewport-centered: ignore the parent offset entirely
                   position: 'fixed',
                   top: 'auto',
                   left: '50%',
@@ -110,7 +109,10 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
                   width: 'calc(100vw - 2rem)',
                   maxWidth: '360px',
                   marginTop: '0',
-                } : {}}
+                } : {
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                }}
               >
                 <div
                   className={`overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.3)] transition-all duration-300 w-full ${

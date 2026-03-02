@@ -1121,3 +1121,304 @@ footer[class*="fixed"] {
 .glass-datepicker .react-datepicker__day--disabled {
   color: rgba(255, 255, 255, 0.25) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Brand Story – Cinematic Page Styles
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Disable the global * transition for brand-story elements so GSAP
+   and Framer Motion have full control */
+.brand-story-page *,
+.brand-story-page *::before,
+.brand-story-page *::after {
+  transition: none;
+}
+
+/* Re-enable transitions only for interactive hover elements */
+.brand-story-page a,
+.brand-story-page button,
+.brand-story-page [class*="hover:"] {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* Parallax elements – GPU-accelerated with will-change */
+.brand-story-page .parallax-bg,
+.brand-story-page .parallax-orb,
+.brand-story-page .parallax-text,
+.brand-story-page .parallax-drift,
+.brand-story-page .hero-zoom,
+.brand-story-page .scroll-fade-out {
+  will-change: transform, opacity;
+}
+
+/* Parallax stagger grids – children start invisible (GSAP controls reveal) */
+.brand-story-page .parallax-stagger-grid > * {
+  will-change: transform, opacity;
+}
+
+/* Line grow animation needs transform origin */
+.brand-story-page .line-grow {
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* Smooth text rendering for large typography */
+.brand-story-page h1,
+.brand-story-page h2,
+.brand-story-page h3 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure overflow visible for parallax orbs that drift outside container */
+.brand-story-page section {
+  overflow: visible;
+}
+
+/* But clip sections that explicitly need it */
+.brand-story-page section[class*="overflow-hidden"] {
+  overflow: hidden !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Hero – Animated Background System
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Slow pan on the background image — Ken Burns style */
+.hero-bg-pan {
+  animation: heroPan 25s ease-in-out infinite alternate;
+}
+
+@keyframes heroPan {
+  0% { transform: scale(1.1) translate(0%, 0%); }
+  50% { transform: scale(1.15) translate(-2%, -1%); }
+  100% { transform: scale(1.1) translate(1%, 1%); }
+}
+
+/* Animated gradient mesh — shifting colors */
+.hero-gradient-mesh {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(30, 58, 138, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(37, 99, 235, 0.1) 0%, transparent 40%);
+  background-size: 200% 200%;
+  animation: gradientMeshShift 12s ease-in-out infinite alternate;
+}
+
+@keyframes gradientMeshShift {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 50% 30%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 30% 80%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* Pulsing/drifting orbs — each on different timing */
+.hero-orb-1 {
+  top: 20%;
+  left: 15%;
+  animation: orbDrift1 10s ease-in-out infinite alternate;
+}
+
+.hero-orb-2 {
+  bottom: 20%;
+  right: 10%;
+  animation: orbDrift2 14s ease-in-out infinite alternate;
+}
+
+.hero-orb-3 {
+  top: 50%;
+  left: 60%;
+  animation: orbDrift3 8s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  33% { transform: translate(40px, -30px) scale(1.1); opacity: 0.9; }
+  66% { transform: translate(-20px, 20px) scale(0.95); opacity: 0.5; }
+  100% { transform: translate(30px, -10px) scale(1.05); opacity: 0.8; }
+}
+
+@keyframes orbDrift2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50px, 30px) scale(1.15); opacity: 0.85; }
+  100% { transform: translate(20px, -40px) scale(0.9); opacity: 0.6; }
+}
+
+@keyframes orbDrift3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  50% { transform: translate(30px, -50px) scale(1.2); opacity: 0.7; }
+  100% { transform: translate(-40px, 20px) scale(0.85); opacity: 0.3; }
+}
+
+/* Light beams — diagonal rays that sweep */
+.hero-beam {
+  position: absolute;
+  width: 2px;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(249, 115, 22, 0.06) 30%,
+    rgba(249, 115, 22, 0.12) 50%,
+    rgba(249, 115, 22, 0.06) 70%,
+    transparent
+  );
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.hero-beam-1 {
+  left: 25%;
+  top: -50%;
+  transform: rotate(15deg);
+  animation: beamSweep1 8s ease-in-out infinite;
+}
+
+.hero-beam-2 {
+  left: 55%;
+  top: -50%;
+  transform: rotate(-10deg);
+  animation: beamSweep2 12s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.hero-beam-3 {
+  left: 80%;
+  top: -50%;
+  transform: rotate(20deg);
+  animation: beamSweep3 10s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes beamSweep1 {
+  0%, 100% { opacity: 0; transform: rotate(15deg) translateX(0); }
+  20% { opacity: 0.6; }
+  50% { opacity: 1; transform: rotate(15deg) translateX(60px); }
+  80% { opacity: 0.4; }
+}
+
+@keyframes beamSweep2 {
+  0%, 100% { opacity: 0; transform: rotate(-10deg) translateX(0); }
+  30% { opacity: 0.5; }
+  60% { opacity: 0.8; transform: rotate(-10deg) translateX(-40px); }
+  85% { opacity: 0.3; }
+}
+
+@keyframes beamSweep3 {
+  0%, 100% { opacity: 0; transform: rotate(20deg) translateX(0); }
+  25% { opacity: 0.4; }
+  55% { opacity: 0.7; transform: rotate(20deg) translateX(30px); }
+  80% { opacity: 0.2; }
+}
+
+/* Animated grid with a moving highlight line */
+.hero-grid-animated {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  animation: gridPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes gridPulse {
+  0% { opacity: 0.02; }
+  50% { opacity: 0.05; }
+  100% { opacity: 0.02; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Micro-Interaction Styles
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* TiltCard – smooth 3D transitions (global) */
+.tilt-card,
+.micro-tilt-card {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transform-style: preserve-3d;
+}
+
+.tilt-glow {
+  border-radius: inherit;
+}
+
+/* Shimmer line – diagonal light sweep */
+.shimmer-line {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 2s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Icon bounce on parent hover (global) */
+.group:hover .icon-bounce {
+  animation: iconBounce 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes iconBounce {
+  0% { transform: scale(1) translateY(0); }
+  30% { transform: scale(1.3) translateY(-4px); }
+  50% { transform: scale(0.9) translateY(2px); }
+  70% { transform: scale(1.1) translateY(-1px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Glow border for dark theme cards */
+.brand-story-page .glow-border {
+  position: relative;
+}
+
+.brand-story-page .glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0) 0%, rgba(249, 115, 22, 0.3) 50%, rgba(249, 115, 22, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+.brand-story-page .glow-border:hover::after {
+  opacity: 1;
+}
+
+/* Underline grow on hover */
+.brand-story-page .hover-underline-grow {
+  position: relative;
+}
+
+.brand-story-page .hover-underline-grow::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #F97316, #FBBF24);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-story-page .hover-underline-grow:hover::after {
+  width: 100%;
+}

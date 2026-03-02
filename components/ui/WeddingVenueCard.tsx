@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Heart, Users, ArrowUpRight } from 'lucide-react';
+import { TiltCard } from '@/components/micro-interactions';
 
 export interface WeddingVenueCardData {
   id: number | string;
@@ -34,6 +35,7 @@ export default function WeddingVenueCard({
   const [liked, setLiked] = useState(false);
 
   return (
+    <TiltCard className="w-full h-full rounded-2xl">
     <Link
       href={href}
       className="group relative flex flex-col w-full h-full rounded-2xl overflow-hidden shadow-md hover:shadow-[0_20px_60px_rgba(180,60,80,0.2)] transition-all duration-500 hover:-translate-y-1 bg-gray-900"
@@ -50,6 +52,11 @@ export default function WeddingVenueCard({
 
       {/* Gradient scrim — strong at bottom */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/10" />
+
+      {/* Shimmer sweep on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden z-[1]">
+        <div className="shimmer-line absolute inset-0" />
+      </div>
 
       {/* ── Top row ────────────────────────────── */}
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
@@ -101,5 +108,6 @@ export default function WeddingVenueCard({
         </div>
       </div>
     </Link>
+    </TiltCard>
   );
 }

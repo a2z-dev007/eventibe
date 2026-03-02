@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
+import { TiltCard } from '@/components/micro-interactions';
 import { fetchEventTypes } from '@/lib/api/eventsEndpoints';
 import type { EventTypeRecord } from '@/lib/api/eventsEndpoints';
 
@@ -210,9 +211,10 @@ function EventTypeCard({ id, name, image }: { id: number; name: string; image: s
   const [imgSrc, setImgSrc] = useState(image);
 
   return (
+    <TiltCard className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] rounded-3xl">
     <Link
       href={`/venues?event_type=${id}`}
-      className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] group cursor-pointer"
+      className="block group cursor-pointer"
       style={{ scrollSnapAlign: 'start' }}
     >
       {/* Image card */}
@@ -228,6 +230,11 @@ function EventTypeCard({ id, name, image }: { id: number; name: string; image: s
 
         {/* Gradient overlay — always visible at bottom */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        {/* Shimmer sweep on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden z-[1]">
+          <div className="shimmer-line absolute inset-0" />
+        </div>
 
         {/* Floating accent badge */}
         <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/15 backdrop-blur-md border border-white/20 rounded-xl px-2.5 py-1.5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
@@ -263,5 +270,6 @@ function EventTypeCard({ id, name, image }: { id: number; name: string; image: s
         </div>
       </div>
     </Link>
+    </TiltCard>
   );
 }
