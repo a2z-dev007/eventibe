@@ -1042,7 +1042,9 @@ footer[class*="fixed"] {
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    /* Use `none` not `translateY(0)` — a frozen transform (via fill-mode: forwards)
+       creates a stacking context that breaks backdrop-filter on all child elements. */
+    transform: none;
   }
 }
 

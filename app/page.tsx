@@ -1,46 +1,34 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchVenueTypes, fetchEventTypes } from '@/lib/api';
 import HeroSearch from '@/components/HeroSearch';
+import HeroVideo from '@/components/HeroVideo';
 import HighlightsSection from '@/components/HighlightsSection';
 import FeaturedVenuesCarousel from '@/components/FeaturedVenuesCarousel';
 import { Search, CalendarCheck, MessageSquare, Star, Quote } from 'lucide-react';
 
-export default async function Home() {
-  const venueTypesData = await fetchVenueTypes();
-  const eventTypesData = await fetchEventTypes();
+export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
       <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white">
         {/* Background Video Content */}
-        <video
-          src="/assets/video/hero-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        />
+        <HeroVideo playbackRate={0.7} />
         {/* Dark Overlay for clear reading visibility */}
         <div className="absolute inset-0 z-0 bg-black/40" />
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-12 md:mt-16">
+        <div className="container mx-auto px-4 mt-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-12 md:mt-16">
           <h1 className="text-2xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl animate-fade-in-up">
             Extraordinary Spaces for <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">Corporate Excellence.</span>
           </h1>
-          <p className="text-[15px] md:text-xl text-white/95  md:mb-10 max-w-2xl font-medium drop-shadow-md animate-fade-in-up [animation-delay:200ms]">
+          <p className="text-[12px] md:text-xl text-white/95  md:mb-10 max-w-2xl font-medium drop-shadow-md animate-fade-in-up [animation-delay:200ms]">
             The trusted marketplace to discover and book premium venues, offsites, and expert vendors for your next high-impact corporate event.
           </p>
 
           <div className="w-full">
             {/* Floating Search Bar with Animated Snake Border from event APIs */}
-            <HeroSearch 
-              venueTypes={venueTypesData?.records || []} 
-              eventTypes={eventTypesData?.records || []} 
-            />
+            <HeroSearch />
           </div>
         </div>
       </section>

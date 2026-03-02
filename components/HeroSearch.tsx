@@ -2,50 +2,61 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, Sparkles, Home as HomeIcon, Users } from 'lucide-react';
+import { Search, Sparkles, Home as HomeIcon, Users } from 'lucide-react';
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect';
 import PremiumSelect from '@/components/ui/PremiumSelect';
 import PremiumDatePicker from '@/components/ui/PremiumDatePicker';
+import { useVenueTypes, useEventTypes } from '@/hooks/useSearchBarData';
 
-interface HeroSearchProps {
-  venueTypes: any[];
-  eventTypes: any[];
+const GUEST_OPTIONS = [
+  { value: '100', label: '0–100' },
+  { value: '300', label: '100–300' },
+  { value: '600', label: '300–600' },
+  { value: '601', label: '600+' },
+];
+
+/** Thin glass skeleton shown while a dropdown is loading from the API */
+function DropdownSkeleton({ label }: { label: string }) {
+  return (
+    <div className="flex flex-col px-4 py-2.5">
+      <span className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-1">{label}</span>
+      <div className="h-4 w-24 rounded-full bg-white/10 animate-pulse" />
+    </div>
+  );
 }
 
-export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) {
+export default function HeroSearch() {
   const router = useRouter();
+
+  // ── Local form state ────────────────────────────────────────────────────────
   const [location, setLocation] = useState<any>(null);
-  const [venueType, setVenueType] = useState<any>(null);
-  const [eventType, setEventType] = useState<any>(null);
-  const [date, setDate] = useState<Date | null>(null);
-  const [guests, setGuests] = useState<any>(null);
+  const [venueType, setVenueType]  = useState<any>(null);
+  const [eventType, setEventType]  = useState<any>(null);
+  const [date, setDate]            = useState<Date | null>(null);
+  const [guests, setGuests]        = useState<any>(null);
 
-  const eventOptions = eventTypes?.map((et: any) => ({ value: et.id, label: et.name })) || [];
-  const venueOptions = venueTypes?.map((vt: any) => ({ value: vt.id, label: vt.name })) || [];
-  const guestOptions = [
-    { value: '100', label: '0-100' },
-    { value: '300', label: '100-300' },
-    { value: '600', label: '300-600' },
-    { value: '601', label: '600+' },
-  ];
+  // ── TanStack Query — cached for 1 hour, refetch-free ───────────────────────
+  const {
+    data: venueOptions = [],
+    isLoading: venueLoading,
+  } = useVenueTypes();
 
+  const {
+    data: eventOptions = [],
+    isLoading: eventLoading,
+  } = useEventTypes();
+
+  // ── Search handler ──────────────────────────────────────────────────────────
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (location?.value) {
-      params.set('city', location.value.toString()); 
-    }
-    if (venueType?.value) params.set('venue_type', venueType.value.toString());
-    if (eventType?.value) params.set('event_type', eventType.value.toString());
-    
+    if (location?.value)   params.set('city',       location.value.toString());
+    if (venueType?.value)  params.set('venue_type', venueType.value.toString());
+    if (eventType?.value)  params.set('event_type', eventType.value.toString());
     if (date) {
-        // format date properly like YYYY-MM-DD
-        const formattedDate = date.toISOString().split('T')[0];
-        params.set('date', formattedDate);
+      params.set('date', date.toISOString().split('T')[0]);
     }
-    
-    if (guests?.value) params.set('guests', guests.value.toString());
-    
-    // assuming eventibe has a /search page or /venues page for generic search
+    if (guests?.value)     params.set('guests',     guests.value.toString());
+
     router.push(`/venues${params.toString() ? '?' + params.toString() : ''}`);
   };
 
@@ -60,6 +71,7 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
         }}
       >
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-white/20">
+
           {/* Location */}
           <div className="flex-[1.5] py-2.5 lg:py-0 hover:bg-white/5 transition-colors group lg:rounded-l-[31px]">
             <PremiumLocationSelect
@@ -71,31 +83,43 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
             />
           </div>
 
-          {/* Event Type */}
-          <PremiumSelect
-            label="Event Type"
-            icon={<Sparkles className="w-5 h-5 text-accent-orange" />}
-            options={eventOptions}
-            value={eventType}
-            onChange={setEventType}
-            placeholder="Any Event"
-            className="flex-1 hover:bg-white/5 transition-colors group"
-            containerClassName="px-4 lg:px-4 py-2.5 lg:py-2"
-            variant="glass"
-          />
+          {/* Event Type — show skeleton while loading */}
+          {eventLoading ? (
+            <div className="flex-1 py-2.5 lg:py-0">
+              <DropdownSkeleton label="Event Type" />
+            </div>
+          ) : (
+            <PremiumSelect
+              label="Event Type"
+              icon={<Sparkles className="w-5 h-5 text-accent-orange" />}
+              options={eventOptions}
+              value={eventType}
+              onChange={setEventType}
+              placeholder="Any Event"
+              className="flex-1 hover:bg-white/5 transition-colors group"
+              containerClassName="px-4 lg:px-4 py-2.5 lg:py-2"
+              variant="glass"
+            />
+          )}
 
-          {/* Venue Type */}
-          <PremiumSelect
-            label="Venue Type"
-            icon={<HomeIcon className="w-5 h-5 text-accent-orange" />}
-            options={venueOptions}
-            value={venueType}
-            onChange={setVenueType}
-            placeholder="Any Type"
-            className="flex-1 hover:bg-white/5 transition-colors group"
-            containerClassName="px-4 lg:px-4 py-2.5 lg:py-2"
-            variant="glass"
-          />
+          {/* Venue Type — show skeleton while loading */}
+          {venueLoading ? (
+            <div className="flex-1 py-2.5 lg:py-0">
+              <DropdownSkeleton label="Venue Type" />
+            </div>
+          ) : (
+            <PremiumSelect
+              label="Venue Type"
+              icon={<HomeIcon className="w-5 h-5 text-accent-orange" />}
+              options={venueOptions}
+              value={venueType}
+              onChange={setVenueType}
+              placeholder="Any Type"
+              className="flex-1 hover:bg-white/5 transition-colors group"
+              containerClassName="px-4 lg:px-4 py-2.5 lg:py-2"
+              variant="glass"
+            />
+          )}
 
           {/* Date */}
           <div className="flex-1 flex items-center hover:bg-white/5 transition-colors group relative">
@@ -113,7 +137,7 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
           <PremiumSelect
             label="Guests"
             icon={<Users className="w-5 h-5 text-accent-orange" />}
-            options={guestOptions}
+            options={GUEST_OPTIONS}
             value={guests}
             onChange={setGuests}
             placeholder="Guest Count"
@@ -124,7 +148,7 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
 
           {/* Search Button */}
           <div className="p-2 lg:p-1.5 lg:pl-2">
-            <button 
+            <button
               onClick={handleSearch}
               className="w-full lg:w-[60px] lg:h-[60px] bg-cta-gradient hover:opacity-90 text-white rounded-2xl lg:rounded-full px-8 lg:px-0 py-3 lg:py-0 flex items-center justify-center gap-2 font-bold transition-all duration-300 hover:scale-[1.01] lg:hover:scale-110 active:scale-95 shadow-lg shadow-orange-500/20 group/btn"
             >
@@ -132,6 +156,7 @@ export default function HeroSearch({ venueTypes, eventTypes }: HeroSearchProps) 
               <span className="lg:hidden tracking-tight font-bold">Find Spaces</span>
             </button>
           </div>
+
         </div>
       </div>
     </div>
