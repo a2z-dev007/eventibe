@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -22,12 +24,6 @@ import {
   ChevronRight,
   ArrowLeft,
 } from "lucide-react";
-
-export const metadata = {
-  title: "Privacy Policy | Eventibe - Your Privacy Matters",
-  description:
-    "Review Eventibe's Privacy Policy to understand how we collect, use, and protect your information when using our event and venue discovery platform.",
-};
 
 export default function PrivacyPolicyPage() {
   return (
@@ -94,47 +90,42 @@ export default function PrivacyPolicyPage() {
       {/* Policy Meta Info */}
       <section className="bg-light-bg py-8 border-b border-gray-100">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4 px-6 bg-white rounded-2xl shadow-sm border border-gray-100">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-corporate-blue/10 flex items-center justify-center text-corporate-blue">
-                <Clock size={20} />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 md:py-5 px-6 bg-white rounded-3xl md:rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
+              <div className="w-12 h-12 md:w-10 md:h-10 rounded-full bg-corporate-blue/10 flex items-center justify-center text-corporate-blue shrink-0">
+                <Clock size={24} className="md:w-5 md:h-5" />
               </div>
               <div>
-                <p className="text-xs text-soft-slate uppercase tracking-wider font-bold">
+                <p className="text-[10px] md:text-xs text-soft-slate uppercase tracking-[0.2em] md:tracking-wider font-bold mb-1 md:mb-0">
                   Effective Date
                 </p>
-                <p className="text-sm font-black text-primary-navy">
-                  [Insert Date]
+                <p className="text-sm md:text-base font-black text-primary-navy">
+                  March 2024
                 </p>
               </div>
             </div>
 
-            <div className="w-px h-8 bg-gray-100 hidden md:block"></div>
+            <div className="w-full h-px md:w-px md:h-8 bg-gray-100"></div>
 
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-accent-orange/10 flex items-center justify-center text-accent-orange">
-                <RefreshCw size={20} />
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
+              <div className="w-12 h-12 md:w-10 md:h-10 rounded-full bg-accent-orange/10 flex items-center justify-center text-accent-orange shrink-0">
+                <RefreshCw size={24} className="md:w-5 md:h-5" />
               </div>
               <div>
-                <p className="text-xs text-soft-slate uppercase tracking-wider font-bold">
+                <p className="text-[10px] md:text-xs text-soft-slate uppercase tracking-[0.2em] md:tracking-wider font-bold mb-1 md:mb-0">
                   Last Updated
                 </p>
-                <p className="text-sm font-black text-primary-navy">
-                  [Insert Date]
+                <p className="text-sm md:text-base font-black text-primary-navy">
+                  March 2024
                 </p>
               </div>
-            </div>
-
-            <div className="hidden lg:flex items-center gap-2 text-soft-slate text-sm font-medium italic">
-              <FileText size={16} className="text-corporate-blue" />
-              This policy applies to Eventibe.com & VenueForEvent.com
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content Sections */}
-      <section className="pt-16 pb-8 md:py-24 bg-white relative">
+      <section className="pt-16 pb-12 md:pb-24 bg-white relative">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Table of Contents - Desktop Sidebar */}
@@ -199,18 +190,37 @@ export default function PrivacyPolicyPage() {
             <main className="lg:col-span-8 space-y-12 md:space-y-16">
               {/* Introduction */}
               <div className="bg-light-bg p-6 md:p-10 rounded-3xl border border-gray-100 shadow-sm">
-                <div className="space-y-4 text-soft-slate text-sm md:text-base leading-relaxed font-medium">
+                <div className="space-y-6 text-soft-slate text-sm md:text-base leading-relaxed font-bold text-center md:text-left">
                   <p>
                     Eventibe.com and VenueForEvent.com (collectively referred to
                     as “Platform”, “Website”, “We”, “Us”, or “Our”).
                   </p>
-                  <p>
+                  <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-8 bg-white/50 p-6 md:p-0 rounded-2xl md:rounded-none border border-gray-100 md:border-none">
+                    <div className="flex flex-col items-center md:items-start gap-1">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
+                        Official URL
+                      </span>
+                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
+                        Eventibe.com
+                      </span>
+                    </div>
+                    <div className="w-12 h-px md:w-px md:h-10 bg-gray-200"></div>
+                    <div className="flex flex-col items-center md:items-start gap-1">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
+                        Official URL
+                      </span>
+                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
+                        VenueForEvent.com
+                      </span>
+                    </div>
+                  </div>
+                  <p className="font-medium opacity-70">
                     This Privacy Policy explains how we collect, use, store,
                     process, disclose, and protect your information when you use
                     our websites, submit inquiries, list venues or services, or
                     interact with us in any manner.
                   </p>
-                  <p className="border-l-4 border-accent-orange pl-4 text-primary-navy font-extrabold italic bg-white/50 py-2 rounded-r-lg">
+                  <p className="border-l-0 md:border-l-4 border-accent-orange px-6 md:pl-4 text-primary-navy font-black italic bg-white p-6 md:bg-white/50 py-5 md:py-3 rounded-2xl md:rounded-r-lg text-sm md:text-base shadow-sm md:shadow-none border border-gray-100 md:border-none">
                     By accessing or using our websites, you agree to the terms
                     outlined in this Privacy Policy.
                   </p>
@@ -219,11 +229,11 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 1: ABOUT US */}
               <div id="about" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Info size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <Info size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
                     1. ABOUT US
                   </h2>
                 </div>
@@ -241,9 +251,9 @@ export default function PrivacyPolicyPage() {
                   ].map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-corporate-blue/20 transition-all font-bold text-primary-navy text-sm"
+                      className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-3 p-5 md:p-4 bg-gray-50 rounded-3xl md:rounded-2xl border border-transparent hover:border-corporate-blue/20 transition-all font-bold text-primary-navy text-sm text-center md:text-left"
                     >
-                      <div className="w-2 h-2 rounded-full bg-accent-orange flex-shrink-0 mt-1.5"></div>
+                      <div className="w-2 h-2 rounded-full bg-accent-orange flex-shrink-0 md:mt-1.5"></div>
                       {item}
                     </li>
                   ))}
@@ -257,11 +267,11 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 2: INFORMATION WE COLLECT */}
               <div id="collect" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Database size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <Database size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
                     2. INFORMATION WE COLLECT
                   </h2>
                 </div>
@@ -461,12 +471,12 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 3: HOW WE USE YOUR INFORMATION */}
               <div id="use" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Zap size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <ShieldCheck size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
-                    3. HOW WE USE YOUR INFORMATION
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
+                    3. HOW WE USE INFORMATION
                   </h2>
                 </div>
 
@@ -617,12 +627,12 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 4: HOW WE SHARE INFORMATION */}
               <div id="share" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Share2 size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <Lock size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
-                    4. HOW WE SHARE INFORMATION
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
+                    6. DATA SECURITY
                   </h2>
                 </div>
                 <p className="text-base md:text-lg text-primary-navy font-black mb-8 p-6 bg-accent-orange/5 border-l-4 border-accent-orange rounded-r-2xl">
@@ -814,11 +824,11 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 9: YOUR RIGHTS */}
               <div id="rights" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <UserCheck size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <UserCheck size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
                     9. YOUR RIGHTS
                   </h2>
                 </div>
@@ -920,12 +930,12 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 12: CHANGES TO THIS POLICY */}
               <div id="changes" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <RefreshCw size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <ExternalLink size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
-                    12. CHANGES TO THIS POLICY
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
+                    7. THIRD-PARTY LINKS
                   </h2>
                 </div>
                 <div className="bg-light-bg rounded-[2.5rem] p-8 md:p-10 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-8">
@@ -948,11 +958,11 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 13: CONTACT INFORMATION */}
               <div id="contact" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Mail size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <Mail size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
                     13. CONTACT INFORMATION
                   </h2>
                 </div>
@@ -985,7 +995,9 @@ export default function PrivacyPolicyPage() {
                           <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-1">
                             Email
                           </p>
-                          <p className="font-bold">[Insert Official Email]</p>
+                          <p className="font-bold text-sm md:text-base">
+                            support@eventibe.com
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -998,7 +1010,9 @@ export default function PrivacyPolicyPage() {
                           <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-1">
                             Phone
                           </p>
-                          <p className="font-bold">[Insert Contact Number]</p>
+                          <p className="font-bold text-sm md:text-base">
+                            +91-8800842084
+                          </p>
                         </div>
                       </div>
                       <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4">
@@ -1009,8 +1023,9 @@ export default function PrivacyPolicyPage() {
                           <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-1">
                             Office Address
                           </p>
-                          <p className="font-bold">
-                            [Insert Registered Office Address]
+                          <p className="font-bold text-xs md:text-sm">
+                            Samta Enclave, Near Mother Dairy, Dwarka, New Delhi
+                            – 110071
                           </p>
                         </div>
                       </div>
@@ -1033,11 +1048,11 @@ export default function PrivacyPolicyPage() {
 
               {/* Section 14: CONSENT */}
               <div id="consent" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-4 mb-6">
-                  <div className="w-12 h-12 flex-shrink-0 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <CheckCircle2 size={24} />
+                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
+                  <div className="w-16 h-16 md:w-12 md:h-12 flex-shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-md border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+                    <CheckCircle2 size={28} className="md:w-6 md:h-6" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-tight">
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
                     14. CONSENT
                   </h2>
                 </div>
@@ -1093,13 +1108,33 @@ export default function PrivacyPolicyPage() {
             </Link>
             <Link
               href="/"
-              className="bg-white border border-gray-200 text-primary-navy px-8 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-colors flex items-center gap-2 shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent-orange text-white px-8 py-4 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-black text-[13px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest hover:scale-105 transition-all shadow-xl hover:shadow-accent-orange/20"
             >
-              Return to Home <ArrowLeft size={20} />
+              I Understand & Accept
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Footer Branding */}
+      <footer className="py-10 md:py-16 bg-light-bg border-t border-gray-100">
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary-navy flex items-center justify-center text-white shadow-lg">
+                <ShieldCheck size={20} />
+              </div>
+              <div className="text-primary-navy font-black text-2xl tracking-tighter">
+                EVEN<span className="text-accent-orange">TIBE</span>
+              </div>
+            </div>
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+            <p className="text-soft-slate text-[10px] font-black uppercase tracking-[0.3em] opacity-60">
+              India&apos;s Premium Venue Marketplace
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
