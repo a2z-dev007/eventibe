@@ -1,6 +1,8 @@
 import { getVenues } from '@/lib/api';
 import VenueCard from '@/components/VenueCard';
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Corporate Venues | Eventibe',
   description: 'Browse and book premium corporate venues, conference halls, and meeting rooms.',
