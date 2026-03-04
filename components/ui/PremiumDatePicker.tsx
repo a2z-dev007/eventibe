@@ -39,14 +39,8 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  const effectiveMonthsShown = customMonthsShown ?? (isMobile ? 1 : 2)
+  // Always show single month on all devices
+  const effectiveMonthsShown = 1
 
   const displayValue = () => {
     if (selectsRange) {

@@ -1,7 +1,6 @@
 'use client'
 
 import Header from '@/components/Header'
-import HeroSection from '@/components/events/HeroSection'
 import VenueTypesCarousel from '@/components/events/VenueTypesCarousel'
 import EventTypesCarousel from '@/components/events/EventTypesCarousel'
 import { FeaturedVenuesSection, WeddingVenuesSection, CorporateVenuesSection } from '@/components/events/VenueSections'
@@ -15,7 +14,6 @@ export default function EventVenuesClient() {
     <>
       <Header />
       <main className="pt-24 lg:pt-28 bg-white">
-        <HeroSection />
         <VenueTypesCarousel />
         <StatStrip />
         <FeaturedVenuesSection />
