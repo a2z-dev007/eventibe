@@ -114,58 +114,73 @@ export default function InvestorRelationsClient() {
   return (
     <div className="min-h-screen bg-white overflow-hidden selection:bg-[#F97316]/30">
       
-      {/* ━━━ 1. HERO & EXECUTIVE SUMMARY ━━━ */}
-      <section className="relative min-h-[95vh] flex items-center justify-center pt-20 overflow-hidden bg-[#0B1F3A]">
+      {/* ━━━ 1. HERO ━━━ */}
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
         {/* Hero Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
             alt="Homocation Asia"
             fill
-            className="parallax-bg object-cover brightness-[0.2] scale-105"
+            className="parallax-bg object-cover brightness-[0.4]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1F3A]/40 via-transparent to-[#0B1F3A]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1F3A]/40 via-transparent to-white" />
         </div>
 
-        {/* Decorative elements */}
-        <div className="absolute inset-0 z-[1] pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,#1e3a8a,transparent_70%)] opacity-30" />
-          <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-[#F97316]/5 blur-[150px] rounded-full translate-x-1/2 translate-y-1/2" />
-          <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-[#2563EB]/10 blur-[130px] rounded-full -translate-x-1/2" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <FadeUp>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
+        <div className="container relative z-10 px-6 text-center text-white">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex justify-center mb-6"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-              <span className="text-white/80 text-[10px] font-bold uppercase tracking-[0.25em]">Investor Relations Profile</span>
+              <span className="text-white text-[10px] font-bold uppercase tracking-[0.25em]">Investor Relations Profile</span>
             </div>
-          </FadeUp>
+          </motion.div>
           
-          <FadeUp delay={0.2}>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-              Homocation Asia<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] via-[#FBBF24] to-[#F97316]">Private Limited</span>
-            </h1>
-          </FadeUp>
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1] tracking-tight mb-6"
+          >
+            Homocation Asia<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] via-[#FBBF24] to-[#F97316]">Private Limited</span>
+          </motion.h1>
 
-          <FadeUp delay={0.4}>
-            <p className="text-white/50 text-base md:text-xl font-medium tracking-widest uppercase mb-12">
-              (Parent Company of Eventibe.com & VenueForEvent.com)
-            </p>
-          </FadeUp>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-lg md:text-2xl font-medium tracking-widest uppercase mb-10 text-gray-200"
+          >
+            (Parent Company of Eventibe.com & VenueForEvent.com)
+          </motion.p>
+        </div>
 
+        {/* Floating Decorative Elements */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce z-10">
+           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
+              <div className="w-1 h-2 bg-white rounded-full" />
+           </div>
+        </div>
+      </section>
+
+      {/* ━━━ 1.5 EXECUTIVE SUMMARY ━━━ */}
+      <section className="py-16 container px-6 relative z-20 -mt-24">
           <div className="max-w-4xl mx-auto">
-            <FadeUp delay={0.6}>
-              <div className="p-8 md:p-12 rounded-[40px] bg-white text-left shadow-2xl relative overflow-hidden">
+            <FadeUp delay={0.4}>
+              <div className="p-8 md:p-12 rounded-[40px] bg-white text-left shadow-2xl border border-gray-100 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8">
                   <TrendingUp className="text-[#F97316]/20 w-16 h-16" />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-black text-[#0B1F3A] mb-6">Executive Summary</h2>
                 <div className="space-y-6 text-[#334155] text-base md:text-lg leading-relaxed">
                   <p>
-                    Homocation Asia Private Limited is building a next-generation digital marketplace focused on event venues and the expanding event services ecosystem. Our core brands — **Eventibe.com** and **VenueForEvent.com** — are designed to address long-standing inefficiencies in event discovery, vendor connection, and event planning workflows, particularly in emerging markets such as India.
+                    Homocation Asia Private Limited is building a next-generation digital marketplace focused on event venues and the expanding event services ecosystem. Our core brands — <strong>Eventibe.com</strong> and <strong>VenueForEvent.com</strong> — are designed to address long-standing inefficiencies in event discovery, vendor connection, and event planning workflows, particularly in emerging markets such as India.
                   </p>
                   <p>
                     With a structured inquiry-based model, strong SEO architecture, and future-ready vendor & CRM integration, the company is positioned to capture significant growth in the emerging experiential economy.
@@ -184,15 +199,6 @@ export default function InvestorRelationsClient() {
               </div>
             </FadeUp>
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
-          <span className="text-white/20 text-[10px] uppercase tracking-[0.4em]">Slide to Explore</span>
-          <div className="w-6 h-10 rounded-full border border-white/10 flex justify-center p-1.5">
-            <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-1 h-2 bg-[#F97316] rounded-full" />
-          </div>
-        </div>
       </section>
 
       {/* ━━━ 2. MARKET OPPORTUNITY ━━━ */}
