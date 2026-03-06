@@ -267,9 +267,9 @@ export function CTASection() {
       <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-accent-orange rounded-full blur-3xl opacity-10" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight text-primary-navy">Ready to host an unforgettable event?</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight text-primary-navy">Ready to host your next corporate event?</h2>
         <p className="text-xl text-soft-slate mb-10 max-w-2xl mx-auto">
-          Join thousands of companies who trust Eventibe to find the perfect venue and services.
+          Join 500+ top enterprises who trust Eventibe for premium venue sourcing and professional event services.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <MagneticButton>

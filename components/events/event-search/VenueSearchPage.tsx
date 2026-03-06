@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import Header from '@/components/Header'
 import { IMAGES } from '@/assets/images'
+import DynamicHeroBackground from '@/components/DynamicHeroBackground'
 import { searchVenues, fetchVenueTypes, fetchEventTypes } from '@/lib/api/eventsEndpoints'
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect'
 import PremiumSelect from '@/components/ui/PremiumSelect'
@@ -170,22 +170,13 @@ export function VenueSearchPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <Header />
 
-      {/* ── Hero banner ─────────────────────────────────────────────────────── */}
-      <div
-        className="relative  bg-cover bg-center bg-no-repeat flex items-center justify-center md:pt-36 pt-28 pb-10 lg:pt-40  px-4 md:px-8"
-        style={{
-          backgroundImage: `url(${IMAGES.listingHeroBg.src})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none" />
+      {/* ── Hero banner (Animated Video & Images) ─────────────────────────── */}
+      <div className="relative overflow-hidden flex items-center justify-center pt-24 pb-20 px-4 md:px-8 bg-black">
+        <DynamicHeroBackground />
 
         <div className="relative z-10 w-full max-w-7xl">
-          <h1 className="text-white font-extrabold text-2xl sm:text-3xl mb-5 drop-shadow  md:text-left text-center">
+          <h1 className="text-white font-extrabold text-xl sm:text-3xl mb-5 drop-shadow  md:text-left text-center">
             Banquet Halls &amp; Event Venues in {locationLabel}
           </h1>
 

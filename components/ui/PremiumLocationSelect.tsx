@@ -15,6 +15,9 @@ interface PremiumLocationSelectProps {
   value?: any
   onChange?: (value: any) => void
   variant?: 'default' | 'glass'
+  menuIsOpen?: boolean
+  onMenuOpen?: () => void
+  onMenuClose?: () => void
 }
 
 const DropdownIndicator = (props: any) => {
@@ -44,6 +47,9 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
   value,
   onChange,
   variant = 'default',
+  menuIsOpen,
+  onMenuOpen,
+  onMenuClose,
 }) => {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => { setMounted(true) }, [])
@@ -125,12 +131,12 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
     menu: (provided) => ({
       ...provided,
       borderRadius: '1.5rem',
-      padding: '0.5rem',
-      backgroundColor: variant === 'glass' ? 'rgba(15, 23, 42, 0.85)' : '#ffffff',
-      backdropFilter: variant === 'glass' ? 'blur(32px)' : 'none',
-      WebkitBackdropFilter: variant === 'glass' ? 'blur(32px)' : 'none',
-      border: variant === 'glass' ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid #F1F5F9',
-      boxShadow: '0 40px 80px rgba(0, 0, 0, 0.15)',
+      padding: '0.6rem',
+      backgroundColor: variant === 'glass' ? 'rgba(255, 255, 255, 0.98)' : '#ffffff',
+      backdropFilter: variant === 'glass' ? 'blur(20px) saturate(180%)' : 'none',
+      WebkitBackdropFilter: variant === 'glass' ? 'blur(20px) saturate(180%)' : 'none',
+      border: variant === 'glass' ? '1px solid rgba(255, 255, 255, 0.5)' : '1px solid #F1F5F9',
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden',
       zIndex: 99999,
       marginTop: '0.5rem',
@@ -163,13 +169,13 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
       backgroundColor: state.isSelected 
         ? '#FF9530' 
         : state.isFocused 
-          ? (variant === 'glass' ? 'rgba(255, 255, 255, 0.1)' : '#FFF7ED') 
+          ? (variant === 'glass' ? 'rgba(0, 0, 0, 0.05)' : '#FFF7ED') 
           : 'transparent',
       color: state.isSelected 
         ? 'white' 
         : state.isFocused 
-          ? (variant === 'glass' ? 'white' : '#FF9530') 
-          : (variant === 'glass' ? 'white' : '#475569'),
+          ? (variant === 'glass' ? '#FF9530' : '#FF9530') 
+          : (variant === 'glass' ? '#1E293B' : '#475569'),
       '&:active': {
         transform: 'scale(0.98)',
         backgroundColor: '#FF9530',
@@ -197,6 +203,9 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
             classNamePrefix="premium-select"
             noOptionsMessage={({ inputValue }) => !inputValue ? "Type to search..." : "No locations found"}
             loadingMessage={() => "Searching..."}
+            menuIsOpen={menuIsOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuClose={onMenuClose}
           />
         )}
       </div>

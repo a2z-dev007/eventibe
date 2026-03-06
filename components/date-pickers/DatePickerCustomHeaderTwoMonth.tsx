@@ -23,7 +23,7 @@ const DatePickerCustomHeaderTwoMonth = ({
         aria-label="Previous Month"
         className={`
           flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200
-          ${variant === 'glass' ? 'hover:bg-white/10 hover:text-white text-white/60' : 'hover:bg-orange-50 hover:text-[#FF9530] text-gray-500'} 
+          ${variant === 'glass' ? 'hover:bg-slate-100 hover:text-accent-orange text-slate-500' : 'hover:bg-orange-50 hover:text-[#FF9530] text-gray-500'} 
           disabled:opacity-0
         `}
         style={customHeaderCount === 0 ? {} : { visibility: "hidden" }}
@@ -34,7 +34,7 @@ const DatePickerCustomHeaderTwoMonth = ({
         <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
       </button>
 
-      <span className={`text-sm font-black uppercase tracking-[0.2em] ${variant === 'glass' ? 'text-white' : 'text-gray-900'}`}>
+      <span className={`text-sm font-black uppercase tracking-[0.2em] ${variant === 'glass' ? 'text-slate-800' : 'text-gray-900'}`}>
         {monthDate.toLocaleString("en-US", {
           month: "long",
           year: "numeric",
@@ -45,7 +45,7 @@ const DatePickerCustomHeaderTwoMonth = ({
         aria-label="Next Month"
         className={`
           flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200
-          ${variant === 'glass' ? 'hover:bg-white/10 hover:text-white text-white/60' : 'hover:bg-orange-50 hover:text-[#FF9530] text-gray-500'} 
+          ${variant === 'glass' ? 'hover:bg-slate-100 hover:text-accent-orange text-slate-500' : 'hover:bg-orange-50 hover:text-[#FF9530] text-gray-500'} 
           disabled:opacity-0
         `}
         style={customHeaderCount === (monthsShown - 1) && !nextMonthButtonDisabled ? {} : (customHeaderCount === (monthsShown - 1) ? {} : { visibility: "hidden" })}

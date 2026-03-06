@@ -739,7 +739,7 @@ button[disabled]:active {
 .event-hero-datepicker {
   border: none !important;
   font-family: inherit !important;
-  background: white !important;
+  background: transparent !important;
   border-radius: 1.5rem !important;
   display: flex !important;
   gap: 2rem !important;
@@ -747,7 +747,7 @@ button[disabled]:active {
 }
 
 .event-hero-datepicker .react-datepicker__header {
-  background: white !important;
+  background: transparent !important;
   border-bottom: none !important;
   border-radius: 1.5rem 1.5rem 0 0 !important;
 }
@@ -1097,17 +1097,17 @@ footer[class*="fixed"] {
 .glass-datepicker .react-datepicker__month-container,
 .glass-datepicker .react-datepicker__header {
   background-color: transparent !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 .glass-datepicker .react-datepicker__day-name,
 .glass-datepicker .react-datepicker__day {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(30, 41, 59, 0.9) !important; /* Dark Slate for light glass */
 }
 
 .glass-datepicker .react-datepicker__day:hover {
-  background-color: rgba(255, 255, 255, 0.15) !important;
-  color: #fff !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #FF9530 !important;
 }
 
 .glass-datepicker .react-datepicker__day--keyboard-selected,
@@ -1119,7 +1119,7 @@ footer[class*="fixed"] {
 }
 
 .glass-datepicker .react-datepicker__day--disabled {
-  color: rgba(255, 255, 255, 0.25) !important;
+  color: rgba(0, 0, 0, 0.2) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

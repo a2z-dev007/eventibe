@@ -3,7 +3,6 @@
 export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, Suspense } from 'react'
-import Header from '@/components/Header'
 import Link from 'next/link'
 import { 
   ChevronRight, Home as HomeIcon, LayoutGrid, Search, 
@@ -95,7 +94,6 @@ function VenueTypesContent() {
 
   return (
     <main className="min-h-screen bg-[#F8FAFC]">
-      <Header />
       
       {/* Premium Hero with Shared Search */}
       <div 

@@ -13,7 +13,6 @@ import {
 } from 'lucide-react'
 import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
-import Header from '@/components/Header'
 import { fetchVenueById, fetchVenueTypes, fetchEventTypes } from '@/lib/api/eventsEndpoints'
 import { EventGallery, EventLightbox } from './EventGallery'
 import { EventQuoteModal } from './EventQuoteModal'
@@ -191,7 +190,6 @@ export function EventDetailsPage() {
 
   return (
     <main className="min-h-screen bg-[#F8FAFC] pb-32">
-      <Header />
 
       {/* ── Hero Search Banner ────────────────────── */}
       <div

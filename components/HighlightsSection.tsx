@@ -95,9 +95,9 @@ function buildCorpCards(): PremiumCardData[] {
 
 function buildVendorCards(): PremiumCardData[] {
   const cities = ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Jaipur', 'Pune', 'Kolkata', 'Ahmedabad'];
-  const names = ['Spice Route Caterers', 'Frozen Frame Studios', 'SoundSync AV', 'Marigold Decor Co.', 'Bloom & Petal Florals', 'Dhol Baaje Entertainment', 'LightWorks India', 'Shutter Stories'];
-  const categories = ['Catering', 'Photography', 'AV & Tech', 'Décor', 'Floral', 'Entertainment', 'Lighting', 'Photography'];
-  const prices = ['₹45,000/event', '₹60,000/event', '₹35,000/event', '₹80,000/event', '₹25,000/event', '₹50,000/event', '₹40,000/event', '₹55,000/event'];
+  const names = ['Executive Suite Caterers', 'Corporate Vision Studios', 'UltraSync AV & Stage', 'BlueChip Event Management', 'Pro Security Services', 'Linguistic Pro Translators', 'TechStream Webcasting', 'Elite Logistics India'];
+  const categories = ['Corporate Catering', 'Conf. Photography', 'AV & Production', 'Event Planning', 'Security', 'Translation', 'Live Streaming', 'Logistics'];
+  const prices = ['From ₹65,000', 'From ₹45,000', 'From ₹1,20,000', 'From ₹80,000', 'From ₹25,000', 'From ₹50,000', 'From ₹90,000', 'From ₹55,000'];
   return Array.from({ length: 8 }, (_, i) => ({
     id: 3000 + i,
     name: names[i],

@@ -163,13 +163,13 @@ export default function FeaturedVenuesCarousel() {
           ) : eventTypes.length === 0 ? (
             // Fallback dummy cards when API is empty/fails
             [
-              { id: 1, name: 'Wedding', key_name: 'wedding' },
               { id: 2, name: 'Corporate', key_name: 'corporate' },
-              { id: 3, name: 'Birthday', key_name: 'birthday' },
               { id: 4, name: 'Conference', key_name: 'conference' },
-              { id: 5, name: 'Gala Dinner', key_name: 'gala' },
-              { id: 6, name: 'Concert', key_name: 'concert' },
               { id: 7, name: 'Exhibition', key_name: 'exhibition' },
+              { id: 5, name: 'Gala Dinner', key_name: 'gala' },
+              { id: 1, name: 'Wedding', key_name: 'wedding' },
+              { id: 3, name: 'Birthday', key_name: 'birthday' },
+              { id: 6, name: 'Concert', key_name: 'concert' },
               { id: 8, name: 'Social Event', key_name: 'social' },
             ].map((item) => (
               <EventTypeCard
