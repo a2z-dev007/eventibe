@@ -238,8 +238,8 @@ export default function CompanyDetailsPage() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0,
+      rootMargin: "-10% 0px -45% 0px",
+      threshold: [0, 0.1, 0.5, 1.0],
     };
 
     const handleIntersect = (entries: IntersectionObserverEntry[]) => {
@@ -343,18 +343,12 @@ export default function CompanyDetailsPage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        .hide-scrollbar::-webkit-scrollbar,
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none !important;
-          width: 0 !important;
-          height: 0 !important;
+        .custom-scrollbar::-webkit-scrollbar {
+          display: none;
         }
-        .hide-scrollbar,
-        .scrollbar-hide {
-          -ms-overflow-style: none !important;
-          scrollbar-width: none !important;
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior: contain;
+        .custom-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `,
         }}
@@ -381,7 +375,7 @@ export default function CompanyDetailsPage() {
 
                 <nav
                   ref={scrollContainerRef}
-                  className="p-4 space-y-1 overflow-y-auto flex-1 hide-scrollbar scrollbar-hide overscroll-contain"
+                  className="p-4 space-y-1 overflow-y-auto flex-1 custom-scrollbar scroll-smooth"
                 >
                   {sections.map((section) => {
                     const isActive = activeSection === section.id;
@@ -455,7 +449,7 @@ export default function CompanyDetailsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-32"
+                  className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
                 >
                   {/* Decorative Background Icon */}
                   <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
