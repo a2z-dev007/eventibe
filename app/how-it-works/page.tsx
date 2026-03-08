@@ -224,36 +224,54 @@ export default function HowItWorksPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ── MODERN HERO SECTION ────────────────────────────── */}
-      <section className="relative pt-4 pb-24 md:pt-12 md:pb-32 overflow-hidden">
-        {/* Animated Background Blobs */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50/50 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4 -z-10 animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-50/50 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/4 -z-10" />
+      {/* ── HERO SECTION ────────────────────────────── */}
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Dark navy base */}
+        <div className="absolute inset-0 bg-primary-navy z-0" />
+        {/* Overlays */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-accent-orange/10 blur-[160px] rounded-full -translate-y-1/3 translate-x-1/4" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-corporate-blue/20 blur-[120px] rounded-full translate-y-1/3 -translate-x-1/4" />
+        </div>
 
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-corporate-blue text-sm font-bold mb-8 border border-blue-100">
-              <Zap size={16} />
-              <span>Simplify Your Planning</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-primary-navy mb-8 leading-[1.05] tracking-tight">
-              How Eventibe Works – <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-corporate-blue via-blue-800 to-accent-orange">
-                Discover, Compare & Book the Right Event Venue with Confidence
-              </span>
-            </h1>
-            <p className="text-xl text-soft-slate max-w-2xl mx-auto leading-relaxed font-bold">
-              Planning an event — whether it’s a grand wedding celebration or a
-              corporate conference — involves countless decisions. The most
-              important one? Choosing the right venue. Eventibe simplifies that
-              process.
-            </p>
-            <p className="text-lg text-soft-slate max-w-2xl mx-auto mt-6 leading-relaxed opacity-80">
-              We are not just a listing directory. We are a curated event venue
-              marketplace designed to connect event hosts, venue owners, and
-              service providers through a structured, transparent, and
-              inquiry-driven system.
-            </p>
+        {/* Content */}
+        <div className="container mx-auto relative z-10 px-6 text-center text-white">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-6 uppercase tracking-widest backdrop-blur-sm shadow-xl">
+            <Zap size={14} className="text-accent-orange" />
+            <span>Simplify Your Planning</span>
+          </div>
+          <h1 className="text-5xl md:text-8xl font-extrabold mb-6 tracking-tight leading-[1.05]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-orange-300">
+              How Eventibe
+            </span>{" "}
+            Works
+          </h1>
+          <p className="text-lg md:text-2xl font-medium max-w-3xl mx-auto mb-4 text-gray-200 leading-relaxed">
+            Planning an event — whether it’s a grand wedding celebration or a
+            corporate conference — involves countless decisions. The most
+            important one? Choosing the right venue. Eventibe simplifies that
+            process.
+          </p>
+          <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            We are a curated event venue marketplace connecting hosts, venue
+            owners, and service providers through a structured inquiry-driven
+            system.
+          </p>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
+            <div className="w-1 h-2 bg-white rounded-full" />
           </div>
         </div>
       </section>
@@ -390,7 +408,7 @@ export default function HowItWorksPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8">
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-8">
                 What Makes Eventibe Different?
               </h2>
               <p className="text-white/80 mb-8 leading-relaxed">
@@ -591,56 +609,162 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── FAQ SECTION ────────────────────────────── */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-          <div className="flex items-center gap-4 mb-12">
-            <HelpCircle size={40} className="text-accent-orange" />
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-navy tracking-tight">
-              Frequently Asked Questions
-            </h2>
-          </div>
+      <section className="py-20 md:py-28 bg-gray-50/60 relative overflow-hidden">
+        {/* Background decorative */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-orange/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-corporate-blue/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div
-                key={idx}
-                className="border border-gray-100 rounded-2xl overflow-hidden transition-all duration-300"
-              >
-                <button
-                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                  className="w-full h-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
-                >
-                  <span className="text-lg font-bold text-primary-navy">
-                    {faq.question}
-                  </span>
-                  {activeFaq === idx ? (
-                    <ChevronUp className="text-accent-orange" />
-                  ) : (
-                    <ChevronDown className="text-gray-400" />
-                  )}
-                </button>
-                <div
-                  className={`transition-all duration-500 overflow-hidden ${activeFaq === idx ? "max-h-96" : "max-h-0"}`}
-                >
-                  <div className="p-6 pt-0 text-soft-slate bg-gray-50">
-                    <p className="leading-relaxed">{faq.answer}</p>
-                  </div>
-                </div>
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-12 lg:gap-20 items-start max-w-6xl mx-auto">
+            {/* Left: Header Panel */}
+            <div className="lg:sticky lg:top-28">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-orange/10 border border-accent-orange/20 text-accent-orange text-[10px] font-black uppercase tracking-widest mb-6">
+                <HelpCircle size={12} />
+                <span>Got Questions?</span>
               </div>
-            ))}
+              <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight mb-6">
+                Frequently Asked{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-corporate-blue to-accent-orange">
+                  Questions
+                </span>
+              </h2>
+              <p className="text-soft-slate leading-relaxed mb-10 text-base md:text-lg">
+                Everything you need to know about how Eventibe works — for
+                hosts, venue owners, and vendors alike.
+              </p>
+
+              {/* Trust Stats */}
+              <div className="space-y-4">
+                {[
+                  { value: "500+", label: "Venues Listed" },
+                  { value: "Free", label: "To Search & Inquire" },
+                  { value: "0%", label: "Commission from Customers" },
+                ].map((stat, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary-navy/5 flex items-center justify-center shrink-0">
+                      <span className="text-lg font-black text-primary-navy">
+                        {stat.value}
+                      </span>
+                    </div>
+                    <span className="text-soft-slate font-medium text-sm">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Accordion */}
+            <div className="space-y-4">
+              {faqs.map((faq, idx) => {
+                const isOpen = activeFaq === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen
+                        ? "border-accent-orange/30 bg-white shadow-[0_8px_30px_-8px_rgba(249,115,22,0.15)]"
+                        : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm"
+                    }`}
+                  >
+                    <button
+                      onClick={() =>
+                        setActiveFaq(activeFaq === idx ? null : idx)
+                      }
+                      className="w-full flex items-center gap-4 p-6 text-left group"
+                    >
+                      {/* Number Badge */}
+                      <div
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shrink-0 transition-all duration-300 ${
+                          isOpen
+                            ? "bg-accent-orange text-white shadow-md shadow-orange-200"
+                            : "bg-gray-100 text-gray-400 group-hover:bg-primary-navy/5 group-hover:text-primary-navy"
+                        }`}
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
+
+                      <span
+                        className={`flex-1 text-base md:text-lg font-bold transition-colors ${
+                          isOpen ? "text-primary-navy" : "text-primary-navy/80"
+                        }`}
+                      >
+                        {faq.question}
+                      </span>
+
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                          isOpen
+                            ? "bg-accent-orange/10 text-accent-orange rotate-180"
+                            : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
+                        }`}
+                      >
+                        <ChevronDown size={16} />
+                      </div>
+                    </button>
+
+                    <div
+                      className={`transition-all duration-500 overflow-hidden ${
+                        isOpen ? "max-h-64" : "max-h-0"
+                      }`}
+                    >
+                      <div className="px-6 pb-6 pl-[4.25rem]">
+                        <div className="h-px w-full bg-gray-100 mb-4" />
+                        <p className="text-soft-slate leading-relaxed text-sm md:text-base">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Bottom note */}
+              <div className="flex items-center gap-3 p-4 bg-primary-navy/3 rounded-2xl border border-primary-navy/8 mt-2">
+                <div className="w-2 h-2 rounded-full bg-accent-orange animate-pulse shrink-0" />
+                <p className="text-soft-slate text-sm font-medium">
+                  Still have questions?{" "}
+                  <a
+                    href="/contact-us"
+                    className="text-corporate-blue font-bold hover:text-accent-orange transition-colors"
+                  >
+                    Contact our team →
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── FINAL CTA ────────────────────────────── */}
-      <section className="py-24 container mx-auto px-4 md:px-6 mb-20">
-        <div className="bg-gradient-to-br from-corporate-blue to-blue-900 rounded-[40px] p-12 text-center text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-12 opacity-10">
+      <section className="py-16 md:py-24 container mx-auto px-4 md:px-6 mb-20">
+        <div className="bg-primary-navy rounded-[40px] p-8 md:p-16 text-center text-white relative overflow-hidden">
+          {/* Orange glow */}
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-orange/10 rounded-full blur-[100px]" />
+          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-corporate-blue/20 rounded-full blur-[80px]" />
+          {/* Grid pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.03] rounded-[40px] overflow-hidden"
+            style={{
+              backgroundImage:
+                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+          <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5">
             <Globe size={160} />
           </div>
 
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-6 uppercase tracking-widest">
+              <Rocket size={14} />
+              <span>Get Started Today</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
               Ready to Get Started?
             </h2>
             <p className="text-xl text-blue-100/80 mb-10 max-w-2xl mx-auto">
@@ -649,7 +773,7 @@ export default function HowItWorksPage() {
               Eventibe is built to guide you from search to success.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-accent-orange hover:bg-orange-500 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-orange-500/20 active:scale-95">
+              <button className="bg-cta-gradient hover:opacity-90 text-white px-10 py-4 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 active:scale-95">
                 Explore Venues
               </button>
               <button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-10 py-4 rounded-xl font-bold transition-all backdrop-blur-sm active:scale-95">
