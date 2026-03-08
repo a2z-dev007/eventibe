@@ -296,7 +296,7 @@ export default function CompanyDetailsPage() {
             className="object-cover opacity-20"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/90 to-transparent"></div>
+          <div className="absolute inset-0 bg-primary-navy/80"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
 
           {/* Subtle Geometric Pattern Overlay */}
@@ -310,12 +310,12 @@ export default function CompanyDetailsPage() {
           ></div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl"
+            className="max-w-4xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-4 md:mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
               <Sparkles size={14} className="text-accent-orange" />
@@ -331,7 +331,7 @@ export default function CompanyDetailsPage() {
               <p className="text-lg md:text-xl text-white font-bold tracking-tight break-words">
                 Homocation Asia Private Limited
               </p>
-              <p className="text-sm md:text-base text-orange-200/90 font-bold border-l-4 border-orange-500 pl-4 md:pl-6 py-2 bg-orange-500/5 backdrop-blur-sm rounded-r-xl max-w-sm md:max-w-none mx-auto md:mx-0">
+              <p className="text-sm md:text-base text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-sm mx-auto">
                 Parent Company of Eventibe.com & VenueForEvent.com
               </p>
             </div>
