@@ -1,7 +1,9 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import {
   ShieldCheck,
   Lock,
@@ -33,46 +35,142 @@ import {
   Edit,
   Shield,
   CircleDollarSign,
+  Sparkles,
+  Files,
+  ListX,
+  RefreshCcw,
 } from "lucide-react";
 
 export default function TermsAndConditionsPage() {
+  const [activeSection, setActiveSection] = useState("about");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+
   const sections = [
-    { id: "about", label: "1. About the Platform", icon: Info },
-    { id: "eligibility", label: "2. Eligibility", icon: UserCheck },
-    { id: "accounts", label: "3. User Accounts", icon: Lock },
-    { id: "role", label: "4. Platform Role & Limitation", icon: ShieldAlert },
-    { id: "inquiry", label: "5. Inquiry Submission Terms", icon: FileText },
-    { id: "listing", label: "6. Listing Terms", icon: Briefcase },
+    { id: "about", label: "About the Platform", icon: <Info size={24} /> },
+    { id: "eligibility", label: "Eligibility", icon: <UserCheck size={24} /> },
+    { id: "accounts", label: "User Accounts", icon: <Lock size={24} /> },
+    {
+      id: "role",
+      label: "Platform Role & Limitation",
+      icon: <ShieldAlert size={24} />,
+    },
+    {
+      id: "inquiry",
+      label: "Inquiry Submission Terms",
+      icon: <FileText size={24} />,
+    },
+    { id: "listing", label: "Listing Terms", icon: <Briefcase size={24} /> },
     {
       id: "payments",
-      label: "7. Payments & Commissions",
-      icon: CircleDollarSign,
+      label: "Payments & Commissions",
+      icon: <CircleDollarSign size={24} />,
     },
-    { id: "conduct", label: "8. User Conduct", icon: UserX },
-    { id: "property", label: "9. Intellectual Property", icon: Copyright },
-    { id: "third-party", label: "10. Third-Party Content", icon: ExternalLink },
+    { id: "conduct", label: "User Conduct", icon: <UserX size={24} /> },
+    {
+      id: "property",
+      label: "Intellectual Property",
+      icon: <Copyright size={24} />,
+    },
+    {
+      id: "third-party",
+      label: "Third-Party Content",
+      icon: <ExternalLink size={24} />,
+    },
     {
       id: "disclaimer",
-      label: "11. Disclaimer of Warranties",
-      icon: AlertTriangle,
+      label: "Disclaimer of Warranties",
+      icon: <AlertTriangle size={24} />,
     },
-    { id: "liability", label: "12. Limitation of Liability", icon: Scale },
-    { id: "indemnification", label: "13. Indemnification", icon: ShieldCheck },
-    { id: "refund", label: "14. Cancellation & Refund", icon: RefreshCw },
-    { id: "termination", label: "15. Termination", icon: Power },
-    { id: "force-majeure", label: "16. Force Majeure", icon: CloudLightning },
-    { id: "law", label: "17. Governing Law", icon: Gavel },
-    { id: "modifications", label: "18. Modifications", icon: Edit },
-    { id: "privacy", label: "19. Privacy", icon: Shield },
-    { id: "contact", label: "20. Contact Information", icon: Mail },
+    {
+      id: "liability",
+      label: "Limitation of Liability",
+      icon: <Scale size={24} />,
+    },
+    {
+      id: "indemnification",
+      label: "Indemnification",
+      icon: <ShieldCheck size={24} />,
+    },
+    {
+      id: "refund",
+      label: "Cancellation & Refund",
+      icon: <RefreshCw size={24} />,
+    },
+    { id: "termination", label: "Termination", icon: <Power size={24} /> },
+    {
+      id: "force-majeure",
+      label: "Force Majeure",
+      icon: <CloudLightning size={24} />,
+    },
+    { id: "law", label: "Governing Law", icon: <Gavel size={24} /> },
+    { id: "modifications", label: "Modifications", icon: <Edit size={24} /> },
+    { id: "privacy", label: "Privacy", icon: <Shield size={24} /> },
+    { id: "contact", label: "Contact Information", icon: <Mail size={24} /> },
   ];
 
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-10% 0px -45% 0px",
+      threshold: [0, 0.1, 0.5, 1.0],
+    };
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [sections]);
+
+  useEffect(() => {
+    if (
+      activeSection &&
+      navItemsRef.current[activeSection] &&
+      scrollContainerRef.current
+    ) {
+      const scrollContainer = scrollContainerRef.current;
+      const navItem = navItemsRef.current[activeSection];
+
+      const containerTop = scrollContainer.getBoundingClientRect().top;
+      const navItemTop = navItem!.getBoundingClientRect().top;
+      const relativeTop = navItemTop - containerTop;
+
+      scrollContainer.scrollTo({
+        top:
+          scrollContainer.scrollTop +
+          relativeTop -
+          scrollContainer.clientHeight / 2 +
+          navItem!.clientHeight / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [activeSection]);
+
+  const fadeInUp: any = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-50px" },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-white scroll-smooth">
+    <div className="flex flex-col min-h-screen bg-slate-50 scroll-smooth">
       {/* Hero Section */}
-      <section className="relative py-16 md:py-24 flex items-center overflow-hidden bg-primary-navy">
+      <section className="relative pt-24 pb-32 md:pt-40 md:pb-56 bg-primary-navy overflow-hidden">
         {/* Background Atmosphere */}
-        <div className="absolute inset-0 z-0 text-white">
+        <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
             alt="Terms and Conditions"
@@ -80,8 +178,8 @@ export default function TermsAndConditionsPage() {
             className="object-cover opacity-20"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-navy/50 via-transparent to-primary-navy"></div>
+          <div className="absolute inset-0 bg-primary-navy/40"></div>
 
           {/* Subtle Geometric Pattern Overlay */}
           <div
@@ -89,13 +187,18 @@ export default function TermsAndConditionsPage() {
             style={{
               backgroundImage:
                 "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
+              backgroundSize: "60px 60px",
             }}
           ></div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center md:text-left">
-          <div className="max-w-4xl">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl flex flex-col items-center"
+          >
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors text-sm font-medium group"
@@ -107,160 +210,161 @@ export default function TermsAndConditionsPage() {
               Back to Home
             </Link>
 
-            <div className="inline-flex items-center gap-2 px-4 py-2 ml-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 animate-fade-in shadow-xl backdrop-blur-sm">
-              <ShieldAlert size={14} />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-4 md:mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
+              <Sparkles size={14} className="text-accent-orange" />
               <span>Legal Agreement</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight animate-fade-in tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md">
               Terms &{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-300">
                 Conditions
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-in [animation-delay:200ms] font-medium mx-auto md:mx-0">
+            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-in [animation-delay:200ms] font-medium mx-auto">
               Please read these terms carefully before using our platform. By
               accessing Eventibe, you agree to be bound by these rules.
             </p>
-          </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-[10px] md:text-xs text-slate-400 uppercase tracking-[0.2em] font-bold">
+              <div className="flex items-center gap-2">
+                <Clock size={14} className="text-accent-orange" />
+                <span>Effective: March 08, 2026</span>
+              </div>
+              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-700" />
+              <div className="flex items-center gap-2">
+                <RefreshCcw size={14} className="text-accent-orange" />
+                <span>Last Updated: March 08, 2026</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Meta Info Section */}
-      <section className="bg-light-bg py-8 border-b border-gray-100">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 md:py-5 px-6 bg-white rounded-3xl md:rounded-2xl shadow-sm border border-gray-100">
-            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-              <div className="w-12 h-12 md:w-10 md:h-10 rounded-full bg-corporate-blue/10 flex items-center justify-center text-corporate-blue shrink-0">
-                <Clock size={24} className="md:w-5 md:h-5" />
-              </div>
-              <div>
-                <p className="text-[10px] md:text-xs text-soft-slate uppercase tracking-[0.2em] md:tracking-wider font-bold mb-1 md:mb-0">
-                  Effective Date
-                </p>
-                <p className="text-sm md:text-base font-black text-primary-navy">
-                  March 2024
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full h-px md:w-px md:h-8 bg-gray-100"></div>
-
-            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-              <div className="w-12 h-12 md:w-10 md:h-10 rounded-full bg-accent-orange/10 flex items-center justify-center text-accent-orange shrink-0">
-                <RefreshCw size={24} className="md:w-5 md:h-5" />
-              </div>
-              <div>
-                <p className="text-[10px] md:text-xs text-soft-slate uppercase tracking-[0.2em] md:tracking-wider font-bold mb-1 md:mb-0">
-                  Last Updated
-                </p>
-                <p className="text-sm md:text-base font-black text-primary-navy">
-                  March 2024
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center gap-2 text-soft-slate text-sm font-medium italic">
-              <FileText size={16} className="text-corporate-blue" />
-              Applies to Eventibe.com & VenueForEvent.com
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Content Section Overlay Style */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .custom-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .custom-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `,
+        }}
+      />
 
       {/* Content Section */}
-      <section className="pt-16 pb-12 md:pb-24 bg-white relative">
+      <section className="py-16 md:py-24 bg-slate-50 relative z-20 -mt-12 md:-mt-20">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Sidebar - Desktop */}
-            <aside className="hidden lg:block lg:col-span-4 sticky top-24 self-start space-y-6">
-              <div className="bg-light-bg p-8 rounded-[2rem] border border-gray-100 shadow-sm">
-                <h3 className="text-primary-navy font-black text-lg mb-6 border-b border-gray-200 pb-4">
-                  Quick Navigation
-                </h3>
-                <nav className="space-y-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
-                  {sections.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className="flex items-center gap-2 text-soft-slate hover:text-accent-orange font-bold text-sm transition-colors group py-1.5"
-                    >
-                      <ChevronRight
-                        size={14}
-                        className="group-hover:translate-x-1 transition-transform shrink-0"
-                      />
-                      <span className="truncate">{item.label}</span>
-                    </a>
-                  ))}
-                </nav>
-              </div>
+          <div className="flex flex-col lg:flex-row gap-16">
+            {/* Sidebar Navigation - Sticky */}
+            <aside className="lg:w-1/4 hidden lg:block">
+              <div className="sticky top-28 bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col max-h-[calc(100vh-140px)]">
+                <div className="p-8 pb-6 border-b border-slate-50 shrink-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-accent-orange/10 flex items-center justify-center text-accent-orange">
+                      <Files size={14} />
+                    </div>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                      DOCUMENT INDEX
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-black text-primary-navy tracking-tight">
+                    Quick Navigation
+                  </h3>
+                </div>
 
-              <div className="bg-primary-navy text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-corporate-blue/20 rounded-full -mt-12 -mr-12"></div>
-                <h4 className="text-xl font-bold mb-4 relative z-10">
-                  Legal Questions?
-                </h4>
-                <p className="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
-                  Our legal team is here to help you understand our terms.
-                </p>
-                <Link
-                  href="/contact-us"
-                  className="inline-flex items-center gap-2 bg-accent-orange text-white px-6 py-3 rounded-xl font-bold text-sm hover:scale-[1.02] transition-all"
+                <nav
+                  ref={scrollContainerRef}
+                  className="p-4 space-y-1 overflow-y-auto flex-1 custom-scrollbar scroll-smooth"
                 >
-                  Contact Us <Mail size={16} />
-                </Link>
+                  {sections.map((section) => {
+                    const isActive = activeSection === section.id;
+                    return (
+                      <Link
+                        key={section.id}
+                        href={`#${section.id}`}
+                        ref={(el) => {
+                          navItemsRef.current[section.id] = el;
+                        }}
+                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative ${
+                          isActive
+                            ? "bg-primary-navy/5 text-primary-navy shadow-[inset_0_0_0_1px_rgba(11,31,58,0.05)]"
+                            : "text-slate-500 hover:text-primary-navy hover:bg-slate-50"
+                        }`}
+                      >
+                        {/* Status Indicator */}
+                        <div
+                          className={`absolute left-0 w-1.5 bg-accent-orange rounded-r-full transition-all duration-300 ${
+                            isActive
+                              ? "h-6 opacity-100"
+                              : "h-0 opacity-0 group-hover:h-2"
+                          }`}
+                        ></div>
+
+                        <div
+                          className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                            isActive
+                              ? "bg-primary-navy text-white shadow-lg shadow-blue-900/20"
+                              : "bg-slate-100 text-slate-400 group-hover:bg-white group-hover:text-primary-navy group-hover:shadow-sm"
+                          }`}
+                        >
+                          <div className="scale-75 origin-center">
+                            {section.icon}
+                          </div>
+                        </div>
+
+                        <span
+                          className={`text-[13px] font-bold truncate transition-all leading-snug flex-1 ${isActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}
+                        >
+                          {section.label}
+                        </span>
+
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeTab"
+                            className="absolute -right-1 w-1 h-1 rounded-full bg-accent-orange"
+                          />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
+
+                <div className="p-6 bg-slate-50/80 mt-auto border-t border-slate-100 flex items-center justify-between shrink-0">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                    LEGAL COMPLIANCE
+                  </span>
+                  <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+                </div>
               </div>
             </aside>
 
             {/* Main Content */}
-            <main className="lg:col-span-8 space-y-16">
-              {/* Introduction */}
-              <div className="bg-light-bg p-6 md:p-10 rounded-3xl border border-gray-100 shadow-sm">
-                <div className="space-y-6 text-soft-slate text-base md:text-lg leading-relaxed font-bold text-center md:text-left">
-                  <p>
-                    These Terms & Conditions (&quot;Terms&quot;) govern your
-                    access to and use of:
-                  </p>
-                  <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-8 bg-white/50 p-6 md:p-0 rounded-2xl md:rounded-none border border-gray-100 md:border-none">
-                    <div className="flex flex-col items-center md:items-start gap-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
-                        Official URL
-                      </span>
-                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
-                        Eventibe.com
-                      </span>
-                    </div>
-                    <div className="w-12 h-px md:w-px md:h-10 bg-gray-200"></div>
-                    <div className="flex flex-col items-center md:items-start gap-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
-                        Official URL
-                      </span>
-                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
-                        VenueForEvent.com
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-xs md:text-sm font-medium opacity-70">
-                    (collectively referred to as the “Platform”, “Website”,
-                    “We”, “Us”, or “Our”).
-                  </p>
-                  <p className="border-l-0 md:border-l-4 border-accent-orange px-6 md:pl-4 text-primary-navy font-black italic bg-white p-6 md:bg-white/50 py-5 md:py-3 rounded-2xl md:rounded-r-lg text-sm md:text-base shadow-sm md:shadow-none border border-gray-100 md:border-none">
-                    By accessing or using the Platform, you agree to be legally
-                    bound by these Terms. If you do not agree, you must not use
-                    the Platform.
-                  </p>
-                </div>
-              </div>
-
-              {/* 1. ABOUT THE PLATFORM */}
-              <div id="about" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+            <div className="lg:w-3/4 space-y-8 md:space-y-20">
+              {/* ABOUT THE PLATFORM */}
+              <motion.div
+                {...fadeInUp}
+                id="about"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <Info size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    1. ABOUT THE PLATFORM
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <Info size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    ABOUT THE PLATFORM
                   </h2>
                 </div>
                 <div className="space-y-6">
@@ -316,16 +420,27 @@ export default function TermsAndConditionsPage() {
                     operate listed venues unless explicitly stated.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 2. ELIGIBILITY */}
-              <div id="eligibility" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* ELIGIBILITY */}
+              <motion.div
+                {...fadeInUp}
+                id="eligibility"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <UserCheck size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    2. ELIGIBILITY
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <UserCheck size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    ELIGIBILITY
                   </h2>
                 </div>
                 <div className="p-8 bg-light-bg rounded-[2rem] border border-gray-100 shadow-sm space-y-4">
@@ -352,16 +467,27 @@ export default function TermsAndConditionsPage() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 3. USER ACCOUNTS */}
-              <div id="accounts" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* USER ACCOUNTS */}
+              <motion.div
+                {...fadeInUp}
+                id="accounts"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <Lock size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    3. USER ACCOUNTS (IF APPLICABLE)
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <Lock size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    USER ACCOUNTS (IF APPLICABLE)
                   </h2>
                 </div>
                 <div className="bg-primary-navy p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden">
@@ -392,16 +518,27 @@ export default function TermsAndConditionsPage() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 4. PLATFORM ROLE & LIMITATION */}
-              <div id="role" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* PLATFORM ROLE & LIMITATION */}
+              <motion.div
+                {...fadeInUp}
+                id="role"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <ShieldAlert size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    4. PLATFORM ROLE & LIMITATION
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <ShieldAlert size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    PLATFORM ROLE & LIMITATION
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -430,16 +567,27 @@ export default function TermsAndConditionsPage() {
                     those parties.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 5. INQUIRY SUBMISSION TERMS */}
-              <div id="inquiry" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* INQUIRY SUBMISSION TERMS */}
+              <motion.div
+                {...fadeInUp}
+                id="inquiry"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <FileText size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    5. INQUIRY SUBMISSION TERMS
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <FileText size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    INQUIRY SUBMISSION TERMS
                   </h2>
                 </div>
                 <div className="space-y-4">
@@ -467,16 +615,27 @@ export default function TermsAndConditionsPage() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 6. LISTING TERMS */}
-              <div id="listing" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* LISTING TERMS */}
+              <motion.div
+                {...fadeInUp}
+                id="listing"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <Briefcase size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    6. LISTING TERMS (FOR VENDORS)
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <Briefcase size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    LISTING TERMS (FOR VENDORS)
                   </h2>
                 </div>
                 <div className="space-y-8">
@@ -527,57 +686,77 @@ export default function TermsAndConditionsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 7. PAYMENTS & COMMISSIONS */}
-              <div id="payments" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* PAYMENTS & COMMISSIONS */}
+              <motion.div
+                {...fadeInUp}
+                id="payments"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
+              >
+                {/* Decorative Background Icon */}
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <CircleDollarSign size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    7. PAYMENTS & COMMISSIONS
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <CircleDollarSign size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    PAYMENTS & COMMISSIONS
                   </h2>
                 </div>
                 <div className="space-y-6">
-                  <div className="p-8 bg-gradient-to-br from-accent-orange to-orange-600 rounded-[2.5rem] text-white shadow-xl">
-                    <h3 className="text-lg font-bold mb-4">
-                      If future payment integrations are enabled:
+                  <div className="bg-corporate-blue/5 p-8 rounded-[2rem] border border-corporate-blue/10">
+                    <h3 className="text-corporate-blue font-black mb-6 uppercase tracking-wider text-sm">
+                      Financial Provisions:
                     </h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-4">
                       {[
-                        "The Platform may charge listing fees, subscription fees, or commissions.",
-                        "Applicable taxes will be added as per law.",
-                        "Refund policies will apply as per the Refund Policy page.",
-                      ].map((item) => (
+                        "We may charge listing fees or commissions as per the selected plan.",
+                        "All fees paid to the Platform are non-refundable unless stated otherwise.",
+                        "Direct transactions between users and vendors are not managed by us.",
+                        "Taxes and gateway charges may apply to Platform payments.",
+                      ].map((item, idx) => (
                         <li
-                          key={item}
-                          className="flex items-start gap-3 font-medium text-sm md:text-base text-gray-100"
+                          key={idx}
+                          className="flex items-start gap-3 text-soft-slate font-medium text-sm md:text-base"
                         >
-                          <Zap
-                            size={18}
-                            className="text-white shrink-0 mt-0.5"
-                          />
-                          {item}
+                          <div className="w-6 h-6 rounded-full bg-corporate-blue/10 flex items-center justify-center shrink-0 mt-0.5">
+                            <CircleDollarSign
+                              size={14}
+                              className="text-corporate-blue"
+                            />
+                          </div>
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="p-6 bg-gray-50 border border-gray-100 rounded-2xl italic text-soft-slate text-sm font-medium">
-                    We are not responsible for disputes between users and
-                    vendors unless payment was processed directly through us.
-                  </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 8. USER CONDUCT */}
-              <div id="conduct" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-red-600 group-hover:scale-110 transition-transform">
+              {/* USER CONDUCT */}
+              <motion.div
+                {...fadeInUp}
+                id="conduct"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm border border-slate-100 group overflow-hidden relative scroll-mt-28"
+              >
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <UserX size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    8. USER CONDUCT
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-red-50 border border-red-100 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <UserX size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    USER CONDUCT
                   </h2>
                 </div>
                 <div className="bg-red-50 p-8 rounded-[2.5rem] border border-red-100">
@@ -630,16 +809,26 @@ export default function TermsAndConditionsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 9. INTELLECTUAL PROPERTY */}
-              <div id="property" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* INTELLECTUAL PROPERTY */}
+              <motion.div
+                {...fadeInUp}
+                id="property"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm border border-slate-100 group overflow-hidden relative scroll-mt-28"
+              >
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <Copyright size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    9. INTELLECTUAL PROPERTY
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <Copyright size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    INTELLECTUAL PROPERTY
                   </h2>
                 </div>
                 <div className="space-y-6">
@@ -652,7 +841,7 @@ export default function TermsAndConditionsPage() {
                     <p className="text-primary-navy font-black text-sm uppercase tracking-widest mb-4">
                       Users may not:
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
                       {[
                         "Copy",
                         "Modify",
@@ -662,7 +851,7 @@ export default function TermsAndConditionsPage() {
                       ].map((item) => (
                         <div
                           key={item}
-                          className="p-5 md:p-3 bg-white rounded-2xl md:rounded-xl text-center shadow-sm border border-gray-100 text-sm md:text-xs font-black md:font-bold text-soft-slate"
+                          className="p-3 bg-white rounded-xl text-center shadow-sm border border-gray-100 text-sm md:text-xs font-bold text-soft-slate"
                         >
                           {item}
                         </div>
@@ -675,16 +864,26 @@ export default function TermsAndConditionsPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 10. THIRD-PARTY CONTENT */}
-              <div id="third-party" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
+              {/* THIRD-PARTY CONTENT */}
+              <motion.div
+                {...fadeInUp}
+                id="third-party"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm border border-slate-100 group overflow-hidden relative scroll-mt-28"
+              >
+                <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
+                  <div className="scale-[8]">
                     <ExternalLink size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    10. THIRD-PARTY CONTENT
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 mb-8 md:mb-12 border-b border-slate-100 pb-8 md:pb-12 text-center md:text-left">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
+                    <ExternalLink size={28} />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight break-words uppercase">
+                    THIRD-PARTY CONTENT
                   </h2>
                 </div>
                 <div className="flex flex-col md:flex-row gap-6">
@@ -705,105 +904,116 @@ export default function TermsAndConditionsPage() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 11 & 12: DISCLAIMER & LIABILITY */}
+              {/* DISCLAIMER & LIABILITY */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="disclaimer"
-                  className="scroll-mt-32 p-10 bg-white rounded-[3rem] md:rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-md transition-all group flex flex-col items-center md:items-start text-center md:text-left"
+                  className="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm hover:shadow-md transition-all group flex flex-col items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-orange-50 flex items-center justify-center text-accent-orange mb-8 group-hover:scale-110 transition-transform">
-                    <AlertTriangle size={32} className="md:w-7 md:h-7" />
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-orange-50 flex items-center justify-center text-accent-orange mb-8 group-hover:scale-110 transition-transform">
+                    <AlertTriangle size={32} />
                   </div>
-                  <h2 className="text-xl md:text-xl font-black text-primary-navy mb-6 uppercase leading-[1.1] md:leading-tight">
-                    11. DISCLAIMER
+                  <h2 className="text-xl font-black text-primary-navy mb-6 uppercase tracking-tight">
+                    DISCLAIMER
                   </h2>
-                  <p className="text-base md:text-sm text-soft-slate font-bold md:font-medium leading-relaxed mb-6 flex-grow">
+                  <p className="text-sm text-soft-slate font-medium leading-relaxed mb-6 flex-grow">
                     The Platform is provided on an &quot;as is&quot; and
                     &quot;as available&quot; basis. We do not warrant
                     uninterrupted service or 100% accuracy of listings.
                   </p>
-                  <p className="text-xs md:text-xs text-accent-orange font-black italic bg-orange-50 p-6 md:p-4 rounded-2xl md:rounded-xl w-full">
+                  <div className="text-xs text-accent-orange font-black italic bg-orange-50 p-6 rounded-2xl w-full">
                     Users engage with vendors at their own discretion and risk.
-                  </p>
-                </div>
+                  </div>
+                </motion.div>
 
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="liability"
-                  className="scroll-mt-32 p-10 bg-primary-navy text-white rounded-[3rem] md:rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all group relative overflow-hidden flex flex-col items-center md:items-start text-center md:text-left"
+                  className="bg-primary-navy text-white rounded-[3rem] p-10 shadow-xl hover:shadow-2xl transition-all group relative overflow-hidden flex flex-col items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-corporate-blue/20 rounded-full -mt-16 -mr-16"></div>
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white/10 flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform relative z-10">
-                    <Scale size={32} className="md:w-7 md:h-7" />
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-white/10 flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform relative z-10">
+                    <Scale size={32} />
                   </div>
-                  <h2 className="text-xl md:text-xl font-black mb-6 uppercase relative z-10 leading-[1.1] md:leading-tight">
-                    12. LIABILITY
+                  <h2 className="text-xl font-black mb-6 uppercase relative z-10 tracking-tight">
+                    LIABILITY
                   </h2>
-                  <p className="text-base md:text-sm text-gray-400 font-bold md:font-medium leading-relaxed mb-6 flex-grow relative z-10">
+                  <p className="text-sm text-gray-400 font-medium leading-relaxed mb-6 flex-grow relative z-10">
                     To the maximum extent permitted by law, the Platform shall
                     not be liable for direct or indirect damages, loss of
                     business, or disputes between parties.
                   </p>
-                  <p className="text-xs md:text-xs text-gray-300 font-bold border-t border-white/10 pt-6 md:pt-4 relative z-10 w-full">
+                  <div className="text-xs text-gray-300 font-bold border-t border-white/10 pt-6 relative z-10 w-full">
                     Liability is limited to amount paid directly to the
                     Platform.
-                  </p>
-                </div>
-              </div>
-
-              {/* 13. INDEMNIFICATION */}
-              <div id="indemnification" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
-                    <ShieldCheck size={28} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    13. INDEMNIFICATION
-                  </h2>
-                </div>
-                <div className="p-8 md:p-8 bg-green-50 rounded-[3rem] md:rounded-[2.5rem] border border-green-100 text-center md:text-left">
-                  <p className="text-soft-slate font-bold md:font-medium leading-relaxed text-sm md:text-base">
-                    You agree to indemnify and hold harmless the Platform, its
-                    owners, and affiliates against any claims, losses, or
-                    liabilities arising from misrepresentation, violation of
-                    law, or breach of these Terms.
-                  </p>
-                </div>
+                </motion.div>
               </div>
 
-              {/* 14 & 15: REFUND & TERMINATION */}
+              {/* INDEMNIFICATION */}
+              <motion.div
+                {...fadeInUp}
+                id="indemnification"
+                className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm border border-slate-100 text-center md:text-left scroll-mt-28"
+              >
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-green-50 flex items-center justify-center text-green-600 shrink-0">
+                    <ShieldCheck size={32} />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-black text-primary-navy mb-4 border-b border-slate-50 pb-4 inline-block">
+                      INDEMNIFICATION
+                    </h2>
+                    <p className="text-soft-slate font-medium leading-relaxed text-sm md:text-base">
+                      You agree to indemnify and hold harmless the Platform, its
+                      owners, and affiliates against any claims, losses, or
+                      liabilities arising from misrepresentation, violation of
+                      law, or breach of these Terms.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* REFUND & TERMINATION */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="refund"
-                  className="scroll-mt-32 p-10 md:p-8 bg-light-bg rounded-[3rem] md:rounded-[2.5rem] border border-gray-100 shadow-sm flex flex-col items-center md:items-start text-center md:text-left"
+                  className="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm flex flex-col items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
-                  <div className="w-14 h-14 md:w-12 md:h-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-corporate-blue mb-6 border border-gray-100">
-                    <RefreshCw size={28} className="md:w-6 md:h-6" />
+                  <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-corporate-blue mb-6 border border-slate-100">
+                    <RefreshCw size={28} />
                   </div>
-                  <h2 className="text-lg md:text-lg font-black text-primary-navy mb-4 leading-[1.1] md:leading-tight">
-                    14. CANCELLATION
+                  <h2 className="text-lg font-black text-primary-navy mb-4">
+                    CANCELLATION
                   </h2>
-                  <p className="text-base md:text-sm text-soft-slate font-bold md:font-medium leading-relaxed mb-6 flex-grow">
+                  <p className="text-sm text-soft-slate font-medium leading-relaxed mb-6 flex-grow">
                     Inquiry submissions are non-binding. Listing fee refunds
                     follow the Refund Policy.
                   </p>
-                  <p className="text-[10px] uppercase tracking-widest font-black text-corporate-blue bg-corporate-blue/10 p-4 md:p-3 rounded-xl md:rounded-lg text-center w-full">
+                  <Link
+                    href="/refund-policy"
+                    className="w-full text-center text-xs font-black uppercase tracking-widest text-accent-orange bg-accent-orange/10 p-4 rounded-xl"
+                  >
                     Check Refund Policy
-                  </p>
-                </div>
+                  </Link>
+                </motion.div>
 
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="termination"
-                  className="scroll-mt-32 p-10 md:p-8 bg-gray-50 rounded-[3rem] md:rounded-[2.5rem] border border-gray-100 shadow-sm flex flex-col group items-center md:items-start text-center md:text-left"
+                  className="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm flex flex-col group items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
-                  <div className="w-14 h-14 md:w-12 md:h-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-red-600 mb-6 border border-gray-100 group-hover:bg-red-600 group-hover:text-white transition-all">
-                    <Power size={28} className="md:w-6 md:h-6" />
+                  <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-red-600 mb-6 border border-slate-100 group-hover:bg-red-600 group-hover:text-white transition-all">
+                    <Power size={28} />
                   </div>
-                  <h2 className="text-lg md:text-lg font-black text-primary-navy mb-4 leading-[1.1] md:leading-tight">
-                    15. TERMINATION
+                  <h2 className="text-lg font-black text-primary-navy mb-4 uppercase">
+                    TERMINATION
                   </h2>
-                  <p className="text-base md:text-sm text-soft-slate font-bold md:font-medium leading-relaxed mb-6 flex-grow">
+                  <p className="text-sm text-soft-slate font-medium leading-relaxed mb-6 flex-grow">
                     We reserve the right to suspend access, remove listings, or
                     block IP access for policy violations without prior notice.
                   </p>
@@ -813,209 +1023,218 @@ export default function TermsAndConditionsPage() {
                       Strict Enforcement
                     </span>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              {/* 16. FORCE MAJEURE */}
-              <div id="force-majeure" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <CloudLightning size={28} />
+              {/* FORCE MAJEURE */}
+              <motion.div
+                {...fadeInUp}
+                id="force-majeure"
+                className="bg-primary-navy text-white rounded-[3rem] p-10 md:p-16 relative overflow-hidden text-center md:text-left scroll-mt-28"
+              >
+                <div className="absolute top-0 left-0 w-32 h-32 bg-corporate-blue/10 rounded-full -mt-16 -ml-16"></div>
+                <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                  <div className="w-20 h-20 rounded-[2rem] bg-white/10 flex items-center justify-center text-white shrink-0">
+                    <CloudLightning size={40} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    16. FORCE MAJEURE
-                  </h2>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-black mb-4 uppercase tracking-tight">
+                      FORCE MAJEURE
+                    </h2>
+                    <p className="text-gray-400 font-medium mb-8 text-sm md:text-base">
+                      We are not liable for delays or failure caused by:
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                      {[
+                        "Natural disasters",
+                        "Government actions",
+                        "Internet failures",
+                        "Pandemics",
+                        "War",
+                      ].map((item) => (
+                        <span
+                          key={item}
+                          className="px-4 py-2 bg-white/10 rounded-xl text-xs font-bold text-gray-100 border border-white/10"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="p-10 md:p-8 bg-primary-navy text-white rounded-[3rem] md:rounded-[2.5rem] relative overflow-hidden text-center md:text-left">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-corporate-blue/10 rounded-full -mt-16 -ml-16"></div>
-                  <p className="text-gray-400 font-bold mb-8 md:mb-6 text-base md:text-sm relative z-10">
-                    We are not liable for delays or failure caused by:
+              </motion.div>
+
+              {/* GOVERNING LAW */}
+              <motion.div
+                {...fadeInUp}
+                id="law"
+                className="bg-white rounded-[3rem] p-10 md:p-16 border border-slate-100 flex flex-col md:flex-row items-center gap-10 text-center md:text-left scroll-mt-28 shadow-sm"
+              >
+                <div className="w-24 h-24 flex items-center justify-center rounded-[2rem] bg-slate-50">
+                  <Gavel size={48} className="text-accent-orange opacity-60" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-black text-primary-navy mb-6 uppercase tracking-tight">
+                    GOVERNING LAW
+                  </h2>
+                  <p className="text-sm md:text-base text-soft-slate font-medium leading-relaxed mb-4">
+                    These Terms shall be governed by the laws of India. Any
+                    disputes shall be subject to the exclusive jurisdiction of
+                    courts located in{" "}
+                    <span className="text-primary-navy font-black">
+                      Indore, Madhya Pradesh
+                    </span>
+                    .
                   </p>
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-3 relative z-10">
-                    {[
-                      "Natural disasters",
-                      "Government actions",
-                      "Internet failures",
-                      "Pandemics",
-                      "War",
-                    ].map((item) => (
-                      <span
-                        key={item}
-                        className="px-6 py-3 md:px-4 md:py-2 bg-white/10 rounded-2xl md:rounded-xl text-sm md:text-xs font-black md:font-bold text-gray-100 border border-white/10 shadow-lg"
-                      >
-                        {item}
-                      </span>
-                    ))}
+                  <div className="inline-block px-4 py-2 bg-corporate-blue/5 rounded-full text-[10px] font-black uppercase tracking-widest text-corporate-blue">
+                    Judicial Center: India
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* 17. GOVERNING LAW */}
-              <div id="law" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Gavel size={28} />
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    17. GOVERNING LAW
-                  </h2>
-                </div>
-                <div className="flex flex-col md:flex-row items-center gap-6 p-10 bg-light-bg rounded-[3rem] md:rounded-[2.5rem] border border-gray-100 text-center md:text-left">
-                  <div className="w-20 h-20 md:w-auto md:h-auto flex items-center justify-center rounded-3xl bg-white md:bg-transparent shadow-xl md:shadow-none border md:border-none border-gray-50">
-                    <MapPin
-                      size={48}
-                      className="text-accent-orange opacity-60 md:opacity-20 shrink-0"
-                    />
-                  </div>
-                  <div className="space-y-3 md:space-y-2">
-                    <p className="text-sm md:text-base text-soft-slate font-bold md:font-medium leading-relaxed">
-                      These Terms shall be governed by the laws of India. Any
-                      disputes shall be subject to the exclusive jurisdiction of
-                      courts located in{" "}
-                      <span className="text-primary-navy font-black">
-                        Indore, Madhya Pradesh
-                      </span>
-                      .
-                    </p>
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-widest text-corporate-blue">
-                      Judicial Center: India
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 18 & 19: MODIFICATIONS & PRIVACY */}
+              {/* MODIFICATIONS & PRIVACY */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="modifications"
-                  className="scroll-mt-32 p-10 md:p-8 bg-white rounded-[3rem] md:rounded-[2.5rem] border border-gray-100 shadow-sm flex flex-col group items-center md:items-start text-center md:text-left"
+                  className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col group items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
-                  <div className="w-14 h-14 md:w-12 md:h-12 shrink-0 rounded-2xl bg-gray-50 flex items-center justify-center text-corporate-blue mb-6 border border-gray-100 group-hover:bg-accent-orange group-hover:text-white transition-all">
-                    <Edit size={28} className="md:w-6 md:h-6" />
+                  <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-corporate-blue mb-6 border border-slate-100 group-hover:bg-accent-orange group-hover:text-white transition-all">
+                    <Edit size={28} />
                   </div>
-                  <h2 className="text-lg md:text-lg font-black text-primary-navy mb-4">
-                    18. MODIFICATIONS
+                  <h2 className="text-lg font-black text-primary-navy mb-4 tracking-tight uppercase">
+                    MODIFICATIONS
                   </h2>
-                  <p className="text-base md:text-sm text-soft-slate font-bold md:font-medium leading-relaxed mb-4 flex-grow">
+                  <p className="text-sm text-soft-slate font-medium leading-relaxed mb-4 flex-grow">
                     We may update these Terms at any time. Continued use of the
                     platform indicates acceptance of revised terms.
                   </p>
-                </div>
+                </motion.div>
 
-                <div
+                <motion.div
+                  {...fadeInUp}
                   id="privacy"
-                  className="scroll-mt-32 p-10 md:p-8 bg-corporate-blue rounded-[3rem] md:rounded-[2.5rem] text-white shadow-lg flex flex-col group items-center md:items-start text-center md:text-left"
+                  className="bg-corporate-blue rounded-[2.5rem] p-10 text-white shadow-lg flex flex-col group items-center md:items-start text-center md:text-left scroll-mt-28"
                 >
-                  <div className="w-16 h-16 shrink-0 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6 border border-white/10 group-hover:bg-white group-hover:text-corporate-blue transition-all">
-                    <Shield size={28} className="md:w-6 md:h-6" />
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white mb-6 border border-white/10 group-hover:bg-white group-hover:text-corporate-blue transition-all">
+                    <Shield size={28} />
                   </div>
-                  <h2 className="text-lg md:text-lg font-black mb-4 uppercase leading-[1.1] md:leading-tight">
-                    19. PRIVACY
+                  <h2 className="text-lg font-black mb-4 uppercase tracking-tight">
+                    PRIVACY
                   </h2>
-                  <p className="text-base md:text-sm text-gray-200 font-bold md:font-medium leading-relaxed mb-8 flex-grow">
+                  <p className="text-sm text-gray-200 font-medium leading-relaxed mb-6 flex-grow">
                     Use of the Platform is also governed by our Privacy Policy.
                     Please review it carefully.
                   </p>
                   <Link
                     href="/privacy-policy"
-                    className="w-full md:w-auto text-center md:text-left text-xs font-black uppercase tracking-[0.2em] text-accent-orange hover:text-white flex items-center justify-center md:justify-start gap-2 group-hover:translate-x-1 transition-all"
+                    className="w-full text-center text-xs font-black uppercase tracking-widest text-accent-orange hover:text-white flex items-center justify-center gap-2"
                   >
                     View Privacy Policy <ChevronRight size={16} />
                   </Link>
-                </div>
+                </motion.div>
               </div>
 
-              {/* 20. CONTACT INFORMATION */}
-              <div id="contact" className="scroll-mt-32 group">
-                <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="w-16 h-16 md:w-14 md:h-14 shrink-0 rounded-[1.5rem] md:rounded-2xl bg-white shadow-xl md:shadow-lg border border-gray-100 flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
-                    <Mail size={28} />
+              {/* CONTACT INFORMATION */}
+              <motion.div
+                {...fadeInUp}
+                id="contact"
+                className="bg-white rounded-[3rem] p-10 md:p-16 border border-slate-100 shadow-sm scroll-mt-28"
+              >
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-6 mb-12 border-b border-slate-50 pb-12 text-center md:text-left">
+                  <div className="w-16 h-16 rounded-[1.5rem] bg-corporate-blue/5 flex items-center justify-center text-corporate-blue">
+                    <Mail size={32} />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    20. CONTACT INFORMATION
+                  <h2 className="text-3xl font-black text-primary-navy tracking-tight uppercase">
+                    CONTACT INFORMATION
                   </h2>
                 </div>
-                <div className="bg-light-bg rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
-                  <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div className="space-y-3 text-center md:text-left">
-                      <div className="flex items-center gap-2 text-corporate-blue font-black text-xs uppercase tracking-widest justify-center md:justify-start">
-                        <Globe size={14} /> Platform
-                      </div>
-                      <p className="text-soft-slate font-bold text-sm">
-                        Eventibe.com / VenueForEvent.com
-                      </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
+                  <div className="space-y-4 text-center md:text-left">
+                    <div className="flex items-center gap-2 text-corporate-blue font-black text-[10px] uppercase tracking-widest justify-center md:justify-start">
+                      <Globe size={14} /> PLATFORM
                     </div>
-                    <div className="space-y-3 text-center md:text-left">
-                      <div className="flex items-center gap-2 text-corporate-blue font-black text-xs uppercase tracking-widest justify-center md:justify-start">
-                        <Mail size={14} /> Email
-                      </div>
-                      <a
-                        href="mailto:support@eventibe.com"
-                        className="text-soft-slate font-bold text-sm hover:text-accent-orange transition-colors underline md:no-underline"
-                      >
-                        support@eventibe.com
-                      </a>
-                    </div>
-                    <div className="space-y-3 text-center md:text-left">
-                      <div className="flex items-center gap-2 text-corporate-blue font-black text-xs uppercase tracking-widest justify-center md:justify-start">
-                        <Phone size={14} /> Phone
-                      </div>
-                      <p className="text-soft-slate font-bold text-sm">
-                        +91-8800842084
-                      </p>
-                    </div>
+                    <p className="text-primary-navy font-bold text-sm">
+                      Eventibe.com / VenueForEvent.com
+                    </p>
                   </div>
-                  <div className="bg-white p-8 border-t border-gray-100 text-center md:text-left">
-                    <div className="flex items-center gap-2 text-corporate-blue font-black text-xs uppercase tracking-widest mb-4 justify-center md:justify-start">
-                      <MapPin size={14} /> Registered Office
+                  <div className="space-y-4 text-center md:text-left">
+                    <div className="flex items-center gap-2 text-corporate-blue font-black text-[10px] uppercase tracking-widest justify-center md:justify-start">
+                      <Mail size={14} /> EMAIL
                     </div>
-                    <p className="text-soft-slate font-bold text-sm leading-relaxed max-w-lg mx-auto md:mx-0">
-                      Samta Enclave, Near Mother Dairy, Qutub Vihar, Phase 1,
-                      Sector 19, Dwarka, New Delhi – 110071, India
+                    <a
+                      href="mailto:support@eventibe.com"
+                      className="text-primary-navy font-bold text-sm hover:text-accent-orange transition-colors underline"
+                    >
+                      support@eventibe.com
+                    </a>
+                  </div>
+                  <div className="space-y-4 text-center md:text-left">
+                    <div className="flex items-center gap-2 text-corporate-blue font-black text-[10px] uppercase tracking-widest justify-center md:justify-start">
+                      <Phone size={14} /> PHONE
+                    </div>
+                    <p className="text-primary-navy font-bold text-sm">
+                      +91-8800842084
                     </p>
                   </div>
                 </div>
-              </div>
+                <div className="p-8 bg-slate-50 rounded-3xl border border-slate-100">
+                  <div className="flex items-center gap-2 text-corporate-blue font-black text-[10px] uppercase tracking-widest mb-4 justify-center md:justify-start">
+                    <MapPin size={14} /> REGISTERED OFFICE
+                  </div>
+                  <p className="text-soft-slate font-medium text-sm leading-relaxed max-w-2xl text-center md:text-left">
+                    Samta Enclave, Near Mother Dairy, Qutub Vihar, Phase 1,
+                    Sector 19, Dwarka, New Delhi – 110071, India
+                  </p>
+                </div>
+              </motion.div>
 
-              {/* Acceptance */}
-              <div className="bg-primary-navy p-10 md:p-16 rounded-[3rem] text-center text-white relative overflow-hidden shadow-2xl">
+              {/* ACCEPTANCE */}
+              <motion.div
+                {...fadeInUp}
+                className="bg-primary-navy p-10 md:p-20 rounded-[4rem] text-center text-white relative overflow-hidden shadow-2xl"
+              >
                 <div className="absolute top-0 left-0 w-64 h-64 bg-accent-orange/10 rounded-full -mt-32 -ml-32 blur-3xl"></div>
                 <div className="absolute bottom-0 right-0 w-64 h-64 bg-corporate-blue/20 rounded-full -mb-32 -mr-32 blur-3xl"></div>
 
-                <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 leading-tight">
+                <h2 className="text-3xl md:text-5xl font-black mb-8 relative z-10 leading-tight uppercase tracking-tight">
                   ACCEPTANCE
                 </h2>
-                <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed relative z-10">
+                <p className="text-gray-400 text-base md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed relative z-10">
                   By accessing or using Eventibe.com or VenueForEvent.com, you
                   acknowledge that you have read, understood, and agreed to
                   these Terms & Conditions.
                 </p>
                 <Link
                   href="/"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-accent-orange text-white px-8 py-4 md:px-10 md:py-5 rounded-xl md:rounded-2xl font-black text-[13px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest hover:scale-105 transition-all shadow-2xl hover:shadow-accent-orange/40 relative z-10"
+                  className="inline-flex items-center justify-center gap-3 bg-accent-orange text-white px-6 py-4 md:px-10 md:py-5 rounded-2xl font-black text-xs md:text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-2xl hover:shadow-accent-orange/40 relative z-10"
                 >
-                  I Understand & Accept
+                  <span className="hidden md:inline">
+                    I Understand & Accept
+                  </span>
+                  <span className="md:hidden">Accept</span>
+                  <CheckCircle2 size={18} />
                 </Link>
-              </div>
-            </main>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer Branding */}
-      <footer className="py-10 md:py-16 bg-light-bg border-t border-gray-100">
+      <footer className="py-20 bg-white border-t border-slate-100">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary-navy flex items-center justify-center text-white shadow-lg">
-                <ShieldCheck size={20} />
+          <div className="flex flex-col items-center gap-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary-navy flex items-center justify-center text-white shadow-xl shadow-blue-900/20">
+                <ShieldCheck size={24} />
               </div>
-              <div className="text-primary-navy font-black text-2xl tracking-tighter">
+              <div className="text-primary-navy font-black text-3xl tracking-tighter">
                 EVEN<span className="text-accent-orange">TIBE</span>
               </div>
             </div>
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-            <p className="text-soft-slate text-[10px] font-black uppercase tracking-[0.3em] opacity-60">
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+            <p className="text-slate-400 text-[11px] font-black uppercase tracking-[0.4em] opacity-80">
               India&apos;s Premium Venue Marketplace
             </p>
           </div>

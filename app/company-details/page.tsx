@@ -238,8 +238,8 @@ export default function CompanyDetailsPage() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0,
+      rootMargin: "-10% 0px -45% 0px",
+      threshold: [0, 0.1, 0.5, 1.0],
     };
 
     const handleIntersect = (entries: IntersectionObserverEntry[]) => {
@@ -296,7 +296,7 @@ export default function CompanyDetailsPage() {
             className="object-cover opacity-20"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/90 to-transparent"></div>
+          <div className="absolute inset-0 bg-primary-navy/80"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
 
           {/* Subtle Geometric Pattern Overlay */}
@@ -310,28 +310,28 @@ export default function CompanyDetailsPage() {
           ></div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl"
+            className="max-w-4xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-4 md:mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
               <Sparkles size={14} className="text-accent-orange" />
               <span>Official Corporate Registry</span>
             </div>
-            <h1 className="text-3xl md:text-6xl lg:text-8xl font-black mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md break-words">
+            <h1 className="text-4xl md:text-6xl font-black mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md break-words">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-orange-300">
                 Company
               </span>{" "}
               Details
             </h1>
             <div className="space-y-3 md:space-y-4">
-              <p className="text-xl md:text-4xl text-white font-bold tracking-tight break-words">
+              <p className="text-lg md:text-xl text-white font-bold tracking-tight break-words">
                 Homocation Asia Private Limited
               </p>
-              <p className="text-base md:text-xl text-orange-200/90 font-bold border-l-4 border-orange-500 pl-4 md:pl-6 py-2 bg-orange-500/5 backdrop-blur-sm rounded-r-xl max-w-sm md:max-w-none mx-auto md:mx-0">
+              <p className="text-sm md:text-base text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-sm mx-auto">
                 Parent Company of Eventibe.com & VenueForEvent.com
               </p>
             </div>
@@ -343,18 +343,12 @@ export default function CompanyDetailsPage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        .hide-scrollbar::-webkit-scrollbar,
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none !important;
-          width: 0 !important;
-          height: 0 !important;
+        .custom-scrollbar::-webkit-scrollbar {
+          display: none;
         }
-        .hide-scrollbar,
-        .scrollbar-hide {
-          -ms-overflow-style: none !important;
-          scrollbar-width: none !important;
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior: contain;
+        .custom-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `,
         }}
@@ -381,7 +375,7 @@ export default function CompanyDetailsPage() {
 
                 <nav
                   ref={scrollContainerRef}
-                  className="p-4 space-y-1 overflow-y-auto flex-1 hide-scrollbar scrollbar-hide overscroll-contain"
+                  className="p-4 space-y-1 overflow-y-auto flex-1 custom-scrollbar scroll-smooth"
                 >
                   {sections.map((section) => {
                     const isActive = activeSection === section.id;
@@ -455,7 +449,7 @@ export default function CompanyDetailsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-32"
+                  className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-16 shadow-sm md:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-md md:hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.06)] hover:border-corporate-blue/10 transition-all group overflow-hidden relative scroll-mt-28"
                 >
                   {/* Decorative Background Icon */}
                   <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-1000">
@@ -466,12 +460,12 @@ export default function CompanyDetailsPage() {
                     <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-corporate-blue/5 border border-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-700 shadow-sm mx-auto md:mx-0">
                       {section.icon}
                     </div>
-                    <h2 className="text-xl md:text-4xl lg:text-5xl font-black text-primary-navy tracking-tight leading-tight break-words">
+                    <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase break-words">
                       {section.title}
                     </h2>
                   </div>
 
-                  <div className="prose prose-lg md:prose-xl max-w-none text-soft-slate leading-[1.7] md:leading-[1.8]">
+                  <div className="prose prose-base md:prose-lg max-w-none text-soft-slate leading-[1.7] md:leading-[1.8]">
                     {section.content && (
                       <div className="whitespace-pre-line space-y-8">
                         {section.content.split("\n\n").map((para, i) => (
@@ -502,7 +496,7 @@ export default function CompanyDetailsPage() {
                                 return (
                                   <h3
                                     key={j}
-                                    className="text-2xl font-black text-primary-navy mb-4 mt-8 first:mt-0 flex items-center gap-3"
+                                    className="text-xl font-black text-primary-navy mb-4 mt-8 first:mt-0 flex items-center gap-3 uppercase tracking-wider"
                                   >
                                     <div className="w-2 h-6 md:w-2 md:h-8 bg-accent-orange rounded-full"></div>
                                     {line.replace(/\*\*/g, "")}
@@ -539,10 +533,10 @@ export default function CompanyDetailsPage() {
                             key={i}
                             className="p-6 md:p-12 rounded-2xl md:rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-md md:hover:shadow-xl hover:border-corporate-blue/20 transition-all duration-500 group/sub h-full flex flex-col"
                           >
-                            <h3 className="text-xl md:text-2xl font-black text-primary-navy mb-6 md:mb-8 border-b-2 border-orange-200 pb-4 inline-block group-hover/sub:border-corporate-blue transition-colors break-words">
+                            <h3 className="text-lg md:text-xl font-black text-primary-navy mb-6 md:mb-8 border-b-2 border-orange-200 pb-4 inline-block group-hover/sub:border-corporate-blue transition-colors break-words uppercase">
                               {sub.subtitle}
                             </h3>
-                            <div className="whitespace-pre-line text-base flex-1">
+                            <div className="whitespace-pre-line text-sm flex-1">
                               {sub.content.split("\n").map((line, j) => (
                                 <div key={j} className="mb-3 last:mb-0">
                                   {line.startsWith("- ") ? (
@@ -594,10 +588,10 @@ export default function CompanyDetailsPage() {
                   <h4 className="text-sm font-bold text-orange-400 uppercase tracking-[0.3em] mb-4">
                     Core Digital Brand
                   </h4>
-                  <h3 className="text-3xl md:text-5xl font-black mb-6 tracking-tight">
+                  <h3 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
                     Eventibe.com
                   </h3>
-                  <p className="text-gray-400 text-lg mb-10 max-w-md leading-relaxed">
+                  <p className="text-gray-400 text-sm md:text-base mb-10 max-w-md leading-relaxed">
                     India's Premier Event & Venue Discovery Marketplace for
                     social and corporate segments.
                   </p>
@@ -621,10 +615,10 @@ export default function CompanyDetailsPage() {
                   <h4 className="text-sm font-bold text-corporate-blue uppercase tracking-[0.3em] mb-4">
                     Search Dominance
                   </h4>
-                  <h3 className="text-3xl md:text-5xl font-black mb-6 tracking-tight">
+                  <h3 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
                     VenueForEvent.com
                   </h3>
-                  <p className="text-soft-slate text-lg mb-10 max-w-md leading-relaxed">
+                  <p className="text-soft-slate text-sm md:text-base mb-10 max-w-md leading-relaxed">
                     Search-driven venue discovery platform designed for
                     city-level targeting and digital expansion.
                   </p>
@@ -681,13 +675,13 @@ export default function CompanyDetailsPage() {
               <div className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center text-accent-orange mb-6 md:mb-8 border border-slate-100 transform -rotate-6 lg:group-hover:rotate-0 transition-transform duration-500 mx-auto lg:mx-0">
                 <MapPin size={28} />
               </div>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-primary-navy mb-6 tracking-tight leading-[1.2] md:leading-[1.1]">
+              <h2 className="text-2xl md:text-3xl font-black text-primary-navy mb-6 tracking-tight leading-tight uppercase">
                 Corporate Office
               </h2>
               <div className="space-y-6 mb-10 md:mb-12">
                 <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4">
                   <div className="hidden lg:block w-1.5 h-16 md:h-20 bg-cta-gradient rounded-full shrink-0"></div>
-                  <p className="text-soft-slate text-lg md:text-xl lg:text-2xl font-bold leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  <p className="text-soft-slate text-base md:text-lg font-bold leading-relaxed max-w-lg mx-auto lg:mx-0">
                     Plot No-18, D Block, Qutub Vihar Phase-1, Sector 19, South
                     West Delhi, New Delhi – 110071, India
                   </p>

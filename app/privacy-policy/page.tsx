@@ -1,7 +1,9 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import {
   ShieldCheck,
   Lock,
@@ -23,9 +25,96 @@ import {
   MapPin,
   ChevronRight,
   ArrowLeft,
+  Files,
 } from "lucide-react";
 
+const sections = [
+  { id: "about", title: "About Us", icon: <Info size={24} /> },
+  {
+    id: "collect",
+    title: "Information We Collect",
+    icon: <Database size={24} />,
+  },
+  {
+    id: "use",
+    title: "How We Use Information",
+    icon: <ShieldCheck size={24} />,
+  },
+  { id: "share", title: "Sharing Information", icon: <Share2 size={24} /> },
+  { id: "retention", title: "Data Retention", icon: <Clock size={24} /> },
+  { id: "security", title: "Data Security", icon: <Lock size={24} /> },
+  { id: "links", title: "Third-Party Links", icon: <ExternalLink size={24} /> },
+  { id: "children", title: "Children's Privacy", icon: <UserX size={24} /> },
+  { id: "rights", title: "Your Rights", icon: <UserCheck size={24} /> },
+  {
+    id: "international",
+    title: "International Transfers",
+    icon: <Globe size={24} />,
+  },
+  {
+    id: "business",
+    title: "Business Transfers",
+    icon: <Briefcase size={24} />,
+  },
+  { id: "changes", title: "Changes to Policy", icon: <RefreshCw size={24} /> },
+  { id: "contact", title: "Contact Information", icon: <Mail size={24} /> },
+  { id: "consent", title: "Consent", icon: <CheckCircle2 size={24} /> },
+];
+
 export default function PrivacyPolicyPage() {
+  const [activeSection, setActiveSection] = useState(sections[0].id);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-10% 0px -45% 0px",
+      threshold: [0, 0.1, 0.5, 1.0],
+    };
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (
+      activeSection &&
+      navItemsRef.current[activeSection] &&
+      scrollContainerRef.current
+    ) {
+      const scrollContainer = scrollContainerRef.current;
+      const navItem = navItemsRef.current[activeSection];
+
+      const containerTop = scrollContainer.getBoundingClientRect().top;
+      const navItemTop = navItem!.getBoundingClientRect().top;
+      const relativeTop = navItemTop - containerTop;
+
+      scrollContainer.scrollTo({
+        top:
+          scrollContainer.scrollTop +
+          relativeTop -
+          scrollContainer.clientHeight / 2 +
+          navItem!.clientHeight / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [activeSection]);
+
   return (
     <div className="flex flex-col min-h-screen bg-white scroll-smooth">
       {/* Hero Section */}
@@ -53,8 +142,13 @@ export default function PrivacyPolicyPage() {
           ></div>
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center md:text-left">
-          <div className="max-w-4xl">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl flex flex-col items-center"
+          >
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors text-sm font-medium group"
@@ -66,7 +160,7 @@ export default function PrivacyPolicyPage() {
               Back to Home
             </Link>
 
-            <div className="inline-flex items-center gap-2 px-4 py-2 ml-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 animate-fade-in shadow-xl backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 animate-fade-in shadow-xl backdrop-blur-sm">
               <ShieldCheck size={14} />
               <span>Trust & Transparency</span>
             </div>
@@ -78,12 +172,12 @@ export default function PrivacyPolicyPage() {
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-in [animation-delay:200ms] font-medium">
+            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-in [animation-delay:200ms] font-medium text-center">
               At Eventibe, your privacy is our priority. We are committed to
               protecting your data and being transparent about how we handle
               your information.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -127,106 +221,105 @@ export default function PrivacyPolicyPage() {
       {/* Main Content Sections */}
       <section className="pt-16 pb-12 md:pb-24 bg-white relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Table of Contents - Desktop Sidebar */}
-            <aside className="hidden lg:block lg:col-span-4 sticky top-24 self-start space-y-4">
-              <div className="bg-light-bg p-8 rounded-[2rem] border border-gray-100 shadow-sm">
-                <h3 className="text-primary-navy font-black text-lg mb-6 border-b border-gray-200 pb-4">
-                  Quick Links
-                </h3>
-                <nav className="space-y-3">
-                  {[
-                    { id: "about", label: "1. About Us" },
-                    { id: "collect", label: "2. Information We Collect" },
-                    { id: "use", label: "3. How We Use Information" },
-                    { id: "share", label: "4. Sharing Information" },
-                    { id: "retention", label: "5. Data Retention" },
-                    { id: "security", label: "6. Data Security" },
-                    { id: "links", label: "7. Third-Party Links" },
-                    { id: "children", label: "8. Children's Privacy" },
-                    { id: "rights", label: "9. Your Rights" },
-                    {
-                      id: "international",
-                      label: "10. International Transfers",
-                    },
-                    { id: "business", label: "11. Business Transfers" },
-                    { id: "changes", label: "12. Changes to Policy" },
-                    { id: "contact", label: "13. Contact Information" },
-                    { id: "consent", label: "14. Consent" },
-                  ].map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className="flex items-center gap-2 text-soft-slate hover:text-accent-orange font-bold text-sm transition-colors group py-1"
-                    >
-                      <ChevronRight
-                        size={14}
-                        className="group-hover:translate-x-1 transition-transform"
-                      />
-                      {item.label}
-                    </a>
-                  ))}
-                </nav>
-              </div>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+            .custom-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+            .custom-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `,
+            }}
+          />
+          <div className="flex flex-col lg:flex-row gap-16">
+            {/* Sidebar Navigation - Sticky */}
+            <aside className="lg:w-1/4 hidden lg:block">
+              <div className="sticky top-28 bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col max-h-[calc(100vh-140px)]">
+                <div className="p-8 pb-6 border-b border-slate-50 shrink-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-accent-orange/10 flex items-center justify-center text-accent-orange">
+                      <Files size={14} />
+                    </div>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                      DOCUMENT INDEX
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-black text-primary-navy tracking-tight">
+                    Quick Navigation
+                  </h3>
+                </div>
 
-              <div className="bg-primary-navy text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-corporate-blue/20 rounded-full -mt-12 -mr-12"></div>
-                <h4 className="text-xl font-bold mb-4 relative z-10">
-                  Need help?
-                </h4>
-                <p className="text-gray-400 text-sm mb-6 relative z-10 leading-relaxed">
-                  Have questions about your privacy or data protection?
-                </p>
-                <Link
-                  href="/contact-us"
-                  className="inline-flex items-center gap-2 bg-accent-orange text-white px-6 py-3 rounded-xl font-bold text-sm hover:scale-[1.02] transition-all"
+                <nav
+                  ref={scrollContainerRef}
+                  className="p-4 space-y-1 overflow-y-auto flex-1 custom-scrollbar scroll-smooth"
                 >
-                  Contact Support <Mail size={16} />
-                </Link>
+                  {sections.map((section) => {
+                    const isActive = activeSection === section.id;
+                    return (
+                      <Link
+                        key={section.id}
+                        href={`#${section.id}`}
+                        ref={(el) => {
+                          navItemsRef.current[section.id] = el;
+                        }}
+                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative ${
+                          isActive
+                            ? "bg-primary-navy/5 text-primary-navy shadow-[inset_0_0_0_1px_rgba(11,31,58,0.05)]"
+                            : "text-slate-500 hover:text-primary-navy hover:bg-slate-50"
+                        }`}
+                      >
+                        {/* Status Indicator */}
+                        <div
+                          className={`absolute left-0 w-1.5 bg-accent-orange rounded-r-full transition-all duration-300 ${
+                            isActive
+                              ? "h-6 opacity-100"
+                              : "h-0 opacity-0 group-hover:h-2"
+                          }`}
+                        ></div>
+
+                        <div
+                          className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                            isActive
+                              ? "bg-primary-navy text-white shadow-lg shadow-blue-900/20"
+                              : "bg-slate-100 text-slate-400 group-hover:bg-white group-hover:text-primary-navy group-hover:shadow-sm"
+                          }`}
+                        >
+                          <div className="scale-75 origin-center">
+                            {section.icon}
+                          </div>
+                        </div>
+
+                        <span
+                          className={`text-[13px] font-bold truncate transition-all leading-snug flex-1 ${isActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}
+                        >
+                          {section.title}
+                        </span>
+
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeTab"
+                            className="absolute -right-1 w-1 h-1 rounded-full bg-accent-orange"
+                          />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
+
+                <div className="p-6 bg-slate-50/80 mt-auto border-t border-slate-100 flex items-center justify-between shrink-0">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+                    LEGAL COMPLIANCE
+                  </span>
+                  <div className="w-2 h-2 rounded-full bg-accent-orange shadow-[0_0_8px_rgba(249,115,22,0.4)]"></div>
+                </div>
               </div>
             </aside>
 
             {/* Content Column */}
-            <main className="lg:col-span-8 space-y-12 md:space-y-16">
-              {/* Introduction */}
-              <div className="bg-light-bg p-6 md:p-10 rounded-3xl border border-gray-100 shadow-sm">
-                <div className="space-y-6 text-soft-slate text-sm md:text-base leading-relaxed font-bold text-center md:text-left">
-                  <p>
-                    Eventibe.com and VenueForEvent.com (collectively referred to
-                    as “Platform”, “Website”, “We”, “Us”, or “Our”).
-                  </p>
-                  <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-8 bg-white/50 p-6 md:p-0 rounded-2xl md:rounded-none border border-gray-100 md:border-none">
-                    <div className="flex flex-col items-center md:items-start gap-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
-                        Official URL
-                      </span>
-                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
-                        Eventibe.com
-                      </span>
-                    </div>
-                    <div className="w-12 h-px md:w-px md:h-10 bg-gray-200"></div>
-                    <div className="flex flex-col items-center md:items-start gap-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-accent-orange font-black">
-                        Official URL
-                      </span>
-                      <span className="text-primary-navy font-black text-lg md:text-base underline decoration-accent-orange/30">
-                        VenueForEvent.com
-                      </span>
-                    </div>
-                  </div>
-                  <p className="font-medium opacity-70">
-                    This Privacy Policy explains how we collect, use, store,
-                    process, disclose, and protect your information when you use
-                    our websites, submit inquiries, list venues or services, or
-                    interact with us in any manner.
-                  </p>
-                  <p className="border-l-0 md:border-l-4 border-accent-orange px-6 md:pl-4 text-primary-navy font-black italic bg-white p-6 md:bg-white/50 py-5 md:py-3 rounded-2xl md:rounded-r-lg text-sm md:text-base shadow-sm md:shadow-none border border-gray-100 md:border-none">
-                    By accessing or using our websites, you agree to the terms
-                    outlined in this Privacy Policy.
-                  </p>
-                </div>
-              </div>
-
+            <main className="lg:w-3/4 space-y-12 md:space-y-16">
               {/* Section 1: ABOUT US */}
               <div id="about" className="scroll-mt-32 group">
                 <div className="flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 md:gap-4 mb-5 md:mb-6">
@@ -234,7 +327,7 @@ export default function PrivacyPolicyPage() {
                     <Info size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    1. ABOUT US
+                    ABOUT US
                   </h2>
                 </div>
                 <p className="text-soft-slate text-base md:text-lg mb-6 leading-relaxed">
@@ -258,7 +351,7 @@ export default function PrivacyPolicyPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-soft-slate text-base leading-relaxed bg-corporate-blue/5 p-6 rounded-2xl border border-corporate-blue/10 italic font-medium">
+                <p className="text-soft-slate text-base leading-relaxed bg-corporate-blue/5 p-6 rounded-2xl border border-corporate-blue/10 italic font-medium text-center md:text-left">
                   We facilitate discovery and inquiries. We do not directly
                   organize, manage, or execute events unless explicitly stated
                   under a separate agreement.
@@ -272,7 +365,7 @@ export default function PrivacyPolicyPage() {
                     <Database size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    2. INFORMATION WE COLLECT
+                    INFORMATION WE COLLECT
                   </h2>
                 </div>
                 <p className="text-soft-slate text-base md:text-lg mb-8">
@@ -284,9 +377,6 @@ export default function PrivacyPolicyPage() {
                   {/* 2.1 */}
                   <div>
                     <h3 className="text-xl font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-accent-orange/10 text-accent-orange text-xs flex items-center justify-center font-black">
-                        2.1
-                      </span>
                       Information You Provide Directly
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -400,9 +490,6 @@ export default function PrivacyPolicyPage() {
                   {/* 2.2 */}
                   <div className="bg-light-bg p-8 rounded-[2.5rem] border border-gray-100">
                     <h3 className="text-xl font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-accent-orange/10 text-accent-orange text-xs flex items-center justify-center font-black">
-                        2.2
-                      </span>
                       Automatically Collected Information
                     </h3>
                     <p className="text-soft-slate text-sm mb-6 font-medium">
@@ -432,9 +519,6 @@ export default function PrivacyPolicyPage() {
                   {/* 2.3 */}
                   <div className="bg-white p-8 rounded-[2.5rem] border border-accent-orange/20 shadow-sm">
                     <h3 className="text-xl font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-accent-orange/10 text-accent-orange text-xs flex items-center justify-center font-black">
-                        2.3
-                      </span>
                       Cookies & Tracking Technologies
                     </h3>
                     <p className="text-soft-slate text-sm mb-4 font-medium">
@@ -476,16 +560,13 @@ export default function PrivacyPolicyPage() {
                     <ShieldCheck size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    3. HOW WE USE INFORMATION
+                    HOW WE USE INFORMATION
                   </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100">
                     <p className="font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-2 uppercase tracking-widest text-xs leading-tight">
-                      <span className="text-accent-orange flex-shrink-0">
-                        3.1
-                      </span>{" "}
                       To Facilitate Inquiries
                     </p>
                     <ul className="space-y-3">
@@ -510,9 +591,6 @@ export default function PrivacyPolicyPage() {
 
                   <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100">
                     <p className="font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-2 uppercase tracking-widest text-xs leading-tight">
-                      <span className="text-accent-orange flex-shrink-0">
-                        3.2
-                      </span>{" "}
                       To Operate the Platform
                     </p>
                     <ul className="space-y-3">
@@ -538,9 +616,6 @@ export default function PrivacyPolicyPage() {
 
                   <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100">
                     <p className="font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-2 uppercase tracking-widest text-xs leading-tight">
-                      <span className="text-accent-orange flex-shrink-0">
-                        3.3
-                      </span>{" "}
                       Communication
                     </p>
                     <ul className="space-y-3">
@@ -566,9 +641,6 @@ export default function PrivacyPolicyPage() {
 
                   <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100">
                     <p className="font-bold text-primary-navy mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-2 uppercase tracking-widest text-xs leading-tight">
-                      <span className="text-accent-orange flex-shrink-0">
-                        3.4
-                      </span>{" "}
                       Marketing & Promotions
                     </p>
                     <ul className="space-y-3">
@@ -598,9 +670,6 @@ export default function PrivacyPolicyPage() {
 
                 <div className="mt-6 p-8 rounded-[2rem] bg-primary-navy text-white">
                   <p className="font-bold mb-4 flex flex-col items-center text-center md:flex-row md:items-center md:text-left gap-2 uppercase tracking-widest text-xs leading-tight">
-                    <span className="text-accent-orange flex-shrink-0">
-                      3.5
-                    </span>{" "}
                     Legal & Compliance
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -632,7 +701,7 @@ export default function PrivacyPolicyPage() {
                     <Lock size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    6. DATA SECURITY
+                    SHARING INFORMATION
                   </h2>
                 </div>
                 <p className="text-base md:text-lg text-primary-navy font-black mb-8 p-6 bg-accent-orange/5 border-l-4 border-accent-orange rounded-r-2xl">
@@ -642,9 +711,6 @@ export default function PrivacyPolicyPage() {
                 <div className="space-y-6">
                   <div className="bg-white border border-gray-100 p-8 rounded-[2rem] shadow-sm">
                     <h3 className="font-bold text-primary-navy mb-4 text-lg flex items-center gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-corporate-blue/10 text-corporate-blue text-xs flex items-center justify-center font-black">
-                        4.1
-                      </span>
                       With Venue Owners & Vendors
                     </h3>
                     <p className="text-soft-slate text-sm font-medium leading-relaxed">
@@ -655,9 +721,6 @@ export default function PrivacyPolicyPage() {
 
                   <div className="bg-white border border-gray-100 p-8 rounded-[2rem] shadow-sm">
                     <h3 className="font-bold text-primary-navy mb-4 text-lg flex items-center gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-corporate-blue/10 text-corporate-blue text-xs flex items-center justify-center font-black">
-                        4.2
-                      </span>
                       With Service Providers
                     </h3>
                     <p className="text-soft-slate text-sm font-medium mb-4">
@@ -686,9 +749,6 @@ export default function PrivacyPolicyPage() {
 
                   <div className="bg-white border border-red-100 p-8 rounded-[2rem] shadow-sm">
                     <h3 className="font-bold text-red-600 mb-4 text-lg flex items-center gap-3 leading-tight">
-                      <span className="w-8 h-8 flex-shrink-0 rounded-lg bg-red-100 text-red-600 text-xs flex items-center justify-center font-black">
-                        4.3
-                      </span>
                       Legal Disclosure
                     </h3>
                     <p className="text-soft-slate text-sm font-medium mb-4 leading-relaxed">
@@ -724,7 +784,7 @@ export default function PrivacyPolicyPage() {
                     <Clock size={24} />
                   </div>
                   <h2 className="text-xl font-black text-primary-navy mb-4 uppercase tracking-tight leading-tight">
-                    5. DATA RETENTION
+                    DATA RETENTION
                   </h2>
                   <p className="text-sm text-soft-slate mb-6 flex-grow leading-relaxed font-medium">
                     We retain personal data only as long as necessary for
@@ -746,7 +806,7 @@ export default function PrivacyPolicyPage() {
                     <Lock size={24} />
                   </div>
                   <h2 className="text-xl font-black mb-4 uppercase tracking-tight leading-tight">
-                    6. DATA SECURITY
+                    DATA SECURITY
                   </h2>
                   <p className="text-sm text-gray-400 mb-6 leading-relaxed font-medium">
                     We implement reasonable technical and organizational
@@ -787,7 +847,7 @@ export default function PrivacyPolicyPage() {
                     <ExternalLink size={24} />
                   </div>
                   <h2 className="text-xl font-black text-primary-navy mb-4 uppercase tracking-tight leading-tight">
-                    7. THIRD-PARTY LINKS
+                    THIRD-PARTY LINKS
                   </h2>
                   <p className="text-sm text-soft-slate mb-4 leading-relaxed font-medium">
                     Our websites may contain links to external venue and vendor
@@ -808,7 +868,7 @@ export default function PrivacyPolicyPage() {
                     <UserX size={24} />
                   </div>
                   <h2 className="text-xl font-black text-primary-navy mb-4 uppercase tracking-tight leading-tight">
-                    8. CHILDREN’S PRIVACY
+                    CHILDREN’S PRIVACY
                   </h2>
                   <p className="text-sm text-soft-slate mb-6 font-bold uppercase tracking-widest text-corporate-blue">
                     Our platforms are not intended for individuals under the age
@@ -829,7 +889,7 @@ export default function PrivacyPolicyPage() {
                     <UserCheck size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    9. YOUR RIGHTS
+                    YOUR RIGHTS
                   </h2>
                 </div>
                 <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
@@ -877,7 +937,7 @@ export default function PrivacyPolicyPage() {
                     <Globe size={24} />
                   </div>
                   <h2 className="text-xl font-black mb-4 uppercase tracking-tight leading-tight">
-                    10. INTERNATIONAL TRANSFER
+                    INTERNATIONAL TRANSFER
                   </h2>
                   <p className="text-sm text-blue-100 mb-6 leading-relaxed font-medium">
                     If you access our platform from outside India, your
@@ -897,7 +957,7 @@ export default function PrivacyPolicyPage() {
                     <Briefcase size={24} />
                   </div>
                   <h2 className="text-xl font-black text-primary-navy mb-4 uppercase tracking-tight leading-tight">
-                    11. BUSINESS TRANSFERS
+                    BUSINESS TRANSFERS
                   </h2>
                   <p className="text-sm text-soft-slate mb-6 leading-relaxed font-bold uppercase tracking-widest">
                     In the event of:
@@ -935,7 +995,7 @@ export default function PrivacyPolicyPage() {
                     <ExternalLink size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    7. THIRD-PARTY LINKS
+                    CHANGES TO THIS POLICY
                   </h2>
                 </div>
                 <div className="bg-light-bg rounded-[2.5rem] p-8 md:p-10 border border-gray-100 shadow-sm flex flex-col md:flex-row items-center gap-8">
@@ -963,7 +1023,7 @@ export default function PrivacyPolicyPage() {
                     <Mail size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    13. CONTACT INFORMATION
+                    CONTACT INFORMATION
                   </h2>
                 </div>
                 <div className="bg-primary-navy text-white rounded-[2.5rem] p-8 md:p-12 shadow-xl relative overflow-hidden">
@@ -1053,7 +1113,7 @@ export default function PrivacyPolicyPage() {
                     <CheckCircle2 size={28} className="md:w-6 md:h-6" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-black text-primary-navy leading-[1.1] md:leading-tight">
-                    14. CONSENT
+                    CONSENT
                   </h2>
                 </div>
                 <div className="bg-light-bg rounded-[2.5rem] p-8 md:p-10 border-2 border-dashed border-gray-200 shadow-inner flex flex-col md:flex-row items-center gap-8">

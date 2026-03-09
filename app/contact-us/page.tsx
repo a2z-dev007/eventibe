@@ -248,7 +248,7 @@ export default function ContactUsPage() {
 
             <motion.h1
               variants={heroReveal}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-4 md:mb-6 tracking-tighter leading-[1.1] drop-shadow-2xl px-2"
+              className="text-4xl md:text-6xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-[1.2] drop-shadow-md px-2"
             >
               Contact Us – <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-400">
@@ -258,7 +258,7 @@ export default function ContactUsPage() {
 
             <motion.p
               variants={heroReveal}
-              className="text-sm md:text-lg lg:text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto mb-8 md:mb-10"
+              className="text-lg md:text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto mb-8 md:mb-10"
             >
               Thank you for visiting Eventibe, your trusted destination for
               discovering the perfect venues and services for weddings,
@@ -323,7 +323,7 @@ export default function ContactUsPage() {
             variants={fadeInUp}
             className="text-center mb-16 px-4"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-6 tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-6">
               How to Reach Us
             </h2>
             <p className="text-soft-slate text-base md:text-lg max-w-2xl mx-auto font-medium">
@@ -383,7 +383,7 @@ export default function ContactUsPage() {
             className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 text-center md:text-left"
           >
             <div className="max-w-2xl">
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-6">
                 Visit Our Office – <br className="hidden md:block" /> Regional
                 Presence
               </h2>
@@ -451,7 +451,7 @@ export default function ContactUsPage() {
               variants={fadeInUp}
               className="lg:w-2/5 text-center lg:text-left"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-8 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-8">
                 Start a Conversation
               </h2>
               <p className="text-soft-slate text-base md:text-lg mb-10 leading-relaxed font-medium">
@@ -591,10 +591,10 @@ export default function ContactUsPage() {
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   type="submit"
-                  className="w-full bg-cta-gradient text-white py-6 rounded-2xl font-black text-lg md:text-xl shadow-xl shadow-orange-500/30 hover:shadow-2xl transition-all flex items-center justify-center gap-4 group"
+                  className="w-full bg-cta-gradient text-white py-4 rounded-2xl font-black text-base md:text-lg shadow-xl shadow-orange-500/30 hover:shadow-2xl transition-all flex items-center justify-center gap-4 group"
                 >
                   Send Message
-                  <Send className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </motion.button>
 
                 <p className="text-center text-xs text-soft-slate italic">
@@ -621,10 +621,10 @@ export default function ContactUsPage() {
             variants={fadeInUp}
             className="text-center mb-20"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight leading-tight uppercase mb-6">
               When Should You Contact Us?
             </h2>
-            <p className="text-white/60 text-lg md:text-xl font-medium">
+            <p className="text-white/60 text-base md:text-lg font-medium">
               If you’re unsure where to begin, here’s a quick guide:
             </p>
           </motion.div>
@@ -692,10 +692,10 @@ export default function ContactUsPage() {
               <div className="inline-block px-5 py-2 bg-orange-100 text-accent-orange rounded-full text-xs font-black mb-8 tracking-widest uppercase">
                 OUR VALUES
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-8 tracking-tighter leading-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-8">
                 Our Commitment <br className="hidden md:block" /> to You
               </h2>
-              <p className="text-soft-slate text-base md:text-xl mb-10 leading-relaxed font-medium">
+              <p className="text-soft-slate text-base md:text-lg mb-10 leading-relaxed font-medium">
                 At Eventibe, we value service and responsiveness. When you reach
                 out, you can expect:
               </p>
@@ -772,7 +772,7 @@ export default function ContactUsPage() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-8 tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-8">
               Connect on Social
             </h2>
             <p className="text-soft-slate text-base md:text-lg max-w-2xl mx-auto font-medium">
@@ -849,7 +849,7 @@ export default function ContactUsPage() {
               <div className="inline-block px-4 py-1 bg-blue-100 text-corporate-blue rounded-full text-[10px] font-black tracking-widest uppercase mb-4">
                 FAQ
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-primary-navy mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-6">
                 Frequently Asked Questions
               </h2>
               <p className="text-soft-slate text-base md:text-lg font-medium">
