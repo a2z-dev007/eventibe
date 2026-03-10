@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Sparkles, Home as HomeIcon, Users } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect';
 import PremiumSelect from '@/components/ui/PremiumSelect';
 import PremiumDatePicker from '@/components/ui/PremiumDatePicker';
@@ -83,19 +84,29 @@ export default function HeroSearch() {
   };
 
   return (
-    <div 
-      className="relative w-full lg:max-w-6xl mx-auto z-40 animate-fade-in-up [animation-delay:600ms] mt-4 shadow-[0_30px_60px_rgba(0,0,0,0.25)] rounded-[31px] lg:rounded-full"
-      ref={searchContainerRef}
-    >
-      <div
-        className="border border-white/40 rounded-[31px] lg:rounded-full p-2 relative z-10 w-full shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.22)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+    <div className="relative w-full lg:max-w-6xl mx-auto z-40 mt-4 px-4 lg:px-0" ref={searchContainerRef}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        onAnimationComplete={(definition) => {
+          // Forcefully clear the transform to ensure backdrop-filter works perfectly
+          if (typeof window !== 'undefined') {
+            const container = searchContainerRef.current?.firstChild as HTMLElement;
+            if (container) container.style.transform = 'none';
+          }
         }}
+        className="w-full"
       >
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-white/30">
+        <div
+          className="border border-white/40 rounded-[31px] lg:rounded-full p-2 relative z-10 w-full shadow-[0_40px_80px_rgba(0,0,0,0.5)] bg-white/10"
+          style={{
+            backdropFilter: 'blur(50px) saturate(220%) brightness(1.1)',
+            WebkitBackdropFilter: 'blur(50px) saturate(220%) brightness(1.1)',
+            boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.3), 0 25px 50px rgba(0, 0, 0, 0.4)',
+          }}
+        >
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-white/20">
 
           {/* Location */}
           <div className="flex-[1.5] py-2.5 lg:py-0 hover:bg-white/12 transition-colors group lg:rounded-l-[31px]">
@@ -196,15 +207,15 @@ export default function HeroSearch() {
           <div className="p-2 lg:p-1.5 lg:pl-2">
             <button
               onClick={handleSearch}
-              className="w-full lg:w-[60px] lg:h-[60px] bg-cta-gradient hover:opacity-90 text-white rounded-2xl lg:rounded-full px-8 lg:px-0 py-3 lg:py-0 flex items-center justify-center gap-2 font-bold transition-all duration-300 hover:scale-[1.01] lg:hover:scale-110 active:scale-95 shadow-lg shadow-orange-500/20 group/btn"
+              className="w-full cursor-pointer   lg:w-[60px] lg:h-[60px] bg-cta-gradient hover:opacity-90 text-white rounded-2xl lg:rounded-full px-8 lg:px-0 py-3 lg:py-0 flex items-center justify-center gap-2 font-bold transition-all duration-300 hover:scale-[1.01] lg:hover:scale-110 active:scale-95 shadow-lg shadow-orange-500/20 group/btn"
             >
               <Search className="w-5 h-5 lg:w-6 lg:h-6 transition-transform duration-500 group-hover/btn:rotate-12" strokeWidth={3} />
               <span className="lg:hidden tracking-tight font-bold">Find Spaces</span>
             </button>
           </div>
-
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

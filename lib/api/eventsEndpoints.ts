@@ -1,21 +1,9 @@
 import { BASE_URL } from './apiClient';
 import axios, { AxiosRequestConfig } from 'axios';
 
-// Temporary static token for events API - will be removed when API becomes public
-const EVENTS_API_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzcyMTMxMDg5LCJpYXQiOjE3NzIwNDQ2ODksImp0aSI6IjQyNzBlYWFmYWFjNjRkYTViYzA0NmExMDEyMzhiNTkyIiwidXNlcl9pZCI6Mn0.RZVp6JPPiuM5-CPB8aZKzHzfrksYfRNGieEpdEunxAE';
-
-/** Shared API request function with Bearer token */
+/** Shared API request function */
 async function eventsApiGet<T>(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
-  const response = await axios.get<T>(`${BASE_URL}${endpoint}`, {
-    ...config,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${EVENTS_API_TOKEN}`,
-      ...config?.headers,
-    },
-    timeout: 30000,
-  });
+  const response = await axios.get<T>(`${BASE_URL}${endpoint}`, config);
   return response.data;
 }
 
@@ -25,7 +13,6 @@ async function eventsApiPost<T>(endpoint: string, data: any, config?: AxiosReque
     ...config,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${EVENTS_API_TOKEN}`,
       ...config?.headers,
     },
     timeout: 30000,
@@ -69,6 +56,59 @@ export interface EventTypesResponse {
   records: EventTypeRecord[];
 }
 
+export interface ContactDetail {
+  id: number;
+  name: string;
+  email: string;
+  mobile: string;
+  contact_type: string;
+}
+
+export interface CuisineDetail {
+  id: number;
+  name: string;
+  description: string;
+  file: string | null;
+  key_name: string | null;
+  created: string;
+  created_by: number;
+}
+
+export interface SDetail {
+  id: number;
+  name: string;
+  created: string;
+  created_by: number;
+  description?: string;
+}
+
+export interface ImageRecord {
+  id: number;
+  file: string;
+  cover_photo: boolean;
+  images_tag: any[];
+  order: number;
+  status: number;
+  status_remark: string | null;
+}
+
+export interface PackageDetail {
+  id: number;
+  venue: number;
+  type: string | null;
+  venue_name: string;
+  file: string | null;
+  key_name: string | null;
+  name: string;
+  suitable_for: string;
+  price: string;
+  description: string | null;
+  created: string;
+  status: boolean;
+  status_remark: string | null;
+  created_by: number;
+}
+
 export interface VenueRecord {
   id: number;
   name: string;
@@ -77,6 +117,19 @@ export interface VenueRecord {
   listing: number;
   venue_type: number;
   event_type: number;
+  contact_details?: ContactDetail[];
+  venue_services?: number[];
+  services_details?: SDetail[];
+  venue_cuisines?: number[];
+  cuisine_details?: CuisineDetail[];
+  venue_amenities?: any[];
+  amenities_details?: any[];
+  venue_terms_conditions?: number[];
+  terms_conditions_details?: SDetail[];
+  venue_highlights?: number[];
+  highlights_details?: SDetail[];
+  package_details?: PackageDetail[];
+  images?: ImageRecord[];
   address: string;
   city_id: number;
   city_name: string;
@@ -87,26 +140,18 @@ export interface VenueRecord {
   country_short_name: string;
   lat: number;
   lon: number;
+  meta_title?: string;
+  meta_keywords?: string;
+  meta_description?: string;
+  meta_tags?: string;
+  videos?: any[];
   is_hotel_venue: boolean;
-  contact_details?: any[];
-  venue_services?: number[];
-  services_details?: any[];
-  venue_cuisines?: number[];
-  cuisine_details?: any[];
-  venue_facilities?: number[];
-  facilities_details?: any[];
-  venue_highlights?: number[];
-  highlights_details?: any[];
-  package_details?: any[];
-  images: Array<{
-    id: number;
-    file: string;
-    cover_photo: boolean;
-    order: number;
-    images_tag: string[];
-    status: number;
-    status_remark: string | null;
-  }>;
+  venue_chain?: number;
+  venue_configuration?: number;
+  created?: string;
+  created_by?: number;
+  status?: boolean;
+  status_remark?: string | null;
   [key: string]: unknown;
 }
 
@@ -126,17 +171,29 @@ export async function searchVenues(params: {
   page_number?: number;
   number_of_records?: number;
   city?: string | number;
-  venue_type?: string | number;
-  event_type?: string | number;
+  venue_type?: string | number | number[];
+  event_type?: string | number | number[];
 }): Promise<VenuesResponse> {
   const queryParams = new URLSearchParams();
   if (params.page_number) queryParams.set('page_number', String(params.page_number));
   if (params.number_of_records) queryParams.set('number_of_records', String(params.number_of_records));
   if (params.city) queryParams.set('city', String(params.city));
-  if (params.venue_type) queryParams.set('venue_type', String(params.venue_type));
-  if (params.event_type) queryParams.set('event_type', String(params.event_type));
 
-  return eventsApiGet<VenuesResponse>(`/venues/?${queryParams.toString()}`);
+  const formatArrayParam = (val: string | number | number[] | undefined) => {
+    if (val === undefined || val === null || val === '') return null;
+    if (Array.isArray(val)) return `[${val.join(',')}]`;
+    const sVal = String(val);
+    if (sVal.startsWith('[') && sVal.endsWith(']')) return sVal;
+    return `[${sVal}]`;
+  };
+
+  const vType = formatArrayParam(params.venue_type);
+  if (vType) queryParams.set('venue_type', vType);
+
+  const eType = formatArrayParam(params.event_type);
+  if (eType) queryParams.set('event_type', eType);
+
+  return eventsApiGet<VenuesResponse>(`/venues/list?${queryParams.toString()}`);
 }
 
 /** Fetch venue types for "Explore Venue Types" section */
@@ -145,7 +202,7 @@ export async function fetchVenueTypes(params?: { page_number?: number; number_of
   if (params?.page_number) queryParams.set('page_number', String(params.page_number));
   if (params?.number_of_records) queryParams.set('number_of_records', String(params.number_of_records));
   const queryString = queryParams.toString();
-  return eventsApiGet<VenueTypesResponse>(`/venue-types${queryString ? '/?' + queryString : ''}`);
+  return eventsApiGet<VenueTypesResponse>(`/venue/types${queryString ? '/?' + queryString : ''}`);
 }
 
 /** Fetch event types for "Event Type" dropdown */
@@ -154,20 +211,29 @@ export async function fetchEventTypes(params?: { page_number?: number; number_of
   if (params?.page_number) queryParams.set('page_number', String(params.page_number));
   if (params?.number_of_records) queryParams.set('number_of_records', String(params.number_of_records));
   const queryString = queryParams.toString();
-  return eventsApiGet<EventTypesResponse>(`/event-types${queryString ? '/?' + queryString : ''}`);
+  return eventsApiGet<EventTypesResponse>(`/event/types${queryString ? '/?' + queryString : ''}`);
 }
 
 /** Fetch venues by venue type - used for Premium Banquet Halls, Wedding, Corporate sections */
-export async function fetchVenues(params: { venue_type: number }): Promise<VenuesResponse> {
-  const searchParams = new URLSearchParams({
-    venue_type: String(params.venue_type),
-  });
-  return eventsApiGet<VenuesResponse>(`/venues?${searchParams.toString()}`);
+export async function fetchVenues(params: { venue_type: number | string | number[] }): Promise<VenuesResponse> {
+  const formatArrayParam = (val: string | number | number[] | undefined) => {
+    if (val === undefined || val === null || val === '') return '';
+    if (Array.isArray(val)) return `[${val.join(',')}]`;
+    const sVal = String(val);
+    if (sVal.startsWith('[') && sVal.endsWith(']')) return sVal;
+    return `[${sVal}]`;
+  };
+
+  const vType = formatArrayParam(params.venue_type);
+  const searchParams = new URLSearchParams();
+  if (vType) searchParams.set('venue_type', vType);
+
+  return eventsApiGet<VenuesResponse>(`/venues/list?${searchParams.toString()}`);
 }
 
 /** Fetch a single venue by ID */
 export async function fetchVenueById(id: number | string): Promise<VenuesResponse> {
-  return eventsApiGet<VenuesResponse>(`/venues?id=${id}`);
+  return eventsApiGet<VenuesResponse>(`/venues/list?id=${id}`);
 }
 
 /** Fetch all venues (simplified for dropdowns) */

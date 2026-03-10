@@ -121,7 +121,7 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
             <div
               className={`overflow-hidden rounded-[1.5rem] shadow-[0_25px_60px_rgba(0,0,0,0.15)] transition-all duration-300 w-full ${
                 variant === 'glass'
-                  ? 'bg-white/95 backdrop-blur-2xl border border-white/50'
+                  ? 'bg-white/82 backdrop-blur-2xl border border-white/40'
                   : 'bg-white border border-gray-100'
               }`}
             >

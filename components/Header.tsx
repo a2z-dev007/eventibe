@@ -159,22 +159,21 @@ export default function Header() {
 
             {/* Drawer */}
             <motion.div
-              initial={{ x: '100%', opacity: 0.6 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '100%', opacity: 0 }}
-              transition={{ type: 'spring', damping: 28, stiffness: 280, mass: 0.8 }}
-              className="fixed top-0 right-0 w-[88%] max-w-[360px] h-[100dvh] z-[100] flex flex-col lg:hidden overflow-y-auto"
-              style={{ background: 'linear-gradient(160deg, #0d1b2e 0%, #111827 60%, #0f172a 100%)' }}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 35, stiffness: 300, mass: 1 }}
+              className="fixed top-0 right-0 w-[88%] max-w-[350px] h-[100dvh] z-[100] flex flex-col lg:hidden overflow-y-auto bg-white shadow-2xl"
               data-lenis-prevent="true"
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.08]">
-                <Image src={logoImg} alt="Eventibe" className="h-8 w-auto object-contain brightness-0 invert" />
+              <div className="flex items-center justify-between px-6 py-5 border-b border-slate-50">
+                <Image src={logoImg} alt="Eventibe" className="h-9 w-auto object-contain" />
                 <button
                   onClick={close}
-                  className="w-9 h-9 rounded-full bg-white/[0.08] hover:bg-white/15 flex items-center justify-center text-white/70 hover:text-white transition-all"
+                  className="w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all border border-slate-100"
                 >
-                  <X size={18} strokeWidth={2.5} />
+                  <X size={20} strokeWidth={2.5} />
                 </button>
               </div>
 
@@ -193,17 +192,17 @@ export default function Header() {
                       <Link
                         href={link.href}
                         onClick={close}
-                        className={`flex items-center gap-3.5 px-4 py-3 rounded-2xl mb-1 transition-all ${
+                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl mb-1.5 transition-all ${
                           active
-                            ? 'bg-accent-orange/15 text-accent-orange'
-                            : 'text-white/75 hover:bg-white/[0.06] hover:text-white'
+                            ? 'bg-orange-50 text-orange-600'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
-                        <span className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${active ? 'bg-accent-orange text-white' : 'bg-white/[0.08] text-white/50'}`}>
-                          <Icon size={15} strokeWidth={2} />
+                        <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${active ? 'bg-orange-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
+                          <Icon size={16} strokeWidth={2.5} />
                         </span>
-                        <span className="text-[15px] font-bold">{link.name}</span>
-                        {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-orange" />}
+                        <span className="text-[15px] font-bold tracking-tight">{link.name}</span>
+                        {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-600" />}
                       </Link>
                     </motion.div>
                   );
@@ -215,10 +214,10 @@ export default function Header() {
                 className="px-4 pt-2 pb-4"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.38 }}
+                transition={{ delay: 0.3, duration: 0.45 }}
               >
-                <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.25em] px-4 mb-3">Venues</p>
-                <div className="flex flex-col gap-2">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 mb-4">Explore Venues</p>
+                <div className="flex flex-col gap-2.5">
                   {venueLinks.map((vlink) => {
                     const Icon = vlink.icon;
                     return (
@@ -226,13 +225,13 @@ export default function Header() {
                         key={vlink.name}
                         href={vlink.href}
                         onClick={close}
-                        className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.06] hover:border-white/[0.12] transition-all group"
+                        className="flex items-center gap-4 px-4 py-3.5 rounded-2xl bg-slate-50/50 hover:bg-slate-50 border border-slate-100 hover:border-slate-200 transition-all group"
                       >
-                        <span className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${vlink.color}`}>
-                          <Icon size={14} strokeWidth={2} />
+                        <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${vlink.color.replace('text-orange-400', 'text-orange-600').replace('text-rose-400', 'text-rose-600').replace('text-blue-400', 'text-blue-600').replace('bg-orange-500/15', 'bg-orange-100').replace('bg-rose-500/15', 'bg-rose-100').replace('bg-blue-500/15', 'bg-blue-100')}`}>
+                          <Icon size={15} strokeWidth={2.5} />
                         </span>
-                        <span className="text-[14px] font-bold text-white/75 group-hover:text-white transition-colors flex-1">{vlink.name}</span>
-                        <ArrowUpRight size={13} className="text-white/20 group-hover:text-white/50 transition-colors" />
+                        <span className="text-[14px] font-bold text-slate-600 group-hover:text-slate-900 transition-colors flex-1">{vlink.name}</span>
+                        <ArrowUpRight size={14} className="text-slate-300 group-hover:text-slate-500 transition-colors" />
                       </Link>
                     );
                   })}
@@ -244,10 +243,10 @@ export default function Header() {
                 className="px-4 pb-4"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.42, duration: 0.38 }}
+                transition={{ delay: 0.42, duration: 0.45 }}
               >
-                <p className="text-[9px] font-black text-white/30 uppercase tracking-[0.25em] px-4 mb-3">Partners</p>
-                <div className="grid grid-cols-2 gap-2">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 mb-4">Our Partners</p>
+                <div className="grid grid-cols-2 gap-2.5">
                   {[
                     { name: 'Partner With Us', href: '/partner-with-us',   icon: Handshake },
                     { name: 'List Service',    href: '/list-your-service', icon: ListPlus },
@@ -258,12 +257,12 @@ export default function Header() {
                         key={p.name}
                         href={p.href}
                         onClick={close}
-                        className="flex flex-col items-center gap-2 px-3 py-4 rounded-2xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.06] hover:border-white/[0.12] transition-all group text-center"
+                        className="flex flex-col items-center gap-3 px-3 py-5 rounded-2xl bg-slate-50/50 hover:bg-slate-50 border border-slate-100 hover:border-slate-200 transition-all group text-center"
                       >
-                        <span className="w-9 h-9 rounded-xl bg-white/[0.08] flex items-center justify-center text-white/50 group-hover:text-white transition-colors">
-                          <Icon size={15} strokeWidth={1.8} />
+                        <span className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:text-slate-600 transition-colors">
+                          <Icon size={17} strokeWidth={2} />
                         </span>
-                        <span className="text-[11px] font-bold text-white/60 group-hover:text-white/90 transition-colors leading-tight">{p.name}</span>
+                        <span className="text-[12px] font-bold text-slate-500 group-hover:text-slate-700 transition-colors leading-tight">{p.name}</span>
                       </Link>
                     );
                   })}
@@ -272,25 +271,25 @@ export default function Header() {
 
               {/* Bottom CTAs */}
               <motion.div
-                className="mt-auto px-4 pb-8 pt-4 border-t border-white/[0.08] flex flex-col gap-3"
+                className="mt-auto px-4 pb-8 pt-5 border-t border-slate-100 flex flex-col gap-3.5 bg-slate-50/30"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.52, duration: 0.38 }}
+                transition={{ delay: 0.55, duration: 0.45 }}
               >
                 <Link
                   href="/login"
                   onClick={close}
-                  className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 text-white font-bold text-[14px] transition-all"
+                  className="flex items-center justify-center gap-2.5 py-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-[14px] transition-all shadow-sm"
                 >
-                  <LogIn size={16} strokeWidth={2} className="text-white/60" />
+                  <LogIn size={18} strokeWidth={2.5} className="text-slate-400" />
                   Login to Account
                 </Link>
                 <Link
                   href="/list-your-venue"
                   onClick={close}
-                  className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-cta-gradient hover:opacity-90 text-white font-bold text-[14px] shadow-lg shadow-orange-500/25 transition-all"
+                  className="flex items-center justify-center gap-2.5 py-4 rounded-2xl bg-cta-gradient hover:opacity-90 text-white font-bold text-[14px] shadow-lg shadow-orange-500/20 transition-all"
                 >
-                  <Building2 size={16} strokeWidth={2} />
+                  <Building2 size={18} strokeWidth={2.5} />
                   List Your Venue
                 </Link>
               </motion.div>

@@ -34,7 +34,7 @@ export default function Home() {
           setIndex(1);
         }} />
 
-        <div className="container mx-auto px-4 mt-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-12 md:mt-16">
+        <div className="container mx-auto px-4 mt-4 md:px-6 relative flex flex-col items-center text-center mt-12 md:mt-16">
           <div className="relative w-full flex flex-col items-center min-h-[160px] md:min-h-[280px]">
             <AnimatePresence>
               <motion.div

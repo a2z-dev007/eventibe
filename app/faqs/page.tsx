@@ -1,63 +1,70 @@
-export const metadata = {
-  title: 'Frequently Asked Questions | Eventibe',
-  description: 'Find answers to common questions about using Eventibe.',
+import { Metadata } from 'next';
+import Script from 'next/script';
+import FAQPageClient from './FAQPageClient';
+
+export const metadata: Metadata = {
+    title: 'Eventibe FAQs – Quick Answers for Events & Stays | Booking Help & Support',
+    description: 'Find clear and accurate answers to the most common questions about Eventibe. Learn how online booking, payments, cancellations, refunds, GST invoices, and event venue listing works.',
+    keywords: 'Eventibe FAQs, Eventibe help, Eventibe support, event booking FAQs, online venue booking help, Eventibe questions, booking cancellation FAQs, refund FAQs, GST invoice FAQs, property listing FAQs, host support, guest support, payment FAQs, booking confirmation help, hotel extranet FAQs, Eventibe India, travel FAQs, booking assistance, venue partner help, online travel platform, room booking help, how Eventibe works, account help, app FAQs, Eventibe mobile FAQs, customer service FAQs, venue onboarding, support center, reservation FAQs, booking policy FAQs, travel support, accommodation help, guest questions, venue partner questions, eventibe.com FAQs',
+    openGraph: {
+        title: 'Eventibe FAQs – Quick Answers for Events & Stays',
+        description: 'Clear answers to the most common guest and venue partner questions at Eventibe.',
+        url: 'https://eventibe.com/faqs',
+        siteName: 'Eventibe',
+        images: [
+            {
+                url: 'https://eventibe.com/assets/images/og-faqs.jpg',
+                alt: 'Eventibe FAQs',
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Eventibe FAQs – Guest & Venue Partner Help Center',
+        description: 'Find answers to all common questions related to booking, payments, refunds, and venue management on Eventibe.',
+        images: ['https://eventibe.com/assets/images/og-faqs.jpg'],
+        site: '@Eventibehq',
+    },
+    alternates: {
+        canonical: 'https://eventibe.com/faqs',
+    },
 };
 
-export default function FAQsPage() {
-  const faqs = [
-    {
-      question: "Is Eventibe free to use for event organizers?",
-      answer: "Yes, Eventibe is completely free for corporate event planners and organizers to search, compare, and send inquiries to venues and vendors."
-    },
-    {
-      question: "How do I book a venue?",
-      answer: "Currently, Eventibe operates on an inquiry-driven model. You find a venue you like, fill out the inquiry form on their profile, and the venue's event team will contact you directly with a quote and availability."
-    },
-    {
-      question: "Are the prices listed on the website final?",
-      answer: "The prices listed are indicative starting prices or ranges provided by the venues and vendors. Final pricing depends on your specific event requirements, date, and guest count."
-    },
-    {
-      question: "Can I list my own venue or service?",
-      answer: "Absolutely! We are always looking to partner with premium corporate venues and service providers. Visit our 'List Your Venue' or 'List Your Service' pages to get started."
-    },
-    {
-      question: "What types of events can I plan using Eventibe?",
-      answer: "Eventibe specializes in corporate events, including conferences, seminars, board meetings, product launches, team offsites, and corporate gala dinners."
-    }
-  ];
-
-  return (
-    <div className="bg-light-bg min-h-screen py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map(faq => ({
-              '@type': 'Question',
-              name: faq.question,
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: faq.answer
-              }
-            }))
-          })
-        }}
-      />
-      <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-        <h1 className="text-4xl font-bold text-primary-navy mb-8 text-center">Frequently Asked Questions</h1>
-        
-        <div className="space-y-6">
-          {faqs.map((faq, index) => (
-            <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-xl font-bold text-primary-navy mb-3">{faq.question}</h3>
-              <p className="text-soft-slate">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+export default function FAQPage() {
+    return (
+        <>
+            <FAQPageClient />
+            <Script
+                id="faq-schema"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        name: 'Eventibe Frequently Asked Questions',
+                        url: 'https://eventibe.com/faqs',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How does Eventibe booking work?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Guests can book venues and stays instantly on Eventibe.com and receive automatic confirmation. Partners receive booking alerts via email, WhatsApp, and dashboard notifications.',
+                                },
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I cancel or modify a booking?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Guests can modify or cancel bookings through the My Bookings section or by contacting support@eventibe.com.',
+                                },
+                            },
+                        ],
+                    }),
+                }}
+            />
+        </>
+    );
 }

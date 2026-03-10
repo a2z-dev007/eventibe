@@ -124,8 +124,8 @@ export default function DynamicHeroBackground({ currentIndex: externalIndex, onV
       </AnimatePresence>
 
       {/* Subtle overlay to ensure text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60 z-[5] pointer-events-none" />
-      <div className="absolute inset-0 bg-black/20 z-[5] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
     </div>
   );
 }

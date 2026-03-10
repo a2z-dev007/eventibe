@@ -295,7 +295,7 @@ button,
 }
 
 /* Button press effect */
-button:active:not(:disabled):not([disabled]),
+/* button:active:not(:disabled):not([disabled]),
 .btn:active:not(:disabled):not([disabled]),
 [type=button]:active:not(:disabled):not([disabled]),
 [type=submit]:active:not(:disabled):not([disabled]),
@@ -303,7 +303,7 @@ button:active:not(:disabled):not([disabled]),
   transform: scale(0.96);
   filter: brightness(0.92);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* Override for carousel navigation buttons to prevent double-arrow effect */
 .carousel-arrow-btn:hover,
