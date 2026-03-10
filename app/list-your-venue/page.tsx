@@ -1476,7 +1476,7 @@ export default function ListYourVenuePage() {
               ))}
             </div>
             <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-              <div className="flex items-center gap-4 group cursor-pointer bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 hover:scale-105 transition-transform">
+              <div className="flex items-center gap-4 group cursor-pointer bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:scale-105 transition-transform">
                 <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-accent-orange">
                   <MessageSquare size={24} />
                 </div>
@@ -1488,7 +1488,7 @@ export default function ListYourVenuePage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 group cursor-pointer bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 hover:scale-105 transition-transform">
+              <div className="flex items-center gap-4 group cursor-pointer bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 hover:scale-105 transition-transform">
                 <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-corporate-blue">
                   <Star size={24} />
                 </div>
