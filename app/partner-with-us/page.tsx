@@ -233,13 +233,13 @@ export default function PartnerWithUsPage() {
                 key={idx}
                 className="bg-white p-6 md:p-8 rounded-[32px] border border-gray-100 shadow-sm hover:shadow-xl transition-shadow"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-corporate-blue">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-corporate-blue mx-auto md:mx-0">
                   <item.icon className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-primary-navy mb-2">
+                <h3 className="text-lg md:text-xl font-bold text-primary-navy mb-2 text-center md:text-left">
                   {item.title}
                 </h3>
-                <p className="text-soft-slate text-sm">
+                <p className="text-soft-slate text-sm text-left">
                   Clients today expect {item.title.toLowerCase()} for their
                   events.
                 </p>
@@ -302,11 +302,11 @@ export default function PartnerWithUsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Category 1 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-600 group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 1. Wedding Planning Companies
               </h3>
             </div>
@@ -340,11 +340,11 @@ export default function PartnerWithUsPage() {
 
           {/* Category 2 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-corporate-blue group-hover:scale-110 transition-transform">
                 <Briefcase className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 2. Corporate Event Management Companies
               </h3>
             </div>
@@ -377,11 +377,11 @@ export default function PartnerWithUsPage() {
 
           {/* Category 3 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
                 <Building2 className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 3. Hospitality & Venue Aggregators
               </h3>
             </div>
@@ -396,11 +396,11 @@ export default function PartnerWithUsPage() {
 
           {/* Category 4 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
                 <Globe2 className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 4. Destination Management Companies (DMCs)
               </h3>
             </div>
@@ -433,11 +433,11 @@ export default function PartnerWithUsPage() {
 
           {/* Category 5 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform">
                 <Camera className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 5. Event Vendors & Service Providers
               </h3>
             </div>
@@ -470,11 +470,11 @@ export default function PartnerWithUsPage() {
 
           {/* Category 6 */}
           <TiltCard className="group p-8 rounded-[32px] border border-gray-100 bg-white hover:border-corporate-blue/20 transition-all">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
               <div className="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center text-yellow-600 group-hover:scale-110 transition-transform">
                 <Laptop className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-extrabold">
+              <h3 className="text-xl font-extrabold text-center md:text-left w-full md:w-auto">
                 6. Media & Content Partners
               </h3>
             </div>
@@ -589,11 +589,13 @@ export default function PartnerWithUsPage() {
                 key={idx}
                 className="group p-10 rounded-[40px] border border-white/10 bg-white/5 hover:bg-white/10 transition-all"
               >
-                <div className="text-accent-orange font-bold text-lg mb-4">
+                <div className="text-accent-orange font-bold text-lg mb-4 text-center md:text-left">
                   Model 0{model.num}
                 </div>
-                <h3 className="text-2xl font-bold mb-6">{model.title}</h3>
-                <div className="mb-8 p-4 rounded-2xl bg-white/5">
+                <h3 className="text-2xl font-bold mb-6 text-center md:text-left">
+                  {model.title}
+                </h3>
+                <div className="mb-8 p-4 rounded-2xl bg-white/5 text-left">
                   <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">
                     Ideal for:
                   </p>
@@ -601,8 +603,8 @@ export default function PartnerWithUsPage() {
                 </div>
                 <ul className="space-y-3">
                   {model.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-accent-orange" />
+                    <li key={i} className="flex items-center gap-3 text-left">
+                      <CheckCircle2 className="w-5 h-5 text-accent-orange flex-shrink-0" />
                       <span className="text-gray-300">{feature}</span>
                     </li>
                   ))}
@@ -617,7 +619,7 @@ export default function PartnerWithUsPage() {
       <section className="py-16 container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy mb-8 leading-tight text-center md:text-left">
               What Makes Eventibe Different?
             </h2>
             <p className="text-xl text-soft-slate mb-8">
@@ -643,19 +645,19 @@ export default function PartnerWithUsPage() {
               ))}
             </div>
             <div className="space-y-6">
-              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex items-center justify-between">
-                <p className="text-xl font-bold text-primary-navy">
+              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p className="text-xl font-bold text-primary-navy text-left">
                   We are not replacing planners.
                 </p>
-                <p className="text-corporate-blue font-extrabold">
+                <p className="text-corporate-blue font-extrabold text-left">
                   We are empowering planners.
                 </p>
               </div>
-              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex items-center justify-between">
-                <p className="text-xl font-bold text-primary-navy">
+              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p className="text-xl font-bold text-primary-navy text-left">
                   We are not competing with agencies.
                 </p>
-                <p className="text-corporate-blue font-extrabold">
+                <p className="text-corporate-blue font-extrabold text-left">
                   We are enabling agencies.
                 </p>
               </div>
@@ -672,11 +674,11 @@ export default function PartnerWithUsPage() {
               <div className="absolute inset-0 bg-blue-900/20" />
             </div>
             <div className="absolute -bottom-10 -left-10 bg-white p-8 rounded-[40px] shadow-xl border border-gray-100 max-w-xs">
-              <Award className="w-12 h-12 text-accent-orange mb-4" />
-              <h4 className="text-xl font-bold text-primary-navy mb-2">
+              <Award className="w-12 h-12 text-accent-orange mb-4 mx-auto md:mx-0" />
+              <h4 className="text-xl font-bold text-primary-navy mb-2 text-center md:text-left">
                 Premiere Portal
               </h4>
-              <p className="text-soft-slate text-sm">
+              <p className="text-soft-slate text-sm text-left">
                 Building the future of events with industry leaders.
               </p>
             </div>
@@ -723,15 +725,17 @@ export default function PartnerWithUsPage() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="group bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-xl transition-all h-full text-center md:text-left"
+                className="group bg-white p-10 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-xl transition-all h-full"
               >
                 <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-corporate-blue mb-8 group-hover:scale-110 transition-transform mx-auto md:mx-0">
                   <item.icon className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-primary-navy mb-4">
+                <h3 className="text-2xl font-bold text-primary-navy mb-4 text-center md:text-left">
                   {item.title}
                 </h3>
-                <p className="text-soft-slate leading-relaxed">{item.desc}</p>
+                <p className="text-soft-slate leading-relaxed text-left">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -824,7 +828,7 @@ export default function PartnerWithUsPage() {
                       transition={{ duration: 0.5, delay: 0.1 }}
                     >
                       <TiltCard className="group">
-                        <div className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-[0_5px_20px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.12)] transition-all duration-500 relative overflow-hidden h-full text-left">
+                        <div className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-[0_5px_20px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.12)] transition-all duration-500 relative overflow-hidden h-full">
                           {/* Inner Gradient Glow */}
                           <div
                             className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none ${
@@ -841,25 +845,29 @@ export default function PartnerWithUsPage() {
                           />
 
                           <div
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest mb-4 border ${
-                              item.color === "blue"
-                                ? "bg-blue-50 text-blue-600 border-blue-100"
-                                : item.color === "orange"
-                                  ? "bg-orange-50 text-orange-600 border-orange-100"
-                                  : item.color === "purple"
-                                    ? "bg-purple-50 text-purple-600 border-purple-100"
-                                    : item.color === "emerald"
-                                      ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                                      : "bg-rose-50 text-rose-600 border-rose-100"
-                            }`}
+                            className={`flex justify-center md:justify-start mb-4`}
                           >
-                            {item.badge}
+                            <div
+                              className={`inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                                item.color === "blue"
+                                  ? "bg-blue-50 text-blue-600 border-blue-100"
+                                  : item.color === "orange"
+                                    ? "bg-orange-50 text-orange-600 border-orange-100"
+                                    : item.color === "purple"
+                                      ? "bg-purple-50 text-purple-600 border-purple-100"
+                                      : item.color === "emerald"
+                                        ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                                        : "bg-rose-50 text-rose-600 border-rose-100"
+                              }`}
+                            >
+                              {item.badge}
+                            </div>
                           </div>
 
-                          <h3 className="text-xl md:text-2xl font-extrabold text-primary-navy mb-3 group-hover:text-corporate-blue transition-colors">
+                          <h3 className="text-xl md:text-2xl font-extrabold text-primary-navy mb-3 group-hover:text-corporate-blue transition-colors text-center md:text-left">
                             {item.title}
                           </h3>
-                          <p className="text-soft-slate text-base leading-relaxed">
+                          <p className="text-soft-slate text-base leading-relaxed text-left">
                             {item.details}
                           </p>
                         </div>
@@ -908,7 +916,7 @@ export default function PartnerWithUsPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div>
-              <h2 className="text-4xl font-extrabold text-white mb-10">
+              <h2 className="text-4xl font-extrabold text-white mb-10 text-center md:text-left">
                 Corporate Collaboration Program
               </h2>
               <div className="p-8 rounded-[40px] bg-white/5 border border-white/10">
@@ -940,8 +948,8 @@ export default function PartnerWithUsPage() {
                 </p>
               </div>
             </div>
-            <div>
-              <h2 className="text-4xl font-extrabold text-white mb-10">
+            <div className="w-full">
+              <h2 className="text-4xl font-extrabold text-white mb-10 text-center md:text-left">
                 Co-Marketing & Brand Promotion
               </h2>
               <p className="text-xl text-gray-300 mb-8">
@@ -972,8 +980,8 @@ export default function PartnerWithUsPage() {
       {/* Vision & Ethics */}
       <section className="py-16 container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <h2 className="text-4xl font-extrabold text-primary-navy mb-8">
+          <div className="w-full">
+            <h2 className="text-4xl font-extrabold text-primary-navy mb-8 text-center md:text-left">
               Our Vision for the Next 5 Years
             </h2>
             <p className="text-lg text-soft-slate mb-8">Eventibe aims to:</p>
@@ -998,8 +1006,8 @@ export default function PartnerWithUsPage() {
               Partnerships will be the foundation of this growth.
             </p>
           </div>
-          <div className="bg-gray-50 p-12 rounded-[40px] border border-gray-100">
-            <h2 className="text-4xl font-extrabold text-primary-navy mb-8">
+          <div className="bg-gray-50 p-6 md:p-12 rounded-[40px] border border-gray-100">
+            <h2 className="text-4xl font-extrabold text-primary-navy mb-8 text-center md:text-left">
               Ethical & Transparent Collaboration
             </h2>
             <div className="flex flex-wrap gap-4 mb-8">
@@ -1023,7 +1031,7 @@ export default function PartnerWithUsPage() {
               strategic, stable collaboration.
             </p>
             <div className="h-0.5 w-full bg-gray-200 my-8" />
-            <h3 className="text-2xl font-bold text-primary-navy mb-4">
+            <h3 className="text-2xl font-bold text-primary-navy mb-4 text-center md:text-left">
               Why Partner Early?
             </h3>
             <ul className="space-y-3">
@@ -1052,7 +1060,7 @@ export default function PartnerWithUsPage() {
           <div className="w-full rounded-[40px] md:rounded-[60px] bg-white shadow-sm overflow-hidden border border-gray-200 flex flex-col md:flex-row">
             <div className="md:w-1/3 bg-primary-navy p-8 md:p-12 text-white flex flex-col justify-between">
               <div>
-                <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center md:text-left">
                   Let’s Build Together
                 </h2>
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 md:mb-8">
@@ -1080,7 +1088,7 @@ export default function PartnerWithUsPage() {
 
             <div className="flex-1 p-8 md:p-12">
               <div className="mb-8">
-                <h3 className="text-2xl md:text-3xl font-extrabold text-primary-navy mb-2">
+                <h3 className="text-2xl md:text-3xl font-extrabold text-primary-navy mb-2 text-center md:text-left">
                   Become a Partner
                 </h3>
                 <p className="text-soft-slate text-sm">

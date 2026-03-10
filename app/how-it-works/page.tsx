@@ -276,12 +276,11 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* ── INTERACTIVE ROLES & STEPS SECTION ────────────────────────────── */}
-      <div className="relative">
-        {/* ── TABS NAVIGATION (Segmented Control UI) ────────────────────────────── */}
-        <section className="container mx-auto px-4 md:px-6 sticky top-24 z-40 mb-20 pointer-events-none">
-          <div className="flex justify-center pointer-events-auto">
-            <div className="bg-white/80 backdrop-blur-xl p-2 rounded-[32px] shadow-2xl border border-gray-100 flex flex-col md:flex-row items-center justify-center gap-1">
+      {/* ── TABS NAVIGATION (Segmented Control UI) ────────────────────────────── */}
+      <div className="py-10">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex justify-center">
+            <div className="bg-white p-2 rounded-[32px] shadow-xl border border-gray-100 flex flex-col md:flex-row items-center justify-center gap-1">
               {roles.map((role) => {
                 const isActive = activeTab === role.id;
                 return (
@@ -315,10 +314,12 @@ export default function HowItWorksPage() {
               })}
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* ── STEPS SECTION ────────────────────────────── */}
-        <section className="container mx-auto px-4 md:px-6 mb-32 relative z-10">
+      {/* ── STEPS SECTION ────────────────────────────── */}
+      <div className="relative">
+        <section className="container mx-auto px-4 md:px-6 mb-32 relative z-10 pt-16">
           <RoleSteps role={selectedRole} />
         </section>
       </div>
@@ -741,7 +742,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────── */}
-      <section className="py-16 md:py-24 container mx-auto px-4 md:px-6 mb-20">
+      <section className="py-8 md:py-24 container mx-auto px-4 md:px-6 mb-6 md:mb-20">
         <div className="bg-primary-navy rounded-[40px] p-8 md:p-16 text-center text-white relative overflow-hidden">
           {/* Orange glow */}
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-orange/10 rounded-full blur-[100px]" />
@@ -780,7 +781,7 @@ export default function HowItWorksPage() {
                 Send Inquiry
               </button>
             </div>
-            <p className="mt-12 text-white/50 font-bold uppercase tracking-[0.3em] text-[10px] md:text-xs">
+            <p className="mt-6 md:mt-12 text-white/50 font-bold uppercase tracking-[0.3em] text-[10px] md:text-xs">
               Explore Venues • Send Inquiries • Plan Confidently
             </p>
           </div>
