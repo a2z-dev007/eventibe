@@ -109,6 +109,16 @@ export interface PackageDetail {
   created_by: number;
 }
 
+export interface VideoRecord {
+  id: number;
+  title: string;
+  video_url: string;
+  status: boolean;
+  status_remark: string | null;
+  created: string;
+  created_by: number;
+}
+
 export interface VenueRecord {
   id: number;
   name: string;
@@ -130,6 +140,7 @@ export interface VenueRecord {
   highlights_details?: SDetail[];
   package_details?: PackageDetail[];
   images?: ImageRecord[];
+  videos?: VideoRecord[];
   address: string;
   city_id: number;
   city_name: string;
@@ -144,7 +155,6 @@ export interface VenueRecord {
   meta_keywords?: string;
   meta_description?: string;
   meta_tags?: string;
-  videos?: any[];
   is_hotel_venue: boolean;
   venue_chain?: number;
   venue_configuration?: number;
@@ -193,7 +203,11 @@ export async function searchVenues(params: {
   const eType = formatArrayParam(params.event_type);
   if (eType) queryParams.set('event_type', eType);
 
-  return eventsApiGet<VenuesResponse>(`/venues/list?${queryParams.toString()}`);
+  const queryString = queryParams.toString()
+    .replaceAll('%5B', '[')
+    .replaceAll('%5D', ']');
+
+  return eventsApiGet<VenuesResponse>(`/venues/list?${queryString}`);
 }
 
 /** Fetch venue types for "Explore Venue Types" section */
@@ -228,7 +242,11 @@ export async function fetchVenues(params: { venue_type: number | string | number
   const searchParams = new URLSearchParams();
   if (vType) searchParams.set('venue_type', vType);
 
-  return eventsApiGet<VenuesResponse>(`/venues/list?${searchParams.toString()}`);
+  const queryString = searchParams.toString()
+    .replaceAll('%5B', '[')
+    .replaceAll('%5D', ']');
+
+  return eventsApiGet<VenuesResponse>(`/venues/list?${queryString}`);
 }
 
 /** Fetch a single venue by ID */
