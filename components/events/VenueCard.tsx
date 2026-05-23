@@ -1,8 +1,14 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { MapPin, Users, Heart } from 'lucide-react'
+import { toSlug } from '@/components/events/event-details/toSlug'
 
 const STAR_PATH = 'M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.922-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.196-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'
 
 interface VenueCardProps {
+  id: number | string
+  slug?: string
   name: string
   city: string
   rating?: string
@@ -11,9 +17,24 @@ interface VenueCardProps {
   img: string
 }
 
-export default function VenueCard({ name, city, rating, capacity, price, img }: VenueCardProps) {
+export default function VenueCard({ id, slug, name, city, rating, capacity, price, img }: VenueCardProps) {
+  const router = useRouter()
+  const detailsHref = `/events/details/${slug || toSlug(name)}`
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // If user clicked the heart/wishlist button, don't trigger card click
+    const target = e.target as HTMLElement
+    if (target.closest('button')) {
+      return
+    }
+    router.push(detailsHref)
+  }
+
   return (
-    <article className="group relative bg-white rounded-3xl border border-gray-100/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 overflow-hidden hover:-translate-y-2">
+    <article 
+      onClick={handleCardClick}
+      className="group relative bg-white rounded-3xl border border-gray-100/60 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 overflow-hidden hover:-translate-y-2 cursor-pointer"
+    >
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img

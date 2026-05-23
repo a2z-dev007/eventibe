@@ -51,19 +51,21 @@ export const googleReviews = [
 ]
 
 export const stories = [
-  { tag: 'Luxury Wedding', quote: '"We finalized our wedding venue in under 48 hours. The listing details were accurate, and the Spodia concierge handled every follow-up professionally."', author: 'Rhea and Arjun', sub: 'Jaipur Destination Wedding' },
+  { tag: 'Luxury Wedding', quote: '"We finalized our wedding venue in under 48 hours. The listing details were accurate, and the Eventibe concierge handled every follow-up professionally."', author: 'Rhea and Arjun', sub: 'Jaipur Destination Wedding' },
   { tag: 'Corporate Summit', quote: '"The side-by-side comparison made procurement fast. We booked a 700-guest convention venue with clear pricing and no hidden surprises."', author: 'Neha Sharma', sub: 'Regional Events Lead, Vertex Labs' },
   { tag: 'Reception Celebration', quote: '"From shortlist to final booking, everything felt premium and organized. The support team helped us close quickly during peak season."', author: 'Karan Malhotra', sub: 'Family Event Host, New Delhi' },
+  { tag: 'Engagement Gala', quote: '"The attention to detail and personalized support was exceptional. We found a stunning venue that perfectly matched our vision and budget."', author: 'Sneha and Rahul', sub: 'Udaipur Heritage Palace' },
+  { tag: 'Tech Conference', quote: '"Efficient, transparent, and professional. Eventibe made organizing our annual tech summit a breeze with their curated list of top-tier hubs."', author: 'Amit Patel', sub: 'Operations Director, TechFlow' },
 ]
 
 export const faqs = [
-  { q: 'What types of venues are available on Spodia?', a: 'You can book banquet halls, lawns, resorts, hotels, farmhouses, rooftops, and convention venues across major cities.' },
-  { q: 'Can I book venues for corporate events?', a: 'Yes. Spodia supports conferences, annual meets, product launches, team offsites, and corporate celebrations.' },
+  { q: 'What types of venues are available on Eventibe?', a: 'You can book banquet halls, lawns, resorts, hotels, farmhouses, rooftops, and convention venues across major cities.' },
+  { q: 'Can I book venues for corporate events?', a: 'Yes. Eventibe supports conferences, annual meets, product launches, team offsites, and corporate celebrations.' },
   { q: 'How quickly can I confirm a venue booking?', a: 'Many listings respond within minutes. Final confirmation usually depends on date hold, package selection, and payment completion.' },
   { q: 'Can I schedule a site visit before booking?', a: 'Yes. You can request a site visit for shortlisted venues and confirm after inspecting facilities, layout, and services.' },
   { q: 'Is there a minimum booking amount?', a: 'Minimum booking amount varies by venue and event date. Premium dates and high-demand cities may require higher advance payments.' },
   { q: 'What is the cancellation and refund policy?', a: 'Cancellation terms are venue-specific. Always review refund timelines, deduction clauses, and date-change conditions before paying.' },
-  { q: 'Are there any hidden charges?', a: 'Spodia promotes transparent pricing, but taxes, overtime, corkage, and add-on services should be confirmed in the final quote.' },
+  { q: 'Are there any hidden charges?', a: 'Eventibe promotes transparent pricing, but taxes, overtime, corkage, and add-on services should be confirmed in the final quote.' },
   { q: 'What is usually included in a venue package?', a: 'Packages may include hall/lawn rental, basic decor, seating, power backup, parking, and in-house catering, based on venue policy.' },
   { q: 'Are guest capacities verified?', a: 'Yes. Capacities are reviewed with venue teams and updated regularly, but final setup style can impact practical seating.' },
   { q: 'Can I bring outside decorators or caterers?', a: 'Some venues allow outside vendors, while others are in-house only. Vendor flexibility is clearly listed per venue profile.' },
@@ -72,11 +74,11 @@ export const faqs = [
   { q: 'Can I book rooms along with the event venue?', a: 'Yes, many hotels and resorts offer room + venue packages for weddings, destination events, and multi-day celebrations.' },
   { q: 'When do I need to submit final guest count?', a: 'Most venues request final numbers 48 to 72 hours before the event for catering and seating execution.' },
   { q: 'What payment methods are accepted?', a: 'Venues commonly accept bank transfer, UPI, and card payments. Some may offer structured milestone payment schedules.' },
-  { q: 'Does Spodia handle event management?', a: 'Spodia is a venue booking platform. While we provide concierge support for venue selection, full event management is usually handled by your chosen planners.' },
+  { q: 'Does Eventibe handle event management?', a: 'Eventibe is a venue booking platform. While we provide concierge support for venue selection, full event management is usually handled by your chosen planners.' },
   { q: 'Are there any discounts for bulk bookings?', a: 'Many venues offer special corporate or multi-day discounts. Our concierge team can help negotiate these rates for you.' },
   { q: 'Is Wi-Fi available at wedding venues?', a: 'Most corporate-focused venues and high-end hotels provide Wi-Fi. It is best to confirm bandwidth and coverage areas for your specific event needs.' },
   { q: 'Can I host private parties like birthdays?', a: 'Absolutely. We have several venues that specialize in smaller, intimate social gatherings like birthdays, anniversaries, and baby showers.' },
-  { q: 'What happens if the venue is not as described?', a: 'Spodia focuses on verified listings. If you find significant discrepancies, our support team will help resolve the issue or find a suitable alternative.' },
+  { q: 'What happens if the venue is not as described?', a: 'Eventibe focuses on verified listings. If you find significant discrepancies, our support team will help resolve the issue or find a suitable alternative.' },
 ]
 
 export const seoRows = [

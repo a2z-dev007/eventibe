@@ -6,10 +6,12 @@ export const metadata: Metadata = {
   description: 'Full venue details — pricing, capacity, photos, reviews, FAQs and booking for your perfect event.',
 }
 
-export default function EventDetailsPageRoute() {
+import { Suspense } from 'react'
+
+export default function EventDetailsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
       <EventDetailsClient />
-    </div>
+    </Suspense>
   )
 }

@@ -1,10 +1,13 @@
 import type {Metadata} from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Geist } from 'next/font/google';
 import './globals.css'; // Global styles
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SmoothScrolling from '@/components/SmoothScrolling';
 import QueryProvider from '@/contexts/QueryProvider';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={cn(inter.variable, "font-sans", geist.variable)} suppressHydrationWarning>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
         <QueryProvider>
           <SmoothScrolling>

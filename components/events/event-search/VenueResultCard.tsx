@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { MapPin, Star, Users, Utensils, Info, ArrowRight, ShieldCheck, Plus, ChevronRight } from 'lucide-react'
+import { MapPin, Star, Users, Utensils, Info, ArrowRight, ShieldCheck, Plus, ChevronRight, Send } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import type { Venue } from './types'
 import { toSlug } from '@/components/events/event-details/toSlug'
 import { IMAGES } from '@/assets/images'
 import { Lightbox, useLightbox } from '@/components/ui/Lightbox'
 
-export function VenueResultCard({ venue }: { venue: Venue }) {
+export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, viewType?: 'grid' | 'list' }) {
+  const router = useRouter()
   const [imgIdx, setImgIdx] = useState(0)
   const [highlightsModalOpen, setHighlightsModalOpen] = useState(false)
   const { isOpen, images, currentIndex, openLightbox, closeLightbox, setIndex } = useLightbox()
@@ -33,7 +35,7 @@ export function VenueResultCard({ venue }: { venue: Venue }) {
         : (venue.state_name && venue.state_name !== 'null')
           ? venue.state_name
           : "No address found"
-  const detailsHref = `/events/details/${toSlug(venueTitle)}?id=${venue.id}`
+  const detailsHref = `/events/details/${venue.slug || toSlug(venueTitle)}`
   
   // Dynamic Data
   const rating = venue.rating || 0
@@ -44,12 +46,29 @@ export function VenueResultCard({ venue }: { venue: Venue }) {
   const highlights = venue.highlights_details?.slice(0, 3) || []
   const cuisines = venue.cuisine_details?.slice(0, 2).map(c => c.name).join(', ') || "Global Cuisines"
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // If user clicked a button, a link, or an image thumbnail, don't trigger card click
+    const target = e.target as HTMLElement
+    if (
+      target.closest('button') || 
+      target.closest('a') || 
+      target.closest('.mini-thumb') ||
+      target.closest('[role="dialog"]')
+    ) {
+      return
+    }
+    router.push(detailsHref)
+  }
+
   return (
-    <article className="group bg-white rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,149,48,0.12)] hover:border-[#FF9530]/30 transition-all duration-500 overflow-hidden">
-      <div className="flex flex-col md:flex-row h-auto md:min-h-[320px]">
+    <article 
+      onClick={handleCardClick}
+      className={`group bg-white rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,149,48,0.12)] hover:border-[#FF9530]/30 transition-all duration-500 overflow-hidden h-full flex flex-col cursor-pointer`}
+    >
+      <div className={`flex flex-col ${viewType === 'list' ? 'md:flex-row md:min-h-[320px]' : 'h-full'}`}>
 
         {/* ── Left: Interactive Image Section ── */}
-        <div className="relative md:w-80 lg:w-96 shrink-0 aspect-[4/3] md:aspect-auto">
+        <div className={`relative shrink-0 ${viewType === 'list' ? 'md:w-80 lg:w-96 aspect-[4/3] md:aspect-auto' : 'aspect-[16/10]'}`}>
           <div 
             className="relative w-full h-full overflow-hidden cursor-pointer"
             onClick={() => openLightbox(allImages, imgIdx)}
@@ -82,7 +101,7 @@ export function VenueResultCard({ venue }: { venue: Venue }) {
             {thumbnails.map((img, i) => (
               <button 
                 key={img.id} 
-                className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${imgIdx === i ? 'border-[#FF9530] scale-105' : 'border-white/50 hover:border-white'}`}
+                className={`mini-thumb w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${imgIdx === i ? 'border-[#FF9530] scale-105' : 'border-white/50 hover:border-white'}`}
                 onMouseEnter={() => setImgIdx(i)}
                 onClick={(e) => {
                    e.stopPropagation();
@@ -109,102 +128,111 @@ export function VenueResultCard({ venue }: { venue: Venue }) {
         </div>
 
         {/* ── Right: Content Section ── */}
-        <div className="flex flex-col flex-1 p-6 lg:p-7 justify-between">
+        <div className={`flex flex-col flex-1 p-6 lg:p-7 justify-between`}>
           
           <div className="space-y-4">
             {/* Header: Title & Rating */}
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <Link href={detailsHref} className="block group/title">
-                  <h3 className="font-extrabold text-gray-900 text-xl lg:text-2xl leading-tight group-hover/title:text-[#FF9530] transition-colors mb-2">
-                    {venueTitle}
-                  </h3>
-                </Link>
-                <div className="flex flex-col gap-1.5">
-                  <div className="flex items-center gap-2 text-gray-500 text-sm">
-                    <div className="bg-gray-100 p-1 rounded-md">
+            {/* Header: Title & Rating */}
+            <div className={`flex items-start justify-between gap-4 ${viewType === 'grid' ? 'flex-col sm:flex-row' : ''}`}>
+              <div className="flex-1 text-left">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-gray-500 mb-1">
+                    <div className="bg-gray-100 p-1 rounded-md shrink-0">
                       <MapPin className="w-3.5 h-3.5" />
                     </div>
-                    <span className="line-clamp-1" title={venueLocation}>{venueLocation}</span>
+                    <span className="text-xs font-semibold line-clamp-1" title={venueLocation}>{venueLocation}</span>
                   </div>
-                  {(venue.lat && venue.lon) && (
-                    <button 
-                      onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${venue.lat},${venue.lon}`, '_blank')}
-                      className="inline-flex items-center gap-1.5 text-[#FF9530] text-[11px] font-bold hover:underline w-fit pl-7"
-                    >
-                      Show on map
-                    </button>
-                  )}
+                  <Link href={detailsHref} className="block group/title">
+                    <h3 className={`font-black text-gray-900 leading-tight group-hover/title:text-[#FF9530] transition-colors ${viewType === 'grid' ? 'text-lg line-clamp-1' : 'text-2xl'}`}>
+                      {venueTitle}
+                    </h3>
+                  </Link>
                 </div>
               </div>
-              
-              <div className="flex flex-col items-end">
-                <div className="flex items-center gap-1.5 bg-[#039c4d] text-white rounded-xl px-3 py-1.5 shadow-lg shadow-green-500/20">
-                  <Star className="w-3.5 h-3.5 fill-current" />
-                  <span className="text-sm font-black">{rating}</span>
+              {reviews > 0 && (
+                <div className="flex flex-col items-end shrink-0">
+                  <div className="flex items-center gap-1.5 bg-[#039c4d] text-white rounded-lg px-2.5 py-1 shadow-lg shadow-green-500/20">
+                    <Star className="w-3 h-3 fill-current" />
+                    <span className="text-[11px] font-black">{rating}</span>
+                  </div>
+                  <span className="text-[8px] font-black text-gray-400 uppercase tracking-tighter mt-1 whitespace-nowrap">
+                    {reviews} Verified Reviews
+                  </span>
                 </div>
-                <span className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-tighter">
-                  {reviews} verified reviews
-                </span>
-              </div>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
               {highlights.map(h => (
-                <span key={h.id} className="bg-orange-50 text-[#FF9530] text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full border border-orange-100">
+                <span key={h.id} className="bg-orange-50 text-[#FF9530] text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full border border-orange-100">
                   {h.name}
                 </span>
               ))}
               {venue.highlights_details && venue.highlights_details.length > 3 && (
                 <button 
                   onClick={() => setHighlightsModalOpen(true)}
-                  className="text-[#FF9530] text-[10px] font-bold uppercase tracking-wide px-2 hover:underline flex items-center gap-0.5"
+                  className="text-[#FF9530] text-[10px] font-black uppercase tracking-wider px-2 hover:underline flex items-center gap-0.5"
                 >
-                  Show More <ChevronRight className="w-3 h-3" />
+                  +{venue.highlights_details.length - 3} More
                 </button>
               )}
             </div>
 
             {/* Details Row */}
-            <div className="flex flex-wrap gap-x-6 gap-y-2 py-2 border-y border-dashed border-gray-100">
-              <div className="flex items-center gap-2">
+            <div className="grid grid-cols-2 gap-4 py-3 border-y border-dashed border-gray-100">
+              {/* <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-gray-400" />
-                <span className="text-xs font-semibold text-gray-600">Capacity 200 - 1500</span>
-              </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none mb-0.5">Capacity</span>
+                  <span className="text-[11px] font-black text-gray-700">200-1500</span>
+                </div>
+              </div> */}
               <div className="flex items-center gap-2">
-                <Utensils className="w-4 h-4 text-gray-400" />
-                <span className="text-xs font-semibold text-gray-600">{cuisines}</span>
+                <Utensils className="w-5 h-5 text-gray-400" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none mb-0.5 w-20">Cuisine</span>
+                  <span className="text-[11px] font-black text-gray-700 truncate ">{cuisines}</span>
+                </div>
               </div>
             </div>
 
             {/* Bio */}
             <div 
-              className="text-sm text-gray-500 leading-relaxed line-clamp-2 italic"
-              dangerouslySetInnerHTML={{ __html: venue.description || "Indulge in a world-class event experience with our bespoke services and premium amenities." }}
+              className={`text-xs text-gray-500 leading-relaxed italic ${viewType === 'grid' ? 'line-clamp-1' : 'line-clamp-2'}`}
+              dangerouslySetInnerHTML={{ __html: venue.description || "Indulge in a world-class event experience with our bespoke services." }}
             />
           </div>
 
           {/* Footer: Price & Actions */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pt-5 mt-auto border-t border-gray-50 sm:border-t-0">
-            <div>
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 leading-none">Package Starts</p>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-black text-gray-900 leading-none">
-                  ₹{packagePrice.toLocaleString()}
-                </span>
-                {/* <span className="text-xs font-bold text-gray-400">/ plate</span> */}
+          <div className="flex flex-col gap-5 pt-5 mt-auto">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 leading-none">Package Starts</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-black text-gray-900 leading-none">
+                    ₹{packagePrice.toLocaleString() || '0'}
+                  </span>
+                </div>
               </div>
+              {reviews > 0 && viewType === 'grid' && (
+                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">
+                   {reviews} verified reviews
+                 </span>
+              )}
             </div>
 
-            <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
-              <button className="flex-1 sm:flex-none whitespace-nowrap bg-white border border-[#FF9530] text-[#FF9530] font-bold px-5 sm:px-8 py-3 rounded-2xl hover:bg-orange-50 hover:scale-105 active:scale-95 transition-all duration-300 text-sm">
+            <div className="flex gap-3">
+              <Link 
+                href={detailsHref}
+                className="flex-1 flex items-center justify-center whitespace-nowrap bg-white border-2 border-[#FF9530] text-[#FF9530] font-black py-3 rounded-2xl hover:bg-orange-50 active:scale-95 transition-all text-xs uppercase tracking-widest shadow-sm"
+              >
                 Send Inquiry
-              </button>
+              </Link>
               <Link 
                 href={detailsHref} 
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap bg-[#FF9530] text-white font-bold px-5 sm:px-8 py-3 rounded-2xl shadow-xl shadow-orange-500/20 hover:bg-[#FF8000] hover:scale-105 active:scale-95 transition-all duration-300 text-sm group/btn"
+                className="flex-[1.2] flex items-center justify-center gap-2 whitespace-nowrap bg-gradient-to-r from-[#FF9530] to-[#FF8000] text-white font-black py-3 rounded-2xl shadow-xl shadow-orange-500/20 hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest group/btn"
               >
-                View Details
+                {viewType === 'grid' ? 'Details' : 'View Details'}
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
               </Link>
             </div>

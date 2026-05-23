@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import EventDetailsClient from './EventDetailsClient'
 
 export const metadata: Metadata = {
-  title: 'Event Venue Details | Spodia',
+  title: 'Event Venue Details | Eventibe',
   description: 'Full venue details — pricing, capacity, photos, reviews, FAQs and booking for your perfect event.',
 }
 

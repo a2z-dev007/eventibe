@@ -13,7 +13,7 @@ export function FeaturedVenuesSection() {
       eyebrow="Featured"
       title="Premium Banquet Halls & Event Spaces"
       subtitle="Compare capacity, pricing, and ratings to book with confidence."
-      viewAllHref="/events/search"
+      viewAllHref={`/events/search?venue_type=${VENUE_TYPE_PREMIUM_BANQUET}`}
       viewAllText="View all venues"
       bgClass="bg-gray-50"
     />
@@ -27,7 +27,7 @@ export function WeddingVenuesSection() {
       venueType={VENUE_TYPE_WEDDING}
       eyebrow="Wedding Signature"
       title="Wedding Venue Highlights"
-      viewAllHref="/events/search"
+      viewAllHref={`/events/search?venue_type=${VENUE_TYPE_WEDDING}`}
       viewAllText="Browse all wedding venues"
       bgClass="bg-white"
     />
@@ -41,7 +41,7 @@ export function CorporateVenuesSection() {
       venueType={VENUE_TYPE_CORPORATE}
       eyebrow="Corporate Elite"
       title="Corporate & Conference Picks"
-      viewAllHref="/events/search"
+      viewAllHref={`/events/search?venue_type=${VENUE_TYPE_CORPORATE}`}
       viewAllText="Browse all corporate venues"
       bgClass="bg-gray-50"
     />

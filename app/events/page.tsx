@@ -6,10 +6,12 @@ export const metadata: Metadata = {
   description: 'Book standout venues for weddings, parties, and corporate events. Compare verified spaces, transparent pricing, and real photos.',
 }
 
+import { Suspense } from 'react'
+
 export default function EventsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
       <EventVenuesClient />
-    </div>
+    </Suspense>
   )
 }

@@ -6,7 +6,7 @@ import SectionHeader from './SectionHeader'
 import VenueCard from './VenueCard'
 import { fetchVenues } from '@/lib/api/eventsEndpoints'
 import type { VenueRecord } from '@/lib/api/eventsEndpoints'
-import { ChevronRight, ArrowRight } from 'lucide-react'
+import { ChevronRight, ArrowRight, Search } from 'lucide-react'
 
 const shimmerClass =
   'bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer'
@@ -51,6 +51,7 @@ function mapVenueToCard(v: VenueRecord) {
     price: formatVenuePrice(price),
     img,
     id: v.id,
+    slug: v.slug,
   }
 }
 
@@ -124,12 +125,21 @@ export default function VenueSectionClient({
           <div className="py-20 text-center">
             <p className="text-gray-400 font-bold uppercase tracking-widest">{error}</p>
           </div>
+        ) : cardItems.length === 0 ? (
+          <div className="py-20 flex flex-col items-center justify-center text-center bg-gray-50/50 rounded-[2.5rem] border border-dashed border-gray-200">
+            <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-gray-300 mb-6 border border-gray-100/50">
+              <Search className="w-10 h-10" strokeWidth={1.5} />
+            </div>
+            <h4 className="text-xl font-black text-gray-900 mb-2">No Venues Found</h4>
+            <p className="text-gray-500 font-medium max-w-sm mx-auto">
+              We couldn't find any premium venues in this category at the moment. Please check back later or explore other categories.
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {cardItems.map((c) => {
-              const { id, ...cardProps } = c
-              return <VenueCard key={id} {...cardProps} />
-            })}
+            {cardItems.map((c) => (
+              <VenueCard key={c.id} {...c} />
+            ))}
           </div>
         )}
       </div>

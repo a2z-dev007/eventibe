@@ -2,14 +2,16 @@ import { Metadata } from 'next'
 import VenueSearchClient from './VenueSearchClient'
 
 export const metadata: Metadata = {
-  title: 'Search Event Venues | Eventibe',
-  description: 'Search and compare event venues. Filter by location, venue type, event type, capacity and more.',
+  title: 'Search Event Venues | Eventibe ',
+  description: 'Compare verified banquet halls, lawns, resorts, and corporate venues. Filter by location, capacity, price, and event type to book with confidence.',
 }
+
+import { Suspense } from 'react'
 
 export default function VenueSearchPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 animate-pulse" />}>
       <VenueSearchClient />
-    </div>
+    </Suspense>
   )
 }

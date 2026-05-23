@@ -1,5 +1,6 @@
 'use client'
 
+
 import HeroSection from '@/components/events/HeroSection'
 import VenueTypesCarousel from '@/components/events/VenueTypesCarousel'
 import EventTypesCarousel from '@/components/events/EventTypesCarousel'
@@ -11,19 +12,22 @@ import StatStrip from '@/components/events/StatStrip'
 
 export default function EventVenuesClient() {
   return (
-    <main className="pt-24 lg:pt-28 bg-white">
-      <HeroSection />
-      <VenueTypesCarousel />
-      <StatStrip />
-      <FeaturedVenuesSection />
-      <WeddingVenuesSection />
-      <CorporateVenuesSection />
-      <EventTypesCarousel />
-      <WhySpodiaSection />
-      <GoogleReviewsSection />
-      <ClientStoriesSection />
-      <SeoContentSection />
-      <FaqSection />
-    </main>
+    <>
+   
+      <main className="pt-24 lg:pt-28 bg-white">
+        <HeroSection />
+        <VenueTypesCarousel />
+        <StatStrip />
+        <FeaturedVenuesSection />
+        <WeddingVenuesSection />
+        <CorporateVenuesSection />
+        <EventTypesCarousel />
+        <WhySpodiaSection />
+        <GoogleReviewsSection />
+        <ClientStoriesSection />
+        <SeoContentSection />
+        <FaqSection />
+      </main>
+    </>
   )
 }

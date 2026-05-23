@@ -71,6 +71,7 @@ export interface PackageDetail {
 
 export interface Venue {
   id: number;
+  slug?: string;
   name: string;
   description: string;
   order: number;

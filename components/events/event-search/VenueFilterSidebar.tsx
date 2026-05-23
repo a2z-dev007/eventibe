@@ -21,16 +21,8 @@ interface VenueFilterSidebarProps {
 }
 
 export function VenueFilterSidebar({ filters, location, setLocation, onChange, onClear }: VenueFilterSidebarProps) {
-  const { data: vtData, isLoading: vtLoading } = useQuery({
-    queryKey: ['venueTypes'],
-    queryFn: () => fetchVenueTypes()
-  })
-
-  // Fetch Event Types
-  const { data: etData, isLoading: etLoading } = useQuery({
-    queryKey: ['eventTypes'],
-    queryFn: () => fetchEventTypes()
-  })
+  const { data: vtData, isLoading: vtLoading } = useQuery({ queryKey: ['venueTypes'], queryFn: fetchVenueTypes })
+  const { data: etData, isLoading: etLoading } = useQuery({ queryKey: ['eventTypes'], queryFn: fetchEventTypes })
 
   const [modalType, setModalType] = useState<'venue' | 'event' | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -112,9 +104,9 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
       {renderSection('Event Type', eventTypes, 'eventTypes', etLoading)}
 
       {/* Capacity Slider */}
-      <div className="px-5 py-5 border-b border-gray-100">
+      {/* <div className="px-5 py-5 border-b border-gray-100">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Capacity (PAX)</p>
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Capacity (Guests)</p>
           <span className="text-xs font-bold text-[#FF9530] bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100 italic">
             {filters.minCap} - {filters.maxCap}
           </span>
@@ -132,10 +124,10 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
           <span>5000</span>
           <span>10000+</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Price Slider */}
-      <div className="px-5 py-5">
+      {/* <div className="px-5 py-5">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Veg Price (₹/Plate)</p>
           <span className="text-xs font-bold text-[#FF9530] bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100 italic">
@@ -155,7 +147,7 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
           <span>₹2500</span>
           <span>₹5000+</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Modal for Show More */}
       <Dialog open={modalType !== null} onOpenChange={() => setModalType(null)}>

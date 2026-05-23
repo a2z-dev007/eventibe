@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
+import Header from '@/components/Header'
 import { IMAGES } from '@/assets/images'
-import DynamicHeroBackground from '@/components/DynamicHeroBackground'
 import { searchVenues, fetchVenueTypes, fetchEventTypes } from '@/lib/api/eventsEndpoints'
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect'
 import PremiumSelect from '@/components/ui/PremiumSelect'
 import PremiumDatePicker from '@/components/ui/PremiumDatePicker'
-import { MapPin, Home, Sparkles, Users, Search as SearchIcon, SlidersHorizontal, ChevronRight } from 'lucide-react'
+import { MapPin, Home, Sparkles, Users, Search as SearchIcon, SlidersHorizontal, ChevronRight, X, LayoutGrid, List } from 'lucide-react'
+import { toast } from 'sonner'
+import PremiumSearchBar from '@/components/events/PremiumSearchBar'
 
 import type { Filters, Venue } from './types'
 import { PER_PAGE } from './data'
@@ -25,6 +27,7 @@ export function VenueSearchPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1)
   const [sort, setSort] = useState('recommended')
+  const [viewType, setViewType] = useState<'grid' | 'list'>('list')
 
   // ── Search bar state (pre-filled from URL params) ───────────────────────────
   const [location, setLocation] = useState<any>(null)
@@ -34,14 +37,8 @@ export function VenueSearchPage() {
   const [guests, setGuests] = useState<any>(null)
 
   // Fetch Metadata for Labels
-  const { data: venueTypesData } = useQuery({
-    queryKey: ['venueTypes'],
-    queryFn: () => fetchVenueTypes()
-  })
-  const { data: eventTypesData } = useQuery({
-    queryKey: ['eventTypes'],
-    queryFn: () => fetchEventTypes()
-  })
+  const { data: venueTypesData } = useQuery({ queryKey: ['venueTypes'], queryFn: () => fetchVenueTypes() })
+  const { data: eventTypesData } = useQuery({ queryKey: ['eventTypes'], queryFn: () => fetchEventTypes() })
 
   const [filtersState, setFiltersState] = useState<Filters>({
     location: '',
@@ -115,21 +112,62 @@ export function VenueSearchPage() {
 
   // ── API Data Fetching ──────────────────────────────────────────────────────
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['venues', page, debouncedLocationValue, venueType?.value, eventType?.value, debouncedFilters.venueTypes, debouncedFilters.eventTypes, debouncedFilters.minCap, debouncedFilters.maxCap, debouncedFilters.minVeg, debouncedFilters.maxVeg],
+    queryKey: ['venues', page, debouncedLocationValue, venueType?.value, eventType?.value, debouncedFilters.venueTypes, debouncedFilters.eventTypes, debouncedFilters.minCap, debouncedFilters.maxCap, debouncedFilters.minVeg, debouncedFilters.maxVeg, sort],
     queryFn: () => searchVenues({
       page_number: page,
       number_of_records: PER_PAGE,
       city: debouncedLocationValue,
       // Priority: sidebar checkboxes if present, else top dropdown
-      venue_type: debouncedFilters.venueTypes.length > 0 ? debouncedFilters.venueTypes.join(',') : (venueType?.value || ''),
-      event_type: debouncedFilters.eventTypes.length > 0 ? debouncedFilters.eventTypes.join(',') : (eventType?.value || ''),
+      venue_type: debouncedFilters.venueTypes.length > 0 ? debouncedFilters.venueTypes : (venueType?.value || ''),
+      event_type: debouncedFilters.eventTypes.length > 0 ? debouncedFilters.eventTypes : (eventType?.value || ''),
     }),
     placeholderData: (previousData) => previousData
   })
 
   const results = data?.records || []
+  
+  // Real-time Frontend Sorting & Granular Filtering
+  const processedResults = useMemo(() => {
+    let list = [...results]
+
+    // 1. Sort Logic
+    if (sort === 'rating') {
+      list.sort((a: any, b: any) => (Number(b.rating || 0)) - (Number(a.rating || 0)))
+    } else if (sort === 'low-high') {
+      list.sort((a: any, b: any) => {
+        const pA = Number(a.package_details?.[0]?.price || 0)
+        const pB = Number(b.package_details?.[0]?.price || 0)
+        return pA - pB
+      })
+    } else if (sort === 'high-low') {
+      list.sort((a: any, b: any) => {
+        const pA = Number(a.package_details?.[0]?.price || 0)
+        const pB = Number(b.package_details?.[0]?.price || 0)
+        return pB - pA
+      })
+    } else if (sort === 'capacity-high') {
+      list.sort((a: any, b: any) => (Number(b.venue_configuration || 0)) - (Number(a.venue_configuration || 0)))
+    }
+
+    return list
+  }, [results, sort])
+
   const totalRecords = data?.totalRecords || 0
   const totalPages = Math.max(1, Math.ceil(totalRecords / PER_PAGE))
+
+  const isAnyFilterActive = 
+    location !== null || 
+    venueType !== null || 
+    eventType !== null || 
+    date !== null || 
+    guests !== null ||
+    filtersState.venueTypes.length > 0 ||
+    filtersState.eventTypes.length > 0 ||
+    filtersState.minCap !== 0 ||
+    filtersState.maxCap !== 10000 ||
+    filtersState.minVeg !== 0 ||
+    filtersState.maxVeg !== 5000
+
   const locationLabel = location?.label || 'India'
 
   const clearFilters = () => {
@@ -148,6 +186,13 @@ export function VenueSearchPage() {
   }
 
   const handleTopSearch = () => {
+    if (!location?.value) {
+      toast.error('Location is required', {
+        description: 'Please select a city to search venues.',
+        duration: 3000,
+      });
+      return;
+    }
     const params = new URLSearchParams()
     if (location?.value) {
       params.set('city', String(location.value))
@@ -170,78 +215,42 @@ export function VenueSearchPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {/* ── Hero banner ─────────────────────────────────────────────────────── */}
+      <div
+        className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center md:pt-28 pt-28 pb-10 lg:pt-40 px-4 md:px-8 overflow-hidden"
+        style={{  
+          backgroundImage: `url(${IMAGES.listingHeroBg.src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none" />
 
-      {/* ── Hero banner (Animated Video & Images) ─────────────────────────── */}
-      <div className="relative overflow-hidden flex items-center justify-center pt-24 pb-20 px-4 md:px-8 bg-black">
-        <DynamicHeroBackground />
-
-        <div className="relative z-10 w-full max-w-7xl">
-          <h1 className="text-white font-extrabold text-xl sm:text-3xl mb-5 drop-shadow  md:text-left text-center">
+        <div className="relative z-[99] w-full max-w-7xl">
+          <h1 className="text-white font-extrabold text-2xl sm:text-3xl mb-5 drop-shadow  md:text-left text-center">
             Banquet Halls &amp; Event Venues in {locationLabel}
           </h1>
 
           {/* Premium Search Bar Integration */}
-          <div className="bg-white rounded-2xl lg:rounded-full shadow-2xl p-2 flex flex-col lg:flex-row items-stretch lg:items-center divide-y lg:divide-y-0 lg:divide-x divide-gray-100 w-full">
-            
-            <PremiumLocationSelect
-              value={location}
-              onChange={setLocation}
-              className="flex-[1.5]"
-              containerClassName="px-4 py-3 lg:py-0"
-              placeholder="Where is the event?"
-            />
-
-            <PremiumSelect
-              label="Event Type"
-              icon={<Sparkles className="w-5 h-5 text-[#FF9530]" />}
-              options={eventOptions}
-              value={eventType}
-              onChange={setEventType}
-              placeholder="Any Event"
-              className="flex-1"
-              containerClassName="px-4 py-3 lg:py-0"
-            />
-
-            <PremiumSelect
-              label="Venue Type"
-              icon={<Home className="w-5 h-5 text-[#FF9530]" />}
-              options={venueOptions}
-              value={venueType}
-              onChange={setVenueType}
-              placeholder="Any Type"
-              className="flex-1"
-              containerClassName="px-4 py-3 lg:py-0"
-            />
-
-            <PremiumDatePicker
-              label="Event Date"
-              selected={date}
-              onChange={setDate}
-              className="flex-1"
-              containerClassName="px-4 py-3 lg:py-0"
-            />
-
-            <PremiumSelect
-              label="Guests"
-              icon={<Users className="w-5 h-5 text-[#FF9530]" />}
-              options={guestOptions}
-              value={guests}
-              onChange={setGuests}
-              placeholder="Pax Count"
-              className="flex-1"
-              containerClassName="px-4 py-3 lg:py-0"
-            />
-
-            <div className="">
-              <button
-                onClick={handleTopSearch}
-                className="w-full lg:w-[60px] h-14 lg:h-[60px] bg-[#FF9530] hover:bg-[#FF8000] text-white rounded-2xl lg:rounded-full flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-xl shadow-orange-500/30 group py-4 lg:py-0"
-              >
-                <SearchIcon className="w-5 h-5 transition-transform group-hover:rotate-12 duration-500" />
-                <span className="lg:hidden ml-2.5 font-bold uppercase tracking-wider text-sm">Search Venues</span>
-              </button>
-            </div>
-          </div>
+          <PremiumSearchBar
+            location={location}
+            setLocation={setLocation}
+            eventType={eventType}
+            setEventType={setEventType}
+            venueType={venueType}
+            setVenueType={setVenueType}
+            date={date}
+            setDate={setDate}
+            guests={guests}
+            setGuests={setGuests}
+            handleSearch={handleTopSearch}
+            eventOptions={eventOptions}
+            venueOptions={venueOptions}
+            guestOptions={guestOptions}
+            searchButtonText="Search Venues"
+            requiredLocation={true}
+          />
         </div>
       </div>
 
@@ -249,9 +258,29 @@ export function VenueSearchPage() {
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
 
         {/* Sub-header row */}
-        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <p className="text-sm sm:text-base text-gray-600">{totalRecords} venues found</p>
-          <div className="flex items-center gap-2 shrink-0">
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-[#FF9530] border border-orange-100 shadow-sm">
+              <SearchIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-none">
+                {processedResults.length} <span className="text-[#FF9530]">Venues Found</span>
+              </h2>
+              <div className="flex items-center gap-3 mt-1.5">
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Available for your selection</p>
+                {isAnyFilterActive && (
+                  <button 
+                    onClick={clearFilters}
+                    className="flex items-center gap-1.5 text-[9px] font-black text-[#FF9530] uppercase tracking-widest bg-orange-50 px-2 py-0.5 rounded-md hover:bg-[#FF9530] hover:text-white transition-all border border-orange-100"
+                  >
+                    <X className="w-2.5 h-2.5" /> Clear All
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 shrink-0">
             {/* Mobile filter btn */}
             <button
               onClick={() => setSidebarOpen(true)}
@@ -266,7 +295,7 @@ export function VenueSearchPage() {
             <select
               value={sort}
               onChange={e => { setSort(e.target.value); setPage(1) }}
-              className="border border-gray-200 bg-white text-gray-700 font-semibold rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9530]/30 shadow-sm cursor-pointer"
+              className="border border-gray-200 bg-white text-gray-700 font-bold rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#FF9530]/30 shadow-sm cursor-pointer h-[42px]"
             >
               <option value="recommended">Sort: Recommended</option>
               <option value="rating">Highest Rated</option>
@@ -274,6 +303,24 @@ export function VenueSearchPage() {
               <option value="high-low">Price: High → Low</option>
               <option value="capacity-high">Capacity: High → Low</option>
             </select>
+
+            {/* View Toggle */}
+            <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
+              <button
+                onClick={() => setViewType('list')}
+                className={`p-2 rounded-lg transition-all ${viewType === 'list' ? 'bg-white text-[#FF9530] shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                title="List View"
+              >
+                <List className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewType('grid')}
+                className={`p-2 rounded-lg transition-all ${viewType === 'grid' ? 'bg-white text-[#FF9530] shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                title="Grid View"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -287,13 +334,24 @@ export function VenueSearchPage() {
               className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[85vh] overflow-hidden flex flex-col"
               onClick={e => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-white border-b px-4 py-4 flex items-center justify-between z-10">
-                <h3 className="text-lg font-bold text-gray-900">Filter Venues</h3>
-                <button onClick={() => setSidebarOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+              <div className="sticky top-0 bg-white border-b px-5 py-5 flex items-center justify-between z-10">
+                <div className="flex flex-col">
+                  <h3 className="text-xl font-black text-gray-900">Filter Venues</h3>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Refine your search</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  {isAnyFilterActive && (
+                    <button 
+                      onClick={clearFilters}
+                      className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest hover:underline"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                  <button onClick={() => setSidebarOpen(false)} className="p-2.5 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all">
+                    <X className="w-5 h-5 text-gray-400" />
+                  </button>
+                </div>
               </div>
               <div className="flex-1 overflow-y-auto px-4 py-4">
                 <VenueFilterSidebar filters={filters} location={location} setLocation={setLocation} onChange={updateFilters} onClear={clearFilters} />
@@ -359,18 +417,25 @@ export function VenueSearchPage() {
                 <h3 className="font-extrabold text-gray-900 text-lg mb-1">Error loading venues</h3>
                 <p className="text-gray-500 text-sm">Please try again later.</p>
               </div>
-            ) : results.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 text-center">
-                <p className="text-4xl mb-3">🔍</p>
-                <h3 className="font-extrabold text-gray-900 text-lg mb-1">No venues found</h3>
-                <p className="text-gray-500 text-sm">Try relaxing your filters or searching a different location.</p>
-                <button onClick={clearFilters} className="mt-4 gradient-btn text-white font-semibold rounded-full px-6 py-2.5 text-sm hover:scale-105 transition-transform">
-                  Clear filters
+            ) : processedResults.length === 0 ? (
+              <div className="bg-white rounded-[3rem] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-16 text-center group">
+                <div className="w-24 h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-[#FF9530] mb-8 mx-auto shadow-sm border border-orange-100/50 group-hover:scale-110 transition-transform duration-500">
+                  <SearchIcon className="w-12 h-12" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-3xl font-black text-gray-900 mb-4 tracking-tight">No Venues Found</h3>
+                <p className="text-gray-500 font-medium text-lg max-w-md mx-auto mb-10 leading-relaxed">
+                  We couldn't find any premium venues matching your current filters. Try relaxing your criteria or search in a different city.
+                </p>
+                <button 
+                  onClick={clearFilters} 
+                  className="bg-gradient-to-r from-[#FF9530] to-[#FF8000] hover:from-[#FF8000] hover:to-[#F97316] text-white font-black uppercase tracking-widest text-xs px-10 py-4 rounded-2xl shadow-xl shadow-orange-500/20 transition-all hover:scale-105 active:scale-95 inline-flex items-center gap-2"
+                >
+                  Clear All Filters
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col gap-6">
-                {results.map((v: any) => <VenueResultCard key={v.id || v.name} venue={v} />)}
+              <div className={viewType === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-8" : "flex flex-col gap-6"}>
+                {processedResults.map((v: any) => <VenueResultCard key={v.id || v.name} venue={v} viewType={viewType} />)}
               </div>
             )}
 
@@ -470,7 +535,7 @@ export function VenueSearchPage() {
                 <div>
                   <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest mb-1">Browse Selection</p>
                   <h3 className="text-gray-900 font-bold">Event Categories</h3>
-                  <p className="text-gray-400 text-[10px] font-mono mt-1">/event/list</p>
+                  {/* <p className="text-gray-400 text-[10px] font-mono mt-1">/event/list</p> */}
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#FF9530] group-hover:bg-[#FF9530] group-hover:text-white transition-all">
                   <ChevronRight className="w-5 h-5" />
@@ -486,7 +551,7 @@ export function VenueSearchPage() {
                 <div>
                   <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest mb-1">Browse Selection</p>
                   <h3 className="text-gray-900 font-bold">Venue Categories</h3>
-                  <p className="text-gray-400 text-[10px] font-mono mt-1">/venue/list</p>
+                  {/* <p className="text-gray-400 text-[10px] font-mono mt-1">/venue/list</p> */}
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#FF9530] group-hover:bg-[#FF9530] group-hover:text-white transition-all">
                   <ChevronRight className="w-5 h-5" />

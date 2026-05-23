@@ -121,6 +121,7 @@ export interface VideoRecord {
 
 export interface VenueRecord {
   id: number;
+  slug?: string;
   name: string;
   description: string;
   order: number;
@@ -252,6 +253,11 @@ export async function fetchVenues(params: { venue_type: number | string | number
 /** Fetch a single venue by ID */
 export async function fetchVenueById(id: number | string): Promise<VenuesResponse> {
   return eventsApiGet<VenuesResponse>(`/venues/list?id=${id}`);
+}
+
+/** Fetch a single venue by Slug */
+export async function fetchVenueBySlug(slug: string): Promise<VenuesResponse> {
+  return eventsApiGet<VenuesResponse>(`/venues/list?slug=${slug}`);
 }
 
 /** Fetch all venues (simplified for dropdowns) */
