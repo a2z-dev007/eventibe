@@ -31,7 +31,7 @@ export default function Header() {
     { name: 'Home',         href: '/',             icon: Home },
     { name: 'About',        href: '/about-us',     icon: Info },
     { name: 'How It Works', href: '/how-it-works', icon: Lightbulb },
-    { name: 'Blog',         href: '/blog',         icon: BookOpen },
+    { name: 'Blogs',         href: '/blogs',         icon: BookOpen },
     { name: 'Our Story',    href: '/our-story',    icon: Building2 },
     { name: 'Contact',      href: '/contact-us',   icon: Phone },
   ];
