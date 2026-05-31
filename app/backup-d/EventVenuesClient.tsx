@@ -4,7 +4,7 @@ import EventTypesCarousel from '@/components/events/EventTypesCarousel'
 import { FeaturedVenuesSection, WeddingVenuesSection, CorporateVenuesSection } from '@/components/events/VenueSections'
 import WhySpodiaSection from '@/components/events/WhySpodiaSection'
 import GoogleReviewsSection from '@/components/events/GoogleReviewsSection'
-import { ClientStoriesSection, SeoContentSection, FaqSection, SeoLinksSection } from '@/components/events/BottomSections'
+import { ClientStoriesSection, SeoContentSection, FaqSection } from '@/components/events/BottomSections'
 import StatStrip from '@/components/events/StatStrip'
 
 export default function EventVenuesClient() {
@@ -22,7 +22,6 @@ export default function EventVenuesClient() {
         <ClientStoriesSection />
         <SeoContentSection />
         <FaqSection />
-        <SeoLinksSection />
       </main>
     </>
   )
