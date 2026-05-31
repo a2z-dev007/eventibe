@@ -432,3 +432,19 @@ export const applyJob = (formData: FormData) => {
 export const getTestimonials = (params?: { show_homepage?: 0 | 1 }) => {
     return handleApiCall(() => apiClient.get("/testimonials/", { params }))
 }
+
+
+// Blog APIs
+export const getBlogs = (params: { applicable_for: string; page_number?: number; number_of_records?: number; slug?: string }) => {
+    return handleApiCall(() => apiClient.get("/get/blogs-list/", { params }));
+}
+
+export const getBlogDetails = (blogIdOrSlug: string | number, applicableFor: string) => {
+    const isId = typeof blogIdOrSlug === 'number' || !isNaN(Number(blogIdOrSlug));
+    return handleApiCall(() => apiClient.get("/get/blogs-list/", { 
+        params: { 
+            applicable_for: applicableFor, 
+            ...(isId ? { blog_id: blogIdOrSlug } : { slug: blogIdOrSlug })
+        } 
+    }));
+}
