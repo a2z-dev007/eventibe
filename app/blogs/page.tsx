@@ -138,22 +138,23 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFD] text-[#334155] min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#FAFBFD] text-[#334155] min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* ================= HERO HEADER ================= */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-16">
           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#2563EB]/10 text-[#2563EB] mb-4">
             <BookOpen size={13} />
             Eventibe Insights
           </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#0B1F3A] tracking-tight mb-6 leading-tight">
-            Planning, Trends & Strategies <br className="hidden sm:inline" />
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1F3A] tracking-tight mb-4 sm:mb-6 leading-tight">
+            Planning, Trends & Strategies{" "}
+            <br className="hidden sm:inline" />
             for{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#F97316]">
               Corporate Excellence
             </span>
           </h1>
-          <p className="text-lg text-[#334155]/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg text-[#334155]/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
             Delve into professional event curation, expert columns, master
             planning tools, and corporate venue strategies.
           </p>
@@ -161,13 +162,12 @@ export default function BlogPage() {
 
         {/* ================= LATEST ARTICLES GRID ================= */}
         <div>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-extrabold text-[#0B1F3A] tracking-tight">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0B1F3A] tracking-tight">
               Latest Articles
             </h2>
             <span className="text-xs font-semibold text-slate-400 bg-white border border-slate-200 px-3 py-1.5 rounded-full">
-              Showing {posts.length}{" "}
-              {posts.length === 1 ? "article" : "articles"}
+              {posts.length} {posts.length === 1 ? "article" : "articles"}
             </span>
           </div>
 
@@ -348,7 +348,7 @@ export default function BlogPage() {
         </div>
 
         {/* ================= NEWSLETTER SUBSCRIPTION WIDGET ================= */}
-        <div className="relative bg-[#0B1F3A] rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16 text-center shadow-2xl border border-white/5">
+        <div className="relative bg-[#0B1F3A] rounded-2xl sm:rounded-3xl overflow-hidden px-6 py-10 sm:px-12 sm:py-16 text-center shadow-2xl border border-white/5 mt-10 sm:mt-0">
           <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-[#2563EB] opacity-20 blur-3xl"></div>
           <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-[#F97316] opacity-15 blur-3xl"></div>
 
@@ -357,10 +357,10 @@ export default function BlogPage() {
               <Mail size={12} />
               Stay Ahead of the Curve
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight mb-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-3 sm:mb-4">
               Subscribe to the Eventibe Letter
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-lg mx-auto">
+            <p className="text-sm sm:text-base text-slate-300 mb-6 sm:mb-8 max-w-lg mx-auto">
               Get handpicked event trends, tech innovations, and strategy
               checklists delivered to your inbox bi-weekly.
             </p>
@@ -370,22 +370,20 @@ export default function BlogPage() {
                 e.preventDefault();
                 alert("Thank you for subscribing!");
               }}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              className="flex flex-col gap-3 max-w-md mx-auto"
             >
               <input
                 type="email"
                 required
-                placeholder="Enter your professional email address..."
-                className="w-full bg-white/10 hover:bg-white/15 focus:bg-white text-white focus:text-[#0B1F3A] border border-white/10 focus:border-[#2563EB] px-5 py-3 rounded-full text-sm font-medium focus:outline-none placeholder-slate-400 transition-all duration-300"
+                placeholder="Enter your email address..."
+                className="w-full bg-white/10 hover:bg-white/15 focus:bg-white text-white focus:text-[#0B1F3A] border border-white/10 focus:border-[#2563EB] px-5 py-3.5 rounded-full text-sm font-medium focus:outline-none placeholder-slate-400 transition-all duration-300"
               />
-              <MagneticButton className="w-full sm:w-auto">
-                <button
-                  type="submit"
-                  className="w-full px-7 py-3 bg-[#F97316] hover:bg-[#EA580C] active:scale-95 text-white text-sm font-bold uppercase tracking-wider rounded-full shadow-lg shadow-[#F97316]/20 transition-all duration-300 whitespace-nowrap"
-                >
-                  Join Now
-                </button>
-              </MagneticButton>
+              <button
+                type="submit"
+                className="w-full px-7 py-3.5 bg-[#F97316] hover:bg-[#EA580C] active:scale-95 text-white text-sm font-bold uppercase tracking-wider rounded-full shadow-lg shadow-[#F97316]/20 transition-all duration-300"
+              >
+                Join Now
+              </button>
             </form>
           </div>
         </div>

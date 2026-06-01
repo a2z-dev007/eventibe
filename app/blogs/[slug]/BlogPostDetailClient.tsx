@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -11,6 +11,10 @@ import {
   ArrowRight,
   BookOpen,
   ChevronRight,
+  Bookmark,
+  Heart,
+  MessageSquare,
+  Share2,
 } from "lucide-react";
 import BlogInteractions from "@/components/BlogInteractions";
 import { TiltCard } from "@/components/micro-interactions";
@@ -26,6 +30,14 @@ function formatDate(dateStr?: string) {
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return dateStr;
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function removeNumberingFromHeadings(htmlContent?: string) {
+  if (!htmlContent) return "";
+  return htmlContent.replace(
+    /(<h[1-6][^>]*>(?:<(?:strong|b|span)[^>]*>)?\s*)\d+(?:\.\d+)*[\.\s-]+\s*(?=[^<>\d\s])/gi,
+    "$1"
+  );
 }
 
 type UiBlogPost = {
@@ -121,25 +133,99 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
     return [...sameCategory, ...fallbackExtras];
   }, [blogsData, blogData]);
 
+  const [showStickyHeader, setShowStickyHeader] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [likes, setLikes] = useState(120);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [showCopiedToast, setShowCopiedToast] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 240) {
+        setShowStickyHeader(true);
+      } else {
+        setShowStickyHeader(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(`bookmark_blog_${slug}`);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsBookmarked(!!saved);
+    }
+  }, [slug]);
+
+  const toggleBookmark = () => {
+    const nextVal = !isBookmarked;
+    setIsBookmarked(nextVal);
+    if (typeof window !== "undefined") {
+      if (nextVal) {
+        localStorage.setItem(`bookmark_blog_${slug}`, "true");
+      } else {
+        localStorage.removeItem(`bookmark_blog_${slug}`);
+      }
+    }
+  };
+
+  const handleLike = () => {
+    if (hasLiked) {
+      setLikes((prev) => prev - 1);
+      setHasLiked(false);
+    } else {
+      setLikes((prev) => prev + 1);
+      setHasLiked(true);
+    }
+  };
+
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      if (navigator.share) {
+        navigator.share({
+          title: post?.title || "",
+          text: post?.desc || "",
+          url: window.location.href,
+        }).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        setShowCopiedToast(true);
+        setTimeout(() => setShowCopiedToast(false), 2000);
+      }
+    }
+  };
+
+  const scrollToComments = () => {
+    const element = document.getElementById("discussion-section");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const bodyContent = useMemo(() => removeNumberingFromHeadings(post?.content?.trim()), [post?.content]);
+
   if (isBlogLoading) {
     return (
       <div className="bg-[#FAFBFD] text-[#334155] min-h-screen pb-20 animate-pulse">
         {/* Hero Skeleton */}
-        <div className="relative h-[40vh] md:h-[50vh] w-full bg-slate-200 overflow-hidden">
-          <div className="absolute inset-x-0 top-6 md:top-12 px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full bg-slate-100 overflow-hidden pt-8 pb-16 sm:pb-24 md:pb-32">
+          <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="flex gap-2 mb-6">
-                <div className="w-32 h-8 bg-slate-300 rounded-full" />
-                <div className="w-48 h-8 bg-slate-300 rounded-full hidden sm:block" />
+                <div className="w-32 h-8 bg-slate-200 rounded-full" />
+                <div className="w-48 h-8 bg-slate-200 rounded-full hidden sm:block" />
               </div>
-              <div className="w-24 h-6 bg-slate-300 rounded-full mb-5" />
-              <div className="w-3/4 h-12 sm:h-16 bg-slate-300 rounded-lg mb-4" />
-              <div className="w-1/2 h-12 sm:h-16 bg-slate-300 rounded-lg mb-8" />
+              <div className="w-24 h-6 bg-slate-200 rounded-full mb-5" />
+              <div className="w-3/4 h-10 sm:h-14 bg-slate-200 rounded-lg mb-4" />
+              <div className="w-1/2 h-10 sm:h-14 bg-slate-200 rounded-lg mb-8" />
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-slate-300 rounded-full" />
+                <div className="w-10 h-10 bg-slate-200 rounded-full" />
                 <div className="flex flex-col gap-2">
-                  <div className="w-32 h-4 bg-slate-300 rounded" />
-                  <div className="w-24 h-3 bg-slate-300 rounded" />
+                  <div className="w-32 h-4 bg-slate-200 rounded" />
+                  <div className="w-24 h-3 bg-slate-200 rounded" />
                 </div>
               </div>
             </div>
@@ -190,26 +276,109 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
     );
   }
 
-  const bodyContent = post.content?.trim() || "";
-
   return (
     <div className="bg-[#FAFBFD] text-[#334155] min-h-screen pb-20">
-      <div className="relative h-[40vh] md:h-[50vh] w-full bg-[#0B1F3A] overflow-hidden">
+      
+      {/* Sticky Mobile Header */}
+      <div className={`fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 py-3 px-4 flex items-center justify-between transition-all duration-300 md:hidden ${
+        showStickyHeader ? 'translate-y-0 opacity-100 shadow-[0_2px_12px_rgba(0,0,0,0.04)]' : '-translate-y-full opacity-0 pointer-events-none'
+      }`}>
+        <Link href="/blogs" className="p-1 text-[#0B1F3A] hover:bg-slate-100 rounded-full transition">
+          <ArrowLeft size={20} />
+        </Link>
+        <span className="text-xs font-bold text-[#0B1F3A] truncate max-w-[60%] text-center">
+          {post.title}
+        </span>
+        <div className="flex gap-2">
+          <button onClick={toggleBookmark} className={`transition ${isBookmarked ? 'text-[#2563EB]' : 'text-slate-400'}`}>
+            <Bookmark size={18} className={isBookmarked ? 'fill-[#2563EB]' : ''} />
+          </button>
+          <button onClick={handleShare} className="text-slate-400 transition hover:text-[#0B1F3A]">
+            <Share2 size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Copied Link Toast */}
+      <div className={`fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg z-[60] transition-all duration-300 pointer-events-none flex items-center gap-2 ${
+        showCopiedToast ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+      }`}>
+        Link copied to clipboard!
+      </div>
+
+      {/* === MOBILE COVER & TITLE SYSTEM (Hidden on Desktop) === */}
+      <div className="md:hidden bg-white pb-6 relative z-10">
+        <div className="relative w-full aspect-[16/10] overflow-hidden">
+          <img
+            src={post.featuredImage}
+            alt={post.title}
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <Link
+            href="/blogs"
+            className="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white active:scale-95 transition"
+          >
+            <ArrowLeft size={18} />
+          </Link>
+        </div>
+        <div className="px-4 pt-5 pb-2">
+          <div className="flex gap-2 mb-3">
+            {post.categories.map((cat) => (
+              <span
+                key={cat.id}
+                className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-[#2563EB] text-white shadow-sm"
+              >
+                {cat.name}
+              </span>
+            ))}
+          </div>
+          <h1 className="text-[22px] font-black text-[#0B1F3A] leading-[1.25] tracking-tight mb-5">
+            {post.title}
+          </h1>
+          <div className="flex items-center justify-between border-b border-slate-100 pb-5">
+            <div className="flex items-center gap-2.5">
+              <img
+                src={post.author.avatar}
+                alt={post.author.displayName}
+                className="w-9 h-9 rounded-full object-cover border border-slate-100 shadow-sm"
+              />
+              <div>
+                <div className="font-extrabold text-[#0B1F3A] text-[13px] leading-tight">{post.author.displayName}</div>
+                <div className="text-[11px] text-slate-500 font-semibold">{post.author.jobName}</div>
+              </div>
+            </div>
+            <div className="flex flex-col items-end gap-1 text-[10px] font-bold text-slate-400">
+              <div className="flex items-center gap-1">
+                <Calendar size={11} className="text-[#F97316]" />
+                <span>{formatDate(post.date)}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Clock size={11} className="text-[#F97316]" />
+                <span>{post.readingTime} min read</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* === DESKTOP HERO SECTION (Hidden on Mobile) === */}
+      <div className="hidden md:block relative w-full bg-[#0B1F3A] overflow-hidden pt-8 pb-16 sm:pb-24 md:pb-32">
         <img
           src={post.featuredImage}
           alt={post.title}
-          className="absolute inset-0 w-full h-full object-cover opacity-50 scale-105"
+          className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAFBFD] via-[#0B1F3A]/70 to-[#0B1F3A]/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 via-[#0B1F3A]/60 to-[#0B1F3A]/30"></div>
         <div className="absolute -top-10 -left-10 w-60 h-60 rounded-full bg-[#2563EB] opacity-10 blur-3xl"></div>
         <div className="absolute top-1/4 -right-12 w-60 h-60 rounded-full bg-[#F97316] opacity-10 blur-3xl"></div>
-        <div className="absolute inset-x-0 top-6 md:top-12 px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center gap-2 mb-6">
+            <div className="flex items-center gap-2 mb-4 sm:mb-6">
               <Link
                 href="/blogs"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md text-xs font-bold text-white uppercase tracking-wider transition-all duration-300 active:scale-95"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md text-xs font-bold text-white uppercase tracking-wider transition-all duration-300 active:scale-95"
               >
                 <ArrowLeft size={13} />
                 Back to Insights
@@ -221,52 +390,66 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
                 <span className="text-[#F97316] max-w-[200px] truncate">{post.title}</span>
               </div>
             </div>
-            <div className="flex gap-2 mb-5">
+            <div className="flex gap-2 mb-3 sm:mb-5">
               {post.categories.map((cat) => (
                 <span
                   key={cat.id}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20"
+                  className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20"
                 >
                   {cat.name}
                 </span>
               ))}
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1F3A] lg:text-white mb-6 tracking-tight leading-tight">
+            <h1 
+              style={{ color: '#ffffff' }}
+              className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight leading-tight sm:leading-snug max-w-4xl hero-heading"
+            >
               {post.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-6 text-[#334155] sm:text-white/90 text-xs sm:text-sm font-semibold">
-              <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-white/80 text-xs sm:text-sm font-semibold">
+              <div className="flex items-center gap-2">
                 <img
                   src={post.author.avatar}
                   alt={post.author.displayName}
-                  className="w-9 h-9 rounded-full object-cover border border-white/20 shadow-sm"
+                  className="w-7 h-7 sm:w-9 sm:h-9 rounded-full object-cover border border-white/20 shadow-sm"
                 />
                 <div>
-                  <div className="font-bold text-[#0B1F3A] sm:text-white">{post.author.displayName}</div>
-                  <div className="text-[10px] text-slate-500 sm:text-white/60">{post.author.jobName}</div>
+                  <div className="font-bold text-white text-xs sm:text-sm">{post.author.displayName}</div>
+                  <div className="text-[10px] text-white/60 hidden sm:block">{post.author.jobName}</div>
                 </div>
               </div>
-              <div className="h-4 w-px bg-slate-300 sm:bg-white/20 hidden sm:block"></div>
+              <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
               <div className="flex items-center gap-1.5">
-                <Calendar size={15} className="text-[#F97316]" />
+                <Calendar size={13} className="text-[#F97316]" />
                 <span>{formatDate(post.date)}</span>
               </div>
-              <div className="h-4 w-px bg-slate-300 sm:bg-white/20 hidden sm:block"></div>
+              <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
               <div className="flex items-center gap-1.5">
-                <Clock size={15} className="text-[#F97316]" />
+                <Clock size={13} className="text-[#F97316]" />
                 <span>{post.readingTime} min read</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <div className="max-w-7xl mx-auto bg-white rounded-3xl p-8 sm:p-12 lg:p-16 shadow-sm border border-slate-100 relative -mt-8 md:-mt-12 z-20">
+      {/* === ARTICLE BODY === */}
+      <div className="w-full md:px-6 lg:px-8 pt-0 md:pt-8 pb-8">
+        <div className="max-w-7xl mx-auto bg-white md:rounded-2xl lg:rounded-3xl p-5 md:p-10 lg:p-16 shadow-none md:shadow-sm border-t md:border border-slate-100 relative mt-0 md:-mt-12 z-20">
           <style>{`
+            .hero-heading {
+              color: #ffffff !important;
+            }
             .article-body {
-              color: #475569; /* soft-slate */
-              font-size: 1.125rem;
-              line-height: 1.8;
+              color: #334155;
+              font-size: 0.95rem;
+              line-height: 1.75;
+            }
+            @media (min-width: 640px) {
+              .article-body { 
+                font-size: 1.1rem; 
+                line-height: 1.8;
+                color: #475569;
+              }
             }
             .article-body::after {
               content: "";
@@ -274,122 +457,192 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
               clear: both;
             }
             .article-body p {
-              margin-bottom: 1.5rem;
+              margin-bottom: 1.25rem;
               clear: none;
             }
-            /* Full-width images */
+            @media (min-width: 640px) {
+              .article-body p { margin-bottom: 1.5rem; }
+            }
+            /* Full-width responsive images */
             .article-body img {
-              border-radius: 2rem;
-              box-shadow: 0 32px 64px -16px rgba(0,0,0,0.15);
-              width: 100%;
-              max-height: 550px;
+              border-radius: 1rem;
+              box-shadow: 0 10px 30px -8px rgba(0,0,0,0.12);
+              max-width: 100% !important;
+              height: auto !important;
+              width: 100% !important;
+              aspect-ratio: 16/10;
               object-fit: cover;
-              margin: 2.5rem 0;
+              margin: 1.5rem 0;
               display: block;
               clear: both;
             }
-            @media (max-width: 768px) {
+            @media (min-width: 640px) {
               .article-body img {
-                float: none !important;
-                margin: 2.5rem auto !important;
-                max-width: 100%;
                 border-radius: 1.5rem;
+                box-shadow: 0 20px 40px -12px rgba(0,0,0,0.12);
+                margin: 2.5rem 0;
               }
             }
-            .article-body h2 {
-              margin-top: 4rem;
-              margin-bottom: 1.5rem;
-              font-size: 2.5rem;
-              font-weight: 900;
-              color: #0B1F3A; /* primary-navy */
-              line-height: 1.2;
-              letter-spacing: -0.025em;
-              display: flex;
-              align-items: center;
-              gap: 1rem;
+            
+            /* Responsive Content Headings */
+            .article-body h1 {
+              margin-top: 1.5rem;
+              margin-bottom: 0.5rem;
+              font-size: 1.35rem !important;
+              font-weight: 800;
+              color: #0B1F3A;
+              line-height: 1.3;
+              letter-spacing: -0.01em;
               clear: both;
+              overflow-wrap: break-word;
+              word-break: break-word;
+            }
+            @media (min-width: 640px) {
+              .article-body h1 {
+                margin-top: 2rem;
+                margin-bottom: 0.75rem;
+                font-size: 2.15rem !important;
+              }
+            }
+            
+            .article-body h2 {
+              margin-top: 1.5rem;
+              margin-bottom: 0.5rem;
+              font-size: 1.2rem !important;
+              font-weight: 800;
+              color: #0B1F3A;
+              line-height: 1.3;
+              letter-spacing: -0.01em;
+              clear: both;
+              overflow-wrap: break-word;
+              word-break: break-word;
             }
             .article-body h2::before {
               content: '';
               display: inline-block;
-              width: 2rem;
-              height: 2rem;
+              vertical-align: middle;
+              margin-top: -0.15em;
+              width: 1.1em;
+              height: 1.1em;
+              margin-right: 0.45em;
               background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F97316' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3L10.5 7.5L15 9L10.5 10.5L9 15L7.5 10.5L3 9L7.5 7.5L9 3Z'/%3E%3Cpath d='M18 14L18.75 16.25L21 17L18.75 17.75L18 20L17.25 17.75L15 17L17.25 16.25L18 14Z'/%3E%3C/svg%3E");
               background-size: contain;
               background-repeat: no-repeat;
-              flex-shrink: 0;
             }
+            @media (min-width: 640px) {
+              .article-body h2 {
+                margin-top: 3.5rem;
+                margin-bottom: 1.25rem;
+                font-size: 1.85rem !important;
+              }
+            }
+            
             .article-body h3 {
-              margin-top: 3rem;
-              margin-bottom: 1.25rem;
-              font-size: 1.875rem;
-              font-weight: 800;
-              color: #0B1F3A; /* primary-navy */
+              margin-top: 1.25rem;
+              margin-bottom: 0.5rem;
+              font-size: 1.05rem !important;
+              font-weight: 700;
+              color: #0B1F3A;
               line-height: 1.3;
-              display: flex;
-              align-items: center;
-              gap: 0.75rem;
               clear: both;
+              overflow-wrap: break-word;
+              word-break: break-word;
             }
             .article-body h3::before {
               content: '';
               display: inline-block;
-              width: 1.5rem;
-              height: 1.5rem;
+              vertical-align: middle;
+              margin-top: -0.15em;
+              width: 1.1em;
+              height: 1.1em;
+              margin-right: 0.45em;
               background-color: rgba(37, 99, 235, 0.1);
-              border-radius: 0.5rem;
+              border-radius: 0.25em;
               background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
               background-size: 60%;
               background-position: center;
               background-repeat: no-repeat;
-              flex-shrink: 0;
             }
+            @media (min-width: 640px) {
+              .article-body h3 {
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+                font-size: 1.5rem !important;
+              }
+            }
+            
             .article-body h4 {
-              margin-top: 2.5rem;
-              margin-bottom: 1rem;
-              font-size: 1.5rem;
+              margin-top: 1.25rem;
+              margin-bottom: 0.5rem;
+              font-size: 0.95rem !important;
               font-weight: 700;
               color: #0B1F3A;
               clear: both;
             }
+            @media (min-width: 640px) {
+              .article-body h4 {
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+                font-size: 1.25rem !important;
+              }
+            }
+            
             .article-body blockquote {
-              margin: 3rem 0;
-              padding: 2rem 2.5rem;
+              margin: 1.5rem 0;
+              padding: 1rem 1.25rem;
               background-color: #F8FAFC;
-              border-left: 6px solid #2563EB;
-              border-radius: 0 1.5rem 1.5rem 0;
+              border-left: 4px solid #F97316;
+              border-radius: 0 0.75rem 0.75rem 0;
               font-style: italic;
               color: #475569;
-              font-size: 1.35rem;
+              font-size: 0.95rem;
               clear: both;
-              box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+            }
+            @media (min-width: 640px) {
+              .article-body blockquote {
+                margin: 3rem 0;
+                padding: 2rem 2.5rem;
+                border-left-width: 6px;
+                border-radius: 0 1.5rem 1.5rem 0;
+                font-size: 1.35rem;
+                box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+              }
             }
             .article-body ul, .article-body ol {
-              margin: 2.5rem 0;
+              margin: 1.25rem 0;
               padding: 0;
               list-style: none;
               clear: both;
             }
+            @media (min-width: 640px) {
+              .article-body ul, .article-body ol { margin: 2.5rem 0; }
+            }
+            
+            /* Responsive Bullet list items */
             .article-body li {
               position: relative;
-              padding-left: 2.75rem;
-              margin-bottom: 1rem;
+              padding-left: 1.75em;
+              margin-bottom: 0.75rem;
               font-weight: 500;
+            }
+            @media (min-width: 640px) {
+              .article-body li { padding-left: 2em; margin-bottom: 1rem; }
             }
             .article-body li::before {
               content: '';
               position: absolute;
               left: 0;
-              top: 0.2rem;
-              width: 1.75rem;
-              height: 1.75rem;
-              background-color: rgba(249, 115, 22, 0.15); /* accent-orange / 15 */
+              top: 0.15em;
+              width: 1.2em;
+              height: 1.2em;
+              background-color: rgba(249, 115, 22, 0.15);
               border-radius: 50%;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F97316' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F97316' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
               background-size: 50%;
               background-position: center;
               background-repeat: no-repeat;
             }
+            
             .article-body strong {
               color: #0B1F3A;
               font-weight: 800;
@@ -407,103 +660,148 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
             }
           `}</style>
           <div
-            className="article-body text-[#334155] font-normal text-base md:text-lg leading-relaxed"
+            className="article-body"
             dangerouslySetInnerHTML={{ __html: bodyContent }}
           />
-          <BlogInteractions
-            initialLikes={120}
-            initialComments={[]}
-            postTitle={post.title}
-          />
+          <div id="discussion-section">
+            <BlogInteractions
+              likes={likes}
+              hasLiked={hasLiked}
+              onLike={handleLike}
+              onCommentsCountChange={setCommentsCount}
+              initialLikes={120}
+              initialComments={[]}
+              postTitle={post.title}
+            />
+          </div>
         </div>
       </div>
-      <div className="bg-slate-50 border-t border-slate-100 mt-24 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-10">
-            <div>
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-[#2563EB] mb-2">
-                <BookOpen size={12} />
-                Deepen Your Knowledge
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B1F3A] tracking-tight">
-                Recommended Insights
-              </h2>
+      {/* Mobile Floating Action Pill */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[340px] bg-white/95 backdrop-blur-xl border border-slate-200/80 shadow-[0_12px_40px_rgba(0,0,0,0.12)] rounded-full z-[50] py-3 px-6 flex items-center justify-between transition-all duration-300 md:hidden">
+        <button
+          onClick={handleLike}
+          className={`flex items-center gap-1.5 transition-transform active:scale-90 ${
+            hasLiked ? 'text-[#F97316]' : 'text-slate-500'
+          }`}
+        >
+          <Heart size={22} className={hasLiked ? 'fill-[#F97316]' : ''} />
+          <span className="text-[11px] font-bold">{likes}</span>
+        </button>
+        <button
+          onClick={scrollToComments}
+          className="flex items-center gap-1.5 text-slate-500 transition-transform active:scale-90 hover:text-[#0B1F3A]"
+        >
+          <MessageSquare size={22} />
+          <span className="text-[11px] font-bold">{commentsCount}</span>
+        </button>
+        <button
+          onClick={toggleBookmark}
+          className={`flex items-center gap-1.5 transition-transform active:scale-90 ${
+            isBookmarked ? 'text-[#2563EB]' : 'text-slate-500'
+          }`}
+        >
+          <Bookmark size={22} className={isBookmarked ? 'fill-[#2563EB]' : ''} />
+        </button>
+        <button
+          onClick={handleShare}
+          className="flex items-center gap-1.5 text-slate-500 transition-transform active:scale-90 hover:text-[#0B1F3A]"
+        >
+          <Share2 size={22} />
+        </button>
+      </div>
+
+      {/* === RELATED POSTS — only render when there's data === */}
+      {relatedPosts.length > 0 && (
+        <div className="bg-slate-50 border-t border-slate-100 mt-12 md:mt-24 py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 sm:mb-10">
+              <div>
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-widest text-[#2563EB] mb-1 sm:mb-2">
+                  <BookOpen size={12} />
+                  Deepen Your Knowledge
+                </span>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0B1F3A] tracking-tight">
+                  Recommended Insights
+                </h2>
+              </div>
+              <Link
+                href="/blogs"
+                className="text-xs sm:text-sm font-bold text-[#2563EB] hover:text-[#F97316] flex items-center gap-1 transition-colors duration-300 self-start sm:self-auto"
+              >
+                See All Articles
+                <ArrowRight size={14} />
+              </Link>
             </div>
-            <Link
-              href="/blogs"
-              className="text-xs sm:text-sm font-bold text-[#2563EB] hover:text-[#F97316] flex items-center gap-1 transition-colors duration-300"
-            >
-              See All Articles
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedPosts.map((relatedPost) => (
-              <TiltCard key={relatedPost.id} className="h-full rounded-2xl">
-                <article className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition-all duration-500 flex flex-col h-full z-20 relative">
-                  <div className="relative h-52 w-full overflow-hidden">
-                    <img
-                      src={relatedPost.featuredImage}
-                      alt={relatedPost.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/45 via-transparent to-transparent"></div>
-                    <div className="absolute top-4 left-4 flex flex-wrap gap-1">
-                      {relatedPost.categories.map((cat) => (
-                        <span
-                          key={cat.id}
-                          className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-white text-[#0B1F3A] shadow-sm"
+            <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-visible pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
+              {relatedPosts.map((relatedPost) => (
+                <div key={relatedPost.id} className="w-[85%] min-w-[280px] md:w-auto shrink-0 snap-start snap-always">
+                  <TiltCard className="h-full rounded-2xl">
+                  <article className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition-all duration-500 flex flex-col h-full z-20 relative">
+                    <div className="relative h-44 sm:h-52 w-full overflow-hidden">
+                      <img
+                        src={relatedPost.featuredImage}
+                        alt={relatedPost.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/45 via-transparent to-transparent"></div>
+                      <div className="absolute top-3 left-3 flex flex-wrap gap-1">
+                        {relatedPost.categories.map((cat) => (
+                          <span
+                            key={cat.id}
+                            className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-white text-[#0B1F3A] shadow-sm"
+                          >
+                            {cat.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                      <div className="flex items-center gap-3 text-[10px] font-semibold text-slate-400 mb-2">
+                        <div className="flex items-center gap-1">
+                          <Calendar size={11} className="text-[#2563EB]" />
+                          <span>{formatDate(relatedPost.date)}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock size={11} className="text-[#2563EB]" />
+                          <span>{relatedPost.readingTime} min read</span>
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-bold text-[#0B1F3A] mb-2 line-clamp-2 group-hover:text-[#2563EB] transition-colors duration-300">
+                        <Link href={relatedPost.href}>{relatedPost.title}</Link>
+                      </h3>
+                      <p className="text-slate-500 text-xs mb-4 line-clamp-2 leading-relaxed">
+                        {relatedPost.desc}
+                      </p>
+                      <div className="w-full h-px bg-slate-100 mt-auto mb-3"></div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={relatedPost.author.avatar}
+                            alt={relatedPost.author.displayName}
+                            className="w-6 h-6 rounded-full object-cover border border-[#2563EB]/10"
+                          />
+                          <span className="text-[10px] font-bold text-[#0B1F3A] truncate max-w-[90px]">
+                            {relatedPost.author.displayName}
+                          </span>
+                        </div>
+                        <Link
+                          href={relatedPost.href}
+                          className="text-[10px] font-bold text-[#2563EB] group-hover:text-[#F97316] flex items-center gap-1 transition-colors duration-300 shrink-0"
                         >
-                          {cat.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center gap-3 text-[10px] font-semibold text-slate-400 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar size={12} className="text-[#2563EB]" />
-                        <span>{formatDate(relatedPost.date)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock size={12} className="text-[#2563EB]" />
-                        <span>{relatedPost.readingTime} min read</span>
+                          Read
+                          <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                        </Link>
                       </div>
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0B1F3A] mb-3 line-clamp-2 group-hover:text-[#2563EB] transition-colors duration-300">
-                      <Link href={relatedPost.href}>{relatedPost.title}</Link>
-                    </h3>
-                    <p className="text-slate-500 text-xs mb-5 line-clamp-3 leading-relaxed">
-                      {relatedPost.desc}
-                    </p>
-                    <div className="w-full h-px bg-slate-100 mt-auto mb-4"></div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={relatedPost.author.avatar}
-                          alt={relatedPost.author.displayName}
-                          className="w-6 h-6 rounded-full object-cover border border-[#2563EB]/10"
-                        />
-                        <span className="text-[10px] font-bold text-[#0B1F3A]">
-                          {relatedPost.author.displayName}
-                        </span>
-                      </div>
-                      <Link
-                        href={relatedPost.href}
-                        className="text-[10px] font-bold text-[#2563EB] group-hover:text-[#F97316] flex items-center gap-1 transition-colors duration-300"
-                      >
-                        Read
-                        <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              </TiltCard>
-            ))}
+                  </article>
+                  </TiltCard>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
