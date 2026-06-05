@@ -8,13 +8,12 @@ STATIC
 6. FAQS - Like Spodia.com
 7. Company Details - Like Spodia.com
 8. Investor Relation - Like Spodia.com
-9. FAQs - Like Spodia.com
-10. List Your Venue
-11. List Your Service
-12. Partner With Us
-13. Terms & Conditions - Like Spodia.com
-14. Privacy Policy - Like Spodia.com
-15. Disclaimer - Like Spodia.com
+9. List Your Venue
+10. List Your Service
+11. Partner With Us
+12. Terms & Conditions - Like Spodia.com
+13. Privacy Policy - Like Spodia.com
+14. Disclaimer - Like Spodia.com
 
 DYNAMIC
 
