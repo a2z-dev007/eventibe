@@ -1,5 +1,5 @@
 import apiClient from "@/lib/api/apiClient";
-// import { RoomInventoryResponse } from "@/types/roomInventory";
+import { RoomInventoryResponse } from "@/types/roomInventory";
 
 // Error wrapper for consistent error handling
 const handleApiCall = async <T>(apiCall: () => Promise<T>): Promise<T> => {
@@ -22,9 +22,6 @@ export const getPropertyByName = (name: string) =>
 export const getPropertyById = (id: string) =>
     handleApiCall(() => apiClient.get(`/listing/detail/${id}`));
 
-export const fetchRoomInventory = async (params: { start_date: string; end_date: string; room_ids: number[] }): Promise<any> => {
-  return handleApiCall(() => apiClient.post('/inventory/rooms/', params));
-};
 export const searchRoomTypes = (params: { page_number?: number; number_of_records?: number; name?: string }) =>
     handleApiCall(() => apiClient.get("/room-types/", { params }));
 
@@ -239,6 +236,7 @@ export const updateProfile = (profileData: {
     return handleApiCall(() => apiClient.post("/users/profile-update/", profileData))
 }
 
+
 export const updateProfileImage = (imageFile: File) => {
     const formData = new FormData()
     formData.append("image", imageFile)
@@ -264,7 +262,7 @@ export const getRoomInventoryAndPricing = (params: {
     customerType?: string | null
     startDate: string // YYYY-MM-DD
     endDate: string   // YYYY-MM-DD
-}): Promise<{ data: any }> => {
+}): Promise<{ data: RoomInventoryResponse }> => {
     const customerType = params.customerType || "b2c"
     return handleApiCall(() => apiClient.get(
         `/rooms-inventory/${params.propertyId}/?customerType=${customerType}&start=${params.startDate}&end=${params.endDate}`
@@ -433,7 +431,6 @@ export const getTestimonials = (params?: { show_homepage?: 0 | 1 }) => {
     return handleApiCall(() => apiClient.get("/testimonials/", { params }))
 }
 
-
 // Blog APIs
 export const getBlogs = (params: { applicable_for: string; page_number?: number; number_of_records?: number; slug?: string }) => {
     return handleApiCall(() => apiClient.get("/get/blogs-list/", { params }));
@@ -447,4 +444,8 @@ export const getBlogDetails = (blogIdOrSlug: string | number, applicableFor: str
             ...(isId ? { blog_id: blogIdOrSlug } : { slug: blogIdOrSlug })
         } 
     }));
+}
+
+export const getInternalReviews = (params: { show_on_homepage?: boolean; applicable_for?: string }) => {
+    return handleApiCall(() => apiClient.get("/internal-review/list", { params }));
 }

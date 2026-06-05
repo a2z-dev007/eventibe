@@ -2,13 +2,12 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import Header from '@/components/Header'
 import { IMAGES } from '@/assets/images'
 import { searchVenues, fetchVenueTypes, fetchEventTypes } from '@/lib/api/eventsEndpoints'
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect'
 import PremiumSelect from '@/components/ui/PremiumSelect'
 import PremiumDatePicker from '@/components/ui/PremiumDatePicker'
-import { MapPin, Home, Sparkles, Users, Search as SearchIcon, SlidersHorizontal, ChevronRight, X, LayoutGrid, List } from 'lucide-react'
+import { MapPin, Home, Sparkles, Users, Search as SearchIcon, SlidersHorizontal, ChevronRight, X, LayoutGrid, List, ChevronDown } from 'lucide-react'
 import { toast } from 'sonner'
 import PremiumSearchBar from '@/components/events/PremiumSearchBar'
 
@@ -16,6 +15,7 @@ import type { Filters, Venue } from './types'
 import { PER_PAGE } from './data'
 import { VenueResultCard } from './VenueResultCard'
 import { VenueFilterSidebar } from './VenueFilterSidebar'
+import { FAQSectionClient } from '@/components/common/FAQSectionClientWrapper'
 
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -28,6 +28,7 @@ export function VenueSearchPage() {
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1)
   const [sort, setSort] = useState('recommended')
   const [viewType, setViewType] = useState<'grid' | 'list'>('list')
+  const [showFloatingFilters, setShowFloatingFilters] = useState(false)
 
   // ── Search bar state (pre-filled from URL params) ───────────────────────────
   const [location, setLocation] = useState<any>(null)
@@ -39,6 +40,16 @@ export function VenueSearchPage() {
   // Fetch Metadata for Labels
   const { data: venueTypesData } = useQuery({ queryKey: ['venueTypes'], queryFn: () => fetchVenueTypes() })
   const { data: eventTypesData } = useQuery({ queryKey: ['eventTypes'], queryFn: () => fetchEventTypes() })
+
+  // Scroll listener for floating filter button
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show button after scrolling past the hero (typically ~400-500px)
+      setShowFloatingFilters(window.scrollY > 450)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const [filtersState, setFiltersState] = useState<Filters>({
     location: '',
@@ -65,7 +76,7 @@ export function VenueSearchPage() {
       const gVal = searchParams.get('guests')
 
       if (cityId && cityName) setLocation({ value: cityId, label: cityName })
-      
+
       const newFilters = { ...filtersState }
       if (vtId) {
         const found = venueTypesData.records.find(r => String(r.id) === vtId)
@@ -110,22 +121,26 @@ export function VenueSearchPage() {
     location: location?.label || filtersState.location,
   }
 
+  const cityIdFromUrl = searchParams.get('city') || '';
+  const vtIdFromUrl = searchParams.get('venue_type') || '';
+  const etIdFromUrl = searchParams.get('event_type') || '';
+
   // ── API Data Fetching ──────────────────────────────────────────────────────
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['venues', page, debouncedLocationValue, venueType?.value, eventType?.value, debouncedFilters.venueTypes, debouncedFilters.eventTypes, debouncedFilters.minCap, debouncedFilters.maxCap, debouncedFilters.minVeg, debouncedFilters.maxVeg, sort],
+    queryKey: ['venues', page, cityIdFromUrl, vtIdFromUrl, etIdFromUrl, debouncedLocationValue, debouncedFilters.venueTypes, debouncedFilters.eventTypes, debouncedFilters.minCap, debouncedFilters.maxCap, debouncedFilters.minVeg, debouncedFilters.maxVeg, sort],
     queryFn: () => searchVenues({
       page_number: page,
       number_of_records: PER_PAGE,
-      city: debouncedLocationValue,
-      // Priority: sidebar checkboxes if present, else top dropdown
-      venue_type: debouncedFilters.venueTypes.length > 0 ? debouncedFilters.venueTypes : (venueType?.value || ''),
-      event_type: debouncedFilters.eventTypes.length > 0 ? debouncedFilters.eventTypes : (eventType?.value || ''),
+      city: location?.value || cityIdFromUrl,
+      // Priority: sidebar checkboxes if present, else URL
+      venue_type: debouncedFilters.venueTypes.length > 0 ? debouncedFilters.venueTypes : vtIdFromUrl,
+      event_type: debouncedFilters.eventTypes.length > 0 ? debouncedFilters.eventTypes : etIdFromUrl,
     }),
     placeholderData: (previousData) => previousData
   })
 
   const results = data?.records || []
-  
+
   // Real-time Frontend Sorting & Granular Filtering
   const processedResults = useMemo(() => {
     let list = [...results]
@@ -155,11 +170,11 @@ export function VenueSearchPage() {
   const totalRecords = data?.totalRecords || 0
   const totalPages = Math.max(1, Math.ceil(totalRecords / PER_PAGE))
 
-  const isAnyFilterActive = 
-    location !== null || 
-    venueType !== null || 
-    eventType !== null || 
-    date !== null || 
+  const isAnyFilterActive =
+    location !== null ||
+    venueType !== null ||
+    eventType !== null ||
+    date !== null ||
     guests !== null ||
     filtersState.venueTypes.length > 0 ||
     filtersState.eventTypes.length > 0 ||
@@ -214,11 +229,12 @@ export function VenueSearchPage() {
   }, [page, searchParams])
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 pb-24 md:pb-8">
+
       {/* ── Hero banner ─────────────────────────────────────────────────────── */}
       <div
-        className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center md:pt-28 pt-28 pb-10 lg:pt-40 px-4 md:px-8 overflow-hidden"
-        style={{  
+        className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center pt-20 pb-8 md:pt-28 lg:pt-40 px-4 md:px-8 overflow-hidden"
+        style={{
           backgroundImage: `url(${IMAGES.listingHeroBg.src})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -227,9 +243,9 @@ export function VenueSearchPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none" />
 
-        <div className="relative z-[99] w-full max-w-7xl">
-          <h1 className="text-white font-extrabold text-2xl sm:text-3xl mb-5 drop-shadow  md:text-left text-center">
-            Banquet Halls &amp; Event Venues in {locationLabel}
+        <div className="max-w-6xl w-full text-center relative z-10 py-6 md:py-10">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-4 md:mb-8 tracking-tighter drop-shadow-2xl">
+            Banquet Halls & Event Venues <br className="hidden md:block" /> in India
           </h1>
 
           {/* Premium Search Bar Integration */}
@@ -265,12 +281,12 @@ export function VenueSearchPage() {
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-none">
-                {processedResults.length} <span className="text-[#FF9530]">Venues Found</span>
+                {totalRecords} <span className="text-[#FF9530]">Venues Found</span>
               </h2>
               <div className="flex items-center gap-3 mt-1.5">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Available for your selection</p>
                 {isAnyFilterActive && (
-                  <button 
+                  <button
                     onClick={clearFilters}
                     className="flex items-center gap-1.5 text-[9px] font-black text-[#FF9530] uppercase tracking-widest bg-orange-50 px-2 py-0.5 rounded-md hover:bg-[#FF9530] hover:text-white transition-all border border-orange-100"
                   >
@@ -292,17 +308,20 @@ export function VenueSearchPage() {
               Filters
             </button>
             {/* Sort */}
-            <select
-              value={sort}
-              onChange={e => { setSort(e.target.value); setPage(1) }}
-              className="border border-gray-200 bg-white text-gray-700 font-bold rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#FF9530]/30 shadow-sm cursor-pointer h-[42px]"
-            >
-              <option value="recommended">Sort: Recommended</option>
-              <option value="rating">Highest Rated</option>
-              <option value="low-high">Price: Low → High</option>
-              <option value="high-low">Price: High → Low</option>
-              <option value="capacity-high">Capacity: High → Low</option>
-            </select>
+            <div className="relative">
+              <select
+                value={sort}
+                onChange={e => { setSort(e.target.value); setPage(1) }}
+                className="appearance-none border border-gray-200 bg-white text-gray-700 font-bold rounded-xl px-4 pr-10 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#FF9530]/30 shadow-sm cursor-pointer h-[42px]"
+              >
+                <option value="recommended">Sort: Recommended</option>
+                <option value="rating">Highest Rated</option>
+                <option value="low-high">Price: Low → High</option>
+                <option value="high-low">Price: High → Low</option>
+                <option value="capacity-high">Capacity: High → Low</option>
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
 
             {/* View Toggle */}
             <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
@@ -341,7 +360,7 @@ export function VenueSearchPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   {isAnyFilterActive && (
-                    <button 
+                    <button
                       onClick={clearFilters}
                       className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest hover:underline"
                     >
@@ -389,8 +408,8 @@ export function VenueSearchPage() {
                       <div className="space-y-4">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1 space-y-2">
-                             <div className="h-6 w-3/4 bg-gray-200 rounded-lg" />
-                             <div className="h-4 w-1/2 bg-gray-100 rounded-lg" />
+                            <div className="h-6 w-3/4 bg-gray-200 rounded-lg" />
+                            <div className="h-4 w-1/2 bg-gray-100 rounded-lg" />
                           </div>
                           <div className="w-12 h-12 bg-gray-200 rounded-2xl" />
                         </div>
@@ -403,8 +422,8 @@ export function VenueSearchPage() {
                       <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mt-8 border-t border-gray-50 pt-5">
                         <div className="h-10 w-32 bg-gray-200 rounded-xl" />
                         <div className="flex gap-3 w-full sm:w-auto">
-                           <div className="h-12 flex-1 sm:w-32 bg-gray-100 rounded-2xl" />
-                           <div className="h-12 flex-1 sm:w-40 bg-gray-200 rounded-2xl" />
+                          <div className="h-12 flex-1 sm:w-32 bg-gray-100 rounded-2xl" />
+                          <div className="h-12 flex-1 sm:w-40 bg-gray-200 rounded-2xl" />
                         </div>
                       </div>
                     </div>
@@ -418,17 +437,17 @@ export function VenueSearchPage() {
                 <p className="text-gray-500 text-sm">Please try again later.</p>
               </div>
             ) : processedResults.length === 0 ? (
-              <div className="bg-white rounded-[3rem] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-16 text-center group">
-                <div className="w-24 h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-[#FF9530] mb-8 mx-auto shadow-sm border border-orange-100/50 group-hover:scale-110 transition-transform duration-500">
-                  <SearchIcon className="w-12 h-12" strokeWidth={1.5} />
+              <div className="bg-white rounded-2xl lg:rounded-[3rem] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-10 lg:p-16 text-center group">
+                <div className="w-20 h-20 lg:w-24 lg:h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-[#FF9530] mb-8 mx-auto shadow-sm border border-orange-100/50 group-hover:scale-110 transition-transform duration-500">
+                  <SearchIcon className="w-10 h-10 lg:w-12 lg:h-12" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-3xl font-black text-gray-900 mb-4 tracking-tight">No Venues Found</h3>
-                <p className="text-gray-500 font-medium text-lg max-w-md mx-auto mb-10 leading-relaxed">
+                <h3 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4 tracking-tight">No Venues Found</h3>
+                <p className="text-gray-500 font-medium text-base lg:text-lg max-w-md mx-auto mb-10 leading-relaxed">
                   We couldn't find any premium venues matching your current filters. Try relaxing your criteria or search in a different city.
                 </p>
-                <button 
-                  onClick={clearFilters} 
-                  className="bg-gradient-to-r from-[#FF9530] to-[#FF8000] hover:from-[#FF8000] hover:to-[#F97316] text-white font-black uppercase tracking-widest text-xs px-10 py-4 rounded-2xl shadow-xl shadow-orange-500/20 transition-all hover:scale-105 active:scale-95 inline-flex items-center gap-2"
+                <button
+                  onClick={clearFilters}
+                  className="bg-gradient-to-r from-[#FF9530] to-[#FF8000] hover:from-[#FF8000] hover:to-[#F97316] text-white font-black uppercase tracking-widest text-[10px] lg:text-xs px-8 lg:px-10 py-4 rounded-xl lg:rounded-2xl shadow-xl shadow-orange-500/20 transition-all hover:scale-105 active:scale-95 inline-flex items-center gap-2"
                 >
                   Clear All Filters
                 </button>
@@ -441,7 +460,7 @@ export function VenueSearchPage() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+              <div className="mt-6 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
                 <p className="text-sm text-gray-500 font-medium">
                   Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, totalRecords)} of {totalRecords} venues
                 </p>
@@ -485,7 +504,7 @@ export function VenueSearchPage() {
         </div>
 
         {/* ── Average ratings & reviews — full-width below grid ── */}
-        <section className="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        {/* <section className="mt-6 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm p-6">
           <h2 className="text-xl font-extrabold text-gray-900 mb-5">
             Average Rating &amp; Reviews for Venues in {locationLabel}
           </h2>
@@ -525,17 +544,16 @@ export function VenueSearchPage() {
             ))}
           </div>
           
-          {/* Quick Navigation Links */}
+          
           <div className="mt-10 pt-8 border-t border-dashed border-gray-100 grid sm:grid-cols-2 gap-4">
             <Link 
               href="/event/list"
-              className="group bg-gray-50 p-6 rounded-2xl border border-transparent hover:border-[#FF9530] hover:bg-white transition-all shadow-sm"
+              className="group bg-gray-50 p-6 rounded-xl lg:rounded-2xl border border-transparent hover:border-[#FF9530] hover:bg-white transition-all shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest mb-1">Browse Selection</p>
                   <h3 className="text-gray-900 font-bold">Event Categories</h3>
-                  {/* <p className="text-gray-400 text-[10px] font-mono mt-1">/event/list</p> */}
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#FF9530] group-hover:bg-[#FF9530] group-hover:text-white transition-all">
                   <ChevronRight className="w-5 h-5" />
@@ -545,13 +563,12 @@ export function VenueSearchPage() {
 
             <Link 
               href="/venue/list"
-              className="group bg-gray-50 p-6 rounded-2xl border border-transparent hover:border-[#FF9530] hover:bg-white transition-all shadow-sm"
+              className="group bg-gray-50 p-6 rounded-xl lg:rounded-2xl border border-transparent hover:border-[#FF9530] hover:bg-white transition-all shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest mb-1">Browse Selection</p>
                   <h3 className="text-gray-900 font-bold">Venue Categories</h3>
-                  {/* <p className="text-gray-400 text-[10px] font-mono mt-1">/venue/list</p> */}
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#FF9530] group-hover:bg-[#FF9530] group-hover:text-white transition-all">
                   <ChevronRight className="w-5 h-5" />
@@ -559,10 +576,10 @@ export function VenueSearchPage() {
               </div>
             </Link>
           </div>
-        </section>
+        </section> */}
 
         {/* ── Area reviews ── */}
-        <section className="mt-4 bg-orange-50 border border-[#FF9530]/20 rounded-2xl overflow-hidden">
+        {/* <section className="mt-4 bg-orange-50 border border-[#FF9530]/20 rounded-xl lg:rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-[#FF9530]/20">
             <h2 className="font-extrabold text-gray-900">Area Reviews — {locationLabel}</h2>
             <span className="text-sm text-gray-500 font-semibold">Avg: 4.4 / 5 · 1,200+ visitors</span>
@@ -582,10 +599,10 @@ export function VenueSearchPage() {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* ── SEO insight grid ── */}
-        <section className="mt-4 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        {/* <section className="mt-4 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-gray-100 bg-gray-50">
             <h2 className="font-extrabold text-gray-900">{locationLabel} — Areas, Budgets &amp; Insights</h2>
             <p className="text-sm text-gray-500 mt-0.5">Compare venues by locality, event type, guests, and price range.</p>
@@ -596,7 +613,7 @@ export function VenueSearchPage() {
               { title: 'Top Event Searches', links: ['Wedding Banquets', 'Corporate Halls', 'Engagement Venues', 'Birthday Banquets', 'Reception Venues'] },
               { title: 'Budget Links', links: ['Under ₹1,800/plate', '₹1,800–₹2,200', 'Above ₹2,200', 'Low Budget', 'Luxury'] },
             ].map(block => (
-              <div key={block.title} className="bg-gray-50 border border-gray-100 rounded-2xl p-4">
+              <div key={block.title} className="bg-gray-50 border border-gray-100 rounded-xl lg:rounded-2xl p-4">
                 <h3 className="font-bold text-gray-900 text-sm mb-3">{block.title}</h3>
                 <div className="flex flex-wrap gap-1.5">
                   {block.links.map(l => (
@@ -625,10 +642,10 @@ export function VenueSearchPage() {
               </details>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* ── SEO internal links ── */}
-        <section className="mt-4 mb-8 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        {/* <section className="mt-4 mb-8 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-gray-100">
             <h2 className="font-extrabold text-gray-900">Discover More Venues</h2>
             <p className="text-sm text-gray-500 mt-0.5">Nearby and same-city discovery lists for stronger venue discovery.</p>
@@ -647,21 +664,32 @@ export function VenueSearchPage() {
               <Link href="#" className="text-[#078ED8] text-xs font-bold ml-1 hover:underline shrink-0">See more</Link>
             </div>
           ))}
-        </section>
+        </section> */}
 
-      </div>
-      <div className="lg:hidden fixed bottom-20 right-6 z-[60] animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="relative flex items-center justify-center bg-[#FF9530] text-white w-14 h-14 rounded-full shadow-[0_12px_40px_rgba(255,149,48,0.4)] border border-white/20 active:scale-90 hover:scale-105 transition-all duration-300 group ring-4 ring-orange-500/10"
-        >
-          <SlidersHorizontal className="w-6 h-6" />
-          
-          <div className="absolute -top-1 -right-1 flex items-center justify-center bg-white text-[#FF9530] w-6 h-6 rounded-full text-[11px] font-black shadow-lg border-2 border-[#FF9530]">
-            {Object.values(filters).filter(v => Array.isArray(v) ? v.length > 0 : !!v && v !== 0 && v !== 10000 && v !== 5000).length}
+        {/* ── FAQ Section ── */}
+        {location?.label && cityIdFromUrl && (
+          <div className="mt-16">
+            <FAQSectionClient
+              cityId={Number(cityIdFromUrl)}
+              title={`${location.label} Event Venues FAQs`}
+            />
           </div>
-        </button>
+        )}
       </div>
+      {showFloatingFilters && (
+        <div className="lg:hidden fixed bottom-24 right-6 z-[60] animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="relative flex items-center justify-center bg-[#FF9530] text-white w-14 h-14 rounded-full shadow-[0_12px_40px_rgba(255,149,48,0.4)] border border-white/20 active:scale-90 hover:scale-105 transition-all duration-300 group ring-4 ring-orange-500/10"
+          >
+            <SlidersHorizontal className="w-6 h-6" />
+
+            <div className="absolute -top-1 -right-1 flex items-center justify-center bg-white text-[#FF9530] w-6 h-6 rounded-full text-[11px] font-black shadow-lg border-2 border-[#FF9530]">
+              {Object.values(filters).filter(v => Array.isArray(v) ? v.length > 0 : !!v && v !== 0 && v !== 10000 && v !== 5000).length}
+            </div>
+          </button>
+        </div>
+      )}
     </main>
   )
 }

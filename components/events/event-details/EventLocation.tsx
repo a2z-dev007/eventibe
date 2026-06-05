@@ -11,8 +11,10 @@ interface EventLocationProps {
 }
 
 export function EventLocation({ venueTitle, venueLoc, lat, lon }: EventLocationProps) {
+  if (!lat || !lon) return null;
+
   return (
-    <section id="location" className="scroll-mt-32 pt-16 md:pt-24 w-full overflow-hidden bg-white border-t border-gray-100">
+    <section id="location" className="scroll-mt-[142px]  w-full overflow-hidden bg-white border-t border-gray-100">
       <div className="relative h-[600px] md:h-[800px] w-full group">
         <iframe
           src={`https://maps.google.com/maps?q=${lat || venueTitle},${lon || ''}&t=&z=16&ie=UTF8&iwloc=&output=embed`}

@@ -106,7 +106,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-8 pb-10 md:pt-10 bg-white overflow-hidden">
+    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white overflow-hidden">
       {/* Immersive Background Container */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img
@@ -115,7 +115,8 @@ export default function HeroSection() {
           className="w-full h-full object-cover object-center scale-105 animate-slow-zoom origin-center"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-white" />
+        {/* Stronger gradient for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black/40" />
         <div className="absolute bottom-0 left-0 right-0 h-2 bg-white" />
       </div>
 
@@ -129,13 +130,13 @@ export default function HeroSection() {
           India's Most Trusted Venue Booking Platform
         </div>
 
-        {/* Hero Title */}
-        <h1 className="text-[28px] sm:text-4xl lg:text-6xl font-extrabold text-white leading-tight lg:leading-[1.1] mb-4  drop-shadow-2xl animate-fade-in-up [animation-delay:200ms]">
-          Craft Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] to-[#FFB770]">Perfect Event</span> <br className="hidden sm:block" />
+        {/* Hero Title with stronger shadows */}
+        <h1 className="text-[28px] sm:text-4xl lg:text-6xl font-extrabold text-white leading-tight lg:leading-[1.1] mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] animate-fade-in-up [animation-delay:200ms]">
+          Craft Your <span className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] bg-clip-text text-transparent bg-gradient-to-r from-[#FF9530] to-[#FFB770]">Perfect Event</span> <br className="hidden sm:block" />
           in Exceptional Spaces
         </h1>
 
-        <p className="text-sm sm:text-xl text-white/90 max-w-2xl mx-auto mb-4 drop-shadow-md animate-fade-in-up [animation-delay:400ms]">
+        <p className="text-sm sm:text-xl text-white/90 max-w-2xl mx-auto mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] animate-fade-in-up [animation-delay:400ms]">
           From intimate gatherings to grand celebrations. Book verified venues with transparent pricing and instant confirmation.
         </p>
 

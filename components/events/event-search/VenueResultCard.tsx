@@ -26,15 +26,12 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
   const hasMore = venue.images?.length > 3
   
   const venueTitle = venue.name || "Premium Venue"
-  const venueLocation = (venue.address && venue.address !== 'null') 
-    ? venue.address 
-    : (venue.city_name && venue.city_name !== 'null' && venue.state_name && venue.state_name !== 'null')
-      ? `${venue.city_name}, ${venue.state_name}`
-      : (venue.city_name && venue.city_name !== 'null')
-        ? venue.city_name
-        : (venue.state_name && venue.state_name !== 'null')
-          ? venue.state_name
-          : "No address found"
+  const venueLocation = [
+    (venue as any)?.area,
+    venue.city_name,
+    venue.state_name,
+    venue.country_name
+  ].filter(val => val && val !== 'null').join(", ") || "No address found"
   const detailsHref = `/events/details/${venue.slug || toSlug(venueTitle)}`
   
   // Dynamic Data
@@ -53,6 +50,7 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
       target.closest('button') || 
       target.closest('a') || 
       target.closest('.mini-thumb') ||
+      target.closest('.image-container') ||
       target.closest('[role="dialog"]')
     ) {
       return
@@ -63,12 +61,12 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
   return (
     <article 
       onClick={handleCardClick}
-      className={`group bg-white rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,149,48,0.12)] hover:border-[#FF9530]/30 transition-all duration-500 overflow-hidden h-full flex flex-col cursor-pointer`}
+      className={`group bg-white rounded-2xl lg:rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,149,48,0.12)] hover:border-[#FF9530]/30 transition-all duration-500 overflow-hidden h-full flex flex-col cursor-pointer`}
     >
       <div className={`flex flex-col ${viewType === 'list' ? 'md:flex-row md:min-h-[320px]' : 'h-full'}`}>
 
         {/* ── Left: Interactive Image Section ── */}
-        <div className={`relative shrink-0 ${viewType === 'list' ? 'md:w-80 lg:w-96 aspect-[4/3] md:aspect-auto' : 'aspect-[16/10]'}`}>
+        <div className={`image-container relative shrink-0 ${viewType === 'list' ? 'md:w-80 lg:w-96 aspect-[16/10] sm:aspect-[4/3] md:aspect-auto' : 'aspect-[16/10]'}`}>
           <div 
             className="relative w-full h-full overflow-hidden cursor-pointer"
             onClick={() => openLightbox(allImages, imgIdx)}
@@ -128,7 +126,7 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
         </div>
 
         {/* ── Right: Content Section ── */}
-        <div className={`flex flex-col flex-1 p-6 lg:p-7 justify-between`}>
+        <div className={`flex flex-col flex-1 p-4 lg:p-7 justify-between`}>
           
           <div className="space-y-4">
             {/* Header: Title & Rating */}
@@ -143,7 +141,7 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
                     <span className="text-xs font-semibold line-clamp-1" title={venueLocation}>{venueLocation}</span>
                   </div>
                   <Link href={detailsHref} className="block group/title">
-                    <h3 className={`font-black text-gray-900 leading-tight group-hover/title:text-[#FF9530] transition-colors ${viewType === 'grid' ? 'text-lg line-clamp-1' : 'text-2xl'}`}>
+                    <h3 className={`font-black text-gray-900 leading-tight group-hover/title:text-[#FF9530] transition-colors ${viewType === 'grid' ? 'text-base line-clamp-1' : 'text-xl sm:text-2xl'}`}>
                       {venueTitle}
                     </h3>
                   </Link>
@@ -209,7 +207,7 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
               <div>
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1 leading-none">Package Starts</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl font-black text-gray-900 leading-none">
+                  <span className="text-xl sm:text-2xl font-black text-gray-900 leading-none">
                     ₹{packagePrice.toLocaleString() || '0'}
                   </span>
                 </div>
@@ -250,7 +248,7 @@ export function VenueResultCard({ venue, viewType = 'list' }: { venue: Venue, vi
       />
 
       <Dialog open={highlightsModalOpen} onOpenChange={setHighlightsModalOpen}>
-        <DialogContent className="sm:max-w-md rounded-[2rem]">
+        <DialogContent className="sm:max-w-md rounded-2xl lg:rounded-[2rem]">
           <DialogHeader>
             <DialogTitle className="text-xl font-extrabold text-gray-900 border-b border-gray-100 pb-4">
               Venue Highlights & Services

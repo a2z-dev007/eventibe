@@ -5,15 +5,30 @@ import { ChevronRight, Star, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-export function SectionHeading({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
+export function SectionHeading({ 
+  title, 
+  subtitle, 
+  action,
+  titleClassName = "text-gray-900",
+  subtitleClassName = "text-gray-500"
+}: { 
+  title: React.ReactNode; 
+  subtitle?: React.ReactNode; 
+  action?: React.ReactNode;
+  titleClassName?: string;
+  subtitleClassName?: string;
+}) {
   return (
-    <div className="mb-2 flex items-end justify-between gap-4">
-      <div>
-        <h2 className="text-lg sm:text-xl md:text-3xl font-black text-gray-900 tracking-tight flex items-center gap-2 md:gap-3">
-          <div className="w-1 md:w-1.5 h-5 md:h-8 bg-[#FF9530] rounded-full" />
+    <div className="mb-2 flex items-end justify-between gap-4  ">
+      <div className='pt-4'>
+        <h2 className={`text-lg sm:text-xl md:text-2xl font-black tracking-tight flex items-center gap-2 md:gap-3 mb-4 ${titleClassName}`}>
           {title}
         </h2>
-        {subtitle && <p className="text-gray-500 mt-1 md:mt-2 font-medium text-[10px] sm:text-xs md:text-base">{subtitle}</p>}
+        {subtitle && (
+          <p className={`${subtitleClassName} mt-1 md:mt-2 font-medium text-[10px] sm:text-xs md:text-base`}>
+            {subtitle}
+          </p>
+        )}
       </div>
       {action && <div>{action}</div>}
     </div>
@@ -76,7 +91,7 @@ export function DetailSkeleton() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── Hero Skeleton ── */}
-      <div className={`relative min-h-[500px] sm:min-h-[600px] md:h-[70vh] lg:h-[75vh] xl:h-[80vh] w-full ${shimmerClass} flex flex-col items-center justify-center text-center px-4`}>
+      <div className={`relative w-full ${shimmerClass} flex flex-col items-center justify-center text-center px-4 min-h-[500px] mt-[70px] h-[calc(100vh-70px)] md:mt-[80px] md:h-[calc(100vh-80px)] lg:mt-[116px] lg:h-[calc(100vh-116px)]`}>
         {/* Advanced Gradients Mimic */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/60" />
         

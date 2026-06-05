@@ -4,7 +4,7 @@ import type { Venue } from './types'
 
 export const VENUE_TYPES = ['Banquet Hall', 'Conference Halls', 'Lawns'] as const
 export const EVENT_TYPES = ['Weddings', 'Corporate Events', 'Engagement', 'Birthday'] as const
-export const PER_PAGE = 6
+export const PER_PAGE = 12
 
 export const ALL_VENUES: Venue[] = [
   { name: 'Regal Crown Banquet', location: 'Sector 62, Noida, Uttar Pradesh', venueType: 'Banquet Hall, Conference Halls', eventType: 'Weddings, Corporate Events', capacity: 400, veg: 2200, nonveg: 2400, badge: 'Top Rated', rating: 4.8, reviews: 124, image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=60' },

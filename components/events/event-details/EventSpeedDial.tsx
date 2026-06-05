@@ -38,7 +38,7 @@ export function EventSpeedDial({ whatsappLink, phoneNum, setQuoteOpen }: EventSp
             {[
               { icon: <MessageCircle className="w-5 h-5" />, label: 'WhatsApp', color: 'bg-[#25D366]', href: whatsappLink },
               { icon: <Phone className="w-5 h-5" />, label: 'Call Venue', color: 'bg-black', href: `tel:${phoneNum}` },
-              { icon: <FileText className="w-5 h-5" />, label: 'Send Quote', color: 'bg-[#FF9530]', onClick: () => setQuoteOpen(true) },
+              { icon: <FileText className="w-5 h-5" />, label: 'Get a Quote', color: 'bg-[#FF9530]', onClick: () => setQuoteOpen(true) },
             ].map((action, i) => (
               <div 
                 key={i} 

@@ -119,6 +119,30 @@ export interface VideoRecord {
   created_by: number;
 }
 
+export interface VenueTypeDetail {
+  id: number;
+  name: string;
+  name_hindi: string;
+  description: string;
+  category: string;
+  show_on_homepage: boolean;
+  file: string;
+  key_name: string;
+  created: string;
+  created_by: number;
+}
+
+export interface EventTypeDetail {
+  id: number;
+  name: string;
+  name_hindi: string;
+  description: string;
+  file: string | null;
+  key_name: string | null;
+  created: string;
+  created_by: number;
+}
+
 export interface VenueRecord {
   id: number;
   slug?: string;
@@ -126,8 +150,8 @@ export interface VenueRecord {
   description: string;
   order: number;
   listing: number;
-  venue_type: number;
-  event_type: number;
+  venue_type: VenueTypeDetail[];
+  event_type: EventTypeDetail[];
   contact_details?: ContactDetail[];
   venue_services?: number[];
   services_details?: SDetail[];
@@ -135,6 +159,7 @@ export interface VenueRecord {
   cuisine_details?: CuisineDetail[];
   venue_amenities?: any[];
   amenities_details?: any[];
+  
   venue_terms_conditions?: number[];
   terms_conditions_details?: SDetail[];
   venue_highlights?: number[];
@@ -148,6 +173,7 @@ export interface VenueRecord {
   state_id: number;
   state_name: string;
   country_id: number;
+  location_name?: string;
   country_name: string;
   country_short_name: string;
   lat: number;
@@ -163,6 +189,7 @@ export interface VenueRecord {
   created_by?: number;
   status?: boolean;
   status_remark?: string | null;
+  show_popular?: boolean;
   [key: string]: unknown;
 }
 
@@ -170,6 +197,32 @@ export interface VenuesResponse {
   status: string;
   records: VenueRecord[];
   totalRecords: number;
+}
+
+export interface TestimonialRecord {
+  id: number;
+  name: string;
+  designation: string;
+  location: string;
+  description: string;
+  file: string;
+  key_name: string;
+  show_homepage: boolean;
+  applicable_for: string;
+  created: string;
+  created_by: number;
+  full_name: string;
+}
+
+export interface TestimonialsResponse {
+  totalRecords: number;
+  status: string;
+  records: TestimonialRecord[];
+}
+
+export interface VenueContentResponse {
+  status: string;
+  venue_content: any;
 }
 
 // ─── Endpoints ────────────────────────────────────────────────────────────────
@@ -282,4 +335,59 @@ export async function addEventEnquiry(data: {
     // The user provided a specific endpoint for enquiry
     // We'll use the eventsApiPost but handle the endpoint explicitly
     return eventsApiPost('/event-enquiry/add/', data);
+}
+
+export interface FaqRecord {
+  id: number;
+  listing: number | null;
+  country: number | null;
+  state: number | null;
+  city: number | null;
+  categories: number | null;
+  venue: number;
+  venue_name: string;
+  question: string;
+  answer: string;
+  created_at: string;
+  updated_at: string;
+  is_active: boolean;
+  created_by: number;
+  full_name: string;
+}
+
+export interface FaqsResponse {
+  totalRecords: number;
+  status: string;
+  records: FaqRecord[];
+}
+
+/** Fetch FAQs by venue ID */
+export async function fetchVenueFaqs(venueId: number | string): Promise<FaqsResponse> {
+  return eventsApiGet<FaqsResponse>(`/faqs/list?venue=${venueId}`);
+}
+
+/** Fetch testimonials filtered by spodia.com */
+export async function fetchSpodiaTestimonials(): Promise<TestimonialsResponse> {
+  return eventsApiGet<TestimonialsResponse>('/testimonials/?applicable_for=https://spodia.com');
+}
+
+/** Fetch recently added venues */
+export async function fetchRecentlyAddedVenues(params?: { number_of_records?: number }): Promise<VenuesResponse> {
+  const queryParams = new URLSearchParams();
+  if (params?.number_of_records) queryParams.set('number_of_records', String(params.number_of_records));
+  const queryString = queryParams.toString();
+  return eventsApiGet<VenuesResponse>(`/venues/recently-added/list${queryString ? '?' + queryString : ''}`);
+}
+
+/** Fetch popular/trending venues */
+export async function fetchPopularVenues(params?: { number_of_records?: number }): Promise<VenuesResponse> {
+  const queryParams = new URLSearchParams();
+  if (params?.number_of_records) queryParams.set('number_of_records', String(params.number_of_records));
+  const queryString = queryParams.toString();
+  return eventsApiGet<VenuesResponse>(`/venues/list?show_popular=true${queryString ? '&' + queryString : ''}`);
+}
+
+/** Fetch Venue Content by Listing ID */
+export async function fetchVenueContent(venueId: number | string): Promise<VenueContentResponse> {
+  return eventsApiGet<VenueContentResponse>(`/public/venue/content/${venueId}/`);
 }

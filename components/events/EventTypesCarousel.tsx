@@ -47,7 +47,7 @@ export default function EventTypesCarousel() {
           />
          
           {/* Scroll & See All Navigation */}
-          <div className="flex items-center gap-6 shrink-0 sm:mb-8">
+          <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-6 shrink-0 sm:mb-8">
             <Link 
               href="/event/list" 
               className="text-sm font-black text-gray-400 uppercase tracking-widest hover:text-[#FF9530] transition-colors"
@@ -57,24 +57,24 @@ export default function EventTypesCarousel() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
-                className="h-12 w-12 rounded-2xl flex items-center justify-center border border-gray-100 bg-white shadow-xl shadow-gray-200/50 hover:bg-[#FF9530] hover:text-white transition-all duration-300 group"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl flex items-center justify-center border border-gray-100 bg-white shadow-xl shadow-gray-200/50 hover:bg-[#FF9530] hover:text-white transition-all duration-300 group"
               >
-                <ChevronLeft className="w-6 h-6 group-hover:scale-110" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110" />
               </button>
               <button
                 onClick={() => swiperRef.current?.slideNext()}
-                className="h-12 w-12 rounded-2xl flex items-center justify-center border border-gray-100 bg-white shadow-xl shadow-gray-200/50 hover:bg-[#FF9530] hover:text-white transition-all duration-300 group"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl flex items-center justify-center border border-gray-100 bg-white shadow-xl shadow-gray-200/50 hover:bg-[#FF9530] hover:text-white transition-all duration-300 group"
               >
-                <ChevronRight className="w-6 h-6 group-hover:scale-110" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110" />
               </button>
             </div>
           </div>
         </div>
 
         {loading ? (
-          <div className="flex gap-6 w-full">
+          <div className="flex gap-4 w-full">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="shrink-0 w-[160px] sm:w-[200px] flex flex-col items-center">
+              <div key={i} className="shrink-0 w-[140px] sm:w-[200px] flex flex-col items-center">
                 <div className="w-full aspect-[4/5] rounded-[2rem] bg-gray-100 animate-pulse" />
                 <div className="mt-4 h-5 w-24 rounded-lg bg-gray-100 animate-pulse" />
               </div>
@@ -88,7 +88,7 @@ export default function EventTypesCarousel() {
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper
             }}
-            spaceBetween={24}
+            spaceBetween={16}
             slidesPerView="auto"
             loop={true}
             autoplay={{
@@ -104,7 +104,7 @@ export default function EventTypesCarousel() {
             className="w-full pb-10"
           >
             {eventTypes.map((v) => (
-              <SwiperSlide key={v.id} className="!h-auto !w-[160px] sm:!w-[200px]">
+              <SwiperSlide key={v.id} className="!h-auto !w-[140px] sm:!w-[200px]">
                 <Link
                   href={`/events/search?event_type=${v.id}`}
                   className="group block transition-all duration-500"

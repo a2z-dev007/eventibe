@@ -21,8 +21,8 @@ interface VenueFilterSidebarProps {
 }
 
 export function VenueFilterSidebar({ filters, location, setLocation, onChange, onClear }: VenueFilterSidebarProps) {
-  const { data: vtData, isLoading: vtLoading } = useQuery({ queryKey: ['venueTypes'], queryFn: fetchVenueTypes })
-  const { data: etData, isLoading: etLoading } = useQuery({ queryKey: ['eventTypes'], queryFn: fetchEventTypes })
+  const { data: vtData, isLoading: vtLoading } = useQuery({ queryKey: ['venueTypes'], queryFn: () => fetchVenueTypes() })
+  const { data: etData, isLoading: etLoading } = useQuery({ queryKey: ['eventTypes'], queryFn: () => fetchEventTypes() })
 
   const [modalType, setModalType] = useState<'venue' | 'event' | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -79,7 +79,7 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
+    <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 bg-orange-50 border-b border-[#FF9530]/20">
         <h2 className="font-extrabold text-gray-900">Filter Venues</h2>
@@ -151,7 +151,7 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
 
       {/* Modal for Show More */}
       <Dialog open={modalType !== null} onOpenChange={() => setModalType(null)}>
-        <DialogContent className="sm:max-w-[80%] p-0 overflow-hidden rounded-[2rem] border-none shadow-2xl">
+        <DialogContent className="sm:max-w-[80%] p-0 overflow-hidden rounded-2xl lg:rounded-[2rem] border-none shadow-2xl">
           <DialogHeader className="px-6 py-5 bg-orange-50/50 border-b border-orange-100">
             <DialogTitle className="text-xl font-black text-gray-900">Select {modalType === 'venue' ? 'Venue Type' : 'Event Type'}</DialogTitle>
           </DialogHeader>

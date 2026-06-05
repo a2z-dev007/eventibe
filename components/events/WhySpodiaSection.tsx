@@ -6,6 +6,16 @@ export default function WhySpodiaSection() {
   return (
     <section className="py-16 lg:py-24 bg-white px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto">
+        {/* Section Heading - Left Aligned */}
+        <div className="mb-16 flex flex-col items-center justify-center">
+          <h2 className="text-3xl lg:text-5xl font-black text-gray-900 tracking-tight">
+            Why Choose <span className="text-[#FF9530]">Spodia</span>
+          </h2>
+          <p className="text-gray-500 font-medium mt-4 max-w-2xl">
+            Experience seamless venue booking with our comprehensive services
+          </p>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
           <div className="relative group">
             <SectionHeader
