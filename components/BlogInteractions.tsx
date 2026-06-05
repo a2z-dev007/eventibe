@@ -14,26 +14,47 @@ interface Comment {
 export default function BlogInteractions({
   initialLikes = 142,
   initialComments = [],
-  postTitle = ''
+  postTitle = '',
+  likes: externalLikes,
+  hasLiked: externalHasLiked,
+  onLike: externalOnLike,
+  onCommentsCountChange
 }: {
   initialLikes?: number;
   initialComments?: Comment[];
   postTitle?: string;
+  likes?: number;
+  hasLiked?: boolean;
+  onLike?: () => void;
+  onCommentsCountChange?: (count: number) => void;
 }) {
-  const [likes, setLikes] = useState(initialLikes);
-  const [hasLiked, setHasLiked] = useState(false);
+  const [localLikes, setLocalLikes] = useState(initialLikes);
+  const [localHasLiked, setLocalHasLiked] = useState(false);
   const [comments, setComments] = useState<Comment[]>(initialComments);
   const [newCommentName, setNewCommentName] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
   const [copiedShare, setCopiedShare] = useState(false);
 
+  const likes = externalLikes !== undefined ? externalLikes : localLikes;
+  const hasLiked = externalHasLiked !== undefined ? externalHasLiked : localHasLiked;
+
+  React.useEffect(() => {
+    if (onCommentsCountChange) {
+      onCommentsCountChange(comments.length);
+    }
+  }, [comments, onCommentsCountChange]);
+
   const handleLike = () => {
-    if (hasLiked) {
-      setLikes(likes - 1);
-      setHasLiked(false);
+    if (externalOnLike) {
+      externalOnLike();
     } else {
-      setLikes(likes + 1);
-      setHasLiked(true);
+      if (localHasLiked) {
+        setLocalLikes(localLikes - 1);
+        setLocalHasLiked(false);
+      } else {
+        setLocalLikes(localLikes + 1);
+        setLocalHasLiked(true);
+      }
     }
   };
 
@@ -158,7 +179,7 @@ export default function BlogInteractions({
                 value={newCommentName}
                 onChange={(e) => setNewCommentName(e.target.value)}
                 placeholder="e.g. Cynthia Roberts"
-                className="w-full bg-slate-50 border border-slate-200 focus:border-[#2563EB] focus:bg-white text-[#0B1F3A] px-4 py-2.5 rounded-xl text-sm font-medium focus:outline-none transition-all duration-300"
+                className="w-full bg-slate-50 border border-slate-200 focus:border-[#2563EB] focus:bg-white text-[#0B1F3A] px-4 py-3 min-h-[48px] rounded-xl text-sm font-medium focus:outline-none transition-all duration-300"
               />
             </div>
             <div>
@@ -171,7 +192,7 @@ export default function BlogInteractions({
                 value={newCommentText}
                 onChange={(e) => setNewCommentText(e.target.value)}
                 placeholder="Share your thoughts or ask a planning question..."
-                className="w-full bg-slate-50 border border-slate-200 focus:border-[#2563EB] focus:bg-white text-[#0B1F3A] px-4 py-3 rounded-xl text-sm font-medium focus:outline-none transition-all duration-300 resize-none"
+                className="w-full bg-slate-50 border border-slate-200 focus:border-[#2563EB] focus:bg-white text-[#0B1F3A] px-4 py-4 min-h-[120px] rounded-xl text-sm font-medium focus:outline-none transition-all duration-300 resize-none"
               />
             </div>
           </div>
@@ -179,7 +200,7 @@ export default function BlogInteractions({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#0B1F3A] hover:bg-[#F97316] text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 active:scale-95 shadow-sm"
+              className="flex items-center gap-2 px-6 py-3 min-h-[48px] bg-[#0B1F3A] hover:bg-[#F97316] text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 active:scale-95 shadow-sm"
             >
               Post Comment
               <Send size={12} />
