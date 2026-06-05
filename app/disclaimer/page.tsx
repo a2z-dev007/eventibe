@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import CommonHero from "@/components/common/CommonHero";
 import { motion } from "motion/react";
 import {
   ShieldAlert,
@@ -147,68 +148,27 @@ export default function DisclaimerPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 scroll-smooth">
-      {/* ── HERO SECTION ── */}
-      <section className="relative pt-24 pb-32 md:pt-40 md:pb-56 bg-primary-navy overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
-            alt="Legal Disclaimer"
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary-navy/50 via-transparent to-primary-navy" />
-          <div className="absolute inset-0 bg-primary-navy/40" />
-          {/* Subtle Geometric Pattern Overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          ></div>
+      <CommonHero
+        badgeText="Platform Governance"
+        badgeIcon="sparkles"
+        titleMain="Legal"
+        titleHighlight="Disclaimer"
+        subtitle="Official Marketplace Terms & Information Accuracy Disclaimer for Eventibe.com & VenueForEvent.com"
+        bgSrc="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      >
+        <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] md:text-xs text-slate-300 uppercase tracking-[0.2em] font-bold mt-4">
+          <div className="flex items-center gap-2">
+            <Clock size={14} className="text-accent-orange" />
+            <span>Effective: March 08, 2026</span>
+          </div>
+          <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-500" />
+          <div className="flex items-center gap-2">
+            <RefreshCcw size={14} className="text-accent-orange" />
+            <span>Last Updated: March 08, 2026</span>
+          </div>
         </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl flex flex-col items-center"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-4 md:mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
-              <Sparkles size={14} className="text-accent-orange" />
-              <span>Platform Governance</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md break-words">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-orange-300">
-                Legal
-              </span>{" "}
-              Disclaimer
-            </h1>
-            <div className="space-y-3 md:space-y-4 mb-8">
-              <p className="text-xl md:text-4xl text-white font-bold tracking-tight break-words">
-                Eventibe.com & VenueForEvent.com
-              </p>
-              <p className="text-base md:text-xl text-orange-200/90 font-bold border-x-4 border-orange-500 px-4 md:px-8 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-2xl mx-auto">
-                Official Marketplace Terms & Information Accuracy Disclaimer
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] md:text-xs text-slate-400 uppercase tracking-[0.2em] font-bold">
-              <div className="flex items-center gap-2">
-                <Clock size={14} className="text-accent-orange" />
-                <span>Effective: March 08, 2026</span>
-              </div>
-              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-700" />
-              <div className="flex items-center gap-2">
-                <RefreshCcw size={14} className="text-accent-orange" />
-                <span>Last Updated: March 08, 2026</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      </CommonHero>
 
       {/* Main Content with Navigation Side */}
       <style

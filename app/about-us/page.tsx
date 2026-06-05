@@ -33,6 +33,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import CommonHero from "@/components/common/CommonHero";
 
 export const metadata = {
   title: "About Us | Eventibe - India’s Premier Event & Venue Discovery",
@@ -44,71 +45,31 @@ export default function AboutUsPage() {
   return (
     <div className="flex flex-col min-h-screen  bg-white">
       {/* Hero Section */}
-      <section className="relative  md:py-12 md:pt-18 flex items-start md:items-center overflow-hidden bg-primary-navy pt-8 pb-8 md:pt-0 md:pb-0">
-        {/* Background Atmosphere */}
-        <div className="absolute inset-0 z-0 text-white">
-          <Image
-            src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
-            alt="Elegant Event Background"
-            fill
-            className="object-cover opacity-25"
-            priority
-          />
-          {/* Layered Overlays for Depth and Readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
-
-          {/* Subtle Geometric Pattern Overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "50px 50px",
-            }}
-          ></div>
+      <CommonHero
+        badgeText="India's Fastest Growing Venue Marketplace"
+        badgeIcon="sparkles"
+        titleMain="Welcome to Eventibe – India’s"
+        titleHighlight="Premier Event & Venue"
+        titleSuffix="Discovery Marketplace"
+        subtitle="At Eventibe, we believe every celebration — whether a dream wedding, an unforgettable corporate event, or a heartfelt social gathering — deserves the perfect canvas. Choosing the right venue can truly make or break the experience, and that’s where Eventibe steps in."
+        bgSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
+        alignment="left"
+      >
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          <Link
+            href="/venues"
+            className="bg-cta-gradient text-white px-8 py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
+          >
+            Explore Venues <ArrowRight size={20} />
+          </Link>
+          <Link
+            href="/contact-us"
+            className="bg-white/5 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-colors flex items-center justify-center text-center backdrop-blur-sm"
+          >
+            Contact Our Team
+          </Link>
         </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 animate-fade-in shadow-xl backdrop-blur-sm">
-              <Sparkles size={14} className="text-accent-orange" />
-              <span>India's Fastest Growing Venue Marketplace</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.15] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md">
-              Welcome to Eventibe – India’s{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-300">
-                Premier Event & Venue
-              </span>{" "}
-              Discovery Marketplace
-            </h1>
-
-            <p className="text-base sm:text-lg md:text-xl text-gray-300/90 leading-relaxed mb-8 md:mb-10 max-w-3xl animate-fade-in [animation-delay:200ms] font-medium">
-              At Eventibe, we believe every celebration — whether a dream
-              wedding, an unforgettable corporate event, or a heartfelt social
-              gathering — deserves the perfect canvas. Choosing the right venue
-              can truly make or break the experience, and that’s where Eventibe
-              steps in.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in [animation-delay:400ms]">
-              <Link
-                href="/venues"
-                className="bg-cta-gradient text-white px-8 py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
-              >
-                Explore Venues <ArrowRight size={20} />
-              </Link>
-              <Link
-                href="/contact-us"
-                className="bg-white/5 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-colors flex items-center justify-center text-center backdrop-blur-sm"
-              >
-                Contact Our Team
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      </CommonHero>
 
       {/* Intro Context */}
       <section className="flex items-center py-20 md:py-28 bg-light-bg overflow-hidden">

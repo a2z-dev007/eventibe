@@ -23,6 +23,7 @@ import {
   Star,
 } from "lucide-react";
 import Image from "next/image";
+import CommonHero from "@/components/common/CommonHero";
 
 /* ═══ GSAP Parallax Hook (Same Logic as Brand Story) ═══ */
 function useGsapParallax() {
@@ -191,64 +192,15 @@ export default function InvestorRelationsClient() {
   return (
     <div className="min-h-screen bg-white overflow-hidden selection:bg-[#F97316]/30">
       {/* ━━━ 1. HERO ━━━ */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Hero Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
-            alt="Homocation Asia"
-            fill
-            className="parallax-bg object-cover brightness-[0.4]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1F3A]/40 via-transparent to-white" />
-        </div>
-
-        <div className="container relative z-10 px-6 text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex justify-center mb-6"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-              <span className="text-white text-[10px] font-bold uppercase tracking-[0.25em]">
-                Investor Relations Profile
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1] tracking-tight mb-6"
-          >
-            Homocation Asia
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] via-[#FBBF24] to-[#F97316]">
-              Private Limited
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-lg md:text-2xl font-medium tracking-widest uppercase mb-10 text-gray-200"
-          >
-            (Parent Company of Eventibe.com & VenueForEvent.com)
-          </motion.p>
-        </div>
-
-        {/* Floating Decorative Elements */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce z-10">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
-            <div className="w-1 h-2 bg-white rounded-full" />
-          </div>
-        </div>
-      </section>
+      <CommonHero
+        badgeText="Investor Relations Profile"
+        badgeIcon="sparkles"
+        titleMain="Homocation Asia"
+        titleHighlight="Private Limited"
+        subtitle="(Parent Company of Eventibe.com & VenueForEvent.com)"
+        bgSrc="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      />
 
       {/* ━━━ 1.5 EXECUTIVE SUMMARY ━━━ */}
       <section className="py-16 container px-6 relative z-20 -mt-24">

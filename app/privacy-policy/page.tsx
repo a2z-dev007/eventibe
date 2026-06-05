@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import CommonHero from "@/components/common/CommonHero";
 import { motion } from "motion/react";
 import {
   ShieldCheck,
@@ -117,69 +118,26 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white scroll-smooth">
-      {/* Hero Section */}
-      <section className="relative py-16 md:py-24 flex items-center overflow-hidden bg-primary-navy">
-        {/* Background Atmosphere */}
-        <div className="absolute inset-0 z-0 text-white">
-          <Image
-            src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
-            alt="Privacy and Security"
-            fill
-            className="object-cover opacity-20"
-            priority
+      <CommonHero
+        badgeText="Trust & Transparency"
+        badgeIcon="shieldcheck"
+        titleMain="Privacy"
+        titleHighlight="Policy"
+        subtitle="At Eventibe, your privacy is our priority. We are committed to protecting your data and being transparent about how we handle your information."
+        bgSrc="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      >
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-4 transition-colors text-sm font-medium group mt-4"
+        >
+          <ArrowLeft
+            size={16}
+            className="group-hover:-translate-x-1 transition-transform"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
-
-          {/* Subtle Geometric Pattern Overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          ></div>
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl flex flex-col items-center"
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors text-sm font-medium group"
-            >
-              <ArrowLeft
-                size={16}
-                className="group-hover:-translate-x-1 transition-transform"
-              />
-              Back to Home
-            </Link>
-
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 animate-fade-in shadow-xl backdrop-blur-sm">
-              <ShieldCheck size={14} />
-              <span>Trust & Transparency</span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight animate-fade-in tracking-tight">
-              Privacy{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-300">
-                Policy
-              </span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-in [animation-delay:200ms] font-medium text-center">
-              At Eventibe, your privacy is our priority. We are committed to
-              protecting your data and being transparent about how we handle
-              your information.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+          Back to Home
+        </Link>
+      </CommonHero>
 
       {/* Policy Meta Info */}
       <section className="bg-light-bg py-8 border-b border-gray-100">

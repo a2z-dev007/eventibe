@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
+import CommonHero from "@/components/common/CommonHero";
 import {
   CheckCircle2, ArrowRight, Sparkles, Building2, Heart, Mic2,
   Camera, Palette, Users, ShieldCheck, Star, Quote,
@@ -253,116 +254,15 @@ export default function BrandStoryClient() {
     <div className="brand-story-page overflow-hidden bg-[#030a14]">
 
       {/* ━━━ 1. HERO ━━━ */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden" id="brand-hero">
-        {/* Layer 1: Slow-panning background image */}
-        <div className="hero-zoom absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" alt="Event energy" className="hero-bg-pan w-full h-full object-cover scale-110" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030a14]/85 via-[#0B1F3A]/75 to-[#030a14]/95" />
-        </div>
-
-        {/* Layer 2: Animated gradient mesh */}
-        <div className="absolute inset-0 z-[1]">
-          <div className="hero-gradient-mesh absolute inset-0 opacity-40" />
-        </div>
-
-        {/* Layer 3: Animated pulsing orbs */}
-        <div className="parallax-orb absolute w-[700px] h-[700px] rounded-full bg-[#F97316]/10 blur-[200px] hero-orb-1 z-[1]" />
-        <div className="parallax-orb absolute w-[500px] h-[500px] rounded-full bg-[#1E3A8A]/20 blur-[180px] hero-orb-2 z-[1]" />
-        <div className="absolute w-[300px] h-[300px] rounded-full bg-[#FBBF24]/8 blur-[140px] hero-orb-3 z-[1]" />
-
-        {/* Layer 4: Light beams / rays */}
-        <div className="absolute inset-0 z-[2] overflow-hidden pointer-events-none">
-          <div className="hero-beam hero-beam-1" />
-          <div className="hero-beam hero-beam-2" />
-          <div className="hero-beam hero-beam-3" />
-        </div>
-
-        {/* Layer 5: Floating particles */}
-        <div className="absolute inset-0 z-[2] pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-white/20"
-              style={{
-                left: `${5 + (i * 47) % 90}%`,
-                top: `${10 + (i * 31) % 80}%`,
-              }}
-              animate={{
-                y: [0, -30 - (i % 4) * 15, 0],
-                opacity: [0.1, 0.4, 0.1],
-                scale: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 4 + (i % 3) * 2,
-                repeat: Infinity,
-                delay: (i * 0.4) % 3,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-          {/* Larger accent particles */}
-          {Array.from({ length: 6 }).map((_, i) => (
-            <motion.div
-              key={`lg-${i}`}
-              className="absolute w-1.5 h-1.5 rounded-full bg-[#F97316]/30"
-              style={{
-                left: `${15 + (i * 67) % 70}%`,
-                top: `${20 + (i * 41) % 60}%`,
-              }}
-              animate={{
-                y: [0, -50 - (i % 3) * 20, 0],
-                x: [0, (i % 2 === 0 ? 20 : -20), 0],
-                opacity: [0.15, 0.5, 0.15],
-              }}
-              transition={{
-                duration: 6 + (i % 2) * 3,
-                repeat: Infinity,
-                delay: i * 0.8,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Layer 6: Animated grid lines */}
-        <div className="absolute inset-0 z-[1] hero-grid-animated opacity-[0.03]" />
-
-        {/* Content */}
-        <div className="scroll-fade-out relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <FadeUp delay={0.2}>
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8">
-              <div className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-              <span className="text-white/70 text-xs font-bold uppercase tracking-[0.2em]">Brand Story</span>
-            </div>
-          </FadeUp>
-          <FadeUp delay={0.4}>
-            <p className="text-white/40 text-sm md:text-base font-medium tracking-[0.4em] uppercase mb-6">Eventibe.com</p>
-          </FadeUp>
-          <FadeUp delay={0.6}>
-            <h1 className="parallax-text text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black text-white leading-[0.95] tracking-tight mb-10">
-              Where Every Event<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] via-[#FBBF24] to-[#F97316]">Finds Its Energy</span>
-            </h1>
-          </FadeUp>
-          <FadeUp delay={0.9}>
-            <div className="flex items-center justify-center gap-4">
-              <div className="parallax-drift w-16 h-[1px] bg-gradient-to-r from-transparent to-white/30" data-direction="left" />
-              <Sparkles size={16} className="text-[#F97316]" />
-              <div className="parallax-drift w-16 h-[1px] bg-gradient-to-l from-transparent to-white/30" data-direction="right" />
-            </div>
-          </FadeUp>
-        </div>
-
-        {/* Scroll indicator */}
-        <FadeUp delay={1.2} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-white/30 text-[10px] uppercase tracking-[0.3em]">Scroll to explore</span>
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center pt-1.5">
-              <div className="w-1 h-2 rounded-full bg-[#F97316]" />
-            </motion.div>
-          </div>
-        </FadeUp>
-      </section>
+      <CommonHero
+        badgeText="Brand Story"
+        badgeIcon="sparkles"
+        titleMain="Where Every Event"
+        titleHighlight="Finds Its Energy"
+        subtitle="Eventibe.com"
+        bgSrc="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      />
 
       {/* ━━━ 2. BEFORE THE LIGHTS TURN ON ━━━ */}
       <section className="relative py-0 bg-[#030a14]" id="before-lights">

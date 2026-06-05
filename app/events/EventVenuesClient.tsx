@@ -15,7 +15,7 @@ import TrendingVenues from '@/components/events/TrendingVenues'
 export default function EventVenuesClient() {
   return (
     <>
-      <main className="pt-24 lg:pt-28 bg-white">
+      <main className="bg-white">
         <HeroSection />
         <VenueTypesCarousel />
         {/* <WhyChooseSpodiaVenues /> */}

@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { TiltCard, MagneticButton } from "@/components/micro-interactions";
+import CommonHero from "@/components/common/CommonHero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -109,59 +110,26 @@ export default function PartnerWithUsPage() {
 
   return (
     <div className="bg-white min-h-screen font-inter overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/partner-hero.png"
-            alt="Partner with Eventibe"
-            fill
-            className="object-cover brightness-[0.4]"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary-navy/40 via-transparent to-white" />
+      <CommonHero
+        badgeText="Collaborative Growth"
+        badgeIcon="sparkles"
+        titleMain="Partner With"
+        titleHighlight="Us"
+        subtitle="Let’s Build the Future of Events — Together. Join India's premier corporate venue and event marketplace."
+        bgSrc="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      >
+        <div className="flex justify-center mt-4">
+          <MagneticButton>
+            <Button
+              size="lg"
+              className="bg-cta-gradient h-14 px-10 text-lg font-bold rounded-2xl shadow-2xl shadow-orange-500/20 hover:scale-105 transition-transform cursor-pointer"
+            >
+              Explore Opportunity <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </MagneticButton>
         </div>
-
-        <div className="container mx-auto relative z-10 px-6 text-center text-white">
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-5xl md:text-8xl font-extrabold mb-6 tracking-tight"
-          >
-            Partner With Us
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-xl md:text-3xl font-medium max-w-3xl mx-auto mb-10 text-gray-200"
-          >
-            Let’s Build the Future of Events — Together
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <MagneticButton>
-              <Button
-                size="lg"
-                className="bg-cta-gradient h-14 px-10 text-lg font-bold rounded-2xl shadow-2xl shadow-orange-500/20 hover:scale-105 transition-transform"
-              >
-                Explore Opportunity <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </MagneticButton>
-          </motion.div>
-        </div>
-
-        {/* Floating Decorative Elements */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
-            <div className="w-1 h-2 bg-white rounded-full" />
-          </div>
-        </div>
-      </section>
+      </CommonHero>
 
       {/* Intro Section */}
       <section className="py-16 container mx-auto px-6">
@@ -1071,7 +1039,19 @@ export default function PartnerWithUsPage() {
                   ecosystem — We would love to collaborate.
                 </p>
               </div>
-              <div className="mt-8 md:mt-12">
+              
+              <div className="flex-1 my-6 relative w-full rounded-[32px] overflow-hidden shadow-2xl border border-white/10 min-h-[250px] md:min-h-[350px]">
+                <Image 
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
+                  alt="Team Collaboration"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-primary-navy/20 mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-navy/80 via-transparent to-transparent" />
+              </div>
+
+              <div className="mt-4 md:mt-8">
                 <div className="flex -space-x-3 mb-4">
                   {[1, 2, 3, 4].map((i) => (
                     <div

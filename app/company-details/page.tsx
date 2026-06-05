@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import CommonHero from "@/components/common/CommonHero";
 import {
   Building2,
   Files,
@@ -286,60 +287,24 @@ export default function CompanyDetailsPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
-      {/* Hero Section */}
-      <section className="relative py-10 md:py-40 overflow-hidden bg-primary-navy">
-        <div className="absolute inset-0 z-0 text-white">
-          <Image
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
-            alt="Corporate Office Background"
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
-          <div className="absolute inset-0 bg-primary-navy/80"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
-
-          {/* Subtle Geometric Pattern Overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          ></div>
+      <CommonHero
+        badgeText="Official Corporate Registry"
+        badgeIcon="sparkles"
+        titleMain="Company"
+        titleHighlight="Details"
+        bgSrc="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
+        bgType="image"
+      >
+        <div className="space-y-3 md:space-y-4">
+          <p className="text-lg md:text-xl text-white font-bold tracking-tight break-words">
+            Homocation Asia Private Limited
+          </p>
+          <p className="text-sm md:text-base text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-sm mx-auto">
+            Parent Company of Eventibe.com & VenueForEvent.com
+          </p>
         </div>
+      </CommonHero>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-4 md:mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
-              <Sparkles size={14} className="text-accent-orange" />
-              <span>Official Corporate Registry</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md break-words">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-orange-300">
-                Company
-              </span>{" "}
-              Details
-            </h1>
-            <div className="space-y-3 md:space-y-4">
-              <p className="text-lg md:text-xl text-white font-bold tracking-tight break-words">
-                Homocation Asia Private Limited
-              </p>
-              <p className="text-sm md:text-base text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-sm mx-auto">
-                Parent Company of Eventibe.com & VenueForEvent.com
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Main Content with Navigation Side */}
       <style
         dangerouslySetInnerHTML={{
           __html: `

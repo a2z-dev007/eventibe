@@ -1,6 +1,7 @@
 import { getVendors, getCityBySlug } from '@/lib/api';
 import VendorCard from '@/components/VendorCard';
 import { notFound } from 'next/navigation';
+import CommonHero from '@/components/common/CommonHero';
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string; city: string }> }) {
   const { category, city } = await params;
@@ -23,28 +24,33 @@ export default async function VendorCategoryCityPage({ params }: { params: Promi
   }
 
   const vendors = await getVendors({ category, city });
+  const formattedCategory = category.replace(/-/g, ' ');
 
   return (
-    <div className="bg-light-bg min-h-screen py-12">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-primary-navy mb-4 tracking-tight capitalize">
-            {category.replace('-', ' ')} Services in {cityData.name}
-          </h1>
-          <p className="text-lg text-soft-slate max-w-3xl">
-            Browse our curated selection of premium {category.replace('-', ' ')} providers in {cityData.name}.
-          </p>
-        </div>
+    <div className="flex flex-col min-h-screen bg-white">
+      <CommonHero
+        badgeText={`Explore ${cityData.name}`}
+        badgeIcon="mappin"
+        titleMain={`${formattedCategory} Services in`}
+        titleHighlight={cityData.name}
+        subtitle={`Browse our curated selection of premium ${formattedCategory} providers in ${cityData.name}.`}
+        bgSrc="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop"
+        bgType="image"
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {vendors.map((vendor) => (
-            <VendorCard key={vendor.id} vendor={vendor} />
-          ))}
-          {vendors.length === 0 && (
-            <p className="text-soft-slate col-span-full">No vendors found in this category and city at the moment.</p>
-          )}
+      <div className="bg-slate-50 py-20 border-t border-gray-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {vendors.map((vendor) => (
+              <VendorCard key={vendor.id} vendor={vendor} />
+            ))}
+            {vendors.length === 0 && (
+              <p className="text-soft-slate col-span-full">No vendors found in this category and city at the moment.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+

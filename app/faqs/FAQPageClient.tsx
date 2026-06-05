@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { TiltCard, MagneticButton } from "@/components/micro-interactions";
 import Link from "next/link";
 import Image from "next/image";
+import CommonHero from "@/components/common/CommonHero";
 
 interface FAQ {
   id: number;
@@ -280,50 +281,15 @@ export default function FAQPageClient() {
         }}
       />
 
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-40 overflow-hidden bg-primary-navy">
-        <div className="absolute inset-0 z-0 text-white">
-          <Image
-            src="https://images.unsplash.com/photo-1454165833767-027ffea9e778?q=80&w=2070&auto=format&fit=crop"
-            alt="FAQ Support Background"
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/90 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
-          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
-
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-[10%] w-72 h-72 bg-accent-orange/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-40 right-[15%] w-96 h-96 bg-mid-blue/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          </div>
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-white flex flex-col items-center md:items-start text-center md:text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-6 animate-fade-in shadow-xl backdrop-blur-sm uppercase tracking-widest">
-              <Sparkles size={14} className="text-accent-orange" />
-              <span>Help Center & Knowledge Base</span>
-            </div>
-            <h1 className="text-3xl md:text-6xl lg:text-8xl font-black mb-8 leading-[1.2] md:leading-[1.1] animate-fade-in tracking-tight drop-shadow-md break-words">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
-                Frequently Asked
-              </span>{" "}
-              Questions
-            </h1>
-            <p className="text-xl md:text-3xl text-orange-200/90 font-bold max-w-2xl leading-relaxed">
-              Find clear and accurate answers to the most common questions about
-              Eventibe.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <CommonHero
+        badgeText="Help Center & Knowledge Base"
+        badgeIcon="sparkles"
+        titleMain="Frequently Asked"
+        titleHighlight="Questions"
+        subtitle="Find clear and accurate answers to the most common questions about Eventibe."
+        bgSrc="https://images.unsplash.com/photo-1454165833767-027ffea9e778?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      />
 
       {/* Main Content with Navigation Sidebar */}
       <section className="py-16 md:py-24 bg-slate-50 relative">

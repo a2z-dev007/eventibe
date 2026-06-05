@@ -299,107 +299,32 @@ const CareerPage = () => {
       {/* <Header /> */}
       <main className="overflow-x-hidden">
         {/* Hero Section */}
-        <section className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 bg-hero-gradient text-white overflow-hidden">
-          {/* Pattern Background Overlay */}
-          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
-
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-[10%] w-72 h-72 bg-accent-orange/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-40 right-[15%] w-96 h-96 bg-mid-blue/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 2 }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-corporate-blue/10 to-accent-orange/10 rounded-full blur-3xl"
-            ></motion.div>
+        <CommonHero
+          badgeText="Join Our Mission"
+          badgeIcon="briefcase"
+          titleMain="Your Career in"
+          titleHighlight="Hospitality"
+          titleSuffix="Starts Here"
+          subtitle="Join the Eventibe Team: Shaping the Future of Global Event Planning and Hospitality."
+          bgSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
+          bgType="image"
+        >
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-4">
+            <MagneticButton>
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("openings")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="group relative flex items-center justify-center gap-3 px-12 py-6 bg-cta-gradient text-white font-black rounded-2xl transition-all shadow-[0_20px_50px_rgba(249,115,22,0.3)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.5)] active:scale-95 text-lg"
+              >
+                Explore Opportunities
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+              </button>
+            </MagneticButton>
           </div>
-
-          {/* Floating Particles */}
-          <div className="absolute inset-0 pointer-events-none opacity-30">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1.5 h-1.5 bg-white rounded-full animate-float"
-                style={{
-                  left: `${(i * 15) % 100}%`,
-                  top: `${(i * 25) % 100}%`,
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${3 + i * 0.4}s`,
-                }}
-              ></div>
-            ))}
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full mb-10 border border-white/20 shadow-2xl"
-            >
-              <Briefcase className="w-5 h-5 text-accent-orange" />
-              <span className="text-white font-black uppercase tracking-widest text-xs">
-                Join Our Mission
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-8xl font-black mb-8 leading-[1.05] tracking-tight"
-            >
-              Your Career in <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange via-orange-400 to-pink-400">
-                Hospitality
-              </span>{" "}
-              Starts Here
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto mb-14 leading-relaxed font-medium"
-            >
-              Join the Eventibe Team: Shaping the Future of Global Event
-              Planning and Hospitality.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-            >
-              <MagneticButton>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("openings")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="group relative flex items-center justify-center gap-3 px-12 py-6 bg-cta-gradient text-white font-black rounded-2xl transition-all shadow-[0_20px_50px_rgba(249,115,22,0.3)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.5)] active:scale-95 text-lg"
-                >
-                  Explore Opportunities
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                </button>
-              </MagneticButton>
-            </motion.div>
-          </div>
-
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-8 h-12 border-2 border-white/20 rounded-full flex items-start justify-center p-2"
-            >
-              <div className="w-1.5 h-3 bg-accent-orange rounded-full animate-pulse"></div>
-            </motion.div>
-          </div>
-        </section>
+        </CommonHero>
 
         {/* Mission Statement */}
         <section className="py-24 relative overflow-hidden bg-white">
