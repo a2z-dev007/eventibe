@@ -185,7 +185,7 @@ export default function DisclaimerPage() {
         }}
       />
       {/* ── CONTENT SECTION ── */}
-      <section className="py-16 md:py-24 bg-slate-50 relative z-20 -mt-12 md:-mt-20">
+      <section className="py-16 md:py-24 bg-slate-50 relative z-20">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col lg:flex-row gap-16">
             {/* Sidebar Navigation - Sticky */}

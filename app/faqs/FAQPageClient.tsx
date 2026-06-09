@@ -420,15 +420,15 @@ export default function FAQPageClient() {
                   className="bg-white rounded-[2rem] p-6 md:p-10 shadow-sm border border-slate-100 hover:shadow-md transition-all group overflow-hidden relative scroll-mt-24"
                 >
                   {/* Decorative Background Icon */}
-                  <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-2 transition-transform duration-1000">
+                  <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity transform group-hover:-translate-x-4 group-hover:translate-y-2 transition-transform duration-1000 pointer-events-none z-0">
                     {category?.file ? (
                       <img
                         src={category.file}
-                        className="scale-[6] w-16 h-16 brightness-0"
+                        className="scale-[6] w-16 h-16 brightness-0 pointer-events-none"
                         alt=""
                       />
                     ) : (
-                      <HelpCircle size={120} className="scale-[6]" />
+                      <HelpCircle size={120} className="scale-[6] pointer-events-none" />
                     )}
                   </div>
 
@@ -503,26 +503,21 @@ export default function FAQPageClient() {
                             </div>
                           </div>
 
-                          <AnimatePresence initial={false}>
-                            {isOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{
-                                  duration: 0.3,
-                                  ease: "easeInOut",
-                                }}
-                                className="overflow-hidden"
-                              >
-                                <div className="px-5 md:px-6 pb-5 pt-0">
-                                  <p className="text-slate-500 text-sm md:text-base leading-relaxed pl-14 md:pl-16">
-                                    {faq.answer}
-                                  </p>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          <div
+                            className={`grid transition-all duration-300 ease-in-out ${
+                              isOpen
+                                ? "grid-rows-[1fr] opacity-100"
+                                : "grid-rows-[0fr] opacity-0"
+                            }`}
+                          >
+                            <div className="overflow-hidden">
+                              <div className="px-5 md:px-6 pb-5 pt-0">
+                                <p className="text-slate-500 text-sm md:text-base leading-relaxed pl-14 md:pl-16">
+                                  {faq.answer}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       );
                     })}

@@ -30,9 +30,8 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { TiltCard, MagneticButton } from "@/components/micro-interactions";
 
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Footer from "@/components/Footer";
+import { toast } from "sonner";
+import CommonHero from "@/components/common/CommonHero";
 
 interface JobOpening {
   id: number;
@@ -169,14 +168,7 @@ const CareerPage = () => {
     e.preventDefault();
 
     if (!selectedJob || !formData.attachment) {
-      toast.error("Please fill all required fields", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error("Please fill all required fields");
       return;
     }
 
@@ -198,14 +190,7 @@ const CareerPage = () => {
       const data = response.data;
 
       if (data.status === "success") {
-        toast.success(data.message || "Application submitted successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.success(data.message || "Application submitted successfully!");
         handleCloseModals();
         setFormData({
           name: "",
@@ -216,27 +201,12 @@ const CareerPage = () => {
         });
       } else {
         toast.error(
-          data.message || "Failed to submit application. Please try again.",
-          {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          },
+          data.message || "Failed to submit application. Please try again."
         );
       }
     } catch (error) {
       console.error("Error submitting application:", error);
-      toast.error("An error occurred. Please try again.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error("An error occurred. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -248,25 +218,25 @@ const CareerPage = () => {
       title: "Diversity and Inclusion",
       description:
         "We celebrate diversity and believe that a variety of perspectives strengthens our team.",
-      color: "from-blue-400 to-cyan-400",
+      color: "from-corporate-blue to-blue-500",
     },
     {
       icon: Lightbulb,
       title: "Innovation",
       description:
         "Embrace creativity and stay at the forefront of industry trends to drive innovation.",
-      color: "from-orange-400 to-pink-400",
+      color: "from-accent-orange to-orange-500",
     },
     {
       icon: CheckCircle,
       title: "Integrity",
       description:
         "Uphold the highest ethical standards in all our interactions, both internally and externally.",
-      color: "from-green-400 to-emerald-400",
+      color: "from-primary-navy to-slate-800",
     },
   ];
 
-  const whySpodia = [
+  const whyEventibe = [
     {
       icon: Lightbulb,
       title: "Innovative Environment",
@@ -295,7 +265,6 @@ const CareerPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <ToastContainer />
       {/* <Header /> */}
       <main className="overflow-x-hidden">
         {/* Hero Section */}
@@ -347,8 +316,7 @@ const CareerPage = () => {
                   transition={{ delay: 0.1 }}
                   className="text-4xl md:text-6xl font-black mb-8 text-primary-navy tracking-tight leading-tight"
                 >
-                  More Than Just <br />
-                  <span className="text-corporate-blue">a Job</span>
+                  More Than Just <span className="text-corporate-blue">a Job</span>
                 </motion.h2>
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
@@ -365,7 +333,7 @@ const CareerPage = () => {
                   </p>
                   <p>
                     If you&apos;re enthusiastic about shaping the future of
-                    hospitaliy and making a positive impact in the world,
+                    hospitality and making a positive impact in the world,
                     Eventibe is the place for you. Join us in creating memorable
                     journeys and contributing to the growth of responsible
                     tourism.
@@ -380,47 +348,49 @@ const CareerPage = () => {
                   className="relative"
                 >
                   <div className="absolute -inset-4 bg-gradient-to-tr from-corporate-blue/20 to-accent-orange/20 rounded-[48px] blur-2xl -z-10 animate-pulse" />
-                  <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-2xl border border-gray-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent-orange/5 rounded-full -mr-16 -mt-16 blur-2xl" />
-                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-corporate-blue/5 rounded-full -ml-16 -mb-16 blur-2xl" />
+                  <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-md border border-gray-100/50 relative overflow-hidden group/card">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent-orange/5 rounded-full -mr-16 -mt-16 blur-2xl transition-all duration-500 group-hover/card:bg-accent-orange/10 group-hover/card:scale-150" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-corporate-blue/5 rounded-full -ml-16 -mb-16 blur-2xl transition-all duration-500 group-hover/card:bg-corporate-blue/10 group-hover/card:scale-150" />
 
-                    <div className="flex flex-col gap-8">
-                      <div className="flex items-start gap-6">
-                        <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-corporate-blue shrink-0">
-                          <Heart className="w-7 h-7" />
+                    <div className="flex flex-col gap-4 relative z-10">
+                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                        <div className="w-14 h-14 bg-blue-50/80 group-hover:bg-corporate-blue group-hover:text-white rounded-2xl flex items-center justify-center text-corporate-blue shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
+                          <Heart className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
-                        <div>
-                          <h4 className="text-xl font-black text-primary-navy mb-2">
+                        <div className="flex-1">
+                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-corporate-blue transition-colors duration-300">
                             Passion Driven
                           </h4>
-                          <p className="text-soft-slate font-medium">
+                          <p className="text-soft-slate font-medium text-sm leading-relaxed">
                             We lead with heart and excellence in everything we
                             do.
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-start gap-6">
-                        <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-accent-orange shrink-0">
-                          <Sparkles className="w-7 h-7" />
+                      
+                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                        <div className="w-14 h-14 bg-orange-50/80 group-hover:bg-accent-orange group-hover:text-white rounded-2xl flex items-center justify-center text-accent-orange shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
+                          <Sparkles className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
-                        <div>
-                          <h4 className="text-xl font-black text-primary-navy mb-2">
+                        <div className="flex-1">
+                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-accent-orange transition-colors duration-300">
                             Future Forward
                           </h4>
-                          <p className="text-soft-slate font-medium">
+                          <p className="text-soft-slate font-medium text-sm leading-relaxed">
                             Innovation is the heartbeat of our platform.
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-start gap-6">
-                        <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
-                          <Users className="w-7 h-7" />
+                      
+                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                        <div className="w-14 h-14 bg-green-50/80 group-hover:bg-emerald-500 group-hover:text-white rounded-2xl flex items-center justify-center text-emerald-600 shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
+                          <Users className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
-                        <div>
-                          <h4 className="text-xl font-black text-primary-navy mb-2">
+                        <div className="flex-1">
+                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-emerald-600 transition-colors duration-300">
                             Community First
                           </h4>
-                          <p className="text-soft-slate font-medium">
+                          <p className="text-soft-slate font-medium text-sm leading-relaxed">
                             Impact on local communities is our ultimate goal.
                           </p>
                         </div>
@@ -460,15 +430,15 @@ const CareerPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {whySpodia.map((item, index) => {
+              {whyEventibe.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <TiltCard key={index} className="h-full">
-                    <div className="group bg-white rounded-[32px] p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:border-accent-orange/30 transition-all duration-500 h-full flex flex-col items-center text-center">
-                      <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mb-8 text-corporate-blue group-hover:bg-cta-gradient group-hover:text-white transition-all duration-500 ring-4 ring-gray-50 group-hover:ring-orange-500/10">
+                    <div className="group bg-white rounded-[32px] p-8 shadow-xl shadow-blue-900/5 border border-gray-100 hover:border-primary-navy/30 transition-all duration-500 h-full flex flex-col items-center text-center">
+                      <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mb-8 text-corporate-blue group-hover:bg-primary-navy group-hover:text-white transition-all duration-500 ring-4 ring-gray-50 group-hover:ring-primary-navy/10">
                         <Icon className="w-10 h-10" />
                       </div>
-                      <h3 className="text-xl font-black mb-4 text-primary-navy group-hover:text-accent-orange transition-colors">
+                      <h3 className="text-xl font-black mb-4 text-primary-navy group-hover:text-primary-navy transition-colors">
                         {item.title}
                       </h3>
                       <p className="text-soft-slate font-medium leading-relaxed">
@@ -488,10 +458,6 @@ const CareerPage = () => {
           className="py-32 bg-primary-navy text-white relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
-          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#f8fafc] to-transparent opacity-10" />
-
-          <div className="absolute top-20 right-20 w-96 h-96 bg-accent-orange/20 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-20 left-20 w-[600px] h-[600px] bg-corporate-blue/20 rounded-full blur-[150px] animate-pulse delay-1000"></div>
 
           <div className="relative max-w-7xl mx-auto px-6">
             <div className="text-center mb-20">
@@ -534,8 +500,7 @@ const CareerPage = () => {
               className="mb-16 max-w-3xl mx-auto"
             >
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-corporate-blue via-accent-orange to-pink-500 rounded-[32px] blur-sm opacity-25 group-hover:opacity-50 transition duration-500" />
-                <div className="relative flex items-center bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[28px] p-2 pr-4 shadow-2xl overflow-hidden">
+                <div className="relative flex items-center bg-white/5 backdrop-blur-2xl border border-white/20 focus-within:border-accent-orange/50 hover:border-white/30 rounded-[28px] p-2 pr-4 shadow-xl transition-all duration-300 overflow-hidden">
                   <div className="flex items-center justify-center pl-6 pr-4 text-white/40">
                     <Search className="w-6 h-6" />
                   </div>
@@ -591,7 +556,7 @@ const CareerPage = () => {
                         onClick={() => handleJobClick(job)}
                         className="group bg-white/5 backdrop-blur-md p-8 md:p-10 rounded-[40px] border border-white/10 hover:border-accent-orange/50 transition-all duration-500 hover:bg-white/10 cursor-pointer relative overflow-hidden flex flex-col justify-between"
                       >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-accent-orange/10 to-transparent rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-accent-orange/5 rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         <div>
                           <div className="flex items-start justify-between mb-8">
@@ -1095,7 +1060,7 @@ const CareerPage = () => {
                         onChange={handleInputChange}
                         placeholder="Enter your name"
                         required
-                        className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-orange-500/10 focus:border-accent-orange/50 outline-none transition-all font-medium text-primary-navy"
+                        className="w-full px-6 py-5 bg-slate-50/50 border border-slate-100 rounded-2xl focus-visible:ring-2 focus-visible:ring-accent-orange/20 focus-visible:border-accent-orange focus:border-accent-orange outline-none transition-all font-medium text-primary-navy"
                       />
                     </div>
 
@@ -1111,7 +1076,7 @@ const CareerPage = () => {
                         onChange={handleInputChange}
                         placeholder="Enter your email"
                         required
-                        className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-orange-500/10 focus:border-accent-orange/50 outline-none transition-all font-medium text-primary-navy"
+                        className="w-full px-6 py-5 bg-slate-50/50 border border-slate-100 rounded-2xl focus-visible:ring-2 focus-visible:ring-accent-orange/20 focus-visible:border-accent-orange focus:border-accent-orange outline-none transition-all font-medium text-primary-navy"
                       />
                     </div>
                   </div>
@@ -1129,7 +1094,7 @@ const CareerPage = () => {
                         onChange={handleInputChange}
                         placeholder="Enter your phone"
                         required
-                        className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-orange-500/10 focus:border-accent-orange/50 outline-none transition-all font-medium text-primary-navy"
+                        className="w-full px-6 py-5 bg-slate-50/50 border border-slate-100 rounded-2xl focus-visible:ring-2 focus-visible:ring-accent-orange/20 focus-visible:border-accent-orange focus:border-accent-orange outline-none transition-all font-medium text-primary-navy"
                       />
                     </div>
 
@@ -1147,7 +1112,7 @@ const CareerPage = () => {
                           accept=".pdf,.doc,.docx"
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         />
-                        <div className="w-full px-6 py-5 bg-gray-50 border border-dashed border-gray-200 rounded-2xl group-hover:border-accent-orange/50 group-hover:bg-orange-50/30 transition-all flex items-center gap-4">
+                        <div className="w-full px-6 py-5 bg-slate-50/50 border border-dashed border-gray-200 rounded-2xl group-hover:border-accent-orange/50 group-hover:bg-orange-50/30 transition-all flex items-center gap-4">
                           <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent-orange">
                             <Upload className="w-5 h-5" />
                           </div>
@@ -1173,7 +1138,7 @@ const CareerPage = () => {
                       placeholder="Tell us why you're a great fit for this role..."
                       required
                       rows={6}
-                      className="w-full px-6 py-5 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-orange-500/10 focus:border-accent-orange/50 outline-none transition-all font-medium text-primary-navy resize-none"
+                      className="w-full px-6 py-5 bg-slate-50/50 border border-slate-100 rounded-2xl focus-visible:ring-2 focus-visible:ring-accent-orange/20 focus-visible:border-accent-orange focus:border-accent-orange outline-none transition-all font-medium text-primary-navy resize-none"
                     />
                   </div>
 
