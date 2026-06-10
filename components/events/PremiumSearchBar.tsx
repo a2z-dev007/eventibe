@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import { Search, MapPin, Calendar, Users, Home, Sparkles } from 'lucide-react'
 import PremiumDatePicker from '../ui/PremiumDatePicker'
 import PremiumSelect from '../ui/PremiumSelect'
@@ -49,8 +50,25 @@ export default function PremiumSearchBar({
   searchButtonText = "Find Spaces",
   requiredLocation = false
 }: PremiumSearchBarProps) {
+  const [activeMenu, setActiveMenu] = useState<string | null>(null)
+  const searchContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setActiveMenu(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   return (
-    <div className={`relative w-full mx-auto z-[99] p-[4px] md:p-[5px] rounded-[32px] lg:rounded-full group/search-bar shadow-[0_30px_60px_rgba(0,0,0,0.25)] ${className}`}>
+    <div 
+      ref={searchContainerRef}
+      className={`relative w-full mx-auto z-[99] p-[4px] md:p-[5px] rounded-[32px] lg:rounded-full group/search-bar shadow-[0_30px_60px_rgba(0,0,0,0.25)] ${className}`}
+    >
       {/* Animated Snake Border Gradient */}
       <div className="absolute inset-0 overflow-hidden rounded-[32px] lg:rounded-full pointer-events-none">
         <div className="absolute inset-[-500%] animate-[spin_3s_linear_infinite_reverse] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_45deg,#FF9530_90deg,transparent_135deg)]" />
@@ -68,6 +86,9 @@ export default function PremiumSearchBar({
               containerClassName="px-6 lg:px-5 py-2 lg:py-0"
               placeholder="Where is the event?"
               required={requiredLocation}
+              menuIsOpen={activeMenu === 'location'}
+              onMenuOpen={() => setActiveMenu('location')}
+              onMenuClose={() => setActiveMenu(null)}
             />
           </div>
 
@@ -81,6 +102,9 @@ export default function PremiumSearchBar({
             placeholder="Any Event"
             className="flex-1"
             containerClassName="px-6 lg:px-4 py-2 lg:py-0"
+            menuIsOpen={activeMenu === 'eventType'}
+            onMenuOpen={() => setActiveMenu('eventType')}
+            onMenuClose={() => setActiveMenu(null)}
           />
 
           {/* Venue Type */}
@@ -93,15 +117,26 @@ export default function PremiumSearchBar({
             placeholder="Any Type"
             className="flex-1"
             containerClassName="px-6 lg:px-4 py-2 lg:py-0"
+            menuIsOpen={activeMenu === 'venueType'}
+            onMenuOpen={() => setActiveMenu('venueType')}
+            onMenuClose={() => setActiveMenu(null)}
           />
 
           {/* Premium Date Picker */}
-          <div className="flex-1 flex items-center px-6 lg:px-4 py-4 lg:py-0">
+          <div 
+            className="flex-1 flex items-center px-6 lg:px-4 py-4 lg:py-0 cursor-pointer"
+            onClick={() => setActiveMenu(activeMenu === 'date' ? null : 'date')}
+          >
             <PremiumDatePicker
               selected={date}
-              onChange={(d: Date | null) => setDate(d)}
+              onChange={(d: Date | null) => {
+                setDate(d)
+                if (!d) return
+                setActiveMenu(null)
+              }}
               placeholder="Select Date"
               label="Date"
+              isOpen={activeMenu === 'date'}
             />
           </div>
 
@@ -115,6 +150,9 @@ export default function PremiumSearchBar({
             placeholder="Guest Count"
             className="flex-1"
             containerClassName="px-6 lg:px-4 py-2 lg:py-0"
+            menuIsOpen={activeMenu === 'guests'}
+            onMenuOpen={() => setActiveMenu('guests')}
+            onMenuClose={() => setActiveMenu(null)}
           />
 
           {/* Search Button */}

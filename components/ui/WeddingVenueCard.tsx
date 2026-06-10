@@ -92,15 +92,17 @@ export default function WeddingVenueCard({
         {/* Footer */}
         <div className="flex items-center justify-between gap-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2">
           <div className="min-w-0">
-            {price && (
-              <p className="text-[10px] font-black text-white truncate">{price}</p>
-            )}
-            {capacity && (
+            {/* {price && price !== 'Price on request' && !price.includes('NaN') ? (
+              <p className="text-[10px] font-black text-white truncate">{price || "See Details"}</p>
+              ) : null} */}
+              <p className="text-[10px] font-black text-white truncate">Price on request</p>
+
+            {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 ? (
               <p className="flex items-center gap-1 text-[9px] text-white/45 font-medium">
                 <Users size={7} className="text-rose-400 shrink-0" />
                 {capacity} guests
               </p>
-            )}
+            ) : null}
           </div>
           <div className="shrink-0 w-7 h-7 rounded-full bg-rose-500/20 border border-rose-400/30 flex items-center justify-center group-hover:bg-rose-500 group-hover:border-rose-500 transition-all duration-300">
             <ArrowUpRight size={12} className="text-rose-300 group-hover:text-white transition-colors" />

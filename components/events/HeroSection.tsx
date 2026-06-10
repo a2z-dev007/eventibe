@@ -106,7 +106,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white overflow-hidden">
+    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white">
       {/* Immersive Background Container */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img

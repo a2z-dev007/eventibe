@@ -62,7 +62,7 @@ const venueFormSchema = z.object({
 type VenueFormValues = z.infer<typeof venueFormSchema>;
 
 export default function ListYourVenuePage() {
-  const fadeInUp = {
+  const fadeInUp: any = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
@@ -723,7 +723,7 @@ export default function ListYourVenuePage() {
                   {step.id}
                 </div>
                 <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-corporate-blue mb-5 group-hover:bg-corporate-blue group-hover:text-white transition-all">
-                  {React.cloneElement(step.icon as React.ReactElement, {
+                  {React.cloneElement(step.icon as any, {
                     size: 22,
                   })}
                 </div>

@@ -16,7 +16,7 @@ import { useLenis } from 'lenis/react'
 import { IMAGES } from '@/assets/images'
 import PremiumSearchBar from '@/components/events/PremiumSearchBar'
 
-function EventTypesContent() {
+function EventListingContent() {
   const router = useRouter()
   const lenis = useLenis()
   const searchParams = useSearchParams()
@@ -79,9 +79,9 @@ function EventTypesContent() {
 
   const scrollToTopListing = () => {
     if (lenis) {
-      lenis.scrollTo('#experience-list-section', { offset: -140 })
+      lenis.scrollTo('#type-list-section', { offset: -140 })
     } else {
-      const element = document.getElementById('experience-list-section')
+      const element = document.getElementById('type-list-section')
       if (element) {
         const offset = 140
         const bodyRect = document.body.getBoundingClientRect().top
@@ -120,10 +120,10 @@ function EventTypesContent() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl lg:text-7xl font-black text-white mb-6 drop-shadow-2xl tracking-tighter leading-[1.1]">
-              Celebrate Every <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] via-[#FFCF52] to-[#FF9530]">Moment</span>
+              Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] via-[#FFCF52] to-[#FF9530]">Events</span>
             </h1>
             <p className="text-white/80 text-lg lg:text-xl font-medium max-w-2xl mx-auto drop-shadow leading-relaxed">
-              From luxury weddings to high-stakes corporate summits, find venues designed for your specific needs.
+              From grand weddings to high-energy corporate mixers, find venues designed for your specific needs.
             </p>
           </motion.div>
 
@@ -153,8 +153,7 @@ function EventTypesContent() {
         </div>
       </div>
 
-      <div id="experience-list-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Modern List Header */}
+      <div id="type-list-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="bg-white/50 backdrop-blur-xl border border-white rounded-3xl p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-8 mb-16 shadow-2xl shadow-gray-200/50">
           <div>
             <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#FF9530]/50 mb-3">
@@ -162,12 +161,12 @@ function EventTypesContent() {
               <ChevronRight className="w-3 h-3" />
               <Link href="/events" className="hover:text-[#FF9530] transition-colors">Events</Link>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-[#FF9530]">Event Types</span>
+              <span className="text-[#FF9530]">Event List</span>
             </nav>
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-none">Experience List</h2>
+              <h2 className="text-2xl font-black text-gray-900 tracking-tight leading-none">Browse Categories</h2>
               <span className="px-3 py-1 bg-[#FF9530]/10 text-[#FF9530] text-[10px] font-black rounded-full uppercase tracking-tighter">
-                {filteredTypes.length} Total
+                {filteredTypes.length} types found
               </span>
             </div>
           </div>
@@ -176,7 +175,7 @@ function EventTypesContent() {
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[#FF9530] transition-colors" />
             <input 
               type="search" 
-              placeholder="Filter experiences..."
+              placeholder="Search by category name..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value)
@@ -230,7 +229,7 @@ function EventTypesContent() {
                         <div className="absolute inset-0 p-6 flex flex-col justify-end">
                            <div className="overflow-hidden">
                              <p className="text-[10px] font-black text-[#FFCF52] uppercase tracking-[0.2em] mb-2 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                                View Collection
+                               View Collection
                              </p>
                            </div>
                            <div className="flex items-end justify-between gap-4">
@@ -313,10 +312,10 @@ function EventTypesContent() {
         ) : (
           <div className="py-24 text-center">
             <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-              <SparklesIcon className="w-10 h-10 text-gray-200" />
+              <LayoutGrid className="w-10 h-10 text-gray-200" />
             </div>
             <h3 className="text-2xl font-black text-gray-900 mb-2 tracking-tight">No results found</h3>
-            <p className="text-gray-400 font-medium max-w-xs mx-auto">Try refining your filter or browse our other experiences for inspiration.</p>
+            <p className="text-gray-400 font-medium max-w-xs mx-auto">Try refining your filter or browse our other categories for inspiration.</p>
           </div>
         )}
       </div>
@@ -324,14 +323,14 @@ function EventTypesContent() {
   )
 }
 
-export default function EventTypesPage() {
+export default function EventListingPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF9530]"></div>
       </div>
     }>
-      <EventTypesContent />
+      <EventListingContent />
     </Suspense>
   )
 }

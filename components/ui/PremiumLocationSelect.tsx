@@ -18,6 +18,7 @@ interface PremiumLocationSelectProps {
   menuIsOpen?: boolean
   onMenuOpen?: () => void
   onMenuClose?: () => void
+  required?: boolean
 }
 
 const DropdownIndicator = (props: any) => {
@@ -50,6 +51,7 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
   menuIsOpen,
   onMenuOpen,
   onMenuClose,
+  required = false,
 }) => {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => { setMounted(true) }, [])

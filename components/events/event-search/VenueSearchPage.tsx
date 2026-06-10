@@ -233,7 +233,7 @@ export function VenueSearchPage() {
 
       {/* ── Hero banner ─────────────────────────────────────────────────────── */}
       <div
-        className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center pt-20 pb-8 md:pt-28 lg:pt-40 px-4 md:px-8 overflow-hidden"
+        className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center pt-20 pb-8 md:pt-8 lg:pt-8 px-4 md:px-8"
         style={{
           backgroundImage: `url(${IMAGES.listingHeroBg.src})`,
           backgroundSize: 'cover',
@@ -243,11 +243,8 @@ export function VenueSearchPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none" />
 
-        <div className="max-w-6xl w-full text-center relative z-10 py-6 md:py-10">
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-4 md:mb-8 tracking-tighter drop-shadow-2xl">
-            Banquet Halls & Event Venues <br className="hidden md:block" /> in India
-          </h1>
-
+        <div className="max-w-6xl w-full text-center relative z-10 ">
+        
           {/* Premium Search Bar Integration */}
           <PremiumSearchBar
             location={location}

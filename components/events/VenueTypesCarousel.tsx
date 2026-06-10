@@ -88,6 +88,7 @@ export default function VenueTypesCarousel() {
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper
             }}
+            grabCursor={true}
             spaceBetween={24}
             slidesPerView="auto"
             loop={true}
