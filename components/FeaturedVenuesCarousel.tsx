@@ -4,8 +4,8 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
 import { TiltCard } from '@/components/micro-interactions';
-import { fetchEventTypes } from '@/lib/api/eventsEndpoints';
-import type { EventTypeRecord } from '@/lib/api/eventsEndpoints';
+import { fetchVenueTypes } from '@/lib/api/eventsEndpoints';
+import type { VenueTypeRecord } from '@/lib/api/eventsEndpoints';
 
 // Curated fallback images per event type keyword
 const FALLBACK_IMAGES: Record<string, string> = {
@@ -46,16 +46,16 @@ function SkeletonCard() {
 
 export default function FeaturedVenuesCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [eventTypes, setEventTypes] = useState<EventTypeRecord[]>([]);
+  const [venueTypes, setVenueTypes] = useState<VenueTypeRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
-    fetchEventTypes()
+    fetchVenueTypes({ page_number: 1, number_of_records: 20 })
       .then((res) => {
-        if (!cancelled && res?.records) setEventTypes(res.records);
+        if (!cancelled && res?.records) setVenueTypes(res.records);
       })
       .catch(() => {
         // silently fail — skeleton disappears
@@ -79,7 +79,7 @@ export default function FeaturedVenuesCarousel() {
     track.addEventListener('scroll', updateNavState, { passive: true });
     updateNavState();
     return () => track.removeEventListener('scroll', updateNavState);
-  }, [eventTypes, updateNavState]);
+  }, [venueTypes, updateNavState]);
 
   const scroll = (dir: 'prev' | 'next') => {
     const track = trackRef.current;
@@ -91,6 +91,41 @@ export default function FeaturedVenuesCarousel() {
     track.scrollBy({ left: dir === 'prev' ? -step : step, behavior: 'smooth' });
   };
 
+  const [isDragging, setIsDragging] = useState(false);
+  const dragMoved = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const track = trackRef.current;
+    if (!track) return;
+    setIsDragging(true);
+    dragMoved.current = false;
+    startX.current = e.pageX - track.offsetLeft;
+    scrollLeft.current = track.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const track = trackRef.current;
+    if (!track) return;
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    if (Math.abs(x - startX.current) > 5) {
+      dragMoved.current = true;
+    }
+    track.scrollLeft = scrollLeft.current - walk;
+  };
+
   return (
     <section className="py-20 bg-light-bg overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
@@ -100,7 +135,7 @@ export default function FeaturedVenuesCarousel() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-0.5 bg-accent-orange" />
               <span className="text-xs font-bold text-accent-orange uppercase tracking-[0.2em]">
-                Explore by Event
+                Explore Venue Types
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight">
@@ -108,7 +143,7 @@ export default function FeaturedVenuesCarousel() {
               <span className="text-accent-orange">Occasion</span>
             </h2>
             <p className="text-soft-slate mt-3 max-w-lg text-base">
-              From grand weddings to high-impact corporate summits — discover curated venues for every event type.
+              From grand banquet halls to cozy corporate spaces — discover curated venues for every style of event.
             </p>
           </div>
 
@@ -153,39 +188,39 @@ export default function FeaturedVenuesCarousel() {
         {/* Carousel Track */}
         <div
           ref={trackRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className={`flex gap-6 overflow-x-auto scrollbar-hide pb-4 ${
+            isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
+          }`}
+          style={{
+            scrollSnapType: isDragging ? 'none' : 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+          }}
         >
           {/* Left spacer — keeps first card off the edge on mobile */}
           <div className="shrink-0 w-1 md:hidden" aria-hidden />
           {loading ? (
             [...Array(6)].map((_, i) => <SkeletonCard key={i} />)
-          ) : eventTypes.length === 0 ? (
-            // Fallback dummy cards when API is empty/fails
-            [
-              { id: 2, name: 'Corporate', key_name: 'corporate' },
-              { id: 4, name: 'Conference', key_name: 'conference' },
-              { id: 7, name: 'Exhibition', key_name: 'exhibition' },
-              { id: 5, name: 'Gala Dinner', key_name: 'gala' },
-              { id: 1, name: 'Wedding', key_name: 'wedding' },
-              { id: 3, name: 'Birthday', key_name: 'birthday' },
-              { id: 6, name: 'Concert', key_name: 'concert' },
-              { id: 8, name: 'Social Event', key_name: 'social' },
-            ].map((item) => (
-              <EventTypeCard
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                image={getImageForType(item.key_name)}
-              />
-            ))
+          ) : venueTypes.length === 0 ? (
+            <div className="flex items-center justify-center py-12 text-soft-slate w-full">
+              No venue types available.
+            </div>
           ) : (
-            eventTypes.map((et) => (
-              <EventTypeCard
-                key={et.id}
-                id={et.id}
-                name={et.name}
-                image={getImageForType(et.name, et.file)}
+            venueTypes.map((vt) => (
+              <VenueTypeCard
+                key={vt.id}
+                id={vt.id}
+                name={vt.name}
+                image={getImageForType(vt.name, vt.file)}
+                onLinkClick={(e) => {
+                  if (dragMoved.current) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
               />
             ))
           )}
@@ -207,15 +242,26 @@ export default function FeaturedVenuesCarousel() {
   );
 }
 
-function EventTypeCard({ id, name, image }: { id: number; name: string; image: string }) {
+function VenueTypeCard({
+  id,
+  name,
+  image,
+  onLinkClick,
+}: {
+  id: number;
+  name: string;
+  image: string;
+  onLinkClick?: (e: React.MouseEvent) => void;
+}) {
   const [imgSrc, setImgSrc] = useState(image);
 
   return (
     <TiltCard className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] rounded-3xl">
     <Link
-      href={`/venues?event_type=${id}`}
+      href={`/events/search?venue_type=${id}`}
       className="block group cursor-pointer"
       style={{ scrollSnapAlign: 'start' }}
+      onClick={onLinkClick}
     >
       {/* Image card */}
       <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500">

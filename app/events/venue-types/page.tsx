@@ -102,32 +102,55 @@ function VenueTypesContent() {
 
   return (
     <main className="min-h-screen bg-[#F8FAFC]">
-      <CommonHero
-        badgeText="Venue Directory"
-        badgeIcon="sparkles"
-        titleMain="Explore Premium"
-        titleHighlight="Venues"
-        subtitle="Discover grand halls, scenic resorts, and intimate spaces tailored for your unique celebrations."
-        bgSrc={IMAGES.listingHeroBg.src}
-        bgType="image"
+      
+      {/* Premium Immersive Hero */}
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat pt-28 pb-16 lg:pt-48 lg:pb-32 px-4 md:px-8"
+        style={{
+          backgroundImage: `url(${IMAGES.listingHeroBg.src})`,
+          backgroundAttachment: 'fixed'
+        }}
       >
-        <div className="max-w-6xl mx-auto mt-6">
-          <PremiumSearchBar
-            location={location}
-            setLocation={setLocation}
-            eventType={eventType}
-            setEventType={setEventType}
-            venueType={venueType}
-            setVenueType={setVenueType}
-            date={date}
-            setDate={setDate}
-            guests={guests}
-            setGuests={setGuests}
-            handleSearch={handleTopSearch}
-            eventOptions={eventOptions}
-            venueOptions={venueOptions}
-            guestOptions={guestOptions}
-          />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 backdrop-blur-[2px]" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-0">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-4xl lg:text-7xl font-black text-white mb-6 drop-shadow-2xl tracking-tighter leading-[1.1]">
+              Explore <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] via-[#FFCF52] to-[#FF9530]">Venues</span>
+            </h1>
+            <p className="text-white/80 text-lg lg:text-xl font-medium max-w-2xl mx-auto drop-shadow leading-relaxed">
+              Discover grand halls, scenic resorts, and intimate spaces tailored for your unique celebrations.
+            </p>
+          </motion.div>
+
+          {/* Premium Search Bar Integration */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <PremiumSearchBar
+              location={location}
+              setLocation={setLocation}
+              eventType={eventType}
+              setEventType={setEventType}
+              venueType={venueType}
+              setVenueType={setVenueType}
+              date={date}
+              setDate={setDate}
+              guests={guests}
+              setGuests={setGuests}
+              handleSearch={handleTopSearch}
+              eventOptions={eventOptions}
+              venueOptions={venueOptions}
+              guestOptions={guestOptions}
+            />
+          </motion.div>
         </div>
       </CommonHero>
 

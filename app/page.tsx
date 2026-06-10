@@ -117,6 +117,7 @@ export default function Home() {
         linkUrl="/corporate-event-venues"
         type="corporate-venue"
         theme="light"
+        eventTypeId={7}
       />
 
       {/* Why Corporate Planners Trust Us — Enterprise Focus */}
@@ -133,6 +134,7 @@ export default function Home() {
         linkUrl="/vendors"
         type="vendor"
         theme="dark"
+        eventTypeId={7}
       />
 
       {/* Wedding & Social Venue Highlights — Secondary Focus (30%) */}
@@ -143,6 +145,7 @@ export default function Home() {
         linkUrl="/wedding-venues"
         type="wedding-venue"
         theme="light"
+        eventTypeId={7}
       />
 
       {/* How It Works – Interactive */}

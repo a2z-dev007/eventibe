@@ -6,7 +6,7 @@ export const VENUE_TYPES = ['Banquet Hall', 'Conference Halls', 'Lawns'] as cons
 export const EVENT_TYPES = ['Weddings', 'Corporate Events', 'Engagement', 'Birthday'] as const
 export const PER_PAGE = 12
 
-export const ALL_VENUES: Venue[] = [
+export const ALL_VENUES: any[] = [
   { name: 'Regal Crown Banquet', location: 'Sector 62, Noida, Uttar Pradesh', venueType: 'Banquet Hall, Conference Halls', eventType: 'Weddings, Corporate Events', capacity: 400, veg: 2200, nonveg: 2400, badge: 'Top Rated', rating: 4.8, reviews: 124, image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=60' },
   { name: 'Orchid Lawn & Hall', location: 'Sector 137, Noida, Uttar Pradesh', venueType: 'Lawns, Banquet Hall', eventType: 'Weddings, Corporate Events', capacity: 650, veg: 1800, nonveg: 2100, badge: 'Best Seller', rating: 4.6, reviews: 89, image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=60' },
   { name: 'Blue Petal Convention', location: 'Sector 18, Noida, Uttar Pradesh', venueType: 'Conference Halls, Banquet Hall', eventType: 'Corporate Events, Weddings', capacity: 500, veg: 2600, nonveg: 2800, badge: 'Corporate Pick', rating: 4.7, reviews: 67, image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=60' },

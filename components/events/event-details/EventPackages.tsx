@@ -103,6 +103,7 @@ export function EventPackages({ packages, getImageUrl, venueTitle }: EventPackag
         <div className="relative group/swiper">
           <Swiper
             modules={[Navigation, Autoplay, FreeMode]}
+            grabCursor={true}
             spaceBetween={24}
             slidesPerView={1.2}
             freeMode={true}

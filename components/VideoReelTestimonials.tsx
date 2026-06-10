@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Star } from 'lucide-react';
 
 interface ReelTestimonial {
@@ -158,14 +158,14 @@ const ReelCard = ({ testimonial }: { testimonial: ReelTestimonial }) => {
           <iframe
             ref={iframeRef}
             src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=${youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&showinfo=0`}
-            className="w-full h-[120%] -top-[10%] relative object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 scale-125 md:scale-150"
+            className="w-full h-[120%] -top-[10%] relative object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 scale-125 md:scale-150 pointer-events-none"
             allow="autoplay; encrypted-media"
           />
         ) : (
           <video
             ref={videoRef}
             src={testimonial.videoUrl}
-            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
             loop
             muted
             playsInline
@@ -232,33 +232,6 @@ const ReelCard = ({ testimonial }: { testimonial: ReelTestimonial }) => {
 };
 
 export default function VideoReelTestimonials() {
-  const [isPaused, setIsPaused] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (isPaused) return;
-
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % TESTIMONIALS.length;
-        
-        controls.start({
-          x: -(nextIndex * 350), 
-          transition: { 
-            duration: nextIndex === 0 ? 0.8 : 1.2, 
-            ease: nextIndex === 0 ? "easeInOut" : [0.32, 0.72, 0, 1] 
-          }
-        });
-        
-        return nextIndex;
-      });
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, [isPaused, controls]);
-
   return (
     <section className="py-32 bg-white relative overflow-hidden">
       {/* Decorative Blur Orbs */}
@@ -284,23 +257,36 @@ export default function VideoReelTestimonials() {
         </div>
 
         {/* Carousel Container */}
-        <div 
-          className="relative group/carousel overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <motion.div 
-            animate={controls}
-            drag="x"
-            dragConstraints={{ right: 0, left: -((TESTIMONIALS.length * 350) - 1200) }}
-            className="flex gap-6 lg:gap-8 pb-8 px-4 lg:px-0 cursor-grab active:cursor-grabbing"
-            onDragStart={() => setIsPaused(true)}
-            onDragEnd={() => setIsPaused(false)}
-          >
+        <div className="relative overflow-hidden group-hover-pause py-4 px-4 lg:px-0">
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-marquee-track {
+              display: flex;
+              gap: 1.5rem; /* gap-6 */
+              width: max-content;
+              animation: marquee 35s linear infinite;
+            }
+            @media (min-width: 1024px) {
+              .animate-marquee-track {
+                gap: 2rem; /* gap-8 */
+              }
+            }
+            .group-hover-pause:hover .animate-marquee-track {
+              animation-play-state: paused;
+            }
+          `}</style>
+          
+          <div className="animate-marquee-track pb-8">
             {TESTIMONIALS.map((t) => (
-              <ReelCard key={t.id} testimonial={t} />
+              <ReelCard key={`${t.id}-orig`} testimonial={t} />
             ))}
-          </motion.div>
+            {TESTIMONIALS.map((t) => (
+              <ReelCard key={`${t.id}-dup`} testimonial={t} />
+            ))}
+          </div>
         </div>
 
         <div className="mt-20 flex flex-wrap justify-center items-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">

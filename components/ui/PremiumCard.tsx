@@ -102,9 +102,9 @@ export default function PremiumCard({
         </div>
 
         {/* Chips row — capacity + amenity */}
-        {(capacity || amenity) && (
+        {((capacity && !isNaN(Number(capacity)) && Number(capacity) > 0) || amenity) && (
           <div className="flex flex-wrap gap-2">
-            {capacity && (
+            {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 && (
               <span className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
                 <Users size={10} className={accentColor} />
                 Up to {capacity}
@@ -124,13 +124,11 @@ export default function PremiumCard({
 
         {/* ── Footer strip ────────────────────────────── */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-          {price ? (
+          {price && price !== 'Custom Quote' && !price.includes('NaN') ? (
             <span className="text-sm font-black text-primary-navy">{price}</span>
-          ) : (
-            <span className="text-sm font-bold text-soft-slate/60 italic">Custom Quote</span>
-          )}
+          ) : null}
 
-          <span className={`inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider ${accentColor} group-hover:gap-2 transition-all duration-300`}>
+          <span className={`inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider ${accentColor} group-hover:gap-2 transition-all duration-300 ml-auto`}>
             View
             <ArrowUpRight size={13} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </span>

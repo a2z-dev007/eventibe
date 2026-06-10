@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Heart } from 'lucide-react';
 import PremiumCard, { PremiumCardData } from '@/components/ui/PremiumCard';
 import WeddingVenueCard, { WeddingVenueCardData } from '@/components/ui/WeddingVenueCard';
+import { searchVenues, VenueRecord } from '@/lib/api/eventsEndpoints';
 
 interface HighlightsSectionProps {
   subtitle: string;
@@ -11,9 +12,10 @@ interface HighlightsSectionProps {
   linkUrl: string;
   type: 'wedding-venue' | 'corporate-venue' | 'vendor';
   theme?: 'light' | 'dark';
+  eventTypeId?: number;
 }
 
-// ── Image Banks ──────────────────────────────────────────────────────────────
+// ── Image Banks (For Fallback/Mock Mode) ─────────────────────────────────────
 
 const WEDDING_IMAGES = [
   'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85',
@@ -48,7 +50,7 @@ const VENDOR_IMAGES = [
   'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80',
 ];
 
-// ── Data Builders ────────────────────────────────────────────────────────────
+// ── Mock Data Builders ───────────────────────────────────────────────────────
 
 function buildWeddingCards(): WeddingVenueCardData[] {
   const cities = ['Udaipur', 'Jaipur', 'Mumbai', 'Delhi', 'Goa', 'Rishikesh', 'Jodhpur', 'Chennai'];
@@ -113,19 +115,238 @@ function buildVendorCards(): PremiumCardData[] {
   }));
 }
 
+// ── Skeletons / Loading Shimmers ─────────────────────────────────────────────
+
+function WeddingSkeletonCard({ variant = 'portrait' }: { variant?: 'feature' | 'portrait' | 'landscape' }) {
+  return (
+    <div className="relative w-full h-full rounded-2xl bg-gray-100 overflow-hidden animate-pulse min-h-[220px]">
+      <div className="absolute inset-0 bg-gray-200" />
+      <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2 bg-gradient-to-t from-gray-300 via-gray-200/50 to-transparent">
+        <div className="h-4 w-3/4 rounded bg-gray-300" />
+        <div className="h-3 w-1/2 rounded bg-gray-300" />
+        <div className="h-8 w-full rounded-xl bg-gray-300/60 mt-2" />
+      </div>
+    </div>
+  );
+}
+
+function PremiumSkeletonCard() {
+  return (
+    <div className="rounded-[28px] bg-white border border-gray-100 overflow-hidden shadow-sm h-[420px] flex flex-col p-5 animate-pulse">
+      <div className="h-52 w-full rounded-2xl bg-gray-100 mb-4" />
+      <div className="h-5 w-3/4 rounded-md bg-gray-200 mb-2" />
+      <div className="h-4 w-1/2 rounded-md bg-gray-200 mb-6" />
+      <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-100">
+        <div className="h-4 w-1/3 rounded-md bg-gray-200" />
+        <div className="h-4 w-1/4 rounded-md bg-gray-200" />
+      </div>
+    </div>
+  );
+}
+
+function WeddingSkeletonLayout() {
+  return (
+    <div>
+      {/* Mobile view */}
+      <div
+        className="md:hidden flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+      >
+        <div className="shrink-0 w-1" aria-hidden />
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="snap-start shrink-0"
+            style={{ width: '72vw', maxWidth: '280px', height: '340px' }}
+          >
+            <WeddingSkeletonCard />
+          </div>
+        ))}
+        <div className="shrink-0 w-1" aria-hidden />
+      </div>
+
+      {/* Tablet view */}
+      <div
+        className="hidden md:grid lg:hidden gap-4"
+        style={{
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridAutoRows: '280px',
+        }}
+      >
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="h-full">
+            <WeddingSkeletonCard />
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop view */}
+      <div className="hidden lg:block space-y-4">
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: '1fr 1fr 1fr',
+            gridTemplateRows: '310px 200px',
+          }}
+        >
+          <div className="h-full" style={{ gridRow: '1 / 3' }}>
+            <WeddingSkeletonCard variant="feature" />
+          </div>
+          <div className="h-full"><WeddingSkeletonCard variant="portrait" /></div>
+          <div className="h-full"><WeddingSkeletonCard variant="portrait" /></div>
+          <div className="h-full"><WeddingSkeletonCard variant="landscape" /></div>
+          <div className="h-full"><WeddingSkeletonCard variant="landscape" /></div>
+        </div>
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateRows: '300px',
+          }}
+        >
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-full">
+              <WeddingSkeletonCard variant="portrait" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PremiumSkeletonLayout() {
+  return (
+    <div>
+      {/* Mobile view */}
+      <div
+        className="md:hidden flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+      >
+        <div className="shrink-0 w-1" aria-hidden />
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="snap-start shrink-0"
+            style={{ width: '72vw', maxWidth: '280px', height: '420px' }}
+          >
+            <PremiumSkeletonCard />
+          </div>
+        ))}
+        <div className="shrink-0 w-1" aria-hidden />
+      </div>
+
+      {/* Tablet and Desktop view */}
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <PremiumSkeletonCard key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── API Mappers ──────────────────────────────────────────────────────────────
+
+function mapVenuesToWedding(records: VenueRecord[]): WeddingVenueCardData[] {
+  let list = [...records];
+  if (list.length > 0 && list.length < 8) {
+    while (list.length < 8) {
+      list.push(...records);
+    }
+  }
+  list = list.slice(0, 8);
+
+  const variants: Array<'feature' | 'portrait' | 'landscape'> = [
+    'feature', 'portrait', 'portrait', 'landscape', 'landscape', 'portrait', 'portrait', 'feature',
+  ];
+
+  return list.map((v, i) => {
+    const coverImage = v.images?.find((img) => img.cover_photo) || v.images?.[0];
+    const image = coverImage?.file || 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80';
+    
+    const rawPrice = v.package_details?.[0]?.price;
+    const priceNum = rawPrice ? Number(rawPrice) : 0;
+    const price = priceNum > 0 && !isNaN(priceNum)
+      ? `From ₹${priceNum.toLocaleString('en-IN')}`
+      : undefined;
+      
+    const parsedCapacity = Number(v.venue_configuration);
+    const capacity = !isNaN(parsedCapacity) && parsedCapacity > 0
+      ? parsedCapacity
+      : undefined;
+    const tag = v.venue_type?.[0]?.name || v.event_type?.[0]?.name || 'Wedding Venue';
+
+    return {
+      id: `${v.id}-${i}`,
+      name: v.name,
+      city: v.city_name || 'Delhi',
+      image,
+      rating: typeof v.rating === 'number' ? v.rating : undefined,
+      price,
+      capacity,
+      tag,
+      href: `/venue/${v.slug || v.id}`,
+      variant: variants[i % variants.length],
+    };
+  });
+}
+
+function mapVenuesToPremium(records: VenueRecord[], isCorporate: boolean): PremiumCardData[] {
+  let list = [...records];
+  if (list.length > 0 && list.length < 8) {
+    while (list.length < 8) {
+      list.push(...records);
+    }
+  }
+  list = list.slice(0, 8);
+
+  return list.map((v, i) => {
+    const coverImage = v.images?.find((img) => img.cover_photo) || v.images?.[0];
+    const image = coverImage?.file || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80';
+    
+    const rawPrice = v.package_details?.[0]?.price;
+    const priceNum = rawPrice ? Number(rawPrice) : 0;
+    const price = priceNum > 0 && !isNaN(priceNum)
+      ? `₹${priceNum.toLocaleString('en-IN')}/day`
+      : undefined;
+      
+    const parsedCapacity = Number(v.venue_configuration);
+    const capacity = !isNaN(parsedCapacity) && parsedCapacity > 0
+      ? parsedCapacity
+      : undefined;
+    const tag = v.venue_type?.[0]?.name || (isCorporate ? 'Corporate' : 'Vendor');
+    const amenity = v.amenities_details?.[0]?.name || 'Premium Service';
+
+    return {
+      id: `${v.id}-${i}`,
+      name: v.name,
+      slug: v.slug || String(v.id),
+      city: v.city_name || 'Delhi',
+      image,
+      rating: typeof v.rating === 'number' ? v.rating : undefined,
+      price,
+      capacity,
+      tag,
+      amenity,
+      href: `/venue/${v.slug || v.id}`,
+      accent: isCorporate ? 'blue' : 'orange',
+    };
+  });
+}
+
+// ── Wedding Layout ───────────────────────────────────────────────────────────
+
 function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boolean }) {
   const [a, b, c, d, e, f, g, h] = cards;
 
   return (
     <div>
-      {/* ── MOBILE: horizontal snap carousel ──────────────────────────────────
-           Each card is 75vw wide × 340px tall, snaps on scroll.
-           Users swipe to see all 8 cards.                                    */}
+      {/* ── MOBILE: horizontal snap carousel ────────────────────────────────── */}
       <div
         className="md:hidden flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
       >
-        {/* Left spacer so first card has breathing room */}
         <div className="shrink-0 w-1" aria-hidden />
         {[a, b, c, d, e, f, g, h].map((card, i) => (
           <div
@@ -136,12 +357,10 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
             <WeddingVenueCard {...card} variant="portrait" />
           </div>
         ))}
-        {/* Right spacer */}
         <div className="shrink-0 w-1" aria-hidden />
       </div>
 
-      {/* ── TABLET: clean 3-col uniform grid ──────────────────────────────────
-           md only (hidden on desktop with lg:hidden, shown from md)           */}
+      {/* ── TABLET: clean 3-col uniform grid ────────────────────────────────── */}
       <div
         className="hidden md:grid lg:hidden gap-4"
         style={{
@@ -156,10 +375,8 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
         ))}
       </div>
 
-      {/* ── DESKTOP: masonry — Feature left + 2×2 right, then 4-col row ───────
-           lg and above                                                        */}
+      {/* ── DESKTOP: masonry ────────────────────────────────────────────────── */}
       <div className="hidden lg:block space-y-4">
-        {/* Block 1: feature (spans 2 rows) + 2 portraits top + 2 landscapes bottom */}
         <div
           className="grid gap-4"
           style={{
@@ -176,7 +393,6 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
           <div className="h-full"><WeddingVenueCard {...e} variant="landscape" /></div>
         </div>
 
-        {/* Block 2: 4 equal portrait cards */}
         <div
           className="grid gap-4"
           style={{
@@ -194,7 +410,6 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
     </div>
   );
 }
-
 
 // ── Section Header ───────────────────────────────────────────────────────────
 
@@ -227,12 +442,46 @@ function SectionHeader({ subtitle, title, linkText, linkUrl, isDark }: {
 
 // ── Main Export ──────────────────────────────────────────────────────────────
 
-export default function HighlightsSection({ subtitle, title, linkText, linkUrl, type, theme = 'light' }: HighlightsSectionProps) {
+export default function HighlightsSection({
+  subtitle,
+  title,
+  linkText,
+  linkUrl,
+  type,
+  theme = 'light',
+  eventTypeId = 7,
+}: HighlightsSectionProps) {
   const isDark = theme === 'dark';
-
   const isWedding = type === 'wedding-venue';
 
-  // Wedding gets a special creamy blush-tinged background
+  const [venues, setVenues] = useState<VenueRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    setLoading(true);
+    searchVenues({ event_type: eventTypeId, page_number: 1, number_of_records: 8 })
+      .then((res) => {
+        if (!active) return;
+        if (res && res.records && res.records.length > 0) {
+          setVenues(res.records);
+        } else {
+          setVenues([]);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch venues for highlights section:', err);
+        if (active) setVenues([]);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [eventTypeId]);
+
   const bgClass = isWedding
     ? (isDark ? 'bg-[#1a0d0d]' : 'bg-[#fdf8f6]')
     : (isDark ? 'bg-primary-navy' : 'bg-white');
@@ -247,6 +496,20 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
     ? 'bg-blue-400'
     : 'bg-orange-300';
 
+  const useFallback = venues.length === 0;
+
+  const weddingCards = useFallback
+    ? buildWeddingCards()
+    : mapVenuesToWedding(venues);
+
+  const corpCards = useFallback
+    ? buildCorpCards()
+    : mapVenuesToPremium(venues, true);
+
+  const vendorCards = useFallback
+    ? buildVendorCards()
+    : mapVenuesToPremium(venues, false);
+
   return (
     <section className={`py-24 relative overflow-hidden ${bgClass}`}>
       {/* Dot grid */}
@@ -258,12 +521,11 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
         }}
       />
 
-      {/* Wedding: decorative blush swirl top-right */}
+      {/* Wedding: decorative blush swirl */}
       {isWedding && (
         <>
           <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-20 bg-rose-200" />
           <div className="absolute -bottom-24 -left-24 w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none opacity-15 bg-pink-200" />
-          {/* Small decorative hearts */}
           <div className="absolute top-12 right-1/4 opacity-[0.07] pointer-events-none select-none text-rose-400 text-[80px]">♡</div>
           <div className="absolute bottom-16 left-1/3 opacity-[0.05] pointer-events-none select-none text-rose-400 text-[120px]">♡</div>
         </>
@@ -276,19 +538,19 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader subtitle={subtitle} title={title} linkText={linkText} linkUrl={linkUrl} isDark={isDark} />
 
-        {isWedding ? (
-          <WeddingLayout cards={buildWeddingCards()} isDark={isDark} />
+        {loading ? (
+          isWedding ? <WeddingSkeletonLayout /> : <PremiumSkeletonLayout />
+        ) : isWedding ? (
+          <WeddingLayout cards={weddingCards} isDark={isDark} />
         ) : (
           <>
-            {/* ── MOBILE: horizontal snap carousel ─────────────────────────────
-                 Each card is ~72vw wide (max 280px), snaps on scroll.         */}
+            {/* ── MOBILE: horizontal snap carousel ───────────────────────────── */}
             <div
               className="md:hidden flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
               style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
-              {/* Left spacer so first card has breathing room */}
               <div className="shrink-0 w-1" aria-hidden />
-              {(type === 'corporate-venue' ? buildCorpCards() : buildVendorCards()).map((card) => (
+              {(type === 'corporate-venue' ? corpCards : vendorCards).map((card) => (
                 <div
                   key={card.id}
                   className="snap-start shrink-0"
@@ -297,13 +559,12 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
                   <PremiumCard {...card} />
                 </div>
               ))}
-              {/* Right spacer */}
               <div className="shrink-0 w-1" aria-hidden />
             </div>
 
             {/* ── TABLET (md) + DESKTOP (lg+): grid layout ─────────────────── */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-5">
-              {(type === 'corporate-venue' ? buildCorpCards() : buildVendorCards()).map((card) => (
+              {(type === 'corporate-venue' ? corpCards : vendorCards).map((card) => (
                 <PremiumCard key={card.id} {...card} />
               ))}
             </div>
@@ -313,3 +574,4 @@ export default function HighlightsSection({ subtitle, title, linkText, linkUrl, 
     </section>
   );
 }
+

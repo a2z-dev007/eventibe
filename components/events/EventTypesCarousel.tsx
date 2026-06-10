@@ -88,6 +88,7 @@ export default function EventTypesCarousel() {
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper
             }}
+            grabCursor={true}
             spaceBetween={16}
             slidesPerView="auto"
             loop={true}

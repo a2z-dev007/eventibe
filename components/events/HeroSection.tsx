@@ -107,7 +107,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white overflow-hidden">
+    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white">
       {/* Immersive Background Container */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none bg-black z-0">
         <motion.div

@@ -64,7 +64,7 @@ export default function Header() {
 
   return (
     <header
-      className={`${isHome ? 'fixed' : 'sticky'} top-0 z-50 w-full transition-all duration-300 ${
+      className={`${isHome ? 'fixed' : 'sticky'} top-0 z-[100] w-full transition-all duration-300 ${
         isScrolled
           ? 'bg-white shadow-md py-3 backdrop-blur-md bg-opacity-95'
           : isHome ? 'bg-transparent md:py-5 py-3' : 'bg-white shadow-sm md:py-5 py-3'
