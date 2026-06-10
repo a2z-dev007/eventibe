@@ -17,7 +17,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === '/';
+  const isHome = true;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);

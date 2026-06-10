@@ -20,6 +20,7 @@ import BlogInteractions from "@/components/BlogInteractions";
 import { TiltCard } from "@/components/micro-interactions";
 import { getBlogDetails, getBlogs } from "@/services/api";
 import { Blog } from "@/types/blog";
+import CommonHero from "@/components/common/CommonHero";
 
 const BLOG_API_APPLICABLE_FOR = "https://spodia.com";
 const DEFAULT_BLOG_IMAGE = "/assets/images/placeholder.png";
@@ -307,134 +308,66 @@ export default function BlogPostDetailClient({ slug }: { slug: string }) {
       </div>
 
       {/* === MOBILE COVER & TITLE SYSTEM (Hidden on Desktop) === */}
-      <div className="md:hidden bg-white pb-6 relative z-10">
-        <div className="relative w-full aspect-[16/10] overflow-hidden">
-          <img
-            src={post.featuredImage}
-            alt={post.title}
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <Link
-            href="/blogs"
-            className="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white active:scale-95 transition"
-          >
-            <ArrowLeft size={18} />
-          </Link>
-        </div>
-        <div className="px-4 pt-5 pb-2">
-          <div className="flex gap-2 mb-3">
-            {post.categories.map((cat) => (
-              <span
-                key={cat.id}
-                className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-[#2563EB] text-white shadow-sm"
-              >
-                {cat.name}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-[22px] font-black text-[#0B1F3A] leading-[1.25] tracking-tight mb-5">
-            {post.title}
-          </h1>
-          <div className="flex items-center justify-between border-b border-slate-100 pb-5">
-            <div className="flex items-center gap-2.5">
+      <CommonHero
+        badgeText={post.categories[0]?.name || "Insight"}
+        badgeIcon="bookopen"
+        titleMain={post.title}
+        bgSrc={post.featuredImage}
+        bgType="image"
+      >
+        <div className="max-w-3xl mx-auto flex flex-col items-center mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-white/95 text-xs sm:text-sm font-semibold mb-6">
+            <div className="flex items-center gap-2">
               <img
                 src={post.author.avatar}
                 alt={post.author.displayName}
-                className="w-9 h-9 rounded-full object-cover border border-slate-100 shadow-sm"
+                className="w-7 h-7 sm:w-9 sm:h-9 rounded-full object-cover border border-white/20 shadow-sm"
               />
               <div>
-                <div className="font-extrabold text-[#0B1F3A] text-[13px] leading-tight">{post.author.displayName}</div>
-                <div className="text-[11px] text-slate-500 font-semibold">{post.author.jobName}</div>
+                <div className="font-bold text-white text-xs sm:text-sm">{post.author.displayName}</div>
+                <div className="text-[10px] text-white/60 hidden sm:block">{post.author.jobName}</div>
               </div>
             </div>
-            <div className="flex flex-col items-end gap-1 text-[10px] font-bold text-slate-400">
-              <div className="flex items-center gap-1">
-                <Calendar size={11} className="text-[#F97316]" />
-                <span>{formatDate(post.date)}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock size={11} className="text-[#F97316]" />
-                <span>{post.readingTime} min read</span>
-              </div>
+            <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
+            <div className="flex items-center gap-1.5">
+              <Calendar size={13} className="text-[#F97316]" />
+              <span>{formatDate(post.date)}</span>
+            </div>
+            <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
+            <div className="flex items-center gap-1.5">
+              <Clock size={13} className="text-[#F97316]" />
+              <span>{post.readingTime} min read</span>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* === DESKTOP HERO SECTION (Hidden on Mobile) === */}
-      <div className="hidden md:block relative w-full bg-[#0B1F3A] overflow-hidden pt-8 pb-16 sm:pb-24 md:pb-32">
-        <img
-          src={post.featuredImage}
-          alt={post.title}
-          className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 via-[#0B1F3A]/60 to-[#0B1F3A]/30"></div>
-        <div className="absolute -top-10 -left-10 w-60 h-60 rounded-full bg-[#2563EB] opacity-10 blur-3xl"></div>
-        <div className="absolute top-1/4 -right-12 w-60 h-60 rounded-full bg-[#F97316] opacity-10 blur-3xl"></div>
-        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center gap-2 mb-4 sm:mb-6">
-              <Link
-                href="/blogs"
-                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md text-xs font-bold text-white uppercase tracking-wider transition-all duration-300 active:scale-95"
-              >
-                <ArrowLeft size={13} />
-                Back to Insights
-              </Link>
-              <div className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-white/50 uppercase tracking-widest">
-                <ChevronRight size={12} />
-                <span>Blog</span>
-                <ChevronRight size={12} />
-                <span className="text-[#F97316] max-w-[200px] truncate">{post.title}</span>
-              </div>
-            </div>
-            <div className="flex gap-2 mb-3 sm:mb-5">
-              {post.categories.map((cat) => (
-                <span
-                  key={cat.id}
-                  className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20"
-                >
-                  {cat.name}
-                </span>
-              ))}
-            </div>
-            <h1 
-              style={{ color: '#ffffff' }}
-              className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight leading-tight sm:leading-snug max-w-4xl hero-heading"
-            >
-              {post.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-white/80 text-xs sm:text-sm font-semibold">
-              <div className="flex items-center gap-2">
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.displayName}
-                  className="w-7 h-7 sm:w-9 sm:h-9 rounded-full object-cover border border-white/20 shadow-sm"
-                />
-                <div>
-                  <div className="font-bold text-white text-xs sm:text-sm">{post.author.displayName}</div>
-                  <div className="text-[10px] text-white/60 hidden sm:block">{post.author.jobName}</div>
-                </div>
-              </div>
-              <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
-              <div className="flex items-center gap-1.5">
-                <Calendar size={13} className="text-[#F97316]" />
-                <span>{formatDate(post.date)}</span>
-              </div>
-              <div className="h-4 w-px bg-white/20 hidden sm:block"></div>
-              <div className="flex items-center gap-1.5">
-                <Clock size={13} className="text-[#F97316]" />
-                <span>{post.readingTime} min read</span>
-              </div>
-            </div>
-          </div>
+          <Link
+            href="/blogs"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md text-xs font-bold text-white uppercase tracking-wider transition-all duration-300 active:scale-95"
+          >
+            <ArrowLeft size={13} />
+            Back to Insights
+          </Link>
         </div>
-      </div>
+      </CommonHero>
       {/* === ARTICLE BODY === */}
       <div className="w-full md:px-6 lg:px-8 pt-0 md:pt-8 pb-8">
         <div className="max-w-7xl mx-auto bg-white md:rounded-2xl lg:rounded-3xl p-5 md:p-10 lg:p-16 shadow-none md:shadow-sm border-t md:border border-slate-100 relative mt-0 md:-mt-12 z-20">
+          
+          {/* Breadcrumbs */}
+          <nav className="mb-8 flex items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium overflow-x-auto whitespace-nowrap pb-1 hide-scrollbar">
+            <Link href="/" className="hover:text-[#2563EB] transition-colors flex items-center gap-1">
+              Home
+            </Link>
+            <ChevronRight size={14} className="text-slate-400 shrink-0" />
+            <Link href="/blogs" className="hover:text-[#2563EB] transition-colors flex items-center gap-1">
+              Blogs
+            </Link>
+            <ChevronRight size={14} className="text-slate-400 shrink-0" />
+            <span className="text-[#0B1F3A] truncate max-w-[200px] sm:max-w-md md:max-w-xl font-bold">
+              {post.title}
+            </span>
+          </nav>
+
           <style>{`
             .hero-heading {
               color: #ffffff !important;

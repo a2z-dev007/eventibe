@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Search, MapPin, Calendar, Users, Home, X, Sparkles } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { motion } from 'framer-motion'
 import PremiumDatePicker from '../ui/PremiumDatePicker'
 import PremiumSelect from '../ui/PremiumSelect'
 import PremiumLocationSelect from '../ui/PremiumLocationSelect'
@@ -108,81 +109,96 @@ export default function HeroSection() {
   return (
     <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white">
       {/* Immersive Background Container */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img
-          src={IMAGES.eventHero.src}
-          alt="Luxury Event Backdrop"
-          className="w-full h-full object-cover object-center scale-105 animate-slow-zoom origin-center"
-          loading="eager"
-        />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none bg-black z-0">
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1.05 }}
+          transition={{
+            opacity: { duration: 1.5, ease: 'easeInOut' },
+            scale: { duration: 10, ease: 'linear' },
+          }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <img
+            src={IMAGES.eventHero.src}
+            alt="Luxury Event Backdrop"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+          />
+        </motion.div>
         {/* Stronger gradient for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black/40" />
-        <div className="absolute bottom-0 left-0 right-0 h-2 bg-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/85 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+        {/* Subtle grid pattern for added tech/modern depth */}
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-6xl w-full text-center">
-        {/* Animated Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-white text-[11px] sm:text-sm font-medium mb-4 animate-fade-in-up">
-          <span className="flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#FF9530] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF9530]"></span>
-          </span>
-          India's Most Trusted Venue Booking Platform
+      <div className="container mx-auto px-4 mt-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-12 md:mt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center w-full"
+        >
+          {/* Animated Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/15 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-bold mb-6 backdrop-blur-sm shadow-xl">
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-[#FF9530] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF9530]"></span>
+            </span>
+            <span className="uppercase tracking-widest">India's Most Trusted Venue Booking Platform</span>
+          </div>
+
+          {/* Hero Title */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+            Craft Your{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
+              Perfect Event
+            </span>{' '}
+            in Exceptional Spaces
+          </h1>
+
+          <p className="text-sm md:text-xl text-white/95 mb-8 md:mb-10 max-w-3xl font-medium drop-shadow-md leading-relaxed">
+            From intimate gatherings to grand celebrations. Book verified venues with transparent pricing and instant confirmation.
+          </p>
+
+          {/* Reusable Search Bar with Snake Border */}
+          <div className="w-full">
+            <PremiumSearchBar
+              location={location}
+              setLocation={setLocation}
+              eventType={eventType}
+              setEventType={setEventType}
+              venueType={venueType}
+              setVenueType={setVenueType}
+              date={date}
+              setDate={setDate}
+              guests={guests}
+              setGuests={setGuests}
+              handleSearch={handleSearch}
+              eventOptions={eventOptions}
+              venueOptions={venueOptions}
+              guestOptions={guestOptions}
+              className="lg:max-w-6xl"
+              requiredLocation={true}
+            />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Bounce scroll indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
+          <div className="w-1 h-2 bg-white rounded-full animate-pulse" />
         </div>
-
-        {/* Hero Title with stronger shadows */}
-        <h1 className="text-[28px] sm:text-4xl lg:text-6xl font-extrabold text-white leading-tight lg:leading-[1.1] mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] animate-fade-in-up [animation-delay:200ms]">
-          Craft Your <span className="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] bg-clip-text text-transparent bg-gradient-to-r from-[#FF9530] to-[#FFB770]">Perfect Event</span> <br className="hidden sm:block" />
-          in Exceptional Spaces
-        </h1>
-
-        <p className="text-sm sm:text-xl text-white/90 max-w-2xl mx-auto mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] animate-fade-in-up [animation-delay:400ms]">
-          From intimate gatherings to grand celebrations. Book verified venues with transparent pricing and instant confirmation.
-        </p>
-
-        {/* Reusable Search Bar with Snake Border */}
-        <PremiumSearchBar
-          location={location}
-          setLocation={setLocation}
-          eventType={eventType}
-          setEventType={setEventType}
-          venueType={venueType}
-          setVenueType={setVenueType}
-          date={date}
-          setDate={setDate}
-          guests={guests}
-          setGuests={setGuests}
-          handleSearch={handleSearch}
-          eventOptions={eventOptions}
-          venueOptions={venueOptions}
-          guestOptions={guestOptions}
-          className="lg:max-w-6xl animate-fade-in-up [animation-delay:600ms]"
-          requiredLocation={true}
-        />
-    </div>
-
-      <style jsx global>{`
-        @keyframes slow-zoom {
-          from { transform: scale(1); }
-          to { transform: scale(1.1); }
-        }
-        .animate-slow-zoom {
-          animation: slow-zoom 20s ease-in-out infinite alternate;
-        }
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-        }
-      `}</style>
+      </div>
     </section>
   )
 }

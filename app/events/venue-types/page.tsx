@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { 
   ChevronRight, Home as HomeIcon, LayoutGrid, Search, 
   ChevronLeft, Users, Sparkles as SparklesIcon, Calendar,
-  Search as SearchIcon, ArrowRight
+  Search as SearchIcon, ArrowRight, Sparkles
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -15,6 +15,7 @@ import type { VenueTypeRecord } from '@/lib/api/eventsEndpoints'
 import { useLenis } from 'lenis/react'
 import { IMAGES } from '@/assets/images'
 import PremiumSearchBar from '@/components/events/PremiumSearchBar'
+import CommonHero from '@/components/common/CommonHero'
 
 function VenueTypesContent() {
   const router = useRouter()
@@ -151,7 +152,7 @@ function VenueTypesContent() {
             />
           </motion.div>
         </div>
-      </div>
+      </CommonHero>
 
       <div id="type-list-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="bg-white/50 backdrop-blur-xl border border-white rounded-3xl p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-8 mb-16 shadow-2xl shadow-gray-200/50">

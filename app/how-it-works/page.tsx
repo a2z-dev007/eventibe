@@ -27,6 +27,7 @@ import {
   Globe,
 } from "lucide-react";
 import { TiltCard } from "@/components/micro-interactions";
+import CommonHero from "@/components/common/CommonHero";
 
 // ── Persona Definitions ──────────────────────────────
 const roles = [
@@ -224,57 +225,16 @@ export default function HowItWorksPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ── HERO SECTION ────────────────────────────── */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Dark navy base */}
-        <div className="absolute inset-0 bg-primary-navy z-0" />
-        {/* Overlays */}
-        <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-accent-orange/10 blur-[160px] rounded-full -translate-y-1/3 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-corporate-blue/20 blur-[120px] rounded-full translate-y-1/3 -translate-x-1/4" />
-        </div>
-
-        {/* Content */}
-        <div className="container mx-auto relative z-10 px-6 text-center text-white">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-black mb-6 uppercase tracking-widest backdrop-blur-sm shadow-xl">
-            <Zap size={14} className="text-accent-orange" />
-            <span>Simplify Your Planning</span>
-          </div>
-          <h1 className="text-5xl md:text-8xl font-extrabold mb-6 tracking-tight leading-[1.05]">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-orange-300">
-              How Eventibe
-            </span>{" "}
-            Works
-          </h1>
-          <p className="text-lg md:text-2xl font-medium max-w-3xl mx-auto mb-4 text-gray-200 leading-relaxed">
-            Planning an event — whether it’s a grand wedding celebration or a
-            corporate conference — involves countless decisions. The most
-            important one? Choosing the right venue. Eventibe simplifies that
-            process.
-          </p>
-          <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            We are a curated event venue marketplace connecting hosts, venue
-            owners, and service providers through a structured inquiry-driven
-            system.
-          </p>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
-            <div className="w-1 h-2 bg-white rounded-full" />
-          </div>
-        </div>
-      </section>
+      <CommonHero
+        badgeText="Simplify Your Planning"
+        badgeIcon="zap"
+        titleMain="How"
+        titleHighlight="Eventibe"
+        titleSuffix="Works"
+        subtitle="Planning an event — whether it’s a grand wedding celebration or a corporate conference — involves countless decisions. The most important one? Choosing the right venue. Eventibe simplifies that process. We are a curated event venue marketplace connecting hosts, venue owners, and service providers through a structured inquiry-driven system."
+        bgSrc="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=2074&auto=format&fit=crop"
+        bgType="image"
+      />
 
       {/* ── TABS NAVIGATION (Segmented Control UI) ────────────────────────────── */}
       <div className="py-10">

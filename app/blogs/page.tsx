@@ -15,6 +15,7 @@ import { TiltCard, MagneticButton } from "@/components/micro-interactions";
 import { Blog } from "@/types/blog";
 import { getBlogs } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
+import CommonHero from "@/components/common/CommonHero";
 
 const POSTS_PER_PAGE = 6;
 const BLOG_API_APPLICABLE_FOR = "https://spodia.com";
@@ -138,27 +139,19 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="bg-[#FAFBFD] text-[#334155] min-h-screen py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* ================= HERO HEADER ================= */}
-        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-16">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#2563EB]/10 text-[#2563EB] mb-4">
-            <BookOpen size={13} />
-            Eventibe Insights
-          </span>
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B1F3A] tracking-tight mb-4 sm:mb-6 leading-tight">
-            Planning, Trends & Strategies{" "}
-            <br className="hidden sm:inline" />
-            for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#F97316]">
-              Corporate Excellence
-            </span>
-          </h1>
-          <p className="text-base sm:text-lg text-[#334155]/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-            Delve into professional event curation, expert columns, master
-            planning tools, and corporate venue strategies.
-          </p>
-        </div>
+    <div className="flex flex-col min-h-screen bg-white">
+      <CommonHero
+        badgeText="Eventibe Insights"
+        badgeIcon="bookopen"
+        titleMain="Planning, Trends & Strategies for"
+        titleHighlight="Corporate Excellence"
+        subtitle="Delve into professional event curation, expert columns, master planning tools, and corporate venue strategies."
+        bgSrc="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop"
+        bgType="image"
+      />
+
+      <div className="bg-[#FAFBFD] text-[#334155] py-20 border-t border-gray-100 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
 
         {/* ================= LATEST ARTICLES GRID ================= */}
         <div>
@@ -389,5 +382,7 @@ export default function BlogPage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
+

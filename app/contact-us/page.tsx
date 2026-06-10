@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import CommonHero from "@/components/common/CommonHero";
 import { motion, Variants, AnimatePresence } from "motion/react";
 import {
   Phone,
@@ -173,130 +174,38 @@ export default function ContactUsPage() {
   return (
     <main className="bg-white min-h-screen font-sans selection:bg-accent-orange/30 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative  md:pb-16 md:pt-18 flex items-start md:items-center overflow-hidden bg-primary-navy py-8 ">
-        <motion.div
-          initial={{ scale: 1.05, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute inset-0 z-0"
-        >
-          <Image
-            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069&auto=format&fit=crop"
-            alt="Corporate Environment"
-            fill
-            className="object-cover opacity-25"
-            priority
-          />
-        </motion.div>
-
-        <div className="absolute inset-0 z-[1]">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50" />
-
-          {/* Subtle Grid Overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "50px 50px",
-            }}
-          />
-
-          {/* Animated Glows */}
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.2, 0.3, 0.2],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: [0.4, 0, 0.2, 1],
-            }}
-            className="absolute top-1/4 -left-20 w-96 h-96 bg-accent-orange/20 rounded-full blur-[120px]"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: [0.4, 0, 0.2, 1],
-              delay: 1,
-            }}
-            className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-corporate-blue/20 rounded-full blur-[150px]"
-          />
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={staggerContainer}
-            className="max-w-4xl mx-auto text-center"
+      <CommonHero
+        badgeText="Dedicated Support for Your Events"
+        badgeIcon="sparkles"
+        titleMain="Contact Us –"
+        titleHighlight="We’re Here to Help"
+        subtitle="Thank you for visiting Eventibe, your trusted destination for discovering the perfect venues and services for weddings, corporate events, and social celebrations."
+        bgSrc="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069&auto=format&fit=crop"
+        bgType="image"
+      >
+        <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 px-4 w-full mt-4">
+          <button
+            onClick={() =>
+              document
+                .getElementById("contact-form")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="w-full sm:w-auto bg-cta-gradient text-white px-8 py-4 rounded-2xl font-black text-base shadow-2xl shadow-orange-500/40 transition-all flex items-center justify-center gap-3 cursor-pointer hover:scale-[1.02]"
           >
-            <motion.div
-              variants={heroReveal}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-[10px] md:text-xs font-bold mb-4 md:mb-6 backdrop-blur-md shadow-xl"
-            >
-              <Sparkles size={12} className="text-accent-orange" />
-              <span>Dedicated Support for Your Events</span>
-            </motion.div>
-
-            <motion.h1
-              variants={heroReveal}
-              className="text-4xl md:text-6xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-[1.2] drop-shadow-md px-2"
-            >
-              Contact Us – <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-400">
-                We’re Here to Help
-              </span>
-            </motion.h1>
-
-            <motion.p
-              variants={heroReveal}
-              className="text-lg md:text-xl text-white/80 leading-relaxed font-medium max-w-2xl mx-auto mb-8 md:mb-10"
-            >
-              Thank you for visiting Eventibe, your trusted destination for
-              discovering the perfect venues and services for weddings,
-              corporate events, and social celebrations.
-            </motion.p>
-
-            <motion.div
-              variants={heroReveal}
-              className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-5 px-4 w-full"
-            >
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() =>
-                  document
-                    .getElementById("contact-form")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="w-full sm:w-auto bg-cta-gradient text-white px-8 py-4.5 md:py-4 rounded-2xl font-black text-base md:text-base shadow-2xl shadow-orange-500/40 transition-all flex items-center justify-center gap-3"
-              >
-                Send a Message <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() =>
-                  document
-                    .getElementById("reach-us")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="w-full sm:w-auto bg-white/10 backdrop-blur-xl text-white border border-white/20 px-8 py-4.5 md:py-4 rounded-2xl font-black text-base md:text-base hover:bg-white/20 transition-all font-sans"
-              >
-                Ways to Reach Us
-              </motion.button>
-            </motion.div>
-          </motion.div>
+            Send a Message <ArrowRight className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() =>
+              document
+                .getElementById("reach-us")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="w-full sm:w-auto bg-white/10 backdrop-blur-xl text-white border border-white/20 px-8 py-4 rounded-2xl font-black text-base hover:bg-white/20 transition-all cursor-pointer"
+          >
+            Ways to Reach Us
+          </button>
         </div>
-      </section>
+      </CommonHero>
 
       {/* Intro Context Banner */}
       <section className="py-10 md:py-16 bg-slate-50 border-y border-slate-200">

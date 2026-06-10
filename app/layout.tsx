@@ -1,18 +1,17 @@
 import type {Metadata} from 'next';
-import { Inter, Geist } from 'next/font/google';
+// Commented out next/font/google to prevent compile errors in offline/restricted environments
+// import { Inter, Geist } from 'next/font/google';
 import './globals.css'; // Global styles
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SmoothScrolling from '@/components/SmoothScrolling';
 import QueryProvider from '@/contexts/QueryProvider';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { Toaster } from '@/components/ui/sonner';
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
+const geist = { variable: '--font-sans', className: '' };
+const inter = { variable: '--font-inter', className: '' };
 
 export const metadata: Metadata = {
   title: 'Eventibe | Corporate Venue & Event Service Marketplace',
@@ -35,13 +34,17 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en" className={cn(inter.variable, "font-sans", geist.variable)} suppressHydrationWarning>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
         <QueryProvider>
-          <SmoothScrolling>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </SmoothScrolling>
+          <AuthProvider>
+            <SmoothScrolling>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </SmoothScrolling>
+            <Toaster position="top-right" richColors />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>
   );
 }
+

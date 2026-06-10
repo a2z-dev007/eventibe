@@ -31,6 +31,7 @@ import {
   Globe2,
 } from "lucide-react";
 import { TiltCard } from "@/components/micro-interactions";
+import CommonHero from "@/components/common/CommonHero";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -117,78 +118,42 @@ export default function ListYourVenuePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* ── HERO SECTION (Project Theme Aligned) ────────────────────────────────── */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Dark navy base with overlays as per HowItWorksPage style */}
-        <div className="absolute inset-0 bg-primary-navy z-0" />
-        <div className="absolute inset-0 z-0">
+      <CommonHero
+        badgeText="Partner with India's Elite Marketplace"
+        badgeIcon="pluscircle"
+        titleMain="List Your Venue"
+        titleHighlight="on Eventibe"
+        subtitle="Every venue has potential. Some become fully booked destinations. Some struggle with inconsistent inquiries. The difference is visibility, positioning, and the right audience."
+        bgSrc="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2074&auto=format&fit=crop"
+        bgType="image"
+      >
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mt-4">
           <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-accent-orange/15 blur-[160px] rounded-full -translate-y-1/3 translate-x-1/4 animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-corporate-blue/25 blur-[120px] rounded-full translate-y-1/3 -translate-x-1/4" />
-        </div>
-
-        {/* Content */}
-        <div className="container mx-auto relative z-10 px-6 text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center"
+            onClick={() =>
+              document
+                .getElementById("submission-form")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="bg-cta-gradient text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 group w-full sm:w-auto"
           >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 uppercase tracking-widest backdrop-blur-md shadow-xl">
-              <PlusCircle size={14} className="text-accent-orange" />
-              <span>Partner with India's Elite Marketplace</span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-[1.15] md:leading-[1.1] max-w-5xl">
-              List Your Venue{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
-                on Eventibe
-              </span>
-            </h1>
-
-            <p className="text-base md:text-xl text-gray-300/90 leading-relaxed mb-10 max-w-3xl font-medium">
-              Every venue has potential. Some become fully booked destinations.
-              Some struggle with inconsistent inquiries. The difference is
-              visibility, positioning, and the right audience.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
-              <div
-                onClick={() =>
-                  document
-                    .getElementById("submission-form")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-cta-gradient text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 group w-full sm:w-auto"
-              >
-                List Your Venue Now{" "}
-                <ArrowRight
-                  size={20}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </div>
-              <div
-                onClick={() =>
-                  document
-                    .getElementById("why-eventibe")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
-              >
-                Learn More <ChevronRight size={18} />
-              </div>
-            </div>
-          </motion.div>
+            List Your Venue Now{" "}
+            <ArrowRight
+              size={20}
+              className="group-hover:translate-x-1 transition-transform"
+            />
+          </div>
+          <div
+            onClick={() =>
+              document
+                .getElementById("why-eventibe")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto"
+          >
+            Learn More <ChevronRight size={18} />
+          </div>
         </div>
-      </section>
+      </CommonHero>
 
       {/* ── TRUST STRIP / STATS ────────────────────────────────────────────── */}
       <section className="py-12 bg-white relative z-10 border-b border-gray-100">

@@ -24,6 +24,7 @@ import {
   Award,
 } from "lucide-react";
 import { TiltCard } from "@/components/micro-interactions";
+import CommonHero from "@/components/common/CommonHero";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -100,92 +101,34 @@ export default function ListYourServicePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* ── HERO SECTION ───────────────────────────────────────────────────────── */}
-      <section className="relative py-20 md:py-32 flex items-center overflow-hidden bg-primary-navy min-h-[85vh]">
-        {/* Background Atmosphere */}
-        <div className="absolute inset-0 z-0 text-white">
-          <Image
-            src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
-            alt="Event Service Background"
-            fill
-            className="object-cover opacity-25"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-navy via-primary-navy/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-navy via-transparent to-primary-navy/50"></div>
-          {/* Subtle Geometric Pattern Overlay */}
+      <CommonHero
+        badgeText="Grow Your Event Business with Eventibe"
+        badgeIcon="sparkles"
+        titleMain="List Your"
+        titleHighlight="Service"
+        subtitle={
+          <span className="block space-y-4">
+            <span className="block mb-2">The event industry is evolving rapidly. Today, event hosts search online before finalizing vendors. Whether it’s a wedding, corporate conference, product launch, or social celebration — clients want verified, visible, and reliable service providers.</span>
+            <span className="block text-accent-orange font-bold">If you offer event-related services, this is your opportunity to expand your reach, increase inquiries, and grow your business.</span>
+          </span>
+        }
+        bgSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
+        bgType="image"
+        alignment="left"
+      >
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-              backgroundSize: "50px 50px",
-            }}
-          ></div>
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
-            <motion.div
-              {...fadeInUp}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/10 border border-accent-orange/30 text-accent-orange text-xs md:text-sm font-bold mb-6 shadow-xl backdrop-blur-sm"
-            >
-              <Sparkles size={14} className="text-accent-orange" />
-              <span>Grow Your Event Business with Eventibe</span>
-            </motion.div>
-
-            <motion.h1
-              {...fadeInUp}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[1.15] md:leading-[1.1] tracking-tight drop-shadow-md"
-            >
-              List Your Service
-            </motion.h1>
-
-            <motion.p
-              {...fadeInUp}
-              transition={{ delay: 0.2 }}
-              className="text-base md:text-xl text-gray-300/90 leading-relaxed mb-10 max-w-3xl font-medium space-y-4"
-            >
-              <span className="block mb-2">
-                The event industry is evolving rapidly.
-              </span>
-              <span className="block mb-2">
-                Today, event hosts search online before finalizing vendors.
-                Whether it’s a wedding, corporate conference, product launch, or
-                social celebration — clients want verified, visible, and
-                reliable service providers.
-              </span>
-              <span className="block mb-2">
-                Eventibe is building a powerful event marketplace that connects
-                event hosts directly with professional service providers across
-                cities.
-              </span>
-              <span className="block text-accent-orange font-bold">
-                If you offer event-related services, this is your opportunity to
-                expand your reach, increase inquiries, and grow your business.
-              </span>
-            </motion.p>
-
-            <motion.div
-              {...fadeInUp}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <div
-                onClick={() =>
-                  document
-                    .getElementById("submission-form")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="bg-cta-gradient text-white px-8 py-4 rounded-[1rem] font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 w-fit"
-              >
-                List Your Service Today <ArrowRight size={20} />
-              </div>
-            </motion.div>
+            onClick={() =>
+              document
+                .getElementById("submission-form")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="bg-cta-gradient text-white px-8 py-4 rounded-[1rem] font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 w-fit"
+          >
+            List Your Service Today <ArrowRight size={20} />
           </div>
         </div>
-      </section>
+      </CommonHero>
 
       {/* ── WHY LIST ON EVENTIBE ──────────────────────────────────────────────────────── */}
       <section className="py-14 md:py-20 bg-white overflow-hidden relative">

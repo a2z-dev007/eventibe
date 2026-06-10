@@ -8,3 +8,4 @@ export const metadata = {
 export default function WeddingVenuesPage() {
   return <WeddingVenuesClient />;
 }
+
