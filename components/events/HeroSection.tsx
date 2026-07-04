@@ -107,7 +107,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pt-20 md:pb-20 bg-white">
+    <section className="relative flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-16 md:pt-28 md:pb-20 bg-white">
       {/* Immersive Background Container */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none bg-black z-0">
         <motion.div
@@ -140,7 +140,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="container mx-auto px-4 mt-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-12 md:mt-16">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center mt-6 md:mt-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,7 +157,7 @@ export default function HeroSection() {
           </div>
 
           {/* Hero Title */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+          <h1 className="text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
             Craft Your{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
               Perfect Event

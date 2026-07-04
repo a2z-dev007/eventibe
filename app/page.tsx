@@ -27,15 +27,15 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white">
+      <section className="relative z-20 w-full lg:h-[100dvh] min-h-screen lg:min-h-[600px] flex flex-col lg:justify-center items-center text-white pt-28 pb-16 lg:py-0">
         {/* Background Dynamic Content (Video + Images) */}
         <DynamicHeroBackground currentIndex={index} onVideoEnd={() => {
           setIsVideoDone(true);
           setIndex(1);
         }} />
 
-        <div className="container mx-auto px-4 mt-4 md:px-6 relative flex flex-col items-center text-center mt-12 md:mt-16">
-          <div className="relative w-full flex flex-col items-center min-h-[160px] md:min-h-[280px]">
+        <div className="container mx-auto px-4 relative flex flex-col items-center text-center mt-2 lg:mt-6">
+          <div className="relative w-full flex flex-col items-center min-h-[240px] sm:min-h-[200px] md:min-h-[280px]">
             <AnimatePresence>
               <motion.div
                 key={index}
@@ -45,13 +45,13 @@ export default function Home() {
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-x-0 top-0 flex flex-col items-center"
               >
-                <h1 className="text-2xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-3 md:mb-4 max-w-5xl leading-tight drop-shadow-xl">
                   {current.title.main} <br className="hidden md:block" />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
                     {current.title.highlight}
                   </span>
                 </h1>
-                <p className="text-[12px] md:text-xl text-white/95 md:mb-10 max-w-2xl font-medium drop-shadow-md">
+                <p className="text-sm sm:text-base md:text-xl text-white/95 md:mb-10 max-w-2xl font-medium drop-shadow-md">
                   {current.desc}
                 </p>
               </motion.div>
@@ -81,7 +81,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.8 }}
-                className="group relative flex flex-col md:flex-row items-center gap-4 p-6 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 border border-transparent hover:border-gray-100"
+                className="group relative flex flex-col md:flex-row items-center gap-3 md:gap-4 p-4 md:p-6 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 border border-transparent hover:border-gray-100"
               >
                 {/* Background Glow on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} />
@@ -94,7 +94,7 @@ export default function Home() {
                   <p className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-none mb-1 group-hover:scale-105 transition-transform duration-300 origin-left">
                     {stat.value}
                   </p>
-                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-nowrap">
+                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-normal text-center md:text-left md:whitespace-nowrap">
                     {stat.label}
                   </p>
                 </div>
