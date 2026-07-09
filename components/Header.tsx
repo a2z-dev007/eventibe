@@ -41,17 +41,17 @@ export default function Header() {
   const close = () => setIsMobileMenuOpen(false);
 
   const navLinks = [
-    { name: 'Home',         href: '/',             icon: Home },
-    { name: 'About',        href: '/about-us',     icon: Info },
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'About', href: '/about-us', icon: Info },
     { name: 'How It Works', href: '/how-it-works', icon: Lightbulb },
-    { name: 'Blogs',         href: '/blogs',         icon: BookOpen },
-    { name: 'Our Story',    href: '/our-story',    icon: Building2 },
-    { name: 'Contact',      href: '/contact-us',   icon: Phone },
+    { name: 'Blogs', href: '/blogs', icon: BookOpen },
+    { name: 'Our Story', href: '/our-story', icon: Building2 },
+    { name: 'Contact', href: '/contact-us', icon: Phone },
   ];
 
   const venueLinks = [
-    { name: 'All Venues',       href: '/venues',                 icon: MapPin,    color: 'bg-orange-500/15 text-orange-400' },
-    { name: 'Wedding Venues',   href: '/wedding-venues',         icon: Heart,     color: 'bg-rose-500/15 text-rose-400' },
+    { name: 'All Venues', href: '/venues', icon: MapPin, color: 'bg-orange-500/15 text-orange-400' },
+    { name: 'Wedding Venues', href: '/wedding-venues', icon: Heart, color: 'bg-rose-500/15 text-rose-400' },
     { name: 'Corporate Venues', href: '/corporate-event-venues', icon: Briefcase, color: 'bg-blue-500/15 text-blue-400' },
   ];
 
@@ -61,7 +61,7 @@ export default function Header() {
   };
   const itemVariants = {
     hidden: { opacity: 0, x: 12 },
-    show:   {
+    show: {
       opacity: 1,
       x: 0,
       transition: { type: 'tween', ease: 'easeOut', duration: 0.22 },
@@ -69,19 +69,17 @@ export default function Header() {
   };
 
   const navTextClass = (extra = '') =>
-    `relative py-1 text-[15px] font-semibold transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all after:duration-300 ${
-      isHome && !isScrolled
-        ? 'text-white hover:text-gray-200 drop-shadow-md after:bg-white'
-        : 'text-primary-navy hover:text-corporate-blue after:bg-corporate-blue'
+    `relative py-1 text-[15px] font-semibold transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all after:duration-300 ${isHome && !isScrolled
+      ? 'text-white hover:text-gray-200 drop-shadow-md after:bg-white'
+      : 'text-primary-navy hover:text-corporate-blue after:bg-corporate-blue'
     } ${extra}`;
 
   return (
     <header
-      className={`${isHome ? 'fixed' : 'sticky'} top-0 z-[100] w-full transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white shadow-md py-3 backdrop-blur-md bg-opacity-95'
-          : isHome ? 'bg-transparent md:py-5 py-3' : 'bg-white shadow-sm md:py-5 py-3'
-      }`}
+      className={`${isHome ? 'fixed' : 'sticky'} top-0 z-[100] w-full transition-all duration-300 ${isScrolled
+        ? 'bg-white shadow-md py-3 backdrop-blur-md bg-opacity-95'
+        : isHome ? 'bg-transparent md:py-5 py-3' : 'bg-white shadow-sm md:py-5 py-3'
+        }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
@@ -89,9 +87,8 @@ export default function Header() {
           <Image
             src={logoImg}
             alt="Eventibe Logo"
-            className={`h-10 md:h-16 w-auto object-contain transition-all duration-300 ${
-              isHome && !isScrolled ? 'brightness-0 invert drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]' : ''
-            }`}
+            className={`h-10 md:h-16 w-auto object-contain transition-all duration-300 ${isHome && !isScrolled ? 'brightness-0 invert drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]' : ''
+              }`}
             priority
           />
         </Link>
@@ -206,11 +203,10 @@ export default function Header() {
                       <Link
                         href={link.href}
                         onClick={close}
-                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl mb-1.5 transition-all ${
-                          active
-                            ? 'bg-orange-50 text-orange-600'
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                        }`}
+                        className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl mb-1.5 transition-all ${active
+                          ? 'bg-orange-50 text-orange-600'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                          }`}
                       >
                         <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${active ? 'bg-orange-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
                           <Icon size={16} strokeWidth={2.5} />
@@ -262,8 +258,8 @@ export default function Header() {
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 mb-4">Our Partners</p>
                 <div className="grid grid-cols-2 gap-2.5">
                   {[
-                    { name: 'Partner With Us', href: '/partner-with-us',   icon: Handshake },
-                    { name: 'List Service',    href: '/list-your-service', icon: ListPlus },
+                    { name: 'Partner With Us', href: '/partner-with-us', icon: Handshake },
+                    { name: 'List Service', href: '/list-your-service', icon: ListPlus },
                   ].map((p) => {
                     const Icon = p.icon;
                     return (

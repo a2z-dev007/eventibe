@@ -75,26 +75,26 @@ export default function Home() {
               { label: "Cities Covered", value: "45+", icon: <MapPin className="w-6 h-6" />, color: "from-emerald-50 to-emerald-100/50" },
               { label: "Verified Reviews", value: "15k+", icon: <Star className="w-6 h-6" />, color: "from-yellow-50 to-yellow-100/50" }
             ].map((stat, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.8 }}
-                className="group relative flex flex-col md:flex-row items-center gap-4 p-6 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 border border-transparent hover:border-gray-100"
+                className="group relative flex flex-col md:flex-row items-center gap-3 md:gap-4 p-4 md:p-6 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 border border-transparent hover:border-gray-100"
               >
                 {/* Background Glow on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`} />
-                
+
                 <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-primary-navy group-hover:bg-primary-navy group-hover:text-white transition-all duration-500 shadow-sm">
                   {stat.icon}
                 </div>
-                
+
                 <div className="text-center md:text-left">
                   <p className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-none mb-1 group-hover:scale-105 transition-transform duration-300 origin-left">
                     {stat.value}
                   </p>
-                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-nowrap">
+                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-normal text-center md:text-left md:whitespace-nowrap">
                     {stat.label}
                   </p>
                 </div>
@@ -110,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* Corporate Venue Highlights — Primary Focus (70%) */}
-      <HighlightsSection 
+      <HighlightsSection
         subtitle="Corporate Elite"
         title="Premium Business & Conference Spaces"
         linkText="View all corporate venues"
@@ -127,7 +127,7 @@ export default function Home() {
       <FeaturedVenuesCarousel />
 
       {/* Vendor Highlights — General Utility */}
-      <HighlightsSection 
+      <HighlightsSection
         subtitle="Professional Services"
         title="Top-Tier Event Vendors"
         linkText="Discover expert vendors"
@@ -138,7 +138,7 @@ export default function Home() {
       />
 
       {/* Wedding & Social Venue Highlights — Secondary Focus (30%) */}
-      <HighlightsSection 
+      <HighlightsSection
         subtitle="Celebration Signature"
         title="Exquisite Wedding & Social Venues"
         linkText="Browse celebration venues"
@@ -152,8 +152,8 @@ export default function Home() {
       <HowItWorksSection />
 
       {/* Testimonials – Interactive */}
-      <TestimonialsSection/>
-  {/* Video Reel Testimonials – Cinematic Social Proof */}
+      <TestimonialsSection />
+      {/* Video Reel Testimonials – Cinematic Social Proof */}
       <VideoReelTestimonials />
       {/* CTA – Interactive */}
       <CTASection />

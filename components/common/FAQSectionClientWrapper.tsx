@@ -1,8 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
-import FAQSectionSSR from "./FAQSectionSSR"
-import FAQSectionSkeleton from "./FAQSectionSkeleton"
+import FAQSection from "./FAQSection"
 
 interface Props {
   cityId: number
@@ -11,8 +9,6 @@ interface Props {
 
 export function FAQSectionClient({ cityId, title }: Props) {
   return (
-    <Suspense fallback={<FAQSectionSkeleton title={title} />}>
-      <FAQSectionSSR cityId={cityId} title={title} />
-    </Suspense>
+    <FAQSection cityId={cityId} title={title} />
   )
 }
