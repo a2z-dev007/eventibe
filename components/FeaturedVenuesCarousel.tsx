@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
-import { TiltCard } from '@/components/micro-interactions';
+
 import { fetchVenueTypes } from '@/lib/api/eventsEndpoints';
 import type { VenueTypeRecord } from '@/lib/api/eventsEndpoints';
 
@@ -256,7 +256,7 @@ function VenueTypeCard({
   const [imgSrc, setImgSrc] = useState(image);
 
   return (
-    <TiltCard className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] rounded-3xl">
+    <div className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] rounded-3xl">
     <Link
       href={`/events/search?venue_type=${id}`}
       className="block group cursor-pointer"
@@ -316,6 +316,6 @@ function VenueTypeCard({
         </div>
       </div>
     </Link>
-    </TiltCard>
+    </div>
   );
 }

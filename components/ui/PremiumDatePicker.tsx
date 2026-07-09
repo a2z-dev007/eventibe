@@ -49,6 +49,15 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
   // Always show single month on all devices
   const effectiveMonthsShown = 1
 
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024)
+    checkDesktop()
+    window.addEventListener('resize', checkDesktop)
+    return () => window.removeEventListener('resize', checkDesktop)
+  }, [])
+
   const displayValue = () => {
     if (selectsRange) {
       if (startDate && endDate) {
@@ -190,7 +199,7 @@ const PremiumDatePicker: FC<PremiumDatePickerProps> = ({
           <div 
             className="absolute z-[9999] mt-2 focus:outline-none"
             style={dropdownStyle || {
-              width: '100%',
+              width: isDesktop ? '320px' : '100%',
               left: '50%',
               transform: 'translateX(-50%)',
             }}

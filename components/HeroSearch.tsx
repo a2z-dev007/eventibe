@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Sparkles, Home as HomeIcon, Users, Building2, Calendar, X } from 'lucide-react';
+import { Search, Sparkles, Home as HomeIcon, Users, Calendar, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect';
 import PremiumSelect from '@/components/ui/PremiumSelect';
@@ -38,7 +38,6 @@ export default function HeroSearch() {
   const [guests, setGuests] = useState<any>(null);
 
   // ── Mode and Interaction state ──────────────────────────────────────────────
-  const [searchMode, setSearchMode] = useState<'corporate' | 'social'>('corporate');
   const [hoveredField, setHoveredField] = useState<number | null>(null);
 
   // ── TanStack Query — cached for 1 hour, refetch-free ───────────────────────
@@ -55,12 +54,6 @@ export default function HeroSearch() {
   // -- Dropdown management state to ensure only one is open at a time --
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
-
-  // Clear type selection when changing modes to prevent filter mismatch
-  useEffect(() => {
-    setEventType(null);
-    setVenueType(null);
-  }, [searchMode]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -116,41 +109,13 @@ export default function HeroSearch() {
     };
   }, [activeMenu]);
 
-  // Filter event types depending on corporate vs social selection
   const filteredEventOptions = React.useMemo(() => {
-    if (!eventOptions) return [];
-    if (searchMode === 'corporate') {
-      const corporateKeywords = ['corporate', 'conference', 'meeting', 'seminar', 'launch', 'exhibition', 'summit', 'workshop', 'office', 'business'];
-      const corporateOptions = eventOptions.filter(opt =>
-        corporateKeywords.some(kw => opt.label.toLowerCase().includes(kw))
-      );
-      return corporateOptions.length > 0 ? corporateOptions : eventOptions;
-    } else {
-      const socialKeywords = ['wedding', 'reception', 'birthday', 'party', 'social', 'anniversary', 'celebration', 'gathering', 'dinner', 'engagement', 'sangeet', 'mehendi'];
-      const socialOptions = eventOptions.filter(opt =>
-        socialKeywords.some(kw => opt.label.toLowerCase().includes(kw))
-      );
-      return socialOptions.length > 0 ? socialOptions : eventOptions;
-    }
-  }, [eventOptions, searchMode]);
+    return eventOptions || [];
+  }, [eventOptions]);
 
-  // Filter venue types depending on corporate vs social selection
   const filteredVenueOptions = React.useMemo(() => {
-    if (!venueOptions) return [];
-    if (searchMode === 'corporate') {
-      const corporateKeywords = ['corporate', 'conference', 'meeting', 'boardroom', 'hotel', 'hall', 'center', 'coworking', 'office'];
-      const corporateOptions = venueOptions.filter(opt =>
-        corporateKeywords.some(kw => opt.label.toLowerCase().includes(kw))
-      );
-      return corporateOptions.length > 0 ? corporateOptions : venueOptions;
-    } else {
-      const socialKeywords = ['banquet', 'lawn', 'resort', 'farmhouse', 'villa', 'wedding', 'palace', 'garden'];
-      const socialOptions = venueOptions.filter(opt =>
-        socialKeywords.some(kw => opt.label.toLowerCase().includes(kw))
-      );
-      return socialOptions.length > 0 ? socialOptions : venueOptions;
-    }
-  }, [venueOptions, searchMode]);
+    return venueOptions || [];
+  }, [venueOptions]);
 
   const showDivider = (index: number) => {
     const keys = ['location', 'eventType', 'venueType', 'date', 'guests'];
@@ -197,59 +162,17 @@ export default function HeroSearch() {
           {/* Background Ambient Glows */}
           <div className="absolute inset-0 -z-10 overflow-hidden rounded-[32px] pointer-events-none">
             {/* Blue Corporate Glow */}
-            <div
-              className={`absolute -top-40 left-1/4 w-[500px] h-[300px] bg-blue-500/10 blur-[130px] rounded-full transition-opacity duration-700 ${searchMode === 'corporate' ? 'opacity-100' : 'opacity-0'
-                }`}
-            />
+            <div className="absolute -top-40 left-1/4 w-[500px] h-[300px] bg-blue-500/10 blur-[130px] rounded-full" />
             {/* Orange Social Glow */}
-            <div
-              className={`absolute -top-40 right-1/4 w-[500px] h-[300px] bg-orange-500/10 blur-[130px] rounded-full transition-opacity duration-700 ${searchMode === 'social' ? 'opacity-100' : 'opacity-0'
-                }`}
-            />
-          </div>
-
-          {/* Category Tabs */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex p-1 bg-black/40 backdrop-blur-md rounded-full border border-white/10 relative">
-              <button
-                onClick={() => setSearchMode('corporate')}
-                className={`relative z-10 px-6 py-2.5 text-xs md:text-sm font-bold rounded-full transition-all duration-300 flex items-center gap-2 cursor-pointer ${searchMode === 'corporate' ? 'text-white' : 'text-white/60 hover:text-white/80'
-                  }`}
-              >
-                <Building2 className={`w-4 h-4 transition-transform ${searchMode === 'corporate' ? 'scale-110 text-blue-400' : 'text-white/60'}`} />
-                <span>Corporate Venues</span>
-                {searchMode === 'corporate' && (
-                  <motion.div
-                    layoutId="activeTabBackground"
-                    className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/10 rounded-full -z-10 shadow-[0_2px_10px_rgba(255,255,255,0.05)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </button>
-              <button
-                onClick={() => setSearchMode('social')}
-                className={`relative z-10 px-6 py-2.5 text-xs md:text-sm font-bold rounded-full transition-all duration-300 flex items-center gap-2 cursor-pointer ${searchMode === 'social' ? 'text-white' : 'text-white/60 hover:text-white/80'
-                  }`}
-              >
-                <Sparkles className={`w-4 h-4 transition-transform ${searchMode === 'social' ? 'scale-110 text-orange-400' : 'text-white/60'}`} />
-                <span>Weddings & Socials</span>
-                {searchMode === 'social' && (
-                  <motion.div
-                    layoutId="activeTabBackground"
-                    className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/10 rounded-full -z-10 shadow-[0_2px_10px_rgba(255,255,255,0.05)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </button>
-            </div>
+            <div className="absolute -top-40 right-1/4 w-[500px] h-[300px] bg-orange-500/10 blur-[130px] rounded-full" />
           </div>
 
           {/* Desktop Search Bar (Unified Pill) */}
-          <div className="hidden lg:flex items-center w-full bg-black/35 border border-white/10 backdrop-blur-3xl rounded-full p-2 relative shadow-[0_30px_70px_rgba(0,0,0,0.65)] hover:border-white/15 transition-all duration-300">
+          <div className="hidden lg:flex items-center w-full bg-white/95 border border-gray-200/50 backdrop-blur-3xl rounded-full p-2 relative shadow-[0_30px_70px_rgba(0,0,0,0.15)] hover:border-gray-200/80 transition-all duration-300">
             {/* Location Wrapper */}
             <div
               data-field-id="location"
-              className={`relative flex-[1.4] min-w-0 transition-all duration-300 py-3 pl-6 pr-4 rounded-full ${activeMenu === 'location' ? 'bg-white/12 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : hoveredField === 0 ? 'bg-white/5 z-20' : 'z-10'
+              className={`relative flex-[1.4] min-w-0 transition-all duration-300 py-3 pl-6 pr-4 rounded-full ${activeMenu === 'location' ? 'bg-gray-100/80 shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.05)] z-30' : hoveredField === 0 ? 'bg-gray-50/80' : 'z-10'
                 }`}
               onMouseEnter={() => setHoveredField(0)}
               onMouseLeave={() => setHoveredField(null)}
@@ -259,7 +182,7 @@ export default function HeroSearch() {
                 onChange={setLocation}
                 className="w-full"
                 containerClassName=""
-                variant="glass"
+                variant="default"
                 menuIsOpen={activeMenu === 'location'}
                 onMenuOpen={() => setActiveMenu('location')}
                 onMenuClose={() => setActiveMenu(null)}
@@ -268,12 +191,12 @@ export default function HeroSearch() {
             </div>
 
             {/* Divider 0 */}
-            {showDivider(0) && <div className="w-[1px] h-8 bg-white/10 self-center shrink-0 transition-opacity duration-300" />}
+            {showDivider(0) && <div className="w-[1px] h-8 bg-gray-200/60 self-center shrink-0 transition-opacity duration-300" />}
 
             {/* Event Type Wrapper */}
             <div
               data-field-id="eventType"
-              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full ${activeMenu === 'eventType' ? 'bg-white/12 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : hoveredField === 1 ? 'bg-white/5 z-20' : 'z-10'
+              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full ${activeMenu === 'eventType' ? 'bg-gray-100/80 shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.05)] z-30' : hoveredField === 1 ? 'bg-gray-50/80' : 'z-10'
                 }`}
               onMouseEnter={() => setHoveredField(1)}
               onMouseLeave={() => setHoveredField(null)}
@@ -290,7 +213,7 @@ export default function HeroSearch() {
                   placeholder="Any Event"
                   className="w-full"
                   containerClassName=""
-                  variant="glass"
+                  variant="default"
                   menuIsOpen={activeMenu === 'eventType'}
                   onMenuOpen={() => setActiveMenu('eventType')}
                   onMenuClose={() => setActiveMenu(null)}
@@ -300,12 +223,12 @@ export default function HeroSearch() {
             </div>
 
             {/* Divider 1 */}
-            {showDivider(1) && <div className="w-[1px] h-8 bg-white/10 self-center shrink-0 transition-opacity duration-300" />}
+            {showDivider(1) && <div className="w-[1px] h-8 bg-gray-200/60 self-center shrink-0 transition-opacity duration-300" />}
 
             {/* Venue Type Wrapper */}
             <div
               data-field-id="venueType"
-              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full ${activeMenu === 'venueType' ? 'bg-white/12 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : hoveredField === 2 ? 'bg-white/5 z-20' : 'z-10'
+              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full ${activeMenu === 'venueType' ? 'bg-gray-100/80 shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.05)] z-30' : hoveredField === 2 ? 'bg-gray-50/80' : 'z-10'
                 }`}
               onMouseEnter={() => setHoveredField(2)}
               onMouseLeave={() => setHoveredField(null)}
@@ -322,7 +245,7 @@ export default function HeroSearch() {
                   placeholder="Any Type"
                   className="w-full"
                   containerClassName=""
-                  variant="glass"
+                  variant="default"
                   menuIsOpen={activeMenu === 'venueType'}
                   onMenuOpen={() => setActiveMenu('venueType')}
                   onMenuClose={() => setActiveMenu(null)}
@@ -332,12 +255,12 @@ export default function HeroSearch() {
             </div>
 
             {/* Divider 2 */}
-            {showDivider(2) && <div className="w-[1px] h-8 bg-white/10 self-center shrink-0 transition-opacity duration-300" />}
+            {showDivider(2) && <div className="w-[1px] h-8 bg-gray-200/60 self-center shrink-0 transition-opacity duration-300" />}
 
             {/* Date Wrapper */}
             <div
               data-field-id="date"
-              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full cursor-pointer ${activeMenu === 'date' ? 'bg-white/12 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : hoveredField === 3 ? 'bg-white/5 z-20' : 'z-10'
+              className={`relative flex-[1.1] min-w-0 transition-all duration-300 py-3 px-4 rounded-full cursor-pointer ${activeMenu === 'date' ? 'bg-gray-100/80 shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.05)] z-30' : hoveredField === 3 ? 'bg-gray-50/80' : 'z-10'
                 }`}
               onMouseEnter={() => setHoveredField(3)}
               onMouseLeave={() => setHoveredField(null)}
@@ -354,20 +277,19 @@ export default function HeroSearch() {
                 placeholder="Select Date"
                 label="Date"
                 containerClassName="w-full"
-                variant="glass"
+                variant="default"
                 monthsShown={1}
                 isOpen={activeMenu === 'date'}
-                dropdownStyle={activeMenu === 'date' ? dropdownStyle || undefined : undefined}
               />
             </div>
 
             {/* Divider 3 */}
-            {showDivider(3) && <div className="w-[1px] h-8 bg-white/10 self-center shrink-0 transition-opacity duration-300" />}
+            {showDivider(3) && <div className="w-[1px] h-8 bg-gray-200/60 self-center shrink-0 transition-opacity duration-300" />}
 
             {/* Guests Wrapper */}
             <div
               data-field-id="guests"
-              className={`relative flex-[0.9] min-w-0 transition-all duration-300 py-3 pl-4 pr-2 rounded-full ${activeMenu === 'guests' ? 'bg-white/12 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : hoveredField === 4 ? 'bg-white/5 z-20' : 'z-10'
+              className={`relative flex-[0.9] min-w-0 transition-all duration-300 py-3 pl-4 pr-2 rounded-full ${activeMenu === 'guests' ? 'bg-gray-100/80 shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.05)] z-30' : hoveredField === 4 ? 'bg-gray-50/80' : 'z-10'
                 }`}
               onMouseEnter={() => setHoveredField(4)}
               onMouseLeave={() => setHoveredField(null)}
@@ -381,7 +303,7 @@ export default function HeroSearch() {
                 placeholder="Count"
                 className="w-full"
                 containerClassName=""
-                variant="glass"
+                variant="default"
                 menuIsOpen={activeMenu === 'guests'}
                 onMenuOpen={() => setActiveMenu('guests')}
                 onMenuClose={() => setActiveMenu(null)}
@@ -404,9 +326,9 @@ export default function HeroSearch() {
           </div>
 
           {/* Mobile Search Bar (Cohesive Stacked Card) */}
-          <div className="lg:hidden w-full max-w-xl mx-auto bg-black/45 border border-white/10 backdrop-blur-3xl rounded-[2rem] p-5 shadow-[0_25px_65px_rgba(0,0,0,0.65)] flex flex-col gap-4 text-left relative">
+          <div className="lg:hidden w-full max-w-xl mx-auto bg-white/95 border border-gray-200/50 backdrop-blur-3xl rounded-[2rem] p-5 shadow-[0_25px_65px_rgba(0,0,0,0.12)] flex flex-col gap-4 text-left relative">
             {/* Header/Title */}
-            <h3 className="text-white text-sm font-black tracking-[0.06em] uppercase px-1 flex items-center gap-2">
+            <h3 className="text-gray-900 text-sm font-black tracking-[0.06em] uppercase px-1 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-accent-orange animate-pulse" />
               Find Your Venue & Services
             </h3>
@@ -420,7 +342,7 @@ export default function HeroSearch() {
                 }
                 setActiveMenu(activeMenu === 'location' ? null : 'location');
               }}
-              className={`relative w-full cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-white/5 border border-white/10 ${activeMenu === 'location' ? 'border-accent-orange bg-white/10 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : 'z-10'}`}
+              className={`relative w-full cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-gray-50/50 border border-gray-100 ${activeMenu === 'location' ? 'border-accent-orange bg-orange-50/30 shadow-[inset_0_1.5px_3px_rgba(255,149,48,0.05)] z-30' : 'z-10'}`}
             >
               <PremiumLocationSelect
                 value={location}
@@ -429,7 +351,7 @@ export default function HeroSearch() {
                   setActiveMenu(null);
                 }}
                 className="w-full"
-                variant="glass"
+                variant="default"
                 menuIsOpen={activeMenu === 'location'}
                 onMenuOpen={() => setActiveMenu('location')}
                 onMenuClose={() => setActiveMenu(null)}
@@ -449,7 +371,7 @@ export default function HeroSearch() {
                   }
                   setActiveMenu(activeMenu === 'event' ? null : 'event');
                 }}
-                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-white/5 border border-white/10 ${activeMenu === 'event' ? 'border-accent-orange bg-white/10 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : 'z-10'}`}
+                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-gray-50/50 border border-gray-100 ${activeMenu === 'event' ? 'border-accent-orange bg-orange-50/30 shadow-[inset_0_1.5px_3px_rgba(255,149,48,0.05)] z-30' : 'z-10'}`}
               >
                 {eventLoading ? (
                   <DropdownSkeleton label="Event Type" />
@@ -465,7 +387,7 @@ export default function HeroSearch() {
                     }}
                     placeholder="Any Event"
                     className="w-full"
-                    variant="glass"
+                    variant="default"
                     menuIsOpen={activeMenu === 'event'}
                     onMenuOpen={() => setActiveMenu('event')}
                     onMenuClose={() => setActiveMenu(null)}
@@ -484,7 +406,7 @@ export default function HeroSearch() {
                   }
                   setActiveMenu(activeMenu === 'venue' ? null : 'venue');
                 }}
-                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-white/5 border border-white/10 ${activeMenu === 'venue' ? 'border-accent-orange bg-white/10 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : 'z-10'}`}
+                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-gray-50/50 border border-gray-100 ${activeMenu === 'venue' ? 'border-accent-orange bg-orange-50/30 shadow-[inset_0_1.5px_3px_rgba(255,149,48,0.05)] z-30' : 'z-10'}`}
               >
                 {venueLoading ? (
                   <DropdownSkeleton label="Venue Type" />
@@ -500,7 +422,7 @@ export default function HeroSearch() {
                     }}
                     placeholder="Any Type"
                     className="w-full"
-                    variant="glass"
+                    variant="default"
                     menuIsOpen={activeMenu === 'venue'}
                     onMenuOpen={() => setActiveMenu('venue')}
                     onMenuClose={() => setActiveMenu(null)}
@@ -522,7 +444,7 @@ export default function HeroSearch() {
                   }
                   setActiveMenu(activeMenu === 'date' ? null : 'date');
                 }}
-                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-white/5 border border-white/10 ${activeMenu === 'date' ? 'border-accent-orange bg-white/10 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : 'z-10'}`}
+                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-gray-50/50 border border-gray-100 ${activeMenu === 'date' ? 'border-accent-orange bg-orange-50/30 shadow-[inset_0_1.5px_3px_rgba(255,149,48,0.05)] z-30' : 'z-10'}`}
               >
                 <PremiumDatePicker
                   selected={date}
@@ -534,10 +456,9 @@ export default function HeroSearch() {
                   placeholder="Select Date"
                   label="Date"
                   containerClassName="w-full"
-                  variant="glass"
+                  variant="default"
                   monthsShown={1}
                   isOpen={activeMenu === 'date'}
-                  dropdownStyle={activeMenu === 'date' ? dropdownStyle || undefined : undefined}
                 />
               </div>
 
@@ -550,7 +471,7 @@ export default function HeroSearch() {
                   }
                   setActiveMenu(activeMenu === 'guests' ? null : 'guests');
                 }}
-                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-white/5 border border-white/10 ${activeMenu === 'guests' ? 'border-accent-orange bg-white/10 shadow-[inset_0_1.5px_3px_rgba(255,255,255,0.08)] z-30' : 'z-10'}`}
+                className={`relative flex-1 cursor-pointer transition-all duration-300 py-3 px-5 rounded-2xl bg-gray-50/50 border border-gray-100 ${activeMenu === 'guests' ? 'border-accent-orange bg-orange-50/30 shadow-[inset_0_1.5px_3px_rgba(255,149,48,0.05)] z-30' : 'z-10'}`}
               >
                 <PremiumSelect
                   label="Guests"
@@ -563,7 +484,7 @@ export default function HeroSearch() {
                   }}
                   placeholder="Count"
                   className="w-full"
-                  variant="glass"
+                  variant="default"
                   menuIsOpen={activeMenu === 'guests'}
                   onMenuOpen={() => setActiveMenu('guests')}
                   onMenuClose={() => setActiveMenu(null)}

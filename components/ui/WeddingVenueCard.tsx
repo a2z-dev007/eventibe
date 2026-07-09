@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Heart, Users, ArrowUpRight } from 'lucide-react';
-import { TiltCard } from '@/components/micro-interactions';
+
 
 export interface WeddingVenueCardData {
   id: number | string;
@@ -41,7 +41,7 @@ export default function WeddingVenueCard({
   const [liked, setLiked] = useState(false);
 
   return (
-    <TiltCard className="w-full h-full rounded-2xl">
+    <div className="w-full h-full rounded-2xl">
     <Link
       href={href}
       className="group relative flex flex-col w-full h-full rounded-2xl overflow-hidden shadow-md hover:shadow-[0_20px_60px_rgba(180,60,80,0.2)] transition-all duration-500 hover:-translate-y-1 bg-gray-900"
@@ -138,6 +138,6 @@ export default function WeddingVenueCard({
         </div>
       </div>
     </Link>
-    </TiltCard>
+    </div>
   );
 }

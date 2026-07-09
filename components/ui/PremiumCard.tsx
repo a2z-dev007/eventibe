@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { MapPin, Star, Users, ArrowUpRight, Tag } from 'lucide-react';
-import { TiltCard } from '@/components/micro-interactions';
+
 
 export interface PremiumCardData {
   id: number | string;
@@ -53,7 +53,7 @@ export default function PremiumCard({
     : 'group-hover:shadow-[0_20px_60px_-10px_rgba(30,58,138,0.35)]';
 
   return (
-    <TiltCard className="h-full rounded-[28px]">
+    <div className="h-full rounded-[28px]">
     <Link
       href={href}
       className={`group relative flex flex-col rounded-[28px] overflow-hidden bg-white shadow-md hover:-translate-y-2 transition-all duration-500 ${glowClass} h-full`}
@@ -162,6 +162,6 @@ export default function PremiumCard({
       {/* ── Hover accent line at bottom ─────────────── */}
       <div className={`absolute bottom-0 left-0 right-0 h-[3px] ${accentBg} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
     </Link>
-    </TiltCard>
+    </div>
   );
 }
