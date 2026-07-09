@@ -102,11 +102,12 @@ export default function TrendingVenues() {
                     {/* Quick Info Pills */}
                     <div className="flex flex-wrap gap-1 mb-2">
                       <span className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-0.5 text-white text-[9px] font-bold inline-flex items-center gap-1">
-                        <Users className="w-3 h-3" />50-500
+                        <Users className="w-3 h-3" />
+                        {venue.venue_configuration ? `${venue.venue_configuration}` : '50-500'}
                       </span>
-                      {venue.venue_type?.[0] && (
-                        <span className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-0.5 text-white text-[9px] font-medium">
-                          {venue.venue_type[0].name}
+                      {venue.cuisine_details?.[0] && (
+                        <span className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-0.5 text-white text-[9px] font-medium truncate max-w-[80px]" title={venue.cuisine_details[0].name}>
+                          {venue.cuisine_details[0].name}
                         </span>
                       )}
                     </div>
@@ -114,7 +115,10 @@ export default function TrendingVenues() {
                     {/* CTA */}
                     <div className="bg-[#FF9530] hover:bg-[#FF8000] rounded-full py-1.5 text-center transition-all">
                       <span className="text-white text-[10px] font-bold flex items-center justify-center gap-1">
-                        Get Quote <ArrowRight className="w-3 h-3" />
+                        {venue.package_details?.[0]?.price
+                          ? `₹${Number(venue.package_details[0].price).toLocaleString('en-IN')}`
+                          : 'Get Quote'}
+                        <ArrowRight className="w-3 h-3" />
                       </span>
                     </div>
                   </div>

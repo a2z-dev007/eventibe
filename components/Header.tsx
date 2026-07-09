@@ -12,18 +12,31 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import logoImg from '@/assets/images/logo.png';
+import { useMobileNav } from '@/contexts/MobileNavContext';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileNav();
   const pathname = usePathname();
-  const isHome = true;
+  const isHome = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Lock scroll on mobile/tablet when sidebar is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   const close = () => setIsMobileMenuOpen(false);
 
@@ -44,14 +57,14 @@ export default function Header() {
 
   const listVariants = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.055, delayChildren: 0.08 } },
+    show: { transition: { staggerChildren: 0.04, delayChildren: 0.06 } },
   };
   const itemVariants = {
-    hidden: { opacity: 0, x: 28 },
+    hidden: { opacity: 0, x: 12 },
     show:   {
       opacity: 1,
       x: 0,
-      transition: { type: 'spring' as const, damping: 22, stiffness: 260 },
+      transition: { type: 'tween', ease: 'easeOut', duration: 0.22 },
     },
   };
 
@@ -152,17 +165,18 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-[6px] z-[90] lg:hidden"
+              transition={{ type: 'tween', ease: 'easeOut', duration: 0.25 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] lg:hidden"
               onClick={close}
             />
 
             {/* Drawer */}
             <motion.div
               initial={{ x: '100%' }}
-              animate={{ x: 0 }}
+              animate={{ x: '0%' }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 35, stiffness: 300, mass: 1 }}
+              transition={{ type: 'tween', ease: [0.16, 1, 0.3, 1], duration: 0.38 }}
+              style={{ willChange: 'transform' }}
               className="fixed top-0 right-0 w-[88%] max-w-[350px] h-[100dvh] z-[100] flex flex-col lg:hidden overflow-y-auto bg-white shadow-2xl"
               data-lenis-prevent="true"
             >
@@ -212,9 +226,9 @@ export default function Header() {
               {/* Venues */}
               <motion.div
                 className="px-4 pt-2 pb-4"
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.45 }}
+                transition={{ type: 'tween', ease: 'easeOut', delay: 0.18, duration: 0.28 }}
               >
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 mb-4">Explore Venues</p>
                 <div className="flex flex-col gap-2.5">
@@ -241,9 +255,9 @@ export default function Header() {
               {/* Partner links */}
               <motion.div
                 className="px-4 pb-4"
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.42, duration: 0.45 }}
+                transition={{ type: 'tween', ease: 'easeOut', delay: 0.24, duration: 0.28 }}
               >
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4 mb-4">Our Partners</p>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -272,9 +286,9 @@ export default function Header() {
               {/* Bottom CTAs */}
               <motion.div
                 className="mt-auto px-4 pb-8 pt-5 border-t border-slate-100 flex flex-col gap-3.5 bg-slate-50/30"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.45 }}
+                transition={{ type: 'tween', ease: 'easeOut', delay: 0.3, duration: 0.28 }}
               >
                 <Link
                   href="/login"

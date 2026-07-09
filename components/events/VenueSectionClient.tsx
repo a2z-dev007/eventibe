@@ -52,6 +52,9 @@ function mapVenueToCard(v: VenueRecord) {
     img,
     id: v.id,
     slug: v.slug,
+    venueType: v.venue_type?.[0]?.name,
+    cuisines: v.cuisine_details?.slice(0, 2).map((c) => c.name) || [],
+    highlights: v.highlights_details?.slice(0, 2).map((h) => h.name) || [],
   }
 }
 

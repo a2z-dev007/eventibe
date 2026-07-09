@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getVenueBySlug, getVenues } from '@/lib/api';
 import { MapPin, Users, Wifi, Star, CheckCircle2, Building2 } from 'lucide-react';
+import DetailMobileCTA from '@/components/ui/DetailMobileCTA';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -43,7 +44,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ sl
   };
 
   return (
-    <div className="bg-light-bg min-h-screen pb-20">
+    <div className="bg-light-bg min-h-screen pb-28 lg:pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -127,7 +128,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ sl
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1" id="inquiry-form">
             <div className="sticky top-24 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
               <h3 className="text-2xl font-bold text-primary-navy mb-2">Interested?</h3>
               <p className="text-soft-slate mb-8">Send an inquiry to get a custom quote and check availability.</p>
@@ -160,6 +161,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ sl
           </div>
         </div>
       </div>
+      <DetailMobileCTA price={venue.price_range} targetId="inquiry-form" />
     </div>
   );
 }

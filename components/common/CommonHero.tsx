@@ -64,7 +64,7 @@ export default function CommonHero({
 
 
   return (
-    <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white overflow-hidden">
+    <section className="relative z-20 w-full h-[50vh] min-h-[350px] md:h-[65vh] md:min-h-[480px] lg:h-[100dvh] lg:min-h-[550px] flex items-center justify-center text-white overflow-hidden">
       {/* Background Media Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
         <AnimatePresence mode="wait">
@@ -163,8 +163,8 @@ export default function CommonHero({
         </motion.div>
       </div>
 
-      {/* Bounce scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      {/* Bounce scroll indicator - Hidden on mobile/tablet to save screen estate */}
+      <div className="hidden lg:block absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
           <div className="w-1 h-2 bg-white rounded-full animate-pulse" />
         </div>

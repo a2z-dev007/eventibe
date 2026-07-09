@@ -7,6 +7,8 @@ import Footer from '@/components/Footer';
 import SmoothScrolling from '@/components/SmoothScrolling';
 import QueryProvider from '@/contexts/QueryProvider';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { MobileNavProvider } from '@/contexts/MobileNavContext';
+// import MobileTabbar from '@/components/MobileTabbar';
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from "@/lib/utils";
 
@@ -35,12 +37,15 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`} suppressHydrationWarning>
         <QueryProvider>
           <AuthProvider>
-            <SmoothScrolling>
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </SmoothScrolling>
-            <Toaster position="top-right" richColors />
+            <MobileNavProvider>
+              <SmoothScrolling>
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+                {/* <MobileTabbar /> */}
+              </SmoothScrolling>
+              <Toaster position="top-right" richColors />
+            </MobileNavProvider>
           </AuthProvider>
         </QueryProvider>
       </body>

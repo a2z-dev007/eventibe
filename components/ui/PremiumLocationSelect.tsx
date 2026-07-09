@@ -19,6 +19,8 @@ interface PremiumLocationSelectProps {
   onMenuOpen?: () => void
   onMenuClose?: () => void
   required?: boolean
+  menuPortalTarget?: HTMLElement | null
+  dropdownStyle?: React.CSSProperties
 }
 
 const DropdownIndicator = (props: any) => {
@@ -52,6 +54,8 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
   onMenuOpen,
   onMenuClose,
   required = false,
+  menuPortalTarget,
+  dropdownStyle,
 }) => {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => { setMounted(true) }, [])
@@ -74,6 +78,10 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
   }
 
   const customStyles: StylesConfig = {
+    container: (provided) => ({
+      ...provided,
+      position: menuIsOpen ? 'static' : 'relative',
+    }),
     control: (provided) => ({
       ...provided,
       backgroundColor: 'transparent',
@@ -134,7 +142,7 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
       ...provided,
       borderRadius: '1.5rem',
       padding: '0.6rem',
-      backgroundColor: variant === 'glass' ? 'rgba(255, 255, 255, 0.82)' : '#ffffff',
+      backgroundColor: '#ffffff',
       backdropFilter: variant === 'glass' ? 'blur(24px) saturate(200%)' : 'none',
       WebkitBackdropFilter: variant === 'glass' ? 'blur(24px) saturate(200%)' : 'none',
       border: variant === 'glass' ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid #F1F5F9',
@@ -142,10 +150,13 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
       overflow: 'hidden',
       zIndex: 99999,
       marginTop: '0.5rem',
-      width: 'max-content',
-      minWidth: '100%',
-      left: '50%',
-      transform: 'translateX(-50%)',
+      ...(dropdownStyle || {
+        width: '320px',
+        maxWidth: '90vw',
+        minWidth: '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+      }) as any
     }),
     menuList: (provided) => ({
       ...provided,
@@ -187,7 +198,7 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
   }
 
   return (
-    <div className={`flex items-center relative ${className} ${containerClassName}`}>
+    <div className={`flex items-center ${menuIsOpen ? 'static' : 'relative'} ${className} ${containerClassName}`}>
       {icon && <div className="shrink-0 mr-2.5 transition-transform group-hover:scale-110">{icon}</div>}
       <div className="flex-1 text-left min-w-0">
         {label && <p className={`text-[12px] font-semibold capitalize mb-0.5 ${variant === 'glass' ? 'text-white/60' : 'text-gray-500'}`}>{label}</p>}
@@ -208,6 +219,7 @@ const PremiumLocationSelect: FC<PremiumLocationSelectProps> = ({
             menuIsOpen={menuIsOpen}
             onMenuOpen={onMenuOpen}
             onMenuClose={onMenuClose}
+            menuPortalTarget={menuPortalTarget}
           />
         )}
       </div>

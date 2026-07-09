@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -35,7 +37,8 @@
   --color-accent-orange: #F97316;
   --color-soft-slate: #334155;
   --color-border: hsl(var(--border));
-  --font-sans: var(--font-inter);
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
 }
 
 @layer utilities {
@@ -89,13 +92,72 @@
   }
 
   html {
-    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     @apply font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: "Outfit", sans-serif !important;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 32 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 202 94% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.animate-none {
+  animation: none !important;
+}
+
+.gradient-btn {
+
+  background: #FF610D;
+  background: linear-gradient(135deg, #FF610D, #EDBA82) !important;
+}
+
+.gradient-orange-bg {
+  background: #FF610D;
+  background: linear-gradient(135deg, #FF610D, #EDBA82) !important;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border) / 1);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -957,6 +1019,7 @@ button[disabled]:active {
   }
 }
 
+
 /* React DatePicker Portal Z-index - Force maximum z-index */
 .react-datepicker-popper {
   z-index: 999999 !important;
@@ -964,6 +1027,68 @@ button[disabled]:active {
 
 .react-datepicker__portal {
   z-index: 999999 !important;
+}
+
+/* Hide screen reader accessibility text visually from date picker headers */
+.react-datepicker__screen-reader-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Ensure react-select dropdowns always show centered under their parent elements when inline */
+.premium-select-container .premium-select__menu {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  max-width: calc(100vw - 2rem) !important;
+}
+
+/* Ensure react-select portals render above everything else */
+.premium-select__menu-portal {
+  z-index: 99999999 !important;
+}
+
+/* Restore react-select default positioning when portaled */
+.premium-select__menu-portal .premium-select__menu {
+  left: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+@media (max-width: 1023px) {
+  /* Center react-select dropdown menus at the bottom center of parent cards with 80vw width on mobile/tablet */
+  .premium-select-container .premium-select__menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 80vw !important;
+    min-width: 80vw !important;
+    max-width: 80vw !important;
+    margin-top: 8px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22) !important;
+    z-index: 1000 !important;
+  }
+
+  /* Center datepicker popper at the bottom center of parent card with 80vw width on mobile/tablet */
+  .react-datepicker-popper {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 80vw !important;
+    max-width: 80vw !important;
+    z-index: 1000 !important;
+  }
 }
 
 [data-radix-popper-content-wrapper] {

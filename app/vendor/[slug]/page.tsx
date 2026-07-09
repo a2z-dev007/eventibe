@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getVendorBySlug } from '@/lib/api';
 import { MapPin, Star, CheckCircle2, Briefcase } from 'lucide-react';
+import DetailMobileCTA from '@/components/ui/DetailMobileCTA';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -23,7 +24,7 @@ export default async function VendorDetailPage({ params }: { params: Promise<{ s
   }
 
   return (
-    <div className="bg-light-bg min-h-screen pb-20">
+    <div className="bg-light-bg min-h-screen pb-28 lg:pb-20">
       {/* Hero Image Gallery */}
       <div className="relative h-[40vh] md:h-[60vh] w-full bg-primary-navy">
         <Image
@@ -95,7 +96,7 @@ export default async function VendorDetailPage({ params }: { params: Promise<{ s
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1" id="inquiry-form">
             <div className="sticky top-24 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
               <h3 className="text-2xl font-bold text-primary-navy mb-2">Request Quote</h3>
               <p className="text-soft-slate mb-8">Contact {vendor.name} to discuss your event requirements.</p>
@@ -125,6 +126,7 @@ export default async function VendorDetailPage({ params }: { params: Promise<{ s
           </div>
         </div>
       </div>
+      <DetailMobileCTA price={vendor.price_range} targetId="inquiry-form" />
     </div>
   );
 }

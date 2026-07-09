@@ -27,15 +27,15 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white">
+      <section className="relative z-20 w-full min-h-[100dvh] lg:h-[100dvh] lg:min-h-[750px] flex items-center justify-center text-white pt-24 pb-16 lg:py-0 overflow-visible">
         {/* Background Dynamic Content (Video + Images) */}
         <DynamicHeroBackground currentIndex={index} onVideoEnd={() => {
           setIsVideoDone(true);
           setIndex(1);
         }} />
 
-        <div className="container mx-auto px-4 mt-4 md:px-6 relative flex flex-col items-center text-center mt-12 md:mt-16">
-          <div className="relative w-full flex flex-col items-center min-h-[160px] md:min-h-[280px]">
+        <div className="container mx-auto px-4 md:px-6 relative flex flex-col items-center text-center">
+          <div className="relative w-full flex flex-col items-center min-h-[140px] sm:min-h-[160px] md:min-h-[220px] lg:min-h-[280px]">
             <AnimatePresence>
               <motion.div
                 key={index}
@@ -45,13 +45,13 @@ export default function Home() {
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-x-0 top-0 flex flex-col items-center"
               >
-                <h1 className="text-2xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl">
+                <h1 className="text-2xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl font-display">
                   {current.title.main} <br className="hidden md:block" />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
                     {current.title.highlight}
                   </span>
                 </h1>
-                <p className="text-[12px] md:text-xl text-white/95 md:mb-10 max-w-2xl font-medium drop-shadow-md">
+                <p className="text-sm md:text-xl text-white/95 md:mb-10 max-w-2xl font-medium drop-shadow-md">
                   {current.desc}
                 </p>
               </motion.div>

@@ -277,6 +277,10 @@ function mapVenuesToWedding(records: VenueRecord[]): WeddingVenueCardData[] {
       : undefined;
     const tag = v.venue_type?.[0]?.name || v.event_type?.[0]?.name || 'Wedding Venue';
 
+    const cuisines = v.cuisine_details?.slice(0, 2).map((c) => c.name) || [];
+    const highlights = v.highlights_details?.slice(0, 2).map((h) => h.name) || [];
+    const packageName = v.package_details?.[0]?.name || '';
+
     return {
       id: `${v.id}-${i}`,
       name: v.name,
@@ -288,6 +292,9 @@ function mapVenuesToWedding(records: VenueRecord[]): WeddingVenueCardData[] {
       tag,
       href: `/venue/${v.slug || v.id}`,
       variant: variants[i % variants.length],
+      cuisines,
+      highlights,
+      packageName,
     };
   });
 }
@@ -318,6 +325,10 @@ function mapVenuesToPremium(records: VenueRecord[], isCorporate: boolean): Premi
     const tag = v.venue_type?.[0]?.name || (isCorporate ? 'Corporate' : 'Vendor');
     const amenity = v.amenities_details?.[0]?.name || 'Premium Service';
 
+    const cuisines = v.cuisine_details?.slice(0, 2).map((c) => c.name) || [];
+    const highlights = v.highlights_details?.slice(0, 2).map((h) => h.name) || [];
+    const packageName = v.package_details?.[0]?.name || '';
+
     return {
       id: `${v.id}-${i}`,
       name: v.name,
@@ -331,6 +342,9 @@ function mapVenuesToPremium(records: VenueRecord[], isCorporate: boolean): Premi
       amenity,
       href: `/venue/${v.slug || v.id}`,
       accent: isCorporate ? 'blue' : 'orange',
+      cuisines,
+      highlights,
+      packageName,
     };
   });
 }

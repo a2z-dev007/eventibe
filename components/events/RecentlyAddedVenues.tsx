@@ -113,22 +113,44 @@ export default function RecentlyAddedVenues() {
                       <span className="line-clamp-1">{venue.city_name}, {venue.state_name}</span>
                     </p>
 
+                    {/* Rich attributes: Cuisines & Highlights */}
+                    <div className="flex flex-col gap-1.5 mb-3">
+                      {venue.cuisine_details && venue.cuisine_details.length > 0 && (
+                        <p className="text-white/80 text-[10px] font-semibold truncate drop-shadow">
+                          🍽️ {venue.cuisine_details.slice(0, 2).map((c) => c.name).join(', ')}
+                        </p>
+                      )}
+                      {venue.highlights_details && venue.highlights_details.length > 0 && (
+                        <p className="text-white/80 text-[10px] font-semibold truncate drop-shadow">
+                          ✨ {venue.highlights_details.slice(0, 2).map((h) => h.name).join(', ')}
+                        </p>
+                      )}
+                    </div>
+
                     {/* Quick Info Pills */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1.5">
                         <Users className="w-3.5 h-3.5 text-white" />
-                        <span className="text-white text-[10px] font-bold">50-500</span>
+                        <span className="text-white text-[10px] font-bold">
+                          {venue.venue_configuration ? `${venue.venue_configuration} Guests` : '50-500'}
+                        </span>
                       </div>
                       <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5 text-white" />
-                        <span className="text-white text-[10px] font-bold">Available</span>
+                        <span className="text-white text-[10px] font-bold">
+                          {venue.package_details?.[0]?.price
+                            ? `₹${Number(venue.package_details[0].price).toLocaleString('en-IN')}`
+                            : 'Available'}
+                        </span>
                       </div>
                     </div>
 
                     {/* CTA Button */}
                     <div className="bg-[#FF9530] hover:bg-[#FF8000] text-white font-bold py-3 px-4 rounded-full text-center transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-orange-500/30">
                       <span className="flex items-center justify-center gap-2">
-                        Get Best Quote
+                        {venue.package_details?.[0]?.price
+                          ? `Book Package`
+                          : 'Get Best Quote'}
                         <Sparkles className="w-4 h-4" />
                       </span>
                     </div>

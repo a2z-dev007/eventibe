@@ -16,6 +16,9 @@ export interface WeddingVenueCardData {
   tag?: string;
   href: string;
   variant?: 'feature' | 'portrait' | 'landscape';
+  cuisines?: string[];
+  highlights?: string[];
+  packageName?: string;
 }
 
 const FALLBACK = 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80';
@@ -30,6 +33,9 @@ export default function WeddingVenueCard({
   tag,
   href,
   variant = 'portrait',
+  cuisines = [],
+  highlights = [],
+  packageName,
 }: WeddingVenueCardData) {
   const [src, setSrc] = useState(image || FALLBACK);
   const [liked, setLiked] = useState(false);
@@ -84,18 +90,40 @@ export default function WeddingVenueCard({
         </h3>
 
         {/* City */}
-        <div className="flex items-center gap-1 text-white/60 text-[10px] font-semibold mb-2.5">
+        <div className="flex items-center gap-1 text-white/60 text-[10px] font-semibold mb-2">
           <MapPin size={8} className="text-rose-400 shrink-0" />
           <span className="capitalize truncate">{city}</span>
         </div>
 
+        {/* Cuisines & Highlights info if available */}
+        {(packageName || (cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
+          <div className="flex flex-col gap-1 mb-2.5 text-[9px] text-white/75 font-semibold drop-shadow-sm">
+            {packageName && (
+              <p className="truncate">
+                Package: <span className="text-rose-300">{packageName}</span>
+              </p>
+            )}
+            {cuisines && cuisines.length > 0 && (
+              <p className="truncate">
+                Cuisines: <span className="text-white/90">{cuisines.join(', ')}</span>
+              </p>
+            )}
+            {highlights && highlights.length > 0 && (
+              <p className="truncate">
+                Highlights: <span className="text-white/90">{highlights.join(', ')}</span>
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Footer */}
         <div className="flex items-center justify-between gap-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2">
           <div className="min-w-0">
-            {/* {price && price !== 'Price on request' && !price.includes('NaN') ? (
-              <p className="text-[10px] font-black text-white truncate">{price || "See Details"}</p>
-              ) : null} */}
+            {price && price !== 'Price on request' && !price.includes('NaN') ? (
+              <p className="text-[10px] font-black text-white truncate">{price}</p>
+            ) : (
               <p className="text-[10px] font-black text-white truncate">Price on request</p>
+            )}
 
             {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 ? (
               <p className="flex items-center gap-1 text-[9px] text-white/45 font-medium">

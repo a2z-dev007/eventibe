@@ -152,7 +152,7 @@ function VenueTypesContent() {
             />
           </motion.div>
         </div>
-      </CommonHero>
+      </div>
 
       <div id="type-list-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="bg-white/50 backdrop-blur-xl border border-white rounded-3xl p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-8 mb-16 shadow-2xl shadow-gray-200/50">

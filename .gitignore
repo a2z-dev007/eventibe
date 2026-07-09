@@ -6,3 +6,10 @@ coverage/
 .env*
 !.env.example
 
+.agents
+.agent
+
+.graphify/
+graphify
+graphify.config.ts
+*graphify-out/

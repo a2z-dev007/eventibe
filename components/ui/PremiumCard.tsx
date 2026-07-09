@@ -18,6 +18,9 @@ export interface PremiumCardData {
   amenity?: string;      // single highlight amenity
   href: string;
   accent?: 'orange' | 'blue'; // accent colour for hover glow
+  cuisines?: string[];
+  highlights?: string[];
+  packageName?: string;
 }
 
 const FALLBACK = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80';
@@ -33,16 +36,19 @@ export default function PremiumCard({
   amenity,
   href,
   accent = 'orange',
+  cuisines = [],
+  highlights = [],
+  packageName,
 }: PremiumCardData) {
   const [src, setSrc] = useState(image || FALLBACK);
-  const isOrange = accent === 'orange';
-  const accentColor = isOrange
+  const [isOrange = accent === 'orange'] = []; // keep destructured vars compatible or local
+  const accentColor = accent === 'orange'
     ? 'text-accent-orange'
     : 'text-corporate-blue';
-  const accentBg = isOrange
+  const accentBg = accent === 'orange'
     ? 'bg-accent-orange'
     : 'bg-corporate-blue';
-  const glowClass = isOrange
+  const glowClass = accent === 'orange'
     ? 'group-hover:shadow-[0_20px_60px_-10px_rgba(249,115,22,0.35)]'
     : 'group-hover:shadow-[0_20px_60px_-10px_rgba(30,58,138,0.35)]';
 
@@ -102,7 +108,7 @@ export default function PremiumCard({
         </div>
 
         {/* Chips row — capacity + amenity */}
-        {((capacity && !isNaN(Number(capacity)) && Number(capacity) > 0) || amenity) && (
+        {((capacity && !isNaN(Number(capacity)) && Number(capacity) > 0) || amenity || (cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
           <div className="flex flex-wrap gap-2">
             {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 && (
               <span className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
@@ -116,6 +122,24 @@ export default function PremiumCard({
                 {amenity}
               </span>
             )}
+            {cuisines && cuisines.slice(0, 2).map((c, i) => (
+              <span key={i} className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
+                <span className={`w-1.5 h-1.5 rounded-full ${accentBg}`} />
+                {c}
+              </span>
+            ))}
+            {highlights && highlights.slice(0, 2).map((h, i) => (
+              <span key={i} className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
+                <span className={`w-1.5 h-1.5 rounded-full bg-slate-300`} />
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {packageName && (
+          <div className="text-[11px] font-semibold text-soft-slate">
+            Package: <span className="text-primary-navy font-bold">{packageName}</span>
           </div>
         )}
 

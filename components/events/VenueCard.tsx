@@ -15,9 +15,24 @@ interface VenueCardProps {
   capacity: string
   price: string
   img: string
+  venueType?: string
+  cuisines?: string[]
+  highlights?: string[]
 }
 
-export default function VenueCard({ id, slug, name, city, rating, capacity, price, img }: VenueCardProps) {
+export default function VenueCard({
+  id,
+  slug,
+  name,
+  city,
+  rating,
+  capacity,
+  price,
+  img,
+  venueType,
+  cuisines = [],
+  highlights = [],
+}: VenueCardProps) {
   const router = useRouter()
   const detailsHref = `/events/details/${slug || toSlug(name)}`
 
@@ -74,13 +89,34 @@ export default function VenueCard({ id, slug, name, city, rating, capacity, pric
       {/* Content */}
       <div className="p-5">
         <div className="flex flex-col gap-1.5 mb-4">
-          <div className="flex items-center gap-1 text-[#FF9530]">
-            <MapPin className="w-3 h-3" />
-            <span className="text-[10px] font-bold uppercase tracking-wider">{city}</span>
+          <div className="flex items-center justify-between gap-1 text-[#FF9530]">
+            <div className="flex items-center gap-1">
+              <MapPin className="w-3 h-3" />
+              <span className="text-[10px] font-bold uppercase tracking-wider">{city}</span>
+            </div>
+            {venueType && (
+              <span className="text-[9px] font-bold uppercase bg-orange-50 px-2 py-0.5 rounded text-[#FF9530]">
+                {venueType}
+              </span>
+            )}
           </div>
-          <h3 className="font-bold text-gray-900 text-lg leading-tight group-hover:text-[#FF9530] transition-colors line-clamp-1">
+          <h3 className="font-bold text-gray-900 text-lg leading-tight group-hover:text-[#FF9530] transition-colors line-clamp-1" title={name}>
             {name}
           </h3>
+          {(cuisines.length > 0 || highlights.length > 0) && (
+            <div className="flex flex-col gap-1 mt-1 text-[11px] text-gray-500 font-semibold leading-normal">
+              {cuisines.length > 0 && (
+                <div className="truncate">
+                  🍽️ <span className="text-gray-600 font-bold">{cuisines.join(', ')}</span>
+                </div>
+              )}
+              {highlights.length > 0 && (
+                <div className="truncate">
+                  ✨ <span className="text-gray-600 font-bold">{highlights.join(', ')}</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between pt-4 border-t border-gray-50">
