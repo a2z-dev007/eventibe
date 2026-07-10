@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from "axios";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-export const IMAGE_BASE_URL = "https://api.spodia.com"
+export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.spodia.com/api';
+export const IMAGE_BASE_URL = "https://api.spodia.com";
 
 // Custom error class for API errors
 export class ApiError extends Error {

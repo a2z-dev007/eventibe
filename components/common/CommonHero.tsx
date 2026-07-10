@@ -140,7 +140,7 @@ export default function CommonHero({
             </div>
           )}
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
             {titleMain}
             {titleHighlight && (
               <>

@@ -127,7 +127,7 @@ export default function VenueTypesCarousel() {
                   </div>
                   
                   <div className="text-center transition-all duration-300">
-                    <h3 className="text-base sm:text-lg font-extrabold text-gray-900 group-hover:text-[#FF9530] transition-colors leading-tight px-2">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-[#FF9530] transition-colors leading-tight px-2">
                       {v.name}
                     </h3>
                   </div>

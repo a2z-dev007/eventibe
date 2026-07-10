@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { ChevronLeft, ChevronRight, FileText, Download, Utensils } from 'lucide-react'
 import { SectionHeading, ExpandableText } from './SharedComponents'
 
@@ -27,6 +28,8 @@ interface EventCuisineProps {
 }
 
 export function EventCuisine({ cuisines, menus, getImageUrl, venueTitle, venueLoc }: EventCuisineProps) {
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
   const cuisinesScrollRef = useRef<HTMLDivElement>(null)
   const [isDraggingCuisine, setIsDraggingCuisine] = useState(false)
   const [isHoveringCuisine, setIsHoveringCuisine] = useState(false)
@@ -138,9 +141,9 @@ export function EventCuisine({ cuisines, menus, getImageUrl, venueTitle, venueLo
         <div className="mt-12 md:mt-10 pt-10 border-t border-gray-100">
           <div className="mb-8 flex items-center gap-3">
             <div className="w-8 h-1 bg-[#FF9530] rounded-full" />
-            <h4 className="text-[12px] md:text-xl font-black text-gray-900 uppercase tracking-widest flex items-center gap-2">
+            <h4 className="text-[12px] md:text-xl font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#FF9530]" />
-              Download Event & Banquet Menu at <span className="text-[#FF9530]">{venueTitle}, {venueLoc}</span>
+              Download {isVenuePage ? 'Venue' : 'Event'} & Banquet Menu at <span className="text-[#FF9530]">{venueTitle}, {venueLoc}</span>
             </h4>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">

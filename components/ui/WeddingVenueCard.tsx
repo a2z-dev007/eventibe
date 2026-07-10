@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Heart, Users, ArrowUpRight } from 'lucide-react';
+import { MapPin, Heart, Users, ArrowUpRight, Star } from 'lucide-react';
 
 
 export interface WeddingVenueCardData {
@@ -22,6 +22,17 @@ export interface WeddingVenueCardData {
 }
 
 const FALLBACK = 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80';
+
+const cleanPrice = (priceStr?: string) => {
+  if (!priceStr) return '';
+  return priceStr
+    .replace(/\/[\s]*(pax|plate|plat)/gi, '')
+    .replace(/per[\s]*(pax|plate|plat)/gi, '')
+    .replace(/[\s]*(pax|plate|plat)/gi, '')
+    .trim()
+    .replace(/\/+$/, '')
+    .trim();
+};
 
 export default function WeddingVenueCard({
   name,
@@ -65,25 +76,33 @@ export default function WeddingVenueCard({
       </div>
 
       {/* ── Top row ────────────────────────────── */}
-      <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+      <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-[2]">
         {tag && (
-          <span className="shrink-0 max-w-[calc(100%-40px)] truncate text-[9px] font-black uppercase tracking-[0.18em] text-white bg-black/50 backdrop-blur-sm border border-white/15 rounded-full px-2.5 py-1">
+          <span className="shrink-0 max-w-[calc(100%-100px)] truncate text-[9px] font-bold uppercase tracking-[0.18em] text-white bg-black/50 backdrop-blur-sm border border-white/15 rounded-full px-2.5 py-1">
             {tag}
           </span>
         )}
-        <button
-          onClick={(e) => { e.preventDefault(); setLiked(!liked); }}
-          className={`ml-auto shrink-0 w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-sm border transition-all duration-300 ${liked ? 'bg-rose-500 border-rose-400 text-white' : 'bg-black/40 border-white/15 text-white'}`}
-          aria-label="Save to wishlist"
-        >
-          <Heart size={11} className={liked ? 'fill-white' : ''} />
-        </button>
+        <div className="flex items-center gap-2 ml-auto shrink-0">
+          {rating !== undefined && (
+            <div className="flex items-center gap-1 bg-black/55 backdrop-blur-md border border-white/15 rounded-full px-2 py-0.5 shadow-sm text-white">
+              <Star size={9} className="fill-accent-orange text-accent-orange flex-shrink-0" />
+              <span className="text-[10px] font-bold">{rating.toFixed(1)}</span>
+            </div>
+          )}
+          <button
+            onClick={(e) => { e.preventDefault(); setLiked(!liked); }}
+            className={`w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-sm border transition-all duration-300 ${liked ? 'bg-rose-500 border-rose-400 text-white' : 'bg-black/40 border-white/15 text-white'}`}
+            aria-label="Save to wishlist"
+          >
+            <Heart size={11} className={liked ? 'fill-white' : ''} />
+          </button>
+        </div>
       </div>
 
       {/* ── Bottom content ──────────────────────── */}
       <div className="absolute bottom-0 left-0 right-0 p-3.5">
         {/* Name */}
-        <h3 className="font-black text-white leading-tight tracking-tight line-clamp-2 mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] transition-colors duration-300 group-hover:text-rose-100"
+        <h3 className="font-bold text-white leading-tight tracking-tight line-clamp-2 mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] transition-colors duration-300 group-hover:text-rose-100"
           style={{ fontSize: variant === 'feature' ? '1.15rem' : '0.9rem' }}
         >
           {name}
@@ -95,22 +114,17 @@ export default function WeddingVenueCard({
           <span className="capitalize truncate">{city}</span>
         </div>
 
-        {/* Cuisines & Highlights info if available */}
+        {/* Cuisines & Highlights info inline (max 2 rows) */}
         {(packageName || (cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
-          <div className="flex flex-col gap-1 mb-2.5 text-[9px] text-white/75 font-semibold drop-shadow-sm">
+          <div className="flex flex-col gap-0.5 mb-2 text-[9px] text-white/75 font-semibold drop-shadow-sm">
             {packageName && (
-              <p className="truncate">
+              <p className="truncate" title={packageName}>
                 Package: <span className="text-rose-300">{packageName}</span>
               </p>
             )}
-            {cuisines && cuisines.length > 0 && (
-              <p className="truncate">
-                Cuisines: <span className="text-white/90">{cuisines.join(', ')}</span>
-              </p>
-            )}
-            {highlights && highlights.length > 0 && (
-              <p className="truncate">
-                Highlights: <span className="text-white/90">{highlights.join(', ')}</span>
+            {((cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
+              <p className="truncate text-white/90" title={[...(cuisines || []), ...(highlights || [])].join(' • ')}>
+                {[...(cuisines || []), ...(highlights || [])].join(' • ')}
               </p>
             )}
           </div>
@@ -120,9 +134,9 @@ export default function WeddingVenueCard({
         <div className="flex items-center justify-between gap-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2">
           <div className="min-w-0">
             {price && price !== 'Price on request' && !price.includes('NaN') ? (
-              <p className="text-[10px] font-black text-white truncate">{price}</p>
+              <p className="text-[10px] font-bold text-white truncate">{cleanPrice(price)}</p>
             ) : (
-              <p className="text-[10px] font-black text-white truncate">Price on request</p>
+              <p className="text-[10px] font-bold text-white truncate">Price on request</p>
             )}
 
             {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 ? (

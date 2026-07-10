@@ -25,6 +25,17 @@ export interface PremiumCardData {
 
 const FALLBACK = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80';
 
+const cleanPrice = (priceStr?: string) => {
+  if (!priceStr) return '';
+  return priceStr
+    .replace(/\/[\s]*(pax|plate|plat)/gi, '')
+    .replace(/per[\s]*(pax|plate|plat)/gi, '')
+    .replace(/[\s]*(pax|plate|plat)/gi, '')
+    .trim()
+    .replace(/\/+$/, '')
+    .trim();
+};
+
 export default function PremiumCard({
   name,
   city,
@@ -59,7 +70,7 @@ export default function PremiumCard({
       className={`group relative flex flex-col rounded-[28px] overflow-hidden bg-white shadow-md hover:-translate-y-2 transition-all duration-500 ${glowClass} h-full`}
     >
       {/* ── Image area ──────────────────────────────── */}
-      <div className="relative h-52 overflow-hidden flex-shrink-0">
+      <div className="relative h-48 overflow-hidden flex-shrink-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
@@ -71,7 +82,7 @@ export default function PremiumCard({
 
         {/* Top-left category tag */}
         {tag && (
-          <div className={`absolute top-3 left-3 ${accentBg} text-white text-[10px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-xl shadow-sm`}>
+          <div className={`absolute top-3 left-3 ${accentBg} text-white text-[10px] font-extrabold uppercase tracking-[0.15em] px-2.5 py-1 rounded-xl shadow-sm`}>
             {tag}
           </div>
         )}
@@ -80,7 +91,7 @@ export default function PremiumCard({
         {rating !== undefined && (
           <div className="absolute top-3 right-3 flex items-center gap-1 bg-white/80 backdrop-blur-md border border-white/60 rounded-xl px-2.5 py-1 shadow-sm">
             <Star size={11} className="fill-accent-orange text-accent-orange flex-shrink-0" />
-            <span className="text-[12px] font-black text-primary-navy">{rating.toFixed(1)}</span>
+            <span className="text-[12px] font-extrabold text-primary-navy">{rating.toFixed(1)}</span>
           </div>
         )}
 
@@ -94,10 +105,10 @@ export default function PremiumCard({
       </div>
 
       {/* ── Content area ────────────────────────────── */}
-      <div className="flex flex-col flex-1 px-5 pt-4 pb-5 gap-3">
+      <div className="flex flex-col flex-1 p-4 sm:p-5 gap-2.5">
 
         {/* Name */}
-        <h3 className={`text-[15px] font-black text-primary-navy leading-snug line-clamp-2 group-hover:${accentColor} transition-colors duration-300`}>
+        <h3 className={`text-[15px] font-bold text-primary-navy leading-snug line-clamp-2 group-hover:${accentColor} transition-colors duration-300`}>
           {name}
         </h3>
 
@@ -107,9 +118,9 @@ export default function PremiumCard({
           <span className="capitalize truncate">{city}</span>
         </div>
 
-        {/* Chips row — capacity + amenity */}
-        {((capacity && !isNaN(Number(capacity)) && Number(capacity) > 0) || amenity || (cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
-          <div className="flex flex-wrap gap-2">
+        {/* Primary Tags Row (Max 2 pills side-by-side) */}
+        {((capacity && !isNaN(Number(capacity)) && Number(capacity) > 0) || amenity) && (
+          <div className="flex flex-wrap items-center gap-2">
             {capacity && !isNaN(Number(capacity)) && Number(capacity) > 0 && (
               <span className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
                 <Users size={10} className={accentColor} />
@@ -122,23 +133,18 @@ export default function PremiumCard({
                 {amenity}
               </span>
             )}
-            {cuisines && cuisines.slice(0, 2).map((c, i) => (
-              <span key={i} className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
-                <span className={`w-1.5 h-1.5 rounded-full ${accentBg}`} />
-                {c}
-              </span>
-            ))}
-            {highlights && highlights.slice(0, 2).map((h, i) => (
-              <span key={i} className="flex items-center gap-1 text-[11px] font-bold text-soft-slate bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1">
-                <span className={`w-1.5 h-1.5 rounded-full bg-slate-300`} />
-                {h}
-              </span>
-            ))}
+          </div>
+        )}
+
+        {/* Cuisines & Highlights inline detail row */}
+        {((cuisines && cuisines.length > 0) || (highlights && highlights.length > 0)) && (
+          <div className="text-[11px] text-soft-slate/70 font-medium truncate mt-0.5" title={[...(cuisines || []), ...(highlights || [])].join(' • ')}>
+            {[...(cuisines || []), ...(highlights || [])].join(' • ')}
           </div>
         )}
 
         {packageName && (
-          <div className="text-[11px] font-semibold text-soft-slate">
+          <div className="text-[11px] font-semibold text-soft-slate truncate" title={packageName}>
             Package: <span className="text-primary-navy font-bold">{packageName}</span>
           </div>
         )}
@@ -149,10 +155,10 @@ export default function PremiumCard({
         {/* ── Footer strip ────────────────────────────── */}
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
           {price && price !== 'Custom Quote' && !price.includes('NaN') ? (
-            <span className="text-sm font-black text-primary-navy">{price}</span>
+            <span className="text-sm font-bold text-primary-navy">{cleanPrice(price)}</span>
           ) : null}
 
-          <span className={`inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider ${accentColor} group-hover:gap-2 transition-all duration-300 ml-auto`}>
+          <span className={`inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider ${accentColor} group-hover:gap-2 transition-all duration-300 ml-auto`}>
             View
             <ArrowUpRight size={13} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </span>

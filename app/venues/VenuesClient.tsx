@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Search, Sparkles, SlidersHorizontal, MapPin } from 'lucide-react';
 import PremiumCard, { PremiumCardData } from '@/components/ui/PremiumCard';
 import { searchVenues, VenueRecord } from '@/lib/api/eventsEndpoints';
+import { Pagination } from '@/components/ui/pagination';
 
 const RECORDS_PER_PAGE = 20;
 
@@ -236,53 +237,13 @@ export default function VenuesClient() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-20 flex justify-center items-center gap-3">
-                {/* Previous Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === 1
-                      ? 'border-slate-200/50 bg-white/40 text-slate-300 cursor-not-allowed'
-                      : 'border-slate-200 bg-white text-primary-navy hover:bg-primary-navy hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Previous Page"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: totalPages }).map((_, idx) => {
-                  const pageNumber = idx + 1;
-                  const isCurrent = pageNumber === currentPage;
-                  return (
-                    <button
-                      key={pageNumber}
-                      onClick={() => handlePageChange(pageNumber)}
-                      className={`w-12 h-12 rounded-xl text-sm font-black transition-all ${
-                        isCurrent
-                          ? 'bg-primary-navy text-white shadow-lg shadow-slate-900/10 scale-105'
-                          : 'border border-slate-200 bg-white text-primary-navy hover:bg-slate-50/50 shadow-sm active:scale-95'
-                      }`}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                })}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === totalPages
-                      ? 'border-slate-200/50 bg-white/40 text-slate-300 cursor-not-allowed'
-                      : 'border-slate-200 bg-white text-primary-navy hover:bg-primary-navy hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Next Page"
-                >
-                  <ChevronRight size={20} />
-                </button>
+              <div className="mt-20">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  variant="default"
+                />
               </div>
             )}
           </>

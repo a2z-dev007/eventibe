@@ -107,7 +107,7 @@ const LoginForm = () => {
             priority
           />
         </div>
-        <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Welcome Back</h1>
+        <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Welcome Back</h1>
         <p className="text-white/70 font-medium text-sm">Sign in to your Eventibe account</p>
       </div>
 

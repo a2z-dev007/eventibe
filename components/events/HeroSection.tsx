@@ -59,7 +59,7 @@ export default function HeroSection() {
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-x-0 top-0 flex flex-col items-center"
             >
-              <h1 className="text-2xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl font-display">
+              <h1 className="text-2xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-2 md:mb-4 max-w-5xl leading-tight drop-shadow-xl font-display">
                 {currentText.title.main} <br className="hidden md:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
                   {currentText.title.highlight}

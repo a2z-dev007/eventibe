@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Search, Sparkles, SlidersHorizontal, MapPin } from 'lucide-react';
 import WeddingVenueCard, { WeddingVenueCardData } from '@/components/ui/WeddingVenueCard';
 import { searchVenues, VenueRecord } from '@/lib/api/eventsEndpoints';
+import { Pagination } from '@/components/ui/pagination';
 
 const RECORDS_PER_PAGE = 6;
 
@@ -96,6 +97,9 @@ export default function WeddingVenuesClient() {
       ? parsedCapacity
       : undefined;
     const tag = v.venue_type?.[0]?.name || v.event_type?.[0]?.name || 'Wedding Venue';
+    const cuisines = v.cuisine_details?.slice(0, 2).map((c: any) => c.name) || [];
+    const highlights = v.highlights_details?.slice(0, 2).map((h: any) => h.name) || [];
+    const packageName = v.package_details?.[0]?.name || '';
 
     return {
       id: v.id,
@@ -108,6 +112,9 @@ export default function WeddingVenuesClient() {
       tag,
       href: `/venue/${v.slug || v.id}`,
       variant: 'portrait' as const,
+      cuisines,
+      highlights,
+      packageName,
     };
   });
 
@@ -226,53 +233,13 @@ export default function WeddingVenuesClient() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-20 flex justify-center items-center gap-3">
-                {/* Previous Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === 1
-                      ? 'border-rose-100/50 bg-white/40 text-rose-300 cursor-not-allowed'
-                      : 'border-rose-100 bg-white text-rose-500 hover:bg-rose-500 hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Previous Page"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: totalPages }).map((_, idx) => {
-                  const pageNumber = idx + 1;
-                  const isCurrent = pageNumber === currentPage;
-                  return (
-                    <button
-                      key={pageNumber}
-                      onClick={() => handlePageChange(pageNumber)}
-                      className={`w-12 h-12 rounded-xl text-sm font-black transition-all ${
-                        isCurrent
-                          ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg shadow-rose-500/25 scale-105'
-                          : 'border border-rose-100 bg-white text-primary-navy hover:bg-rose-50/50 shadow-sm active:scale-95'
-                      }`}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                })}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === totalPages
-                      ? 'border-rose-100/50 bg-white/40 text-rose-300 cursor-not-allowed'
-                      : 'border-rose-100 bg-white text-rose-500 hover:bg-rose-500 hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Next Page"
-                >
-                  <ChevronRight size={20} />
-                </button>
+              <div className="mt-20">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  variant="wedding"
+                />
               </div>
             )}
           </>

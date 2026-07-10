@@ -162,7 +162,7 @@ export default function BlogInteractions({
 
       {/* Comment Section */}
       <div>
-        <h3 className="text-xl font-extrabold text-[#0B1F3A] mb-8">
+        <h3 className="text-xl font-bold text-[#0B1F3A] mb-8">
           Discussion ({comments.length})
         </h3>
 

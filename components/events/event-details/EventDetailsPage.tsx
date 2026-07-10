@@ -170,6 +170,7 @@ export function EventDetailsPage() {
               setCurrentVideoIdx(0);
               setIsVideoModalOpen(true);
             }}
+            venue={venue}
           />
 
           <div className="pt-2 md:pt-4" />

@@ -30,7 +30,7 @@ export default function VendorCard({ vendor }: { vendor: Vendor }) {
       
       {/* Content Area */}
       <div className="p-6 flex flex-col flex-grow gap-3">
-        <h3 className="text-[16px] font-black text-primary-navy leading-snug line-clamp-2 group-hover:text-corporate-blue transition-colors duration-300">
+        <h3 className="text-[16px] font-bold text-primary-navy leading-snug line-clamp-2 group-hover:text-corporate-blue transition-colors duration-300">
           {vendor.name}
         </h3>
         

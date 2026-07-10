@@ -8,7 +8,7 @@ export default function WhySpodiaSection() {
       <div className="max-w-7xl mx-auto">
         {/* Section Heading - Left Aligned */}
         <div className="mb-16 flex flex-col items-center justify-center">
-          <h2 className="text-3xl lg:text-5xl font-black text-gray-900 tracking-tight">
+          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 tracking-tight">
             Why Choose <span className="text-[#FF9530]">Spodia</span>
           </h2>
           <p className="text-gray-500 font-medium mt-4 max-w-2xl">
@@ -84,7 +84,7 @@ export default function WhySpodiaSection() {
               <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform">
                 {c.icon}
               </div>
-              <h3 className="font-black text-gray-900 text-lg mb-3 tracking-tight group-hover:text-[#FF9530] transition-colors">{c.title}</h3>
+              <h3 className="font-bold text-gray-900 text-lg mb-3 tracking-tight group-hover:text-[#FF9530] transition-colors">{c.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed font-medium">{c.desc}</p>
             </div>
           ))}

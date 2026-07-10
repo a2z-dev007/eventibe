@@ -66,7 +66,7 @@ const SuccessModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
         <button onClick={onClose} className="absolute top-6 right-6 text-white/30 hover:text-white transition-colors"><X className="w-6 h-6" /></button>
         <div className="flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-accent-orange/10 border border-accent-orange/20 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-orange-500/5"><CheckCircle className="w-10 h-10 text-accent-orange" /></div>
-          <h2 className="text-3xl font-black text-white mb-3 tracking-tighter">Account Created!</h2>
+          <h2 className="text-3xl font-bold text-white mb-3 tracking-tighter">Account Created!</h2>
           <p className="text-white/60 text-lg font-medium leading-relaxed mb-8">Welcome to Eventibe! Your account has been successfully set up. You can now log in and start exploring.</p>
           <Link href="/login" className="w-full bg-cta-gradient text-white h-14 rounded-2xl flex items-center justify-center text-lg font-bold shadow-lg shadow-orange-500/20 hover:scale-[1.02] active:scale-95 transition-all">Go to Login</Link>
         </div>
@@ -233,7 +233,7 @@ const SignupForm = () => {
               priority
             />
           </div>
-          <h1 className="text-xl sm:text-3xl font-extrabold text-white mb-1 sm:mb-2 tracking-tight">Create Account</h1>
+          <h1 className="text-xl sm:text-3xl font-bold text-white mb-1 sm:mb-2 tracking-tight">Create Account</h1>
           <p className="text-white/60 text-xs sm:text-base font-medium">Join Eventibe and start your journey</p>
         </div>
 

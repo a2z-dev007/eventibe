@@ -1,5 +1,7 @@
 "use client"
 import { useState, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
+import { useScrollLock } from "@/hooks/useScrollLock"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize, Grid3X3, Play, Pause } from "lucide-react"
 import Image from "next/image"
 import { useSwipeable } from "react-swipeable"
@@ -23,6 +25,12 @@ export function Lightbox({
 }: LightboxProps) {
     const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([])
     const [zoom, setZoom] = useState(1)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+        return () => setMounted(false)
+    }, [])
     const [showThumbnails, setShowThumbnails] = useState(true)
     const [isFullscreen, setIsFullscreen] = useState(false)
     const [isSlideshow, setIsSlideshow] = useState(false)
@@ -178,23 +186,14 @@ export function Lightbox({
     }, [isOpen, currentIndex])
 
     // Prevent body scroll when lightbox is open
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = 'unset'
-        }
+    useScrollLock(isOpen)
 
-        return () => {
-            document.body.style.overflow = 'unset'
-        }
-    }, [isOpen])
+    if (!isOpen || images.length === 0 || !mounted) return null
 
-    if (!isOpen || images.length === 0) return null
-
-    return (
+    return createPortal(
         <div
-            className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center"
+            data-lenis-prevent
+            className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-sm flex items-center justify-center"
             {...generalHandlers}
         >
             <div className="relative w-full h-full flex flex-col items-center justify-center p-2 sm:p-4">
@@ -269,13 +268,13 @@ export function Lightbox({
                     </button>
                 </div>
 
-                {/* Navigation Arrows at Viewport Edges (desktop only) */}
+                {/* Navigation Arrows at Viewport Edges (desktop/tablet only) */}
                 {images.length > 1 && (
                     <>
                         {/* Left Arrow */}
                         <button
                             onClick={prevImage}
-                            className="hidden lg:flex absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors z-10"
+                            className="hidden md:flex absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors z-10"
                         >
                             <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                         </button>
@@ -283,7 +282,7 @@ export function Lightbox({
                         {/* Right Arrow */}
                         <button
                             onClick={nextImage}
-                            className="hidden lg:flex absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors z-10"
+                            className="hidden md:flex absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors z-10"
                         >
                             <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                         </button>
@@ -291,7 +290,7 @@ export function Lightbox({
                 )}
 
                 {/* Main Image */}
-                <div className="relative w-full h-[60vh] sm:w-[85%] sm:h-[68vh] px-2 sm:px-12 md:mb-6 md-2 flex items-center justify-center">
+                <div className="relative w-full h-[60vh] sm:w-[90%] sm:h-[70vh] lg:w-[95%] lg:h-[75vh] px-2 sm:px-12 flex items-center justify-center">
                     {/* Main Image Container with Enhanced Swipe and Zoom */}
                     <div
                         className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing touch-pan-x"
@@ -309,10 +308,10 @@ export function Lightbox({
                             <Image
                                 src={images[currentIndex]}
                                 alt={`${altText} ${currentIndex + 1}`}
-                                width={1200}
-                                height={800}
-                                className="select-none rounded-[16px] max-w-full max-h-[60vh] sm:max-h-[68vh] w-auto h-auto object-contain"
-                                sizes="(max-width: 640px) 100vw, 85vw"
+                                width={2400}
+                                height={1600}
+                                className="select-none rounded-[16px] max-w-full max-h-[60vh] sm:max-h-[70vh] lg:max-h-[75vh] w-auto h-auto object-contain"
+                                sizes="100vw"
                                 priority
                                 draggable={false}
                                 style={{
@@ -325,12 +324,12 @@ export function Lightbox({
                         {images.length > 1 && (
                             <>
                                 <div
-                                    className="absolute left-0 top-0 w-1/3 h-full z-10 lg:hidden"
+                                    className="absolute left-0 top-0 w-1/3 h-full z-10 md:hidden"
                                     onClick={prevImage}
                                     style={{ touchAction: 'manipulation' }}
                                 />
                                 <div
-                                    className="absolute right-0 top-0 w-1/3 h-full z-10 lg:hidden"
+                                    className="absolute right-0 top-0 w-1/3 h-full z-10 md:hidden"
                                     onClick={nextImage}
                                     style={{ touchAction: 'manipulation' }}
                                 />
@@ -339,55 +338,64 @@ export function Lightbox({
                     </div>
                 </div>
 
-                {/* Arrow Buttons (mobile/tablet below image) */}
-                {images.length > 1 && (
-                    <div className="flex md:hidden items-center justify-center gap-6 mt-3 sm:mt-4">
-                        <button
-                            onClick={prevImage}
-                            className="p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors"
-                        >
-                            <ChevronLeft className="w-6 h-6 text-white" />
-                        </button>
-                        <button
-                            onClick={nextImage}
-                            className="p-2 sm:p-3 bg-white/20 hover:bg-white/30 rounded-full shadow-md transition-colors"
-                        >
-                            <ChevronRight className="w-6 h-6 text-white" />
-                        </button>
-                    </div>
-                )}
+                {/* Bottom Controls Bar (non-overlapping layout) */}
+                <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-3 w-full px-4 z-10 select-none">
+                    {/* Thumbnail Strip (scrollable & auto-center) */}
+                    {images.length > 1 && showThumbnails && (
+                        <div className="flex gap-2 max-w-full overflow-x-auto px-4 py-1.5 hide-scrollbar transition-opacity duration-300 bg-black/45 backdrop-blur-md rounded-2xl border border-white/5">
+                            {images.map((image, index) => (
+                                <button
+                                    key={index}
+                                    ref={(el) => {
+                                        thumbnailRefs.current[index] = el
+                                    }}
+                                    onClick={() => onIndexChange(index)}
+                                    className={`relative w-14 h-10 sm:w-16 sm:h-12 flex-shrink-0 rounded overflow-hidden border-2 transition-all duration-300 ${index === currentIndex
+                                        ? "border-white bg-white/20 scale-110 shadow-lg"
+                                        : "border-transparent bg-black/40 hover:bg-black/60"
+                                        }`}
+                                >
+                                    <Image
+                                        src={image}
+                                        alt=""
+                                        fill
+                                        className="object-cover rounded"
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                    )}
 
-                {/* Image Counter */}
-                {images.length > 1 && showThumbnails && (<div className="absolute bottom-8 sm:bottom-8 left-1/2 transform -translate-x-1/2 px-3 sm:px-2 py-1.5 sm:py-1 bg-white/50 backdrop-blur-sm text-white text-xs sm:text-sm rounded-full">
-                    {currentIndex + 1} / {images.length}
-                </div>)}
-
-
-                {/* Thumbnail Strip (scrollable & auto-center) */}
-                {images.length > 1 && showThumbnails && (
-                    <div className="absolute bottom-24 sm:bottom-24 left-1/2 transform -translate-x-1/2 flex gap-2 max-w-full overflow-x-auto px-2 sm:p-2 hide-scrollbar transition-opacity duration-300">
-                        {images.map((image, index) => (
+                    {/* Navigation Row (Mobile Arrows and Counter) */}
+                    <div className="flex items-center gap-6">
+                        {/* Prev Button (Mobile only) */}
+                        {images.length > 1 && (
                             <button
-                                key={index}
-                                ref={(el) => {
-                                    thumbnailRefs.current[index] = el
-                                }}
-                                onClick={() => onIndexChange(index)}
-                                className={`relative w-14 h-10 sm:w-16 sm:h-12 flex-shrink-0 rounded overflow-hidden border-2 transition-all duration-300 ${index === currentIndex
-                                    ? "border-white bg-white/20 scale-110 shadow-lg"
-                                    : "border-transparent bg-black/40 hover:bg-black/60"
-                                    }`}
+                                onClick={prevImage}
+                                className="md:hidden p-2.5 bg-white/10 hover:bg-white/20 active:scale-90 rounded-full shadow-md transition-all text-white border border-white/5"
                             >
-                                <Image
-                                    src={image}
-                                    alt=""
-                                    fill
-                                    className="object-cover rounded"
-                                />
+                                <ChevronLeft className="w-5 h-5" />
                             </button>
-                        ))}
+                        )}
+
+                        {/* Image Counter */}
+                        {images.length > 1 && (
+                            <div className="px-4 py-1.5 bg-black/55 border border-white/10 backdrop-blur-md text-white text-xs sm:text-sm rounded-full font-semibold tracking-wider shadow-md">
+                                {currentIndex + 1} / {images.length}
+                            </div>
+                        )}
+
+                        {/* Next Button (Mobile only) */}
+                        {images.length > 1 && (
+                            <button
+                                onClick={nextImage}
+                                className="md:hidden p-2.5 bg-white/10 hover:bg-white/20 active:scale-90 rounded-full shadow-md transition-all text-white border border-white/5"
+                            >
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        )}
                     </div>
-                )}
+                </div>
 
                 {/* Zoom Level Indicator */}
                 {zoom !== 1 && (
@@ -396,7 +404,8 @@ export function Lightbox({
                     </div>
                 )}
             </div>
-        </div>
+        </div>,
+        document.body
     )
 }
 

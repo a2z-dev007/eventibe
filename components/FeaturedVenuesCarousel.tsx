@@ -138,7 +138,7 @@ export default function FeaturedVenuesCarousel() {
                 Explore Venue Types
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy tracking-tight leading-tight">
               Find Venues for Every <br className="hidden md:block" />
               <span className="text-accent-orange">Occasion</span>
             </h2>
@@ -304,7 +304,7 @@ function VenueTypeCard({
             " />
             {/* Text always visible, just changes color on hover */}
             <div className="relative z-10">
-              <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-accent-orange transition-colors duration-300">
+              <h3 className="text-lg font-bold text-white leading-tight group-hover:text-accent-orange transition-colors duration-300">
                 {name}
               </h3>
               <p className="text-[11px] font-semibold text-white/60 uppercase tracking-widest mt-1 flex items-center gap-1 group-hover:text-accent-orange/80 transition-colors duration-300">

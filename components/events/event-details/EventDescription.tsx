@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { ChevronRight, Building2, PartyPopper } from 'lucide-react'
 import { SectionHeading, ExpandableHtml } from './SharedComponents'
 
@@ -15,6 +16,8 @@ interface EventDescriptionProps {
 export function EventDescription({ description, venueTags, eventTags, venueCity, venueName }: EventDescriptionProps) {
   const [isMobile, setIsMobile] = useState(false)
   const [isTagsExpanded, setIsTagsExpanded] = useState(false)
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -29,9 +32,9 @@ export function EventDescription({ description, venueTags, eventTags, venueCity,
   return (
     <section id="overview" className="scroll-mt-32">
       <SectionHeading
-        title={`Craft Unforgettable Events in ${venueCity}`}
+        title={isVenuePage ? `Find the Perfect Venue in ${venueCity}` : `Craft Unforgettable Events in ${venueCity}`}
         titleClassName="text-gray-900"
-        subtitle={`Celebrate Corporate & Social Events – Weddings, Exhibitions & Anniversaries at ${venueName}, ${venueCity}`}
+        subtitle={isVenuePage ? `Explore Venues for Corporate & Social Events – Weddings, Exhibitions & Anniversaries at ${venueName}, ${venueCity}` : `Celebrate Corporate & Social Events – Weddings, Exhibitions & Anniversaries at ${venueName}, ${venueCity}`}
         subtitleClassName="text-[#FF9530]"
       />
 
@@ -41,8 +44,8 @@ export function EventDescription({ description, venueTags, eventTags, venueCity,
         {((venueTags && venueTags.length > 0) || (eventTags && eventTags.length > 0)) && (
           <div className={`pt-8 border-t border-gray-100 ${!description ? 'border-t-0 pt-0' : ''}`}>
             <div className="flex items-center gap-3 mb-8">
-              <h4 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">
-                Celebrate Premium Events at {venueName}, {venueCity}
+              <h4 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
+                {isVenuePage ? `Explore Premium Venue at ${venueName}, ${venueCity}` : `Celebrate Premium Events at ${venueName}, ${venueCity}`}
               </h4>
             </div>
 

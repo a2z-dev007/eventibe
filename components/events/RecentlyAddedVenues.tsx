@@ -18,7 +18,7 @@ export default function RecentlyAddedVenues() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
                 Recently Added <span className="text-[#FF9530]">Event</span> Venues
               </h2>
               <p className="text-gray-500 font-medium mt-2">Latest additions to our venue collection</p>
@@ -45,7 +45,7 @@ export default function RecentlyAddedVenues() {
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
               Recently Added <span className="text-[#FF9530]">Event</span> Venues
             </h2>
             <p className="text-gray-500 font-medium mt-2">Latest additions to our venue collection</p>
@@ -103,7 +103,7 @@ export default function RecentlyAddedVenues() {
                   {/* Bottom Content */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
                     {/* Venue Name with text shadow */}
-                    <h3 className="text-white text-xl font-black leading-tight line-clamp-2 mb-2 drop-shadow-lg">
+                    <h3 className="text-white text-xl font-bold leading-tight line-clamp-2 mb-2 drop-shadow-lg">
                       {venue.name}
                     </h3>
                     

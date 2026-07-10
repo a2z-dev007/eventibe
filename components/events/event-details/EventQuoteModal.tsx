@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { createPortal } from 'react-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { X, User, Phone, Mail, Users, Utensils, FileText, Calendar, Building2, Sparkles, Loader2, ArrowRight } from 'lucide-react'
@@ -11,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRecaptcha, RecaptchaV2 } from '@/components/common/RecaptchaV2'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import { toast } from 'sonner'
 
 const eventEnquirySchema = z.object({
@@ -46,6 +48,8 @@ interface Props {
 export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, venueType }: Props) {
   const [done, setDone] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
 
   const { recaptchaVerified, recaptchaToken, resetRecaptcha } = useRecaptcha({
     containerId: "recaptcha-event-modal"
@@ -56,16 +60,7 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
     return () => setMounted(false)
   }, [])
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
+  useScrollLock(isOpen)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(eventEnquirySchema) as any,
@@ -136,7 +131,7 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
   return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-end sm:items-center justify-center sm:p-6 md:p-10">
+        <div data-lenis-prevent className="fixed inset-0 z-[99999] flex items-end sm:items-center justify-center sm:p-6 md:p-10">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -157,7 +152,7 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
             {/* Header - Fixed to top */}
             <div className="shrink-0 z-10 bg-white flex items-center justify-between px-6 sm:px-8 py-5 sm:py-6 border-b border-gray-50">
               <div>
-                <h3 className="text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight leading-none">Send Enquiry</h3>
+                <h3 className="text-xl sm:text-3xl font-bold text-gray-900 tracking-tight leading-none">Send Enquiry</h3>
                 <p className="text-[11px] sm:text-[13px] text-gray-500 font-medium mt-1.5 sm:mt-2">Direct enquiry to venue management</p>
               </div>
               <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-all group">
@@ -170,9 +165,9 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
                 <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-100/50">
                   <Sparkles className="w-10 h-10 text-green-500" />
                 </div>
-                <h4 className="text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">Request Shared!</h4>
+                <h4 className="text-3xl font-bold text-gray-900 mb-3 tracking-tight">Request Shared!</h4>
                 <p className="text-gray-500 font-medium max-w-[280px] mx-auto mb-8 text-[15px] leading-relaxed">
-                  We've sent your requirements. Our event specialist will reach out to you within 30 minutes.
+                  We've sent your requirements. Our {isVenuePage ? 'venue' : 'event'} specialist will reach out to you within 30 minutes.
                 </p>
                 <button type="button" onClick={onClose} className="bg-gray-900 hover:bg-black text-white px-12 py-3.5 rounded-xl font-bold text-sm tracking-widest transition-all shadow-xl shadow-gray-200">
                   Done
@@ -188,7 +183,7 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
 
                     {/* Event Occasion */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">Event Occasion <span className="text-red-500">*</span></label>
+                      <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">{isVenuePage ? 'Venue' : 'Event'} Occasion <span className="text-red-500">*</span></label>
                       <div className="flex items-center border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#FF9530] focus-within:ring-1 focus-within:ring-[#FF9530] transition-all bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                         <Controller
                           name="event_type"
@@ -210,7 +205,7 @@ export function EventQuoteModal({ isOpen, onClose, initialVenueId, venueName, ve
 
                     {/* Event Dates */}
                     <div className="flex flex-col gap-2">
-                      <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">Event Date <span className="text-red-500">*</span></label>
+                      <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">{isVenuePage ? 'Venue' : 'Event'} Date <span className="text-red-500">*</span></label>
                       <div className="flex items-center border border-gray-200 rounded-xl px-4 py-3 focus-within:border-[#FF9530] focus-within:ring-1 focus-within:ring-[#FF9530] transition-all bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
                         <Calendar className="w-5 h-5 text-gray-400 mr-3 shrink-0" />
                         <input

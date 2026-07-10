@@ -16,6 +16,7 @@ import { useLenis } from 'lenis/react'
 import { IMAGES } from '@/assets/images'
 import PremiumSearchBar from '@/components/events/PremiumSearchBar'
 import CommonHero from '@/components/common/CommonHero'
+import { Pagination } from '@/components/ui/pagination'
 
 function VenueTypesContent() {
   const router = useRouter()
@@ -251,43 +252,13 @@ function VenueTypesContent() {
             <div className="mt-16 md:mt-24 flex items-center justify-center">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 px-6 md:px-10 py-4 md:py-5 bg-white border border-gray-100 rounded-[2rem] md:rounded-full shadow-2xl shadow-gray-200/50 w-full max-w-fit">
                 {/* Left / Page Numbers / Right */}
-                <div className="flex items-center gap-2 md:gap-4">
-                  <button
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="text-gray-900 disabled:opacity-30 transition-opacity p-2"
-                  >
-                    <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
-                  </button>
-
-                  <div className="flex items-center gap-1">
-                    {[...Array(totalPages)].map((_, i) => {
-                      const pageNum = i + 1;
-                      const isActive = currentPage === pageNum;
-                      return (
-                        <button
-                          key={pageNum}
-                          onClick={() => goToPage(pageNum)}
-                          className={`w-9 h-9 flex items-center justify-center text-sm font-bold transition-all rounded-full ${
-                            isActive 
-                              ? 'bg-[#FF9530]/10 text-[#FF9530] border border-[#FF9530]/30 shadow-sm' 
-                              : 'text-gray-900 hover:text-[#FF9530]'
-                          }`}
-                        >
-                          {pageNum}
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  <button
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="text-gray-900 disabled:opacity-30 transition-opacity p-1"
-                  >
-                    <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-                  </button>
-                </div>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  variant="orange"
+                  className="shadow-none border-none bg-transparent dark:bg-transparent p-0"
+                />
 
                 {/* Items per page selector */}
                 <div className="relative group">

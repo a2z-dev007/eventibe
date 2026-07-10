@@ -91,48 +91,59 @@ export function DetailSkeleton() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── Hero Skeleton ── */}
-      <div className={`relative w-full ${shimmerClass} flex flex-col items-center justify-center text-center px-4 min-h-[500px] mt-[70px] h-[calc(100vh-70px)] md:mt-[80px] md:h-[calc(100vh-80px)] lg:mt-[116px] lg:h-[calc(100vh-116px)]`}>
-        {/* Advanced Gradients Mimic */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/60" />
+      <div className={`relative w-full ${shimmerClass} flex flex-col items-center justify-center text-center px-4 py-12 md:py-20 min-h-[500px] md:min-h-[600px]`}>
+        {/* Background dark overlay mimic */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/25" />
         
-        <div className="relative z-10 max-w-4xl w-full flex flex-col items-center pt-16">
-          {/* Breadcrumb Skeleton */}
-          <div className="hidden md:flex items-center justify-center gap-3 mb-8 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-xl">
-             <div className={`h-3 w-48 rounded-full bg-white/20 ${shimmerClass} opacity-40`} />
-          </div>
-
-          <div className="flex flex-col items-center gap-4 md:gap-8 w-full">
-            <div className="flex items-center gap-3">
-              {/* Elite Badge Skeleton */}
-              <div className="bg-[#FF9530]/50 h-8 w-40 rounded-full shadow-lg backdrop-blur-sm" />
-              {/* Rating Skeleton */}
-              <div className="bg-[#039c4d]/50 h-8 w-12 rounded-xl shadow-lg backdrop-blur-sm" />
+        {/* Content Overlay Mimic */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-6 py-6">
+          
+          {/* Centered Details Card Mimic */}
+          <div className="w-full md:max-w-2xl bg-black/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 p-6 md:p-8 shadow-2xl flex flex-col gap-4 items-center justify-center text-center mx-auto">
+            {/* Top Badges Row Mimic */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="bg-white/15 border border-white/10 h-7 w-28 rounded-full animate-pulse" />
+              <div className="bg-white/15 border border-white/10 h-7 w-28 rounded-full animate-pulse" />
             </div>
 
-            {/* Title Skeleton */}
-            <div className={`h-12 md:h-16 lg:h-20 w-[85%] md:w-2/3 rounded-2xl bg-white/20 backdrop-blur-sm ${shimmerClass} opacity-40`} />
+            {/* Title Mimic */}
+            <div className={`h-10 md:h-14 w-[85%] rounded-2xl bg-white/20 backdrop-blur-sm ${shimmerClass} opacity-40`} />
 
-            {/* Location Skeleton */}
-            <div className={`h-6 w-64 md:w-80 rounded-full bg-white/20 backdrop-blur-sm ${shimmerClass} opacity-30 mt-2`} />
+            {/* Location Mimic */}
+            <div className={`h-5 w-48 rounded-full bg-white/20 backdrop-blur-sm ${shimmerClass} opacity-30 mt-1`} />
+
+            {/* Perfect Occasions Mimic */}
+            <div className="flex flex-col items-center gap-2 mt-2 w-full">
+              <div className="h-3 w-28 bg-white/10 rounded-full animate-pulse" />
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="h-7 w-20 bg-white/10 rounded-xl animate-pulse" />
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons Mimic */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-4 w-full">
+              <div className="flex-1 max-w-xs h-12 rounded-2xl bg-white/15 border border-white/10 animate-pulse" />
+              <div className="h-12 w-28 rounded-2xl bg-white/10 border border-white/10 animate-pulse" />
+            </div>
+          </div>
+
+          {/* Centered Carousel Thumbnails Mimic */}
+          <div className="hidden md:flex items-center justify-center gap-2 bg-black/45 backdrop-blur-2xl p-2.5 rounded-3xl border border-white/10 shadow-2xl mx-auto mt-2">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-16 h-12 rounded-2xl bg-white/10 border border-white/5 animate-pulse" />
+            ))}
           </div>
         </div>
 
-        {/* Navigation Arrows Mimic */}
-        <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 hidden md:block">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10" />
+        {/* Navigation Arrows Mimic (Floating edges) */}
+        <div className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 z-20">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse" />
         </div>
-        <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 hidden md:block">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10" />
+        <div className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 z-20">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse" />
         </div>
-
-        {/* Slide Indicators Mimic */}
-        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-          <div className="h-1.5 w-8 md:w-12 bg-[#FF9530] rounded-full" />
-          {[...Array(4)].map((_, i) => (
-             <div key={i} className="h-1.5 w-3 md:w-4 bg-white/20 rounded-full" />
-          ))}
-        </div>
-
       </div>
 
       {/* ── Sticky Nav Skeleton ── */}
@@ -213,7 +224,7 @@ export function ErrorState() {
       <div className="w-24 h-24 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-6">
         <ShieldCheck className="w-10 h-10" />
       </div>
-      <h2 className="text-3xl font-black text-gray-900 mb-4">Venue Not Found</h2>
+      <h2 className="text-3xl font-bold text-gray-900 mb-4">Venue Not Found</h2>
       <p className="text-gray-500 max-w-md mb-8">We couldn't find the elite venue you're looking for. It may have been relocated or the link is expired.</p>
       <Link href="/events/search" className="bg-black text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#FF9530] transition-all">Back to Search</Link>
     </div>

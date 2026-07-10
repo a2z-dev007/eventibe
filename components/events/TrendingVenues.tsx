@@ -18,7 +18,7 @@ export default function TrendingVenues() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
                 Trending <span className="text-[#FF9530]">Venues</span>
               </h2>
               <p className="text-gray-500 font-medium mt-2">Most popular venues based on customer enquiries</p>
@@ -47,7 +47,7 @@ export default function TrendingVenues() {
         {/* Section Header */}
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
               Trending <span className="text-[#FF9530]">Venues</span>
             </h2>
             <p className="text-gray-500 font-medium mt-2">Most popular venues based on customer enquiries</p>

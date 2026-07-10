@@ -100,7 +100,7 @@ export function EventVenueInfo({ venueId, venueTitle, venueLoc, venueCity }: Eve
             <span className="h-1.5 w-6 bg-[#FF9530] rounded-full" />
             <span className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest">Venue Details</span>
           </div>
-          <h2 className="text-xl md:text-2xl font-black text-gray-900">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
             Everything about <span className="text-[#FF9530]">{venueTitle}</span>
           </h2>
           <p className="text-gray-500 text-sm mt-1">{area}, {venueCity}</p>

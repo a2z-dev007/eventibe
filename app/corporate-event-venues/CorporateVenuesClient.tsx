@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Search, Sparkles, SlidersHorizontal, MapPin, Building2 } from 'lucide-react';
 import PremiumCard, { PremiumCardData } from '@/components/ui/PremiumCard';
 import { searchVenues, VenueRecord } from '@/lib/api/eventsEndpoints';
+import { Pagination } from '@/components/ui/pagination';
 
 const RECORDS_PER_PAGE = 6;
 
@@ -104,6 +105,9 @@ export default function CorporateVenuesClient() {
       : undefined;
     const tag = v.venue_type?.[0]?.name || 'Corporate';
     const amenity = v.amenities_details?.[0]?.name || 'Premium Service';
+    const cuisines = v.cuisine_details?.slice(0, 2).map((c: any) => c.name) || [];
+    const highlights = v.highlights_details?.slice(0, 2).map((h: any) => h.name) || [];
+    const packageName = v.package_details?.[0]?.name || '';
 
     return {
       id: v.id,
@@ -118,6 +122,9 @@ export default function CorporateVenuesClient() {
       amenity,
       href: `/venue/${v.slug || v.id}`,
       accent: 'blue' as const,
+      cuisines,
+      highlights,
+      packageName,
     };
   });
 
@@ -236,53 +243,13 @@ export default function CorporateVenuesClient() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-20 flex justify-center items-center gap-3">
-                {/* Previous Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === 1
-                      ? 'border-blue-100/50 bg-white/40 text-blue-300 cursor-not-allowed'
-                      : 'border-blue-100 bg-white text-corporate-blue hover:bg-corporate-blue hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Previous Page"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: totalPages }).map((_, idx) => {
-                  const pageNumber = idx + 1;
-                  const isCurrent = pageNumber === currentPage;
-                  return (
-                    <button
-                      key={pageNumber}
-                      onClick={() => handlePageChange(pageNumber)}
-                      className={`w-12 h-12 rounded-xl text-sm font-black transition-all ${
-                        isCurrent
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25 scale-105'
-                          : 'border border-blue-100 bg-white text-primary-navy hover:bg-blue-50/50 shadow-sm active:scale-95'
-                      }`}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                })}
-
-                {/* Next Button */}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
-                    currentPage === totalPages
-                      ? 'border-blue-100/50 bg-white/40 text-blue-300 cursor-not-allowed'
-                      : 'border-blue-100 bg-white text-corporate-blue hover:bg-corporate-blue hover:text-white shadow-md active:scale-95'
-                  }`}
-                  aria-label="Next Page"
-                >
-                  <ChevronRight size={20} />
-                </button>
+              <div className="mt-20">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  variant="corporate"
+                />
               </div>
             )}
           </>

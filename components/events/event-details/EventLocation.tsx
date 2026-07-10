@@ -32,7 +32,7 @@ export function EventLocation({ venueTitle, venueLoc, lat, lon }: EventLocationP
                 <div className="w-8 h-1 bg-[#FF9530] rounded-full" />
                 <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-widest leading-none">Venue Map</p>
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-3 tracking-tight">{venueTitle}</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 tracking-tight">{venueTitle}</h3>
               <p className="text-[13px] font-bold text-gray-500 leading-relaxed mb-8 line-clamp-2">{venueLoc}</p>
               <a 
                 href={`https://www.google.com/maps/dir/?api=1&destination=${lat || ''},${lon || ''}`} 

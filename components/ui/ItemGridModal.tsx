@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Check, ShieldCheck } from 'lucide-react'
 
@@ -34,12 +35,14 @@ export function ItemGridModal({
     return () => setMounted(false)
   }, [])
 
+  useScrollLock(isOpen)
+
   if (!mounted) return null
 
   return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10 pointer-events-auto">
+        <div data-lenis-prevent className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10 pointer-events-auto">
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
@@ -56,7 +59,7 @@ export function ItemGridModal({
             {/* Sticky Header */}
             <div className="shrink-0 flex items-start justify-between p-6 md:px-16 md:pt-12 md:pb-6 border-b border-gray-100">
               <div>
-                <h3 className="text-2xl sm:text-3xl md:text-5xl font-black text-gray-900 tracking-tighter mb-2 md:mb-4 pr-10">
+                <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 tracking-tighter mb-2 md:mb-4 pr-10">
                   {title}
                 </h3>
                 <p className="text-gray-500 font-bold text-sm sm:text-base">{subtitle}</p>
@@ -71,7 +74,7 @@ export function ItemGridModal({
 
             {/* Content Area */}
             <div className="flex-1 p-6 md:p-16 md:pt-8 bg-white min-h-0">
-               <div className="max-h-[40vh] sm:max-h-[55vh] md:max-h-[480px] overflow-y-auto pr-2 md:pr-4 custom-scrollbar-orange">
+               <div data-lenis-prevent className="max-h-[40vh] sm:max-h-[55vh] md:max-h-[480px] overflow-y-auto pr-2 md:pr-4 custom-scrollbar-orange">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
                   {items.map((item) => (
                     <div 

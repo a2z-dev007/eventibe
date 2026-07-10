@@ -248,7 +248,7 @@ export default function VideoReelTestimonials() {
           >
            <span className="text-[#FF9530] text-xs font-black uppercase tracking-[0.3em]">Client Stories</span>
           </motion.div>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-primary-navy mb-6 uppercase tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-primary-navy mb-6 uppercase tracking-tight">
             Loved by <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] to-[#FF6B00]">Real People</span>
           </h2>
           <p className="text-soft-slate text-lg max-w-2xl mx-auto font-medium">

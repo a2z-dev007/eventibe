@@ -19,7 +19,7 @@ export function VenueQuickInfo({ venueName, venueLoc }: VenueQuickInfoProps) {
           <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] bg-gray-50 flex items-center justify-center border border-gray-100 shrink-0">
             <Building2 className="w-7 h-7 md:w-8 md:h-8 text-gray-400" />
           </div>
-          <h1 className="text-lg md:text-xl lg:text-2xl font-black text-gray-900 leading-tight tracking-tight">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 leading-tight tracking-tight">
             {venueName}
           </h1>
         </div>

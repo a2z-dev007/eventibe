@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { Plus, Check, Utensils, X, ArrowRight, ChefHat, Heart, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SectionHeading } from './SharedComponents'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -36,6 +37,8 @@ interface EventPackagesProps {
 export function EventPackages({ packages, getImageUrl, venueTitle }: EventPackagesProps) {
   const [selectedPkg, setSelectedPkg] = useState<Package | null>(null)
   const [isSeeAllOpen, setIsSeeAllOpen] = useState(false)
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
 
   if (!packages || packages.length === 0) return null
 
@@ -59,7 +62,7 @@ export function EventPackages({ packages, getImageUrl, venueTitle }: EventPackag
     <section id="packages" className="scroll-mt-[100px] border-t border-gray-100">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <SectionHeading 
-          title="Exclusive Event Packages" 
+          title={isVenuePage ? "Exclusive Venue Packages" : "Exclusive Event Packages"} 
           subtitle={`Discover meticulously crafted experiences designed for every occasion at ${venueTitle}`}
         />
         
@@ -175,8 +178,8 @@ export function EventPackages({ packages, getImageUrl, venueTitle }: EventPackag
             >
               <div className="p-8 border-b border-gray-100 flex items-center justify-between bg-white shrink-0 z-10">
                 <div>
-                  <h3 className="text-2xl font-black text-gray-900 tracking-tight">All Venue Packages</h3>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Explore all {packages.length} options for your event</p>
+                  <h3 className="text-2xl font-bold text-gray-900 tracking-tight">All Venue Packages</h3>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Explore all {packages.length} options for your {isVenuePage ? 'venue' : 'event'}</p>
                 </div>
                 <button 
                   onClick={() => setIsSeeAllOpen(false)}
@@ -252,7 +255,7 @@ function PackageCard({ pkg, getImageUrl, onClick }: { pkg: Package, getImageUrl:
       </div>
 
       <div className="p-5 flex-1 flex flex-col">
-        <h3 className="text-base font-black text-gray-900 mb-2 leading-tight drop-shadow-sm group-hover:text-[#FF9530] transition-colors">
+        <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight drop-shadow-sm group-hover:text-[#FF9530] transition-colors">
           {pkg.name}
         </h3>
         <p className="text-[11px] text-gray-500 font-bold leading-relaxed mb-4 line-clamp-2">
@@ -276,7 +279,9 @@ function PackageCard({ pkg, getImageUrl, onClick }: { pkg: Package, getImageUrl:
 
 function PackageDetailModal({ pkg, onClose, getImageUrl }: { pkg: Package, onClose: () => void, getImageUrl: any }) {
   const [showMore, setShowMore] = React.useState(false)
-  const description = pkg.description?.replace(/<[^>]*>/g, '') || 'A carefully curated package designed to make your event memorable.'
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
+  const description = pkg.description?.replace(/<[^>]*>/g, '') || `A carefully curated package designed to make your ${isVenuePage ? 'booking' : 'event'} memorable.`
   const shouldTruncate = description.length > 150
   const displayText = showMore || !shouldTruncate ? description : description.slice(0, 150) + '...'
 
@@ -312,7 +317,7 @@ function PackageDetailModal({ pkg, onClose, getImageUrl }: { pkg: Package, onClo
             <span className="px-2 py-1 bg-[#FF9530] rounded-md text-[10px] font-bold uppercase tracking-wide text-white">
               {pkg.type || 'Package'}
             </span>
-            <h2 className="text-2xl font-black text-white mt-2">{pkg.name}</h2>
+            <h2 className="text-2xl font-bold text-white mt-2">{pkg.name}</h2>
           </div>
         </div>
 
@@ -326,7 +331,7 @@ function PackageDetailModal({ pkg, onClose, getImageUrl }: { pkg: Package, onClo
             </div>
             <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
               <Heart className="w-4 h-4 text-pink-500" />
-              <span className="text-xs font-semibold text-gray-600">{pkg.suitable_for || 'All Events'}</span>
+              <span className="text-xs font-semibold text-gray-600">{pkg.suitable_for || (isVenuePage ? 'All Occasions' : 'All Events')}</span>
             </div>
           </div>
 

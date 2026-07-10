@@ -32,7 +32,7 @@ export function VenueHeaderInfo({
         {/* Left Side: Name and Location */}
         <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
               {venueName}
             </h1>
             <div className="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-[10px] font-black uppercase tracking-widest border border-blue-100 flex items-center gap-1">

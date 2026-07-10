@@ -13,8 +13,10 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import logoImg from '@/assets/images/logo.png';
 import { useMobileNav } from '@/contexts/MobileNavContext';
+import { useLenis } from 'lenis/react';
 
 export default function Header() {
+  const lenis = useLenis();
   const [isScrolled, setIsScrolled] = useState(false);
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileNav();
   const pathname = usePathname();
@@ -30,13 +32,16 @@ export default function Header() {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
     } else {
       document.body.style.overflow = '';
+      if (lenis) lenis.start();
     }
     return () => {
       document.body.style.overflow = '';
+      if (lenis) lenis.start();
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, lenis]);
 
   const close = () => setIsMobileMenuOpen(false);
 
@@ -69,7 +74,7 @@ export default function Header() {
   };
 
   const navTextClass = (extra = '') =>
-    `relative py-1 text-[15px] font-semibold transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all after:duration-300 ${isHome && !isScrolled
+    `relative py-1 text-[13px] xl:text-[14px] 2xl:text-[15px] font-semibold transition-colors after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-[2px] hover:after:w-full after:transition-all after:duration-300 ${isHome && !isScrolled
       ? 'text-white hover:text-gray-200 drop-shadow-md after:bg-white'
       : 'text-primary-navy hover:text-corporate-blue after:bg-corporate-blue'
     } ${extra}`;
@@ -81,20 +86,20 @@ export default function Header() {
         : isHome ? 'bg-transparent md:py-5 py-3' : 'bg-white shadow-sm md:py-5 py-3'
         }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between gap-3 xl:gap-5">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <Image
             src={logoImg}
             alt="Eventibe Logo"
-            className={`h-10 md:h-16 w-auto object-contain transition-all duration-300 ${isHome && !isScrolled ? 'brightness-0 invert drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]' : ''
+            className={`h-10 md:h-12 lg:h-10 xl:h-14 w-auto object-contain transition-all duration-300 ${isHome && !isScrolled ? 'brightness-0 invert drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]' : ''
               }`}
             priority
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
+        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-6 2xl:gap-8 flex-shrink-0">
           {navLinks.slice(0, 3).map((link) => (
             <Link key={link.name} href={link.href} className={navTextClass()}>
               {link.name}
@@ -104,7 +109,7 @@ export default function Header() {
           {/* Venues Dropdown */}
           <div className="relative group h-full flex items-center py-2 cursor-pointer">
             <button className={navTextClass('flex items-center gap-1')}>
-              Venues <ChevronDown className="w-4 h-4 ml-0.5 transition-transform duration-300 group-hover:-rotate-180" />
+              Venues <ChevronDown className="w-3.5 h-3.5 ml-0.5 transition-transform duration-300 group-hover:-rotate-180" />
             </button>
             <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 transform origin-top translate-y-3 group-hover:translate-y-0 z-50">
               <div className="w-48 bg-white shadow-xl rounded-xl p-2 flex flex-col border border-gray-100">
@@ -125,10 +130,10 @@ export default function Header() {
         </nav>
 
         {/* Desktop Right */}
-        <div className="hidden lg:flex items-center gap-5">
+        <div className="hidden lg:flex items-center gap-2.5 xl:gap-5 2xl:gap-6 flex-shrink-0">
           <div className="relative group h-full flex items-center py-2 cursor-pointer">
             <button className={navTextClass('flex items-center gap-1')}>
-              Partners <ChevronDown className="w-4 h-4 ml-0.5 transition-transform duration-300 group-hover:-rotate-180" />
+              Partners <ChevronDown className="w-3.5 h-3.5 ml-0.5 transition-transform duration-300 group-hover:-rotate-180" />
             </button>
             <div className="absolute top-full right-0 pt-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 transform origin-top translate-y-3 group-hover:translate-y-0 z-50">
               <div className="w-48 bg-white shadow-xl rounded-xl p-2 flex flex-col border border-gray-100">
@@ -138,7 +143,7 @@ export default function Header() {
             </div>
           </div>
           <Link href="/login" className={navTextClass()}>Login</Link>
-          <Link href="/list-your-venue" className="bg-cta-gradient text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:scale-[1.02] transition-transform shadow-sm">
+          <Link href="/list-your-venue" className="bg-cta-gradient text-white px-3.5 py-2 xl:px-5 xl:py-2.5 rounded-xl text-xs xl:text-sm font-semibold hover:scale-[1.02] transition-transform shadow-sm whitespace-nowrap">
             List Your Venue
           </Link>
         </div>
@@ -163,7 +168,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ type: 'tween', ease: 'easeOut', duration: 0.25 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] lg:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[99995] lg:hidden"
               onClick={close}
             />
 
@@ -174,7 +179,7 @@ export default function Header() {
               exit={{ x: '100%' }}
               transition={{ type: 'tween', ease: [0.16, 1, 0.3, 1], duration: 0.38 }}
               style={{ willChange: 'transform' }}
-              className="fixed top-0 right-0 w-[88%] max-w-[350px] h-[100dvh] z-[100] flex flex-col lg:hidden overflow-y-auto bg-white shadow-2xl"
+              className="fixed top-0 right-0 w-[88%] max-w-[350px] h-[100dvh] z-[99999] flex flex-col lg:hidden overflow-y-auto bg-white shadow-2xl"
               data-lenis-prevent="true"
             >
               {/* Header */}

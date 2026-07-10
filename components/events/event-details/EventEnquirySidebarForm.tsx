@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { createPortal } from 'react-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { User, Phone, Mail, Users, Utensils, FileText, Sparkles, Loader2, ArrowRight, Calendar } from 'lucide-react'
@@ -37,6 +38,8 @@ interface FormValues {
 // ── Success Modal Portal ───────────────────────────────────────────────────────
 function SuccessModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
 
   useEffect(() => { setMounted(true); return () => setMounted(false) }, [])
 
@@ -103,7 +106,7 @@ function SuccessModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               transition={{ delay: 0.25 }}
               className="text-gray-500 text-[14px] font-medium leading-relaxed mb-8 max-w-[220px]"
             >
-              We've received your enquiry. Our event specialist will reach out you soon.
+              We've received your enquiry. Our {isVenuePage ? 'venue' : 'event'} specialist will reach out you soon.
             </motion.p>
 
             <motion.button
@@ -131,6 +134,8 @@ function SuccessModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 // ── Main Sidebar Form ──────────────────────────────────────────────────────────
 export function EventEnquirySidebarForm({ venueName, venueId }: { venueName?: string, venueId?: number }) {
   const [showSuccess, setShowSuccess] = useState(false)
+  const pathname = usePathname()
+  const isVenuePage = pathname?.includes('/venue')
 
   const { recaptchaVerified, recaptchaToken, resetRecaptcha } = useRecaptcha({
     containerId: "recaptcha-event-sidebar"
@@ -194,7 +199,7 @@ export function EventEnquirySidebarForm({ venueName, venueId }: { venueName?: st
       <div className="bg-white rounded-[2rem] border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible flex flex-col">
         <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black p-5 md:p-6 text-center shrink-0 rounded-t-[2rem] relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF9530]/15 rounded-full blur-3xl pointer-events-none" />
-          <h3 className="text-xl md:text-2xl font-black text-white relative z-10 tracking-tight">
+          <h3 className="text-xl md:text-2xl font-bold text-white relative z-10 tracking-tight">
             Send Enquiry
           </h3>
           <p className="text-[11px] text-gray-400 font-medium mt-1 relative z-10">Direct enquiry to venue management</p>
@@ -204,7 +209,7 @@ export function EventEnquirySidebarForm({ venueName, venueId }: { venueName?: st
 
           {/* Event Occasion */}
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">Event Occasion <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">{isVenuePage ? 'Venue' : 'Event'} Occasion <span className="text-red-500">*</span></label>
             <div className="flex items-center border border-gray-200 rounded-xl px-4 py-2.5 focus-within:border-[#FF9530] focus-within:ring-1 focus-within:ring-[#FF9530] transition-all bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
               <Controller name="event_type" control={control} render={({ field }) => (
                 <PremiumSelect {...field} label="" icon={<Sparkles className="w-4 h-4 text-gray-400" />} options={eventOptions} placeholder="Select Occasion" className="bg-transparent -ml-2.5 w-full" />
@@ -215,7 +220,7 @@ export function EventEnquirySidebarForm({ venueName, venueId }: { venueName?: st
 
           {/* Event Date */}
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">Event Date <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">{isVenuePage ? 'Venue' : 'Event'} Date <span className="text-red-500">*</span></label>
             <div className="flex items-center border border-gray-200 rounded-xl px-4 py-2.5 focus-within:border-[#FF9530] focus-within:ring-1 focus-within:ring-[#FF9530] transition-all bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
               <Calendar className="w-4 h-4 text-gray-400 mr-3 shrink-0" />
               <input type="date" {...register('event_date')} className="w-full bg-transparent p-0 text-[14px]  text-gray-900 outline-none placeholder:text-gray-400" />

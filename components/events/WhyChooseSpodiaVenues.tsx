@@ -16,7 +16,7 @@ export default function WhyChooseSpodiaVenues() {
     <section className="bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-5xl font-black text-gray-900 mb-4 tracking-tight">
+          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             Why Choose <span className="text-[#FF9530]">Eventibe</span> Event Venues?
           </h2>
           <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto">
@@ -30,7 +30,7 @@ export default function WhyChooseSpodiaVenues() {
               <div className="w-16 h-16 mx-auto mb-4 bg-[#FF9530]/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                 <item.icon className="w-8 h-8 text-[#FF9530]" />
               </div>
-              <h3 className="font-black text-gray-900 mb-2">{item.title}</h3>
+              <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
               <p className="text-sm text-gray-500 font-medium">{item.desc}</p>
             </div>
           ))}

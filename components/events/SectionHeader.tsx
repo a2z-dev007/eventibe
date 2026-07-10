@@ -15,7 +15,7 @@ export default function SectionHeader({ eyebrow, title, subtitle }: SectionHeade
           </p>
         </div>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-[1.15] mb-4">
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.15] mb-4">
         {title}
       </h2>
       {subtitle && (

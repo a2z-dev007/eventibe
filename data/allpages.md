@@ -1,29 +1,29 @@
 STATIC
 
-1. Home
-2. About Us - Like Spodia.com
-3. Contact Us
-4. How It Works
-5. Carrier - Like Spodia.com
-6. FAQS - Like Spodia.com
-7. Company Details - Like Spodia.com
-8. Investor Relation - Like Spodia.com
-9. List Your Venue
-10. List Your Service
-11. Partner With Us
-12. Terms & Conditions - Like Spodia.com
-13. Privacy Policy - Like Spodia.com
-14. Disclaimer - Like Spodia.com
+1. Home - `/`
+2. About Us - Like Spodia.com - `/about-us`
+3. Contact Us - `/contact-us`
+4. How It Works - `/how-it-works`
+5. Carrier - Like Spodia.com - `/career`
+6. FAQS - Like Spodia.com - `/faqs`
+7. Company Details - Like Spodia.com - `/company-details`
+8. Investor Relation - Like Spodia.com - `/investor-relations`
+9. List Your Venue - `/list-your-venue`
+10. List Your Service - `/list-your-service`
+11. Partner With Us - `/partner-with-us`
+12. Terms & Conditions - Like Spodia.com - `/terms-and-conditions`
+13. Privacy Policy - Like Spodia.com - `/privacy-policy`
+14. Disclaimer - Like Spodia.com - `/disclaimer`
 
 DYNAMIC
 
-16. All Venues
-17. Wedding Venues
-18. Corporate Event Venues
-19. City Landing Page
-20. Venue Type Page
-21. Venue Detail Page
-22. Send Inquiry
-23. Search Results
-24. Blog Listing
-25. Blog Detail
+16. All Venues - `/venue/list` (or `/venues`)
+17. Wedding Venues - `/wedding-venues`
+18. Corporate Event Venues - `/corporate-event-venues` (or `/corporate-venues`)
+19. City Landing Page - `/venues/[city]` (e.g., `/venues/delhi`)
+20. Venue Type Page - `/[venue-type]` (e.g., `/banquet-halls`)
+21. Venue Detail Page - `/venue/[slug]` (e.g., `/venue/hotel-country-inn-suites`)
+22. Send Inquiry - `/inquiry` (or `/vendor-inquiry`)
+23. Search Results - `/search`
+24. Blog Listing - `/blogs`
+25. Blog Detail - `/blogs/[slug]` (e.g., `/blogs/sample-post`)

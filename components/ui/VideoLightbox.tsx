@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react'
 import { getNormalizedVideoUrl, isVideoFile } from '@/utils/videoUtils'
@@ -19,6 +20,8 @@ const VideoLightboxComponent = ({ isOpen, onClose, videoUrls, initialIndex = 0 }
     setMounted(true)
     return () => setMounted(false)
   }, [])
+
+  useScrollLock(isOpen)
 
   useEffect(() => {
     if (isOpen) setCurrentIndex(initialIndex)
@@ -45,7 +48,7 @@ const VideoLightboxComponent = ({ isOpen, onClose, videoUrls, initialIndex = 0 }
   return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-3xl p-4 sm:p-6 md:p-8 lg:p-12">
+        <div data-lenis-prevent className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-3xl p-4 sm:p-6 md:p-8 lg:p-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -59,7 +62,7 @@ const VideoLightboxComponent = ({ isOpen, onClose, videoUrls, initialIndex = 0 }
                     <Play className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
                  </div>
                  <div>
-                    <h3 className="text-white font-black text-sm md:text-2xl tracking-tight leading-tight">Virtual Experience</h3>
+                    <h3 className="text-white font-bold text-sm md:text-2xl tracking-tight leading-tight">Virtual Experience</h3>
                     <p className="text-white/40 text-[8px] md:text-xs uppercase font-bold tracking-widest leading-none mt-0.5 md:mt-1">
                       Discovery {currentIndex + 1}/{videoUrls.length} • Cinematic Tour
                     </p>

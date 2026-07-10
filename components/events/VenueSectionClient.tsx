@@ -133,7 +133,7 @@ export default function VenueSectionClient({
             <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-gray-300 mb-6 border border-gray-100/50">
               <Search className="w-10 h-10" strokeWidth={1.5} />
             </div>
-            <h4 className="text-xl font-black text-gray-900 mb-2">No Venues Found</h4>
+            <h4 className="text-xl font-bold text-gray-900 mb-2">No Venues Found</h4>
             <p className="text-gray-500 font-medium max-w-sm mx-auto">
               We couldn't find any premium venues in this category at the moment. Please check back later or explore other categories.
             </p>

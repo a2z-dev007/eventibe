@@ -54,7 +54,7 @@ export default function CorporateTrustSection() {
               The Eventibe Advantage
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-navy tracking-tight leading-tight mb-6">
             Why Corporate Planners <br className="hidden md:block" />
             <span className="text-blue-600">Trust Eventibe</span>
           </h2>

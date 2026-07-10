@@ -117,7 +117,7 @@ export function ClientStoriesSection() {
                       )}
                     </div>
                     <div className="overflow-hidden">
-                      <h4 className="font-black text-gray-900 text-sm tracking-tight truncate">{s.name}</h4>
+                      <h4 className="font-bold text-gray-900 text-sm tracking-tight truncate">{s.name}</h4>
                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5 truncate">{s.location}</p>
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export function SeoContentSection() {
             </p>
           </div>
           
-          <h2 className="text-2xl sm:text-5xl font-black text-gray-900 mb-6 md:mb-8 leading-tight tracking-tighter">
+          <h2 className="text-2xl sm:text-5xl font-bold text-gray-900 mb-6 md:mb-8 leading-tight tracking-tighter">
             Curating India's Finest <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF9530] to-[#FFB770]">Celebration Spaces</span>
           </h2>
@@ -171,7 +171,7 @@ export function SeoContentSection() {
             
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="space-y-4">
-                <h3 className="text-lg font-black text-gray-900 tracking-tight flex items-center gap-2">
+                <h3 className="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-[#FF9530]" />
                   Global Reach
                 </h3>
@@ -180,7 +180,7 @@ export function SeoContentSection() {
                 </p>
               </div>
               <div className="space-y-4">
-                <h3 className="text-lg font-black text-gray-900 tracking-tight flex items-center gap-2">
+                <h3 className="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-[#FF9530]" />
                   Corporate Hubs
                 </h3>

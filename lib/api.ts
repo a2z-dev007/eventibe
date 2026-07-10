@@ -76,8 +76,7 @@ export async function getVendorBySlug(slug: string): Promise<Vendor | undefined>
   return vendorsData.find((v) => v.slug === slug);
 }
 
-// --- Spodia Event Live APIs (for HeroSearch) ---
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://stgbackend.spodia.com/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.spodia.com/api';
 
 export async function fetchEventTypes() {
   try {

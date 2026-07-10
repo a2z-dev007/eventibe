@@ -127,7 +127,7 @@ export default function EventTypesCarousel() {
                   </div>
                   
                   <div className="text-center transition-all duration-300 px-2">
-                    <h3 className="text-base sm:text-lg font-extrabold text-gray-900 group-hover:text-[#FF9530] transition-colors leading-tight">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-[#FF9530] transition-colors leading-tight">
                       {v.name}
                     </h3>
                   </div>

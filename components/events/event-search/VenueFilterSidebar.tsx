@@ -82,7 +82,7 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
     <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-xl">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 bg-orange-50 border-b border-[#FF9530]/20 rounded-t-xl lg:rounded-t-2xl">
-        <h2 className="font-extrabold text-gray-900">Filter Venues</h2>
+        <h2 className="font-bold text-gray-900">Filter Venues</h2>
         <button onClick={onClear} className="text-xs font-bold text-[#FF9530] hover:bg-white px-2 py-1 rounded-lg transition-colors">
           Clear all
         </button>

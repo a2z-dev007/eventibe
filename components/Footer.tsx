@@ -7,9 +7,9 @@ export default function Footer() {
   return (
     <footer className="bg-primary-navy text-white pt-16 pb-8">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Column 1 */}
-          <div>
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-x-8 gap-y-12 lg:gap-6 xl:gap-8 2xl:gap-12 mb-12">
+          {/* Column 1: Branding */}
+          <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
               <Image
                 src={logoImg}
@@ -17,10 +17,17 @@ export default function Footer() {
                 className="h-10 md:h-14 w-auto object-contain brightness-0 invert"
               />
             </Link>
-            <p className="text-sm text-gray-300 mb-6 leading-relaxed">
+            <p className="text-sm text-gray-300 leading-relaxed">
               Find. Book. Celebrate. The premier corporate venue & event service
               marketplace.
             </p>
+          </div>
+
+          {/* Column 2: Company */}
+          <div className="col-span-1">
+            <h4 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">
+              Company
+            </h4>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -73,9 +80,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2 */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+          {/* Column 3: Venues */}
+          <div className="col-span-1">
+            <h4 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">
               Venues
             </h4>
             <ul className="space-y-3">
@@ -122,9 +129,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+          {/* Column 4: Vendors */}
+          <div className="col-span-1">
+            <h4 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">
               Vendors
             </h4>
             <ul className="space-y-3">
@@ -179,12 +186,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-white uppercase tracking-wider">
+          {/* Column 5: Support */}
+          <div className="col-span-1">
+            <h4 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">
               Support
             </h4>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/contact-us"
@@ -226,8 +233,11 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
+          </div>
 
-            <h4 className="text-lg font-semibold mb-4 text-white uppercase tracking-wider">
+          {/* Column 6: Newsletter */}
+          <div className="col-span-2 lg:col-span-1">
+            <h4 className="text-lg font-bold mb-4 text-white uppercase tracking-wider">
               Newsletter
             </h4>
             <form className="flex gap-2">

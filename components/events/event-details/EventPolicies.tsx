@@ -80,7 +80,7 @@ export function EventPolicies({ policies, setQuoteOpen, venueTitle, venueLoc }: 
             Protocol &amp; Guidelines
           </p>
         </div>
-        <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-snug">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight leading-snug">
           Terms &amp; Policies
         </h2>
       </div>
@@ -148,7 +148,7 @@ export function EventPolicies({ policies, setQuoteOpen, venueTitle, venueLoc }: 
                   <p className="text-[10px] font-black text-[#FF9530] uppercase tracking-[0.3em] mb-0.5">
                     Protocol &amp; Guidelines
                   </p>
-                  <h3 className="text-xl font-black text-gray-900 tracking-tight">All Policies</h3>
+                  <h3 className="text-xl font-bold text-gray-900 tracking-tight">All Policies</h3>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}

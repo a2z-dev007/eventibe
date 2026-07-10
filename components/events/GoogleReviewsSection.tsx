@@ -101,7 +101,7 @@ export default function GoogleReviewsSection() {
                   {getInitials(r.name)}
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-sm font-extrabold text-gray-900 truncate tracking-tight">{r.name}</h4>
+                  <h4 className="text-sm font-bold text-gray-900 truncate tracking-tight">{r.name}</h4>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Verified Host</p>
                 </div>
               </div>

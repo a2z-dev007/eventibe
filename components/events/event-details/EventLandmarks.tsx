@@ -173,7 +173,7 @@ export function EventLandmarks({ venueId, venueTitle, venueLoc, venueCity }: Eve
                 Location Overview
               </p>
             </div>
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-tight">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
               Nearby Landmarks from <br className="hidden md:block" />
               <span className="text-[#FF9530]">{venueTitle}</span>, {area}, {city}
             </h1>
@@ -188,7 +188,7 @@ export function EventLandmarks({ venueId, venueTitle, venueLoc, venueCity }: Eve
             const items = getLandmarksByCategories(section.categories)
             return (
               <div key={section.id} className={index !== sectionConfig.length - 1 ? "pb-12 lg:pb-16 border-b border-gray-100" : ""}>
-                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2 tracking-tight">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 tracking-tight">
                   {section.title}
                 </h2>
                 

@@ -16,6 +16,7 @@ import { Blog } from "@/types/blog";
 import { getBlogs } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import CommonHero from "@/components/common/CommonHero";
+import { Pagination } from "@/components/ui/pagination";
 
 const POSTS_PER_PAGE = 6;
 const BLOG_API_APPLICABLE_FOR = "https://spodia.com";
@@ -61,42 +62,7 @@ function mapBlogToListItem(blog: Blog): BlogListItem {
   };
 }
 
-const DOTS = "DOTS" as const;
 
-function range(start: number, end: number) {
-  const length = end - start + 1;
-  return Array.from({ length }, (_, idx) => start + idx);
-}
-
-function getPaginationRange(currentPage: number, totalPages: number, siblingCount = 1) {
-  const totalPageNumbers = siblingCount * 2 + 5;
-
-  if (totalPages <= totalPageNumbers) {
-    return range(1, totalPages);
-  }
-
-  const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-  const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
-
-  const showLeftDots = leftSiblingIndex > 2;
-  const showRightDots = rightSiblingIndex < totalPages - 1;
-
-  if (!showLeftDots && showRightDots) {
-    const leftItemCount = 3 + 2 * siblingCount;
-    const leftRange = range(1, leftItemCount);
-    return [...leftRange, DOTS, totalPages];
-  }
-
-  if (showLeftDots && !showRightDots) {
-    const rightItemCount = 3 + 2 * siblingCount;
-    const rightRange = range(totalPages - rightItemCount + 1, totalPages);
-    return [1, DOTS, ...rightRange];
-  }
-
-  // both sides have dots
-  const middleRange = range(leftSiblingIndex, rightSiblingIndex);
-  return [1, DOTS, ...middleRange, DOTS, totalPages];
-}
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
@@ -298,42 +264,13 @@ export default function BlogPage() {
 
               {/* ================= PAGINATION ================= */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-8 mb-20">
-                  <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm"
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-
-                  {getPaginationRange(currentPage, totalPages).map((p, idx) =>
-                    p === DOTS ? (
-                      <span key={`dot-${idx}`} className="w-10 h-10 flex items-center justify-center text-xs text-slate-400">
-                        …
-                      </span>
-                    ) : (
-                      <button
-                        key={p}
-                        onClick={() => handlePageChange(Number(p))}
-                        className={`w-10 h-10 rounded-full text-xs font-bold transition-all duration-300 ${
-                          currentPage === p
-                            ? "bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/25"
-                            : "bg-white border border-slate-200 hover:bg-slate-50 text-slate-600"
-                        }`}
-                      >
-                        {p}
-                      </button>
-                    ),
-                  )}
-
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm"
-                  >
-                    <ChevronRight size={18} />
-                  </button>
+                <div className="mt-8 mb-20">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                    variant="default"
+                  />
                 </div>
               )}
             </>

@@ -31,7 +31,7 @@ const EventVideoModalComponent = ({ isOpen, onClose, videoUrl }: EventVideoModal
             {/* Header / Close button area */}
             <div className="flex items-center justify-between p-4 sm:p-0 sm:mb-6">
                <div className="hidden sm:block">
-                  <h3 className="text-white font-black text-2xl tracking-tighter">Elite Venue Tour</h3>
+                  <h3 className="text-white font-bold text-2xl tracking-tighter">Elite Venue Tour</h3>
                </div>
                <button 
                 onClick={onClose} 

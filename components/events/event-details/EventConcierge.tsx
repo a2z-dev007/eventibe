@@ -32,7 +32,7 @@ export function EventConcierge({ contacts, highlights, venueTitle = 'this proper
 
       <div className="flex items-center gap-3 mb-10">
         <div className="w-1 h-6 bg-black rounded-full" />
-        <h4 className="font-black text-gray-900 text-lg tracking-tight">VIP Concierge</h4>
+        <h4 className="font-bold text-gray-900 text-lg tracking-tight">VIP Concierge</h4>
       </div>
 
       <div className="space-y-4">
@@ -78,7 +78,7 @@ export function EventConcierge({ contacts, highlights, venueTitle = 'this proper
       {highlights && highlights.length > 0 && (
         <div className="mt-8 pt-8 border-t border-gray-50">
           <div className="flex items-center gap-3 mb-6">
-            <h4 className="font-black text-gray-900 text-lg tracking-tight">Venue Highlights</h4>
+            <h4 className="font-bold text-gray-900 text-lg tracking-tight">Venue Highlights</h4>
           </div>
           <div className="flex flex-wrap gap-2.5">
             {displayHighlights.map((h) => (

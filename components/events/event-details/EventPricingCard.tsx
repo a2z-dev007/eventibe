@@ -25,7 +25,7 @@ export function EventPricingCard({ packageDetails, getImageUrl, setQuoteOpen }: 
         {/* Left Side: Text and Stats */}
         <div className="flex-1 space-y-8">
           <div className="space-y-4">
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">Plan Your Event with Excellence</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight leading-tight">Plan Your Event with Excellence</h3>
             <p className="text-sm md:text-base text-gray-500 font-bold leading-relaxed max-w-2xl">Connect with our event specialists to get a personalized quote tailored to your specific requirements and guest count.</p>
           </div>
           
@@ -48,7 +48,7 @@ export function EventPricingCard({ packageDetails, getImageUrl, setQuoteOpen }: 
         <div className="lg:w-[400px] shrink-0 space-y-8">
           {packageDetails && packageDetails.length > 0 && (
             <div className="space-y-4">
-              <h4 className="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-4">Available Packages</h4>
+              <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">Available Packages</h4>
               <div className="grid grid-cols-1 gap-3">
                 {packageDetails.slice(0, 2).map((pkg) => (
                   <div key={pkg.id} className="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex gap-4 hover:border-orange-200 transition-colors cursor-default group">

@@ -67,7 +67,7 @@ export function EventAmenities({ highlights, amenities, services, venueTitle, ve
             What's Included
           </p>
         </div>
-        <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-snug">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight leading-snug">
           Amenities &amp; Services
         </h2>
       </div>
@@ -89,7 +89,7 @@ export function EventAmenities({ highlights, amenities, services, venueTitle, ve
                   <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${section.iconBg}`}>
                     <Icon className={`w-4 h-4 ${section.iconColor}`} />
                   </div>
-                  <h3 className="text-[13px] font-black text-gray-900 uppercase tracking-widest">
+                  <h3 className="text-[13px] font-bold text-gray-900 uppercase tracking-widest">
                     {section.title}
                   </h3>
                 </div>

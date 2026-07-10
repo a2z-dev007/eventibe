@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Pagination } from "@/components/ui/pagination";
 import { motion, AnimatePresence } from "framer-motion";
 import { TiltCard, MagneticButton } from "@/components/micro-interactions";
 
@@ -645,44 +646,13 @@ const CareerPage = () => {
                   of <span className="text-white">{filteredJobs.length}</span>{" "}
                   positions
                 </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(1, prev - 1))
-                    }
-                    disabled={currentPage === 1}
-                    className="h-14 px-8 bg-white/5 border border-white/10 rounded-2xl font-black uppercase tracking-widest text-xs disabled:opacity-30 hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2"
-                  >
-                    <ChevronLeft className="w-4 h-4" /> Previous
-                  </button>
-
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                      (page) => (
-                        <button
-                          key={page}
-                          onClick={() => setCurrentPage(page)}
-                          className={`w-14 h-14 rounded-2xl font-black transition-all flex items-center justify-center border ${
-                            currentPage === page
-                              ? "bg-accent-orange border-accent-orange text-white shadow-xl shadow-orange-500/30 scale-110 z-10"
-                              : "bg-white/5 border-white/10 text-white/40 hover:bg-white/10 hover:border-white/20"
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      ),
-                    )}
-                  </div>
-
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(totalPages, prev + 1))
-                    }
-                    disabled={currentPage === totalPages}
-                    className="h-14 px-8 bg-white/5 border border-white/10 rounded-2xl font-black uppercase tracking-widest text-xs disabled:opacity-30 hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2"
-                  >
-                    Next <ChevronRight className="w-4 h-4" />
-                  </button>
+                <div>
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                    variant="dark"
+                  />
                 </div>
               </div>
             )}

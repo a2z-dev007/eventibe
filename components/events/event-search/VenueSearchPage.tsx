@@ -10,6 +10,7 @@ import PremiumDatePicker from '@/components/ui/PremiumDatePicker'
 import { MapPin, Home, Sparkles, Users, Search as SearchIcon, SlidersHorizontal, ChevronRight, X, LayoutGrid, List, ChevronDown } from 'lucide-react'
 import { toast } from 'sonner'
 import PremiumSearchBar from '@/components/events/PremiumSearchBar'
+import { Pagination } from '@/components/ui/pagination'
 
 import type { Filters, Venue } from './types'
 import { PER_PAGE } from './data'
@@ -277,7 +278,7 @@ export function VenueSearchPage() {
               <SearchIcon className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight leading-none">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight leading-none">
                 {totalRecords} <span className="text-[#FF9530]">Venues Found</span>
               </h2>
               <div className="flex items-center gap-3 mt-1.5">
@@ -352,7 +353,7 @@ export function VenueSearchPage() {
             >
               <div className="sticky top-0 bg-white border-b px-5 py-5 flex items-center justify-between z-10">
                 <div className="flex flex-col">
-                  <h3 className="text-xl font-black text-gray-900">Filter Venues</h3>
+                  <h3 className="text-xl font-bold text-gray-900">Filter Venues</h3>
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Refine your search</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -430,7 +431,7 @@ export function VenueSearchPage() {
             ) : isError ? (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 text-center">
                 <p className="text-4xl mb-3">⚠️</p>
-                <h3 className="font-extrabold text-gray-900 text-lg mb-1">Error loading venues</h3>
+                <h3 className="font-bold text-gray-900 text-lg mb-1">Error loading venues</h3>
                 <p className="text-gray-500 text-sm">Please try again later.</p>
               </div>
             ) : processedResults.length === 0 ? (
@@ -438,7 +439,7 @@ export function VenueSearchPage() {
                 <div className="w-20 h-20 lg:w-24 lg:h-24 bg-orange-50 rounded-3xl flex items-center justify-center text-[#FF9530] mb-8 mx-auto shadow-sm border border-orange-100/50 group-hover:scale-110 transition-transform duration-500">
                   <SearchIcon className="w-10 h-10 lg:w-12 lg:h-12" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4 tracking-tight">No Venues Found</h3>
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 tracking-tight">No Venues Found</h3>
                 <p className="text-gray-500 font-medium text-base lg:text-lg max-w-md mx-auto mb-10 leading-relaxed">
                   We couldn't find any premium venues matching your current filters. Try relaxing your criteria or search in a different city.
                 </p>
@@ -461,39 +462,16 @@ export function VenueSearchPage() {
                 <p className="text-sm text-gray-500 font-medium">
                   Showing {(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, totalRecords)} of {totalRecords} venues
                 </p>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    disabled={page === 1}
-                    onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                    className="w-8 h-8 rounded-lg border border-gray-200 text-gray-600 flex items-center justify-center disabled:opacity-40 hover:border-[#FF9530] hover:text-[#FF9530] transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                    const pageNum = i + 1;
-                    return (
-                      <button
-                        key={pageNum}
-                        onClick={() => { setPage(pageNum); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                        className={`w-8 h-8 rounded-lg text-sm font-bold transition-all ${pageNum === page ? 'gradient-btn text-white shadow-sm' : 'border border-gray-200 text-gray-600 hover:border-[#FF9530] hover:text-[#FF9530]'}`}
-                      >
-                        {pageNum}
-                      </button>
-                    );
-                  })}
-                  {totalPages > 5 && <span className="text-gray-400 mx-1">...</span>}
-                  <button
-                    disabled={page === totalPages}
-                    onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                    className="w-8 h-8 rounded-lg border border-gray-200 text-gray-600 flex items-center justify-center disabled:opacity-40 hover:border-[#FF9530] hover:text-[#FF9530] transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
+                <Pagination
+                  currentPage={page}
+                  totalPages={totalPages}
+                  onPageChange={(p) => {
+                    setPage(p)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                  variant="orange"
+                  className="shadow-none border-none bg-transparent dark:bg-transparent p-0"
+                />
               </div>
             )}
 
@@ -502,7 +480,7 @@ export function VenueSearchPage() {
 
         {/* ── Average ratings & reviews — full-width below grid ── */}
         {/* <section className="mt-6 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm p-6">
-          <h2 className="text-xl font-extrabold text-gray-900 mb-5">
+          <h2 className="text-xl font-bold text-gray-900 mb-5">
             Average Rating &amp; Reviews for Venues in {locationLabel}
           </h2>
           <div className="flex items-center gap-6 pb-5 border-b border-dashed border-gray-200">
@@ -578,7 +556,7 @@ export function VenueSearchPage() {
         {/* ── Area reviews ── */}
         {/* <section className="mt-4 bg-orange-50 border border-[#FF9530]/20 rounded-xl lg:rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-[#FF9530]/20">
-            <h2 className="font-extrabold text-gray-900">Area Reviews — {locationLabel}</h2>
+            <h2 className="font-bold text-gray-900">Area Reviews — {locationLabel}</h2>
             <span className="text-sm text-gray-500 font-semibold">Avg: 4.4 / 5 · 1,200+ visitors</span>
           </div>
           <div className="grid sm:grid-cols-3 gap-3 p-4">
@@ -601,7 +579,7 @@ export function VenueSearchPage() {
         {/* ── SEO insight grid ── */}
         {/* <section className="mt-4 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-gray-100 bg-gray-50">
-            <h2 className="font-extrabold text-gray-900">{locationLabel} — Areas, Budgets &amp; Insights</h2>
+            <h2 className="font-bold text-gray-900">{locationLabel} — Areas, Budgets &amp; Insights</h2>
             <p className="text-sm text-gray-500 mt-0.5">Compare venues by locality, event type, guests, and price range.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-4 p-5">
@@ -644,7 +622,7 @@ export function VenueSearchPage() {
         {/* ── SEO internal links ── */}
         {/* <section className="mt-4 mb-8 bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-gray-100">
-            <h2 className="font-extrabold text-gray-900">Discover More Venues</h2>
+            <h2 className="font-bold text-gray-900">Discover More Venues</h2>
             <p className="text-sm text-gray-500 mt-0.5">Nearby and same-city discovery lists for stronger venue discovery.</p>
           </div>
           {[

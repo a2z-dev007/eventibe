@@ -31,6 +31,7 @@ export default function HeroSearch() {
   const router = useRouter();
 
   // ── Local form state ────────────────────────────────────────────────────────
+  const [isSearching, setIsSearching] = useState(false);
   const [location, setLocation] = useState<any>(null);
   const [venueType, setVenueType] = useState<any>(null);
   const [eventType, setEventType] = useState<any>(null);
@@ -127,6 +128,7 @@ export default function HeroSearch() {
 
   // ── Search handler ──────────────────────────────────────────────────────────
   const handleSearch = () => {
+    setIsSearching(true);
     const params = new URLSearchParams();
     if (location?.value) {
       params.set('city', location.value.toString());
@@ -316,10 +318,17 @@ export default function HeroSearch() {
               <MagneticButton>
                 <button
                   onClick={handleSearch}
-                  className="h-14 cursor-pointer bg-cta-gradient text-white rounded-full px-6 flex items-center justify-center gap-2 font-bold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] shadow-lg hover:shadow-[0_8px_24px_rgba(249,115,22,0.4)] group/btn"
+                  disabled={isSearching}
+                  className={`h-14 cursor-pointer bg-cta-gradient text-white rounded-full px-6 flex items-center justify-center gap-2 font-bold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] shadow-lg hover:shadow-[0_8px_24px_rgba(249,115,22,0.4)] group/btn ${isSearching ? 'opacity-80 cursor-not-allowed' : ''}`}
                 >
-                  <Search className="w-4 h-4 transition-transform duration-500 group-hover/btn:rotate-12" strokeWidth={3} />
-                  <span className="hidden xl:inline text-sm font-bold tracking-tight">Search</span>
+                  {isSearching ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+                  ) : (
+                    <Search className="w-4 h-4 transition-transform duration-500 group-hover/btn:rotate-12" strokeWidth={3} />
+                  )}
+                  <span className="hidden xl:inline text-sm font-bold tracking-tight">
+                    {isSearching ? 'Searching...' : 'Search'}
+                  </span>
                 </button>
               </MagneticButton>
             </div>
@@ -328,7 +337,7 @@ export default function HeroSearch() {
           {/* Mobile Search Bar (Cohesive Stacked Card) */}
           <div className="lg:hidden w-full max-w-xl mx-auto bg-white/95 border border-gray-200/50 backdrop-blur-3xl rounded-[2rem] p-5 shadow-[0_25px_65px_rgba(0,0,0,0.12)] flex flex-col gap-4 text-left relative">
             {/* Header/Title */}
-            <h3 className="text-gray-900 text-sm font-black tracking-[0.06em] uppercase px-1 flex items-center gap-2">
+            <h3 className="text-gray-900 text-sm font-bold tracking-[0.06em] uppercase px-1 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-accent-orange animate-pulse" />
               Find Your Venue & Services
             </h3>
@@ -498,10 +507,17 @@ export default function HeroSearch() {
             {/* Search Button */}
             <button
               onClick={handleSearch}
-              className="group/btn w-full mt-2 py-4 px-6 rounded-2xl bg-gradient-to-r from-[#FF610D] to-[#EDBA82] hover:opacity-95 text-white font-bold flex items-center justify-center gap-2.5 shadow-xl shadow-orange-500/20 active:scale-[0.98] transition-all cursor-pointer text-sm"
+              disabled={isSearching}
+              className={`group/btn w-full mt-2 py-4 px-6 rounded-2xl bg-gradient-to-r from-[#FF610D] to-[#EDBA82] hover:opacity-95 text-white font-bold flex items-center justify-center gap-2.5 shadow-xl shadow-orange-500/20 active:scale-[0.98] transition-all cursor-pointer text-sm ${isSearching ? 'opacity-80 cursor-not-allowed' : ''}`}
             >
-              <Search className="w-5 h-5 transition-transform duration-500 group-hover/btn:rotate-12" strokeWidth={3} />
-              <span className="font-bold tracking-tight">Search Venues</span>
+              {isSearching ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin shrink-0" />
+              ) : (
+                <Search className="w-5 h-5 transition-transform duration-500 group-hover/btn:rotate-12" strokeWidth={3} />
+              )}
+              <span className="font-bold tracking-tight">
+                {isSearching ? 'Searching...' : 'Search Venues'}
+              </span>
             </button>
           </div>
         </div>

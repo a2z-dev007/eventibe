@@ -39,7 +39,7 @@ export function EventDetailedSpecs({ content }: { content?: any }) {
             Technical Details
           </p>
         </div>
-        <h2 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
           Property Specifications & <br className="hidden md:block" />
           <span className="text-[#FF9530]">Standard Operating Protocols</span>
         </h2>
@@ -56,7 +56,7 @@ export function EventDetailedSpecs({ content }: { content?: any }) {
                   <div className="w-14 h-14 rounded-2xl bg-orange-50 text-[#FF9530] flex items-center justify-center mb-6 border border-orange-100 shadow-sm">
                     <Icon className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 tracking-tight">{section.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 tracking-tight">{section.title}</h3>
                   <p className="text-gray-500 font-medium text-sm leading-relaxed max-w-xs">Essential operational data and venue constraints for event planning.</p>
                 </div>
 
@@ -81,7 +81,7 @@ export function EventDetailedSpecs({ content }: { content?: any }) {
                         <div key={field.key} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 flex gap-4 items-start">
                           <Info className="w-5 h-5 text-[#FF9530] shrink-0 mt-0.5" />
                           <div>
-                            <h5 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{field.label}</h5>
+                            <h5 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{field.label}</h5>
                             <p className="text-sm text-gray-700 leading-relaxed font-semibold">{data[field.key]}</p>
                           </div>
                         </div>

@@ -25,7 +25,7 @@ export function EventSeatingLayouts({ venueConfigurations, getImageUrl, venueTit
   return (
     <div className="mt-8 pt-8 border-t border-gray-100">
       <div className="flex items-center gap-3 mb-8">
-        <h4 className="text-lg sm:text-xl md:text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2 md:gap-3 ">Flexible Event Layouts for Every Occasion in {venueLoc}</h4>
+        <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2 md:gap-3 ">Flexible Event Layouts for Every Occasion in {venueLoc}</h4>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
         {venueConfigurations.slice(0, isLayoutsExpanded ? undefined : 8).map((conf) => (
