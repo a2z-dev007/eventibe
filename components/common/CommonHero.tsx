@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
   LucideIcon,
-  Building2, 
-  Briefcase, 
-  Heart, 
-  Users, 
-  MapPin, 
-  Sparkles, 
-  BookOpen, 
-  Zap, 
-  PlusCircle, 
-  ShieldCheck, 
-  Search 
-} from 'lucide-react';
+  Building2,
+  Briefcase,
+  Heart,
+  Users,
+  MapPin,
+  Sparkles,
+  BookOpen,
+  Zap,
+  PlusCircle,
+  ShieldCheck,
+  Search,
+} from "lucide-react";
 
 const iconMap: Record<string, LucideIcon> = {
   building2: Building2,
@@ -39,9 +39,9 @@ interface CommonHeroProps {
   badgeText?: string;
   badgeIcon?: LucideIcon | string;
   bgSrc: string;
-  bgType?: 'image' | 'video';
+  bgType?: "image" | "video";
   children?: React.ReactNode;
-  alignment?: 'center' | 'left';
+  alignment?: "center" | "left";
 }
 
 export default function CommonHero({
@@ -52,23 +52,23 @@ export default function CommonHero({
   badgeText,
   badgeIcon,
   bgSrc,
-  bgType = 'image',
+  bgType = "image",
   children,
-  alignment = 'center',
+  alignment = "center",
 }: CommonHeroProps) {
-  const isLeft = alignment === 'left';
-  
-  const BadgeIcon = typeof badgeIcon === 'string'
-    ? iconMap[badgeIcon.toLowerCase()]
-    : badgeIcon;
+  const isLeft = alignment === "left";
 
+  const BadgeIcon =
+    typeof badgeIcon === "string"
+      ? iconMap[badgeIcon.toLowerCase()]
+      : badgeIcon;
 
   return (
-    <section className="relative z-20 w-full h-[50vh] min-h-[350px] md:h-[65vh] md:min-h-[480px] lg:h-[100dvh] lg:min-h-[550px] flex items-center justify-center text-white overflow-hidden">
+    <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white overflow-hidden">
       {/* Background Media Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
         <AnimatePresence mode="wait">
-          {bgType === 'video' ? (
+          {bgType === "video" ? (
             <motion.div
               key={bgSrc}
               initial={{ opacity: 0 }}
@@ -93,8 +93,8 @@ export default function CommonHero({
               animate={{ opacity: 1, scale: 1.05 }}
               exit={{ opacity: 0, scale: 1.15 }}
               transition={{
-                opacity: { duration: 1.5, ease: 'easeInOut' },
-                scale: { duration: 10, ease: 'linear' },
+                opacity: { duration: 1.5, ease: "easeInOut" },
+                scale: { duration: 10, ease: "linear" },
               }}
               className="absolute inset-0 w-full h-full"
             >
@@ -115,36 +115,38 @@ export default function CommonHero({
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage:
-              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
           }}
         />
       </div>
 
       {/* Content Container */}
       <div
-        className={`container mx-auto px-4 md:px-6 relative z-10 flex flex-col mt-12 md:mt-16 ${
-          isLeft ? 'items-start text-left' : 'items-center text-center'
+        className={`container mx-auto px-4 md:px-6 relative z-10 flex flex-col lg:mt-0 ${
+          isLeft ? "items-start text-left" : "items-center text-center"
         }`}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className={`flex flex-col ${isLeft ? 'items-start' : 'items-center'} w-full`}
+          className={`flex flex-col ${isLeft ? "items-start" : "items-center"} w-full`}
         >
-          {badgeText && (
+          {/* {badgeText && (
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/15 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-bold mb-6 backdrop-blur-sm shadow-xl animate-fade-in">
-              {BadgeIcon && <BadgeIcon size={14} className="text-accent-orange" />}
+              {BadgeIcon && (
+                <BadgeIcon size={14} className="text-accent-orange" />
+              )}
               <span className="uppercase tracking-widest">{badgeText}</span>
             </div>
-          )}
+          )} */}
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+          <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
             {titleMain}
             {titleHighlight && (
               <>
-                {' '}
+                {" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
                   {titleHighlight}
                 </span>
@@ -154,7 +156,7 @@ export default function CommonHero({
           </h1>
 
           {subtitle && (
-            <p className="text-sm md:text-xl text-white/95 mb-8 md:mb-10 max-w-3xl font-medium drop-shadow-md leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-lg lg:text-xl text-white/95 mb-4 sm:mb-6 md:mb-10 max-w-3xl font-medium drop-shadow-md leading-relaxed text-left sm:text-center">
               {subtitle}
             </p>
           )}
