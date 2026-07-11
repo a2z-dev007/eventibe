@@ -35,6 +35,7 @@ import {
   Send,
   ChevronRight,
   Files,
+  Menu,
 } from "lucide-react";
 
 const contactData = {
@@ -184,6 +185,42 @@ export default function DisclaimerPage() {
       `,
         }}
       />
+      {/* Mobile Quick Navigation - Visible only on mobile/tablet */}
+      <div className="lg:hidden sticky top-[64px] z-30 w-full px-4 py-3 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div className="max-w-md mx-auto relative">
+          <label className="sr-only">Navigate Sections</label>
+          <select
+            value={activeSection}
+            onChange={(e) => {
+              const val = e.target.value;
+              setActiveSection(val);
+              const el = document.getElementById(val);
+              if (el) {
+                const offset = 140; // offset to clear sticky header and mobile nav
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = el.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                });
+              }
+            }}
+            className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-bold text-primary-navy appearance-none outline-none focus:border-accent-orange transition-all cursor-pointer pr-10"
+          >
+            {sections.map((section) => (
+              <option key={section.id} value={section.id} className="font-semibold text-primary-navy">
+                {section.title}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+            <Menu size={16} />
+          </div>
+        </div>
+      </div>
+
       {/* ── CONTENT SECTION ── */}
       <section className="py-16 md:py-24 bg-slate-50 relative z-20">
         <div className="container mx-auto px-4 md:px-6">

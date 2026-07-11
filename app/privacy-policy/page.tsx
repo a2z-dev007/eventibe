@@ -27,6 +27,7 @@ import {
   ChevronRight,
   ArrowLeft,
   Files,
+  Menu,
 } from "lucide-react";
 
 const sections = [
@@ -175,6 +176,42 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </section>
+
+      {/* Mobile Quick Navigation - Visible only on mobile/tablet */}
+      <div className="lg:hidden sticky top-[64px] z-30 w-full px-4 py-3 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div className="max-w-md mx-auto relative">
+          <label className="sr-only">Navigate Sections</label>
+          <select
+            value={activeSection}
+            onChange={(e) => {
+              const val = e.target.value;
+              setActiveSection(val);
+              const el = document.getElementById(val);
+              if (el) {
+                const offset = 140; // offset to clear sticky header and mobile nav
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = el.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                });
+              }
+            }}
+            className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-bold text-primary-navy appearance-none outline-none focus:border-accent-orange transition-all cursor-pointer pr-10"
+          >
+            {sections.map((section) => (
+              <option key={section.id} value={section.id} className="font-semibold text-primary-navy">
+                {section.title}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+            <Menu size={16} />
+          </div>
+        </div>
+      </div>
 
       {/* Main Content Sections */}
       <section className="pt-16 pb-12 md:pb-24 bg-white relative">
