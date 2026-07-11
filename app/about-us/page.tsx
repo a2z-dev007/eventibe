@@ -55,16 +55,16 @@ export default function AboutUsPage() {
         bgSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
         alignment="left"
       >
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mt-3 sm:mt-6 w-full sm:w-auto">
           <Link
             href="/venues"
-            className="bg-cta-gradient text-white px-8 py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
+            className="bg-cta-gradient text-white px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold hover:scale-[1.02] transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
           >
             Explore Venues <ArrowRight size={20} />
           </Link>
           <Link
             href="/contact-us"
-            className="bg-white/5 border border-white/10 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-colors flex items-center justify-center text-center backdrop-blur-sm"
+            className="bg-white/5 border border-white/10 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold hover:bg-white/10 transition-colors flex items-center justify-center text-center backdrop-blur-sm"
           >
             Contact Our Team
           </Link>
@@ -72,7 +72,7 @@ export default function AboutUsPage() {
       </CommonHero>
 
       {/* Intro Context */}
-      <section className="flex items-center py-20 md:py-28 bg-light-bg overflow-hidden">
+      <section className="flex items-center py-10 md:py-28 bg-light-bg overflow-hidden">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-20 items-center">
             {/* Image Column - 60% Width */}
@@ -116,13 +116,13 @@ export default function AboutUsPage() {
                   Discover Your{" "}
                   <span className="text-corporate-blue">Perfect Canvas</span>
                 </h2>
-                <p className="text-base md:text-lg text-soft-slate leading-relaxed">
+                <p className="text-sm md:text-lg text-soft-slate leading-relaxed text-left">
                   We are India’s fastest-growing event and venue discovery
                   platform, built with the singular mission of connecting event
                   planners, couples, corporate teams, and experience seekers
                   with the best venues and services across cities.
                 </p>
-                <p className="text-base md:text-lg text-soft-slate segment-highlight border-l-4 border-accent-orange pl-5 md:pl-6 my-6 md:my-8 py-2 font-semibold text-primary-navy">
+                <p className="text-sm md:text-lg text-soft-slate segment-highlight border-l-4 border-accent-orange pl-5 md:pl-6 my-6 md:my-8 py-2 font-semibold text-primary-navy text-left">
                   From lush wedding lawns to contemporary corporate conference
                   spaces — our platform curates locations tailored to your
                   unique needs.
@@ -153,16 +153,16 @@ export default function AboutUsPage() {
       </section>
 
       {/* Our Story & Mission */}
-      <section className="flex items-center py-20 md:py-28 bg-white relative">
+      <section className="flex items-center py-10 md:py-28 bg-white relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-5xl mx-auto text-center mb-10">
+          <div className="max-w-5xl mx-auto text-center mb-6 md:mb-10">
             <h2 className="text-accent-orange font-bold uppercase tracking-[0.2em] text-sm mb-4">
               Our Foundation
             </h2>
-            <h3 className="text-4xl md:text-5xl font-extrabold text-primary-navy mb-6 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-primary-navy mb-6 tracking-tight text-center">
               Our Story – Why We Built Eventibe
             </h3>
-            <p className="text-lg text-soft-slate">
+            <p className="text-sm md:text-lg text-soft-slate text-left sm:text-center">
               Eventibe was founded by a team of passionate event professionals,
               tech innovators, and wedding industry strategists who have spent
               years working with venues, planners, and couples. We saw a
@@ -174,11 +174,11 @@ export default function AboutUsPage() {
             <div className="bg-primary-navy text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden group shadow-xl">
               <div className="absolute top-0 right-0 w-32 h-32 bg-corporate-blue/20 rounded-full -mt-16 -mr-16 transition-transform group-hover:scale-150 duration-500"></div>
               <h4 className="text-2xl font-bold mb-4">Who We Are</h4>
-              <p className="text-gray-300 mb-6 leading-relaxed italic text-base py-4 border-y border-white/10 uppercase font-light tracking-wide">
+              <p className="text-gray-300 mb-6 leading-relaxed italic text-xs md:text-base py-4 border-y border-white/10 uppercase font-light tracking-wide text-left">
                 “Beautiful venues exist, but discovering them — in a trusted,
                 transparent, and tailored way — is difficult.”
               </p>
-              <p className="text-gray-400 mb-6 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-400 mb-6 text-xs md:text-base leading-relaxed text-left">
                 Unlike traditional directories or simple listing sites, we
                 envisioned a platform that would be visual, inspiring, and
                 searchable by real requirements.
@@ -202,7 +202,7 @@ export default function AboutUsPage() {
                   </li>
                 ))}
               </ul>
-              <p className="text-gray-400 mb-6 mt-5 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-400 mb-6 mt-5 text-xs md:text-base leading-relaxed text-left">
                 And so Eventibe was born — not just a directory, but a discovery
                 engine for celebrations and professional experiences.
               </p>
@@ -212,7 +212,7 @@ export default function AboutUsPage() {
               <h4 className="text-2xl font-bold text-primary-navy mb-4">
                 Our Core Mission
               </h4>
-              <p className="text-soft-slate mb-6 leading-relaxed text-sm md:text-base">
+              <p className="text-soft-slate mb-6 leading-relaxed text-xs md:text-base text-left">
                 Our mission is simple yet profound: To make venue discovery
                 seamless, joyful, and trustworthy for everyone — from couples
                 planning a wedding to corporate teams organizing large-scale
@@ -255,7 +255,7 @@ export default function AboutUsPage() {
                       className="flex items-center gap-3 group/item"
                     >
                       <div
-                        className={`w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center ${val.color} group-hover/item:scale-110 transition-transform`}
+                        className={`w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 ${val.color} group-hover/item:scale-110 transition-transform`}
                       >
                         <val.icon size={20} />
                       </div>
@@ -272,13 +272,13 @@ export default function AboutUsPage() {
       </section>
 
       {/* Services Section */}
-      <section className="flex items-center py-20 md:py-28 bg-primary-navy text-white">
+      <section className="flex items-center py-10 md:py-28 bg-primary-navy text-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+          <div className="text-center mb-10 md:mb-20">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-center">
               What We Do
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-sm md:text-xl text-gray-400 max-w-3xl mx-auto text-center">
               At Eventibe, We empower users with tools, filters, insights, and
               inspiration so they can confidently choose the perfect venue for
               any occasion.
@@ -286,14 +286,14 @@ export default function AboutUsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12">
-              <div className="w-16 h-16 bg-corporate-blue rounded-2xl flex items-center justify-center mb-8">
-                <Search size={32} />
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 flex flex-col items-center text-center md:items-start md:text-left">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-corporate-blue rounded-2xl flex items-center justify-center mb-4 md:mb-8 shrink-0 mx-auto md:mx-0">
+                <Search className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <h4 className="text-2xl font-bold mb-6">
+              <h4 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center md:text-left">
                 Venue Discovery Simplified
               </h4>
-              <p className="text-gray-400 mb-8 leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-gray-400 mb-8 leading-relaxed text-left">
                 Our venue marketplace connects you with hundreds of verified
                 venues across cities, including Banquet halls, Wedding lawns,
                 Luxury resorts, and Conference centers, Corporate event spaces,
@@ -301,7 +301,7 @@ export default function AboutUsPage() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
                 <div className="space-y-3">
-                  <div className="text-xs font-bold text-accent-orange uppercase tracking-wider mb-2">
+                  <div className="text-xs font-bold text-accent-orange uppercase tracking-wider mb-2 text-left md:text-left">
                     Showcased with
                   </div>
                   {[
@@ -314,14 +314,14 @@ export default function AboutUsPage() {
                   ].map((t) => (
                     <div
                       key={t}
-                      className="flex items-center gap-2 text-sm text-gray-300"
+                      className="flex items-start gap-2 text-sm text-gray-300 text-left"
                     >
-                      <CheckCircle2 size={14} className="text-blue-400" /> {t}
+                      <CheckCircle2 size={14} className="text-blue-400 shrink-0 mt-0.5" /> <span>{t}</span>
                     </div>
                   ))}
                 </div>
                 <div className="space-y-3">
-                  <div className="text-xs font-bold text-accent-orange uppercase tracking-wider mb-2">
+                  <div className="text-xs font-bold text-accent-orange uppercase tracking-wider mb-2 text-left md:text-left">
                     Filter by
                   </div>
                   {[
@@ -333,27 +333,27 @@ export default function AboutUsPage() {
                   ].map((t) => (
                     <div
                       key={t}
-                      className="flex items-center gap-2 text-sm text-gray-300"
+                      className="flex items-start gap-2 text-sm text-gray-300 text-left"
                     >
-                      <CheckCircle2 size={14} className="text-blue-400" /> {t}
+                      <CheckCircle2 size={14} className="text-blue-400 shrink-0 mt-0.5" /> <span>{t}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12">
-              <div className="w-16 h-16 bg-accent-orange rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-orange-500/20">
-                <Sparkles size={32} />
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 flex flex-col items-center text-center md:items-start md:text-left">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-accent-orange rounded-2xl flex items-center justify-center mb-4 md:mb-8 shadow-lg shadow-orange-500/20 shrink-0 mx-auto md:mx-0">
+                <Sparkles className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <h4 className="text-2xl font-bold mb-6">
+              <h4 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center md:text-left">
                 Inspiration for Every Celebration
               </h4>
-              <p className="text-gray-400 mb-8 leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-gray-400 mb-8 leading-relaxed text-left">
                 Beyond pure listings, Eventibe also inspires you with curated
                 editorial content, trend guides, and success stories.
               </p>
-              <ul className="space-y-4">
+              <ul className="space-y-4 text-left">
                 {[
                   "Editorial guides for choosing venues",
                   "Trend articles on decor and event design",
@@ -363,14 +363,14 @@ export default function AboutUsPage() {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/20 transition-colors"
+                    className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/20 transition-colors"
                   >
-                    <div className="w-2 h-2 rounded-full bg-accent-orange"></div>
-                    <span className="font-medium">{item}</span>
+                    <div className="w-2 h-2 rounded-full bg-accent-orange shrink-0 mt-2"></div>
+                    <span className="font-medium text-xs sm:text-sm text-left">{item}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 p-4 bg-corporate-blue/20 border border-corporate-blue/30 rounded-xl text-sm italic text-blue-200">
+              <div className="mt-8 p-4 bg-corporate-blue/20 border border-corporate-blue/30 rounded-xl text-xs sm:text-sm italic text-blue-200 text-left">
                 "This editorial dimension sets Eventibe apart — we blend
                 inspiration with discovery."
               </div>
@@ -380,17 +380,17 @@ export default function AboutUsPage() {
       </section>
 
       {/* Vision Section */}
-      <section className="flex items-center py-20 md:py-28 bg-white">
+      <section className="flex items-center py-10 md:py-28 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col lg:flex-row gap-16">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             <div className="lg:w-1/3">
-              <h2 className="text-accent-orange font-bold uppercase tracking-[0.2em] text-sm mb-4">
+              <h2 className="text-accent-orange font-bold uppercase tracking-[0.2em] text-sm mb-4 text-center lg:text-left">
                 The Future
               </h2>
-              <h3 className="text-4xl font-extrabold text-primary-navy mb-6 tracking-tight">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary-navy mb-6 tracking-tight text-center lg:text-left">
                 Our Vision – Where We’re Headed
               </h3>
-              <p className="text-xl text-soft-slate leading-relaxed mb-8 font-semibold">
+              <p className="text-base lg:text-xl text-soft-slate leading-relaxed mb-8 font-semibold text-center lg:text-left">
                 Our long-term vision includes:
               </p>
               <div className="flex flex-col gap-4">
@@ -424,17 +424,17 @@ export default function AboutUsPage() {
             </div>
 
             <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 flex flex-col items-start shadow-sm">
-                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-navy mb-6 border border-gray-100">
-                  <Building2 size={28} />
+              <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 flex flex-col items-stretch text-left shadow-sm">
+                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-navy mb-4 md:mb-6 border border-gray-100 shrink-0 mx-auto md:mx-0">
+                  <Building2 className="w-5 h-5 md:w-7 md:h-7" />
                 </div>
-                <h4 className="text-xl font-bold mb-4">
+                <h4 className="text-lg md:text-xl font-bold mb-4 text-center md:text-left">
                   A Full Event Planning Ecosystem
                 </h4>
-                <p className="text-sm font-bold text-primary-navy mb-4">
+                <p className="text-xs md:text-sm font-bold text-primary-navy mb-4 text-left">
                   We are building:
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-3 text-left">
                   {[
                     "Vendor listings — Catering, Photography, Decor, Mehndi Artists, Entertainment, Lighting, Tenting, and more",
                     "City-specific curated experiences",
@@ -444,33 +444,33 @@ export default function AboutUsPage() {
                   ].map((t) => (
                     <li
                       key={t}
-                      className="text-sm text-soft-slate flex items-start gap-2"
+                      className="text-xs md:text-sm text-soft-slate flex items-start gap-2 text-left"
                     >
                       <CheckCircle2
                         size={16}
                         className="text-accent-orange shrink-0 mt-0.5"
                       />{" "}
-                      {t}
+                      <span className="text-left">{t}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 flex flex-col items-start shadow-sm">
-                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-navy mb-6 border border-gray-100">
-                  <Zap size={28} />
+              <div className="p-8 rounded-[2rem] bg-gray-50 border border-gray-100 flex flex-col items-stretch text-left shadow-sm">
+                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-navy mb-4 md:mb-6 border border-gray-100 shrink-0 mx-auto md:mx-0">
+                  <Zap className="w-5 h-5 md:w-7 md:h-7" />
                 </div>
-                <h4 className="text-xl font-bold mb-4">
+                <h4 className="text-lg md:text-xl font-bold mb-4 text-center md:text-left">
                   Technology-Driven, Yet Human-Centric
                 </h4>
-                <p className="text-sm text-soft-slate mb-4 leading-relaxed font-medium">
+                <p className="text-xs md:text-sm text-soft-slate mb-4 leading-relaxed font-medium text-left">
                   We believe technology should enhance human decisions, not
                   replace them.
                 </p>
-                <p className="text-sm font-bold text-primary-navy mb-4">
+                <p className="text-xs md:text-sm font-bold text-primary-navy mb-4 text-left">
                   Our team blends:
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-3 text-left">
                   {[
                     "User-centric design",
                     "Scalable technology",
@@ -481,13 +481,13 @@ export default function AboutUsPage() {
                   ].map((t) => (
                     <li
                       key={t}
-                      className="text-sm text-soft-slate flex items-start gap-2"
+                      className="text-xs md:text-sm text-soft-slate flex items-start gap-2 text-left"
                     >
                       <CheckCircle2
                         size={16}
                         className="text-corporate-blue shrink-0 mt-0.5"
                       />{" "}
-                      {t}
+                      <span className="text-left">{t}</span>
                     </li>
                   ))}
                 </ul>
@@ -498,23 +498,23 @@ export default function AboutUsPage() {
       </section>
 
       {/* User Support Section */}
-      <section className="flex items-center py-20 md:py-28 bg-light-bg border-y border-gray-100">
+      <section className="flex items-center py-10 md:py-28 bg-light-bg border-y border-gray-100">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl font-extrabold text-primary-navy mb-6 tracking-tight">
+          <div className="text-center mb-10 md:mb-20">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-navy mb-6 tracking-tight text-center">
               How Eventibe Supporting Different Users
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
-              <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-500 mb-8 border border-pink-100 group-hover:bg-pink-500 group-hover:text-white transition-colors duration-500">
-                <Heart size={32} />
+            <div className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group flex flex-col items-stretch text-left">
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-500 mb-4 md:mb-8 border border-pink-100 group-hover:bg-pink-500 group-hover:text-white transition-colors duration-500 shrink-0 mx-auto md:mx-0">
+                <Heart className="w-5 h-5 md:w-8 md:h-8" />
               </div>
-              <h4 className="text-2xl font-bold text-primary-navy mb-6">
+              <h4 className="text-xl md:text-2xl font-bold text-primary-navy mb-6 text-center md:text-left">
                 For Couples and Social Planners
               </h4>
-              <p className="text-soft-slate mb-8 leading-relaxed">
+              <p className="text-xs md:text-base text-soft-slate mb-8 leading-relaxed text-left">
                 Wedding planning is emotional, detailed, and personal. Eventibe
                 helps you visualize venues, compare options, and connect
                 directly with managers.
@@ -530,32 +530,32 @@ export default function AboutUsPage() {
                 ].map((t) => (
                   <div
                     key={t}
-                    className="flex items-center gap-3 font-medium text-primary-navy/80"
+                    className="flex items-start gap-3 font-medium text-primary-navy/80 text-left"
                   >
-                    <div className="w-6 h-6 rounded-full bg-pink-50 flex items-center justify-center text-pink-400 shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-pink-50 flex items-center justify-center text-pink-400 shrink-0 mt-0.5">
                       <ChevronRight size={14} />
                     </div>
-                    {t}
+                    <span className="text-xs md:text-base text-left">{t}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
-              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-corporate-blue mb-8 border border-blue-100 group-hover:bg-corporate-blue group-hover:text-white transition-colors duration-500">
-                <Building2 size={32} />
+            <div className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all group flex flex-col items-stretch text-left">
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-corporate-blue mb-4 md:mb-8 border border-blue-100 group-hover:bg-corporate-blue group-hover:text-white transition-colors duration-500 shrink-0 mx-auto md:mx-0">
+                <Building2 className="w-5 h-5 md:w-8 md:h-8" />
               </div>
-              <h4 className="text-2xl font-bold text-primary-navy mb-6">
+              <h4 className="text-xl md:text-2xl font-bold text-primary-navy mb-6 text-center md:text-left">
                 For Corporate and Business Events
               </h4>
-              <p className="text-soft-slate mb-8 leading-relaxed">
+              <p className="text-xs md:text-base text-soft-slate mb-8 leading-relaxed text-left">
                 Professional events require structure and precision. We enable
                 corporate planners to find venues that fit both logistics and
                 brand identity.
               </p>
               <div className="space-y-4">
                 {[
-                  "Search layout (theatre,classroom, boardroom)",
+                  "Search layout (theatre, classroom, boardroom)",
                   "Find Locations with AV & technical support",
                   "Filter by seating capacity and facilities",
                   "Identify venues with lodging options",
@@ -563,12 +563,12 @@ export default function AboutUsPage() {
                 ].map((t) => (
                   <div
                     key={t}
-                    className="flex items-center gap-3 font-medium text-primary-navy/80"
+                    className="flex items-start gap-3 font-medium text-primary-navy/80 text-left"
                   >
-                    <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-corporate-blue shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-corporate-blue shrink-0 mt-0.5">
                       <ChevronRight size={14} />
                     </div>
-                    {t}
+                    <span className="text-xs md:text-base text-left">{t}</span>
                   </div>
                 ))}
               </div>
@@ -578,10 +578,10 @@ export default function AboutUsPage() {
       </section>
 
       {/* Why Choose Eventibe */}
-      <section className="flex items-center py-20 md:py-28 bg-white overflow-hidden relative">
+      <section className="flex items-center py-10 md:py-28 bg-white overflow-hidden relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-primary-navy mb-4 tracking-tight">
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-primary-navy mb-4 tracking-tight text-center">
               Why Choose Eventibe
             </h2>
           </div>
@@ -645,19 +645,19 @@ export default function AboutUsPage() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="relative group p-8 rounded-[2.5rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 h-full flex flex-col"
+                className="relative group p-8 rounded-[2.5rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 h-full flex flex-col items-stretch text-left"
               >
                 <div className="absolute -top-3 -right-3 w-10 h-10 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center font-black text-sm text-accent-orange z-10 group-hover:bg-accent-orange group-hover:text-white transition-colors">
                   {item.num}
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-corporate-blue mb-6 group-hover:scale-110 transition-transform">
-                  <item.icon size={26} />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-corporate-blue mb-4 md:mb-6 group-hover:scale-110 transition-transform shrink-0 mx-auto md:mx-0">
+                  <item.icon className="w-5 h-5 md:w-6.5 md:h-6.5" />
                 </div>
-                <h4 className="text-lg font-black text-primary-navy mb-5 leading-tight">
+                <h4 className="text-sm md:text-lg font-black text-primary-navy mb-5 leading-tight text-left">
                   {item.title}
                 </h4>
-                <div className="space-y-4 mb-6 flex-1">
-                  <p className="text-[10px] font-bold text-soft-slate uppercase tracking-wider">
+                <div className="space-y-4 mb-6 flex-1 text-left">
+                  <p className="text-[10px] font-bold text-soft-slate uppercase tracking-wider text-left">
                     {item.intro}
                   </p>
                   <ul className="space-y-2.5">
@@ -689,37 +689,37 @@ export default function AboutUsPage() {
       </section>
 
       {/* Team Section */}
-      <section className="flex items-center py-20 md:py-28 bg-primary-navy text-white relative overflow-hidden">
+      <section className="flex items-center py-10 md:py-28 bg-primary-navy text-white relative overflow-hidden">
         {/* Decorative Background Orbs */}
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-corporate-blue/10 rounded-full blur-[120px] -ml-64 -mt-24"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-orange/10 rounded-full blur-[120px] -mr-64 -mb-24"></div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-10 md:mb-20">
             <h2 className="text-accent-orange font-bold uppercase tracking-[0.2em] text-sm mb-4">
               Our Team
             </h2>
-            <h3 className="text-4xl md:text-6xl font-black mb-8 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-6xl font-black mb-6 md:mb-8 tracking-tight text-center">
               Experts You Can Trust
             </h3>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed text-center">
               Eventibe is built by a passionate team of professionals with
               diverse expertise
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col">
-              <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-accent-orange mb-8 group-hover:scale-110 transition-transform">
-                <Users size={40} />
+            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col items-stretch text-left">
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-white/10 rounded-2xl flex items-center justify-center text-accent-orange mb-4 md:mb-8 group-hover:scale-110 transition-transform shrink-0 mx-auto md:mx-0">
+                <Users className="w-5 h-5 md:w-10 md:h-10" />
               </div>
-              <h4 className="text-2xl font-bold mb-4">
+              <h4 className="text-xl md:text-2xl font-bold mb-4 text-center md:text-left">
                 Event Industry Veterans
               </h4>
-              <p className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-4">
+              <p className="text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider mb-4 text-left">
                 Our advisors and content strategists have experience in:
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-left">
                 {[
                   "Weddings and social celebrations",
                   "Corporate event planning",
@@ -728,29 +728,29 @@ export default function AboutUsPage() {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-center gap-3 text-gray-300"
+                    className="flex items-start gap-3 text-gray-300 text-left"
                   >
                     <CheckCircle2
                       size={16}
-                      className="text-accent-orange shrink-0"
+                      className="text-accent-orange shrink-0 mt-0.5"
                     />
-                    <span className="text-sm font-medium">{item}</span>
+                    <span className="text-xs md:text-sm font-medium text-left">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col">
-              <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-blue-400 mb-8 group-hover:scale-110 transition-transform">
-                <Zap size={40} />
+            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col items-stretch text-left">
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-white/10 rounded-2xl flex items-center justify-center text-blue-400 mb-4 md:mb-8 group-hover:scale-110 transition-transform shrink-0 mx-auto md:mx-0">
+                <Zap className="w-5 h-5 md:w-10 md:h-10" />
               </div>
-              <h4 className="text-2xl font-bold mb-4">
+              <h4 className="text-xl md:text-2xl font-bold mb-4 text-center md:text-left">
                 Technology and Design Experts
               </h4>
-              <p className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-4">
+              <p className="text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider mb-4 text-left">
                 Our tech team has crafted Eventibe with:
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-left">
                 {[
                   "Scalable architecture",
                   "Smooth UX workflows",
@@ -760,44 +760,44 @@ export default function AboutUsPage() {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-center gap-3 text-gray-300"
+                    className="flex items-start gap-3 text-gray-300 text-left"
                   >
                     <CheckCircle2
                       size={16}
-                      className="text-blue-400 shrink-0"
+                      className="text-blue-400 shrink-0 mt-0.5"
                     />
-                    <span className="text-sm font-medium">{item}</span>
+                    <span className="text-xs md:text-sm font-medium text-left">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col">
-              <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-green-500 mb-8 group-hover:scale-110 transition-transform">
-                <MapPin size={40} />
+            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 relative group hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 flex flex-col items-stretch text-left">
+              <div className="w-10 h-10 md:w-16 md:h-16 bg-white/10 rounded-2xl flex items-center justify-center text-green-500 mb-4 md:mb-8 group-hover:scale-110 transition-transform shrink-0 mx-auto md:mx-0">
+                <MapPin className="w-5 h-5 md:w-10 md:h-10" />
               </div>
-              <h4 className="text-2xl font-bold mb-4">
+              <h4 className="text-xl md:text-2xl font-bold mb-4 text-center md:text-left">
                 Local Market Specialists
               </h4>
-              <p className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-4">
+              <p className="text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider mb-4 text-left">
                 Our local specialists ensure content is:
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-left">
                 {[
                   "Regionally relevant",
                   "SEO optimized",
                   "Contextually accurate",
                   "Social and corporate event friendly",
-                ].map((item, idx) => (
+                ].map((item) => (
                   <li
-                    key={idx}
-                    className="flex items-center gap-3 text-gray-300"
+                    key={item}
+                    className="flex items-start gap-3 text-gray-300 text-left"
                   >
                     <CheckCircle2
                       size={16}
-                      className="text-green-500 shrink-0"
+                      className="text-green-500 shrink-0 mt-0.5"
                     />
-                    <div className="text-sm font-medium">{item}</div>
+                    <span className="text-xs md:text-sm font-medium text-left">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -807,43 +807,43 @@ export default function AboutUsPage() {
       </section>
 
       {/* Ethics & Values */}
-      <section className="flex items-center py-20 md:py-28 bg-white">
+      <section className="flex items-center py-10 md:py-28 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div>
-              <h3 className="text-4xl font-extrabold text-primary-navy mb-8 tracking-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-navy mb-8 tracking-tight text-center lg:text-left">
                 Ethical Standards and Community Commitment
               </h3>
-              <p className="text-soft-slate mb-10 leading-relaxed text-lg">
+              <p className="text-sm md:text-lg text-soft-slate mb-10 leading-relaxed text-left">
                 We believe in responsible digital ecosystems. We are committed
                 to uplifting small and medium venue owners, service providers,
                 and independent vendors.
               </p>
 
               <div className="space-y-6">
-                <div className="p-6 rounded-2xl bg-light-bg border border-gray-100 flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 text-blue-500">
+                <div className="p-6 rounded-2xl bg-light-bg border border-gray-100 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-5">
+                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 text-blue-500 mx-auto md:mx-0">
                     <ShieldCheck size={24} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-primary-navy mb-1">
+                    <h5 className="font-bold text-primary-navy mb-1 text-center md:text-left">
                       Trust and Transparency
                     </h5>
-                    <p className="text-sm text-soft-slate">
+                    <p className="text-xs md:text-sm text-soft-slate text-center md:text-left">
                       Real verification, transparent contacts, Respect for user
                       privacy, and data protection.
                     </p>
                   </div>
                 </div>
-                <div className="p-6 rounded-2xl bg-light-bg border border-gray-100 flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 text-green-500">
+                <div className="p-6 rounded-2xl bg-light-bg border border-gray-100 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-5">
+                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 text-green-500 mx-auto md:mx-0">
                     <Heart size={24} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-primary-navy mb-1">
+                    <h5 className="font-bold text-primary-navy mb-1 text-center md:text-left">
                       Supporting Local Enterprises
                     </h5>
-                    <p className="text-sm text-soft-slate">
+                    <p className="text-xs md:text-sm text-soft-slate text-center md:text-left">
                       Equal visibility and digital tools for local vendors and
                       lesser-known venues.
                     </p>
@@ -885,7 +885,7 @@ export default function AboutUsPage() {
                     </div>
                     <div>
                       <h6 className="font-extrabold text-lg mb-2">{v.t}</h6>
-                      <p className="text-gray-400 text-sm">{v.d}</p>
+                      <p className="text-gray-400 text-xs md:text-sm text-left">{v.d}</p>
                     </div>
                   </div>
                 ))}
@@ -896,13 +896,13 @@ export default function AboutUsPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="flex items-center py-20 md:py-28 bg-light-bg">
+      <section className="flex items-center py-10 md:py-28 bg-light-bg">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 md:mb-16">
             <h2 className="text-accent-orange font-bold uppercase tracking-[0.2em] text-sm mb-4">
               Feedback
             </h2>
-            <h3 className="text-4xl font-extrabold text-primary-navy mb-4 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-navy mb-4 tracking-tight text-center">
               Testimonials – What Our Users Say
             </h3>
           </div>
@@ -949,16 +949,16 @@ export default function AboutUsPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="flex items-center py-20 md:py-28 bg-primary-navy relative overflow-hidden">
+      <section className="flex items-center py-10 md:py-28 bg-primary-navy relative overflow-hidden">
         {/* Subtle Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-corporate-blue/10 rounded-full blur-[150px] opacity-50"></div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center mb-16">
-            <h3 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-black text-white mb-6 tracking-tight text-center">
               FAQs – <span className="text-accent-orange">About Eventibe</span>
             </h3>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto text-left sm:text-center">
               Everything you need to know about our marketplace and how to make
               the most of your event planning journey.
             </p>
@@ -996,7 +996,7 @@ export default function AboutUsPage() {
                   <AccordionTrigger className="text-left font-bold text-white py-8 px-10 hover:no-underline hover:text-accent-orange transition-colors duration-300 [&[data-state=open]]:text-accent-orange">
                     {faq.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-400 pb-10 px-10 leading-relaxed text-lg border-t border-white/5">
+                  <AccordionContent className="text-gray-400 pb-10 px-10 leading-relaxed text-sm md:text-lg border-t border-white/5 text-left">
                     <div className="pt-6">{faq.a}</div>
                   </AccordionContent>
                 </AccordionItem>
@@ -1007,60 +1007,60 @@ export default function AboutUsPage() {
       </section>
 
       {/* Connect With Us / CTA */}
-      <section className="flex items-center py-20 md:py-28 bg-light-bg relative overflow-hidden border-t border-gray-100">
+      <section className="flex items-center py-10 md:py-28 bg-light-bg relative overflow-hidden border-t border-gray-100">
         {/* Abstract Background Orbs using Theme Colors */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-corporate-blue/10 rounded-full blur-[120px] -mr-64 -mt-32 animate-pulse-slow"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-orange/10 rounded-full blur-[120px] -ml-64 -mb-32 animate-pulse-slow [animation-delay:2s]"></div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-24 items-center">
             {/* Left Content: Branding (5 Cols) */}
-            <div className="lg:col-span-5 space-y-12 text-center lg:text-left text-primary-navy">
+            <div className="lg:col-span-5 space-y-8 lg:space-y-12 text-center lg:text-left text-primary-navy">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-sm border border-gray-100 text-corporate-blue text-xs font-black uppercase tracking-[0.2em]">
                   <Sparkles size={14} className="text-accent-orange" />
                   Let's Collaborate
                 </div>
-                <h3 className="text-4xl md:text-6xl font-black leading-[1.1] tracking-tight">
+                <h3 className="text-3xl md:text-6xl font-black leading-[1.1] tracking-tight text-center lg:text-left">
                   Connect <br />
                   <span className="text-corporate-blue">With Eventibe</span>
                 </h3>
-                <p className="text-soft-slate text-xl leading-relaxed max-w-md mx-auto lg:mx-0">
+                <p className="text-soft-slate text-sm md:text-xl leading-relaxed max-w-md mx-auto lg:mx-0 text-center lg:text-left">
                   Join India's most innovative event marketplace. Whether you're
                   a planner or a venue, we're here to grow with you.
                 </p>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-4 lg:space-y-8">
                 <div className="grid grid-cols-1 gap-5">
                   <a
                     href="mailto:support@eventibe.com"
-                    className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white transition-all group lg:justify-start justify-center text-left"
+                    className="flex items-center gap-4 md:gap-6 p-4 rounded-2xl hover:bg-white transition-all group lg:justify-start justify-center text-left"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-corporate-blue/10 flex items-center justify-center text-corporate-blue group-hover:bg-corporate-blue group-hover:text-white transition-all duration-300">
-                      <Mail size={24} />
+                    <div className="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-corporate-blue/10 flex items-center justify-center shrink-0 text-corporate-blue group-hover:bg-corporate-blue group-hover:text-white transition-all duration-300">
+                      <Mail className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
                       <div className="text-[10px] font-bold text-soft-slate uppercase tracking-widest mb-1">
                         Direct Email
                       </div>
-                      <div className="text-lg font-bold">
+                      <div className="text-sm sm:text-base md:text-lg font-bold">
                         support@eventibe.com
                       </div>
                     </div>
                   </a>
                   <a
                     href="tel:+911234567890"
-                    className="flex items-center gap-6 p-4 rounded-2xl hover:bg-white transition-all group lg:justify-start justify-center text-left"
+                    className="flex items-center gap-4 md:gap-6 p-4 rounded-2xl hover:bg-white transition-all group lg:justify-start justify-center text-left"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-accent-orange/10 flex items-center justify-center text-accent-orange group-hover:bg-accent-orange group-hover:text-white transition-all duration-300">
-                      <Phone size={24} />
+                    <div className="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-accent-orange/10 flex items-center justify-center shrink-0 text-accent-orange group-hover:bg-accent-orange group-hover:text-white transition-all duration-300">
+                      <Phone className="w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <div>
                       <div className="text-[10px] font-bold text-soft-slate uppercase tracking-widest mb-1">
                         Helpline Number
                       </div>
-                      <div className="text-lg font-bold">
+                      <div className="text-sm sm:text-base md:text-lg font-bold">
                         +91 (0) 123 456 7890
                       </div>
                     </div>
@@ -1086,11 +1086,11 @@ export default function AboutUsPage() {
               <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.08)] border border-gray-50 relative overflow-hidden group">
                 {/* Visual Accent */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-corporate-blue/5 rounded-full -mt-16 -mr-16 transition-transform group-hover:scale-150 duration-700"></div>
-
-                <h4 className="text-2xl md:text-3xl font-black text-primary-navy mb-10 tracking-tight">
+ 
+                <h4 className="text-2xl md:text-3xl font-black text-primary-navy mb-6 md:mb-10 tracking-tight text-center md:text-left">
                   Quick <span className="text-accent-orange">Inquiries</span>
                 </h4>
-
+ 
                 <div className="space-y-5">
                   {[
                     {
@@ -1118,22 +1118,22 @@ export default function AboutUsPage() {
                     <Link
                       key={idx}
                       href={item.href}
-                      className="flex items-center gap-6 p-6 rounded-[2rem] border border-gray-100 hover:border-corporate-blue/20 hover:bg-gray-50/50 transition-all group/item"
+                      className="flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 p-6 rounded-[2rem] border border-gray-100 hover:border-corporate-blue/20 hover:bg-gray-50/50 transition-all group/item text-center md:text-left"
                     >
                       <div
-                        className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center group-hover/item:scale-110 transition-transform`}
+                        className={`w-11 h-11 md:w-14 md:h-14 rounded-2xl ${item.color} flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform mx-auto md:mx-0`}
                       >
-                        <item.icon size={24} />
+                        <item.icon className="w-5 h-5 md:w-6 md:h-6" />
                       </div>
-                      <div className="flex-1">
-                        <div className="text-lg font-bold text-primary-navy group-hover/item:text-corporate-blue transition-colors">
+                      <div className="flex-1 text-center md:text-left">
+                        <div className="text-base md:text-lg font-bold text-primary-navy group-hover/item:text-corporate-blue transition-colors">
                           {item.label}
                         </div>
-                        <div className="text-sm text-soft-slate">
+                        <div className="text-xs md:text-sm text-soft-slate">
                           {item.desc}
                         </div>
                       </div>
-                      <div className="w-10 h-10 rounded-full bg-light-bg flex items-center justify-center text-primary-navy group-hover/item:bg-primary-navy group-hover/item:text-white transition-all font-bold">
+                      <div className="hidden md:flex w-10 h-10 rounded-full bg-light-bg items-center justify-center text-primary-navy shrink-0 group-hover/item:bg-primary-navy group-hover/item:text-white transition-all font-bold">
                         <ChevronRight size={20} />
                       </div>
                     </Link>
@@ -1141,7 +1141,7 @@ export default function AboutUsPage() {
                 </div>
 
                 {/* CTA Footer inside card */}
-                <div className="mt-12 p-6 bg-light-bg rounded-3xl border border-dashed border-gray-300 text-center">
+                <div className="mt-8 md:mt-12 p-6 bg-light-bg rounded-3xl border border-dashed border-gray-300 text-center">
                   <p className="text-sm font-medium text-soft-slate mb-1">
                     Ready to transform your events?
                   </p>
