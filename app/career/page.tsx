@@ -279,27 +279,27 @@ const CareerPage = () => {
           bgSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
           bgType="image"
         >
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-4">
-            <MagneticButton>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-4 sm:mt-8 w-full px-4 sm:px-0 mx-auto">
+            <MagneticButton className="w-full sm:w-auto max-w-[280px] sm:max-w-none flex justify-center">
               <button
                 onClick={() =>
                   document
                     .getElementById("openings")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="group relative flex items-center justify-center gap-3 px-12 py-6 bg-cta-gradient text-white font-black rounded-2xl transition-all shadow-[0_20px_50px_rgba(249,115,22,0.3)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.5)] active:scale-95 text-lg"
+                className="group relative flex items-center justify-center gap-2 sm:gap-3 px-6 py-4 sm:px-12 sm:py-6 bg-cta-gradient text-white font-black rounded-xl sm:rounded-2xl transition-all shadow-[0_20px_50px_rgba(249,115,22,0.3)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.5)] active:scale-95 text-base sm:text-lg w-full whitespace-nowrap"
               >
                 Explore Opportunities
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform duration-300" />
               </button>
             </MagneticButton>
           </div>
         </CommonHero>
 
         {/* Mission Statement */}
-        <section className="py-24 relative overflow-hidden bg-white">
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-20">
+        <section className="py-12 md:py-24 relative overflow-hidden bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
               <div className="flex-1">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
@@ -315,7 +315,7 @@ const CareerPage = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="text-4xl md:text-6xl font-black mb-8 text-primary-navy tracking-tight leading-tight"
+                  className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 md:mb-8 text-primary-navy tracking-tight leading-tight"
                 >
                   More Than Just <span className="text-corporate-blue">a Job</span>
                 </motion.h2>
@@ -324,7 +324,7 @@ const CareerPage = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="space-y-6 text-xl text-soft-slate leading-relaxed font-medium"
+                  className="space-y-4 md:space-y-6 text-base md:text-lg lg:text-xl text-soft-slate leading-relaxed font-medium"
                 >
                   <p>
                     At Eventibe, we&apos;re on a mission to redefine event
@@ -354,12 +354,12 @@ const CareerPage = () => {
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-corporate-blue/5 rounded-full -ml-16 -mb-16 blur-2xl transition-all duration-500 group-hover/card:bg-corporate-blue/10 group-hover/card:scale-150" />
 
                     <div className="flex flex-col gap-4 relative z-10">
-                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                      <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4 md:gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
                         <div className="w-14 h-14 bg-blue-50/80 group-hover:bg-corporate-blue group-hover:text-white rounded-2xl flex items-center justify-center text-corporate-blue shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
                           <Heart className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-corporate-blue transition-colors duration-300">
+                          <h4 className="text-xl font-black text-primary-navy mb-2 md:mb-1.5 group-hover:text-corporate-blue transition-colors duration-300 whitespace-nowrap">
                             Passion Driven
                           </h4>
                           <p className="text-soft-slate font-medium text-sm leading-relaxed">
@@ -369,12 +369,12 @@ const CareerPage = () => {
                         </div>
                       </div>
                       
-                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                      <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4 md:gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
                         <div className="w-14 h-14 bg-orange-50/80 group-hover:bg-accent-orange group-hover:text-white rounded-2xl flex items-center justify-center text-accent-orange shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
                           <Sparkles className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-accent-orange transition-colors duration-300">
+                          <h4 className="text-xl font-black text-primary-navy mb-2 md:mb-1.5 group-hover:text-accent-orange transition-colors duration-300 whitespace-nowrap">
                             Future Forward
                           </h4>
                           <p className="text-soft-slate font-medium text-sm leading-relaxed">
@@ -383,12 +383,12 @@ const CareerPage = () => {
                         </div>
                       </div>
                       
-                      <div className="flex items-start gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
+                      <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4 md:gap-6 p-4 rounded-3xl hover:bg-gray-50/80 transition-colors duration-300 group cursor-pointer border border-transparent hover:border-gray-100">
                         <div className="w-14 h-14 bg-green-50/80 group-hover:bg-emerald-500 group-hover:text-white rounded-2xl flex items-center justify-center text-emerald-600 shrink-0 transition-all duration-300 shadow-sm group-hover:shadow-md">
                           <Users className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-xl font-black text-primary-navy mb-1.5 group-hover:text-emerald-600 transition-colors duration-300">
+                          <h4 className="text-xl font-black text-primary-navy mb-2 md:mb-1.5 group-hover:text-emerald-600 transition-colors duration-300 whitespace-nowrap">
                             Community First
                           </h4>
                           <p className="text-soft-slate font-medium text-sm leading-relaxed">
@@ -405,7 +405,7 @@ const CareerPage = () => {
         </section>
 
         {/* Why Join Us */}
-        <section className="py-24 bg-[#f8fafc] relative overflow-hidden">
+        <section className="py-12 md:py-24 bg-[#f8fafc] relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
 
           <div className="container mx-auto px-6">
@@ -424,7 +424,7 @@ const CareerPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-6xl font-black mb-6 text-primary-navy tracking-tight"
+                className="text-3xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-primary-navy tracking-tight"
               >
                 Life at <span className="text-accent-orange">Eventibe</span>
               </motion.h2>
@@ -456,7 +456,7 @@ const CareerPage = () => {
         {/* Current Openings */}
         <section
           id="openings"
-          className="py-32 bg-primary-navy text-white relative overflow-hidden"
+          className="py-16 md:py-32 bg-primary-navy text-white relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
 
@@ -476,7 +476,7 @@ const CareerPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tight"
+                className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 md:mb-8 leading-tight tracking-tight"
               >
                 Career <span className="text-accent-orange">Opportunities</span>
               </motion.h2>
@@ -485,7 +485,7 @@ const CareerPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto leading-relaxed font-medium"
+                className="text-base md:text-xl lg:text-2xl text-white/60 max-w-3xl mx-auto mb-8 md:mb-0 leading-relaxed font-medium"
               >
                 Join a high-performance team building the world&apos;s most
                 reliable event marketplace.
@@ -510,7 +510,7 @@ const CareerPage = () => {
                     placeholder="Search by job title, department, or type..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full py-5 bg-transparent text-white placeholder-white/30 focus:outline-none text-lg font-medium"
+                    className="w-full py-3 md:py-5 bg-transparent text-white placeholder-white/30 focus:outline-none text-sm md:text-lg font-medium"
                   />
                   {searchQuery && (
                     <button
@@ -560,17 +560,17 @@ const CareerPage = () => {
                         <div className="absolute top-0 right-0 w-32 h-32 bg-accent-orange/5 rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         <div>
-                          <div className="flex items-start justify-between mb-8">
-                            <div className="space-y-2">
-                              <div className="px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-black uppercase tracking-widest text-accent-orange w-fit">
+                          <div className="flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-3 mb-6 md:mb-8 text-center md:text-left">
+                            <div className="order-2 md:order-1 space-y-1.5 md:space-y-2 flex-1 min-w-0 flex flex-col items-center md:items-start w-full">
+                              <div className="px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-white/10 border border-white/10 text-[10px] md:text-xs font-black uppercase tracking-widest text-accent-orange w-fit truncate max-w-full">
                                 {job.department_name}
                               </div>
-                              <h3 className="text-2xl md:text-3xl font-black text-white group-hover:text-accent-orange transition-colors">
+                              <h3 className="text-base sm:text-lg md:text-3xl font-black text-white group-hover:text-accent-orange transition-colors truncate w-full">
                                 {job.title}
                               </h3>
                             </div>
-                            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-accent-orange group-hover:border-accent-orange transition-all duration-500 shrink-0">
-                              <ArrowRight className="w-7 h-7 text-white" />
+                            <div className="order-1 md:order-2 w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-accent-orange group-hover:border-accent-orange transition-all duration-500 shrink-0">
+                              <ArrowRight className="w-4 h-4 md:w-7 md:h-7 text-white" />
                             </div>
                           </div>
 
@@ -660,7 +660,7 @@ const CareerPage = () => {
         </section>
 
         {/* Core Values */}
-        <section className="py-24 relative bg-white">
+        <section className="py-12 md:py-24 relative bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-20">
               <motion.div
@@ -677,7 +677,7 @@ const CareerPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-6xl font-black mb-6 text-primary-navy tracking-tight"
+                className="text-3xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-primary-navy tracking-tight"
               >
                 What We <span className="text-corporate-blue">Value</span>
               </motion.h2>
@@ -688,16 +688,16 @@ const CareerPage = () => {
                 const Icon = value.icon;
                 return (
                   <TiltCard key={index} className="h-full">
-                    <div className="group bg-white rounded-[40px] p-10 shadow-2xl shadow-blue-900/5 border border-gray-100 hover:shadow-orange-500/10 hover:border-accent-orange/20 transition-all duration-500 h-full text-center flex flex-col items-center">
+                    <div className="group bg-white rounded-3xl md:rounded-[40px] p-6 md:p-10 shadow-2xl shadow-blue-900/5 border border-gray-100 hover:shadow-orange-500/10 hover:border-accent-orange/20 transition-all duration-500 h-full text-center flex flex-col items-center">
                       <div
-                        className={`w-24 h-24 bg-gradient-to-br ${value.color} rounded-[32px] flex items-center justify-center mb-8 shadow-xl group-hover:scale-110 transition-transform duration-500`}
+                        className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${value.color} rounded-2xl lg:rounded-[32px] flex items-center justify-center mb-6 md:mb-8 shadow-xl group-hover:scale-110 transition-transform duration-500`}
                       >
-                        <Icon className="w-10 h-10 text-white" />
+                        <Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
                       </div>
-                      <h3 className="text-2xl font-black mb-4 text-primary-navy">
+                      <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 text-primary-navy">
                         {value.title}
                       </h3>
-                      <p className="text-soft-slate font-medium leading-relaxed">
+                      <p className="text-soft-slate font-medium leading-relaxed text-sm md:text-base">
                         {value.description}
                       </p>
                     </div>
@@ -709,7 +709,7 @@ const CareerPage = () => {
         </section>
 
         {/* How to Apply */}
-        <section className="py-24 bg-[#f8fafc] relative overflow-hidden">
+        <section className="py-12 md:py-24 bg-[#f8fafc] relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
 
           <div className="container mx-auto px-6 relative z-10">
@@ -728,7 +728,7 @@ const CareerPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-6xl font-black mb-6 text-primary-navy tracking-tight"
+                className="text-3xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-primary-navy tracking-tight"
               >
                 How to <span className="text-accent-orange">Apply</span>
               </motion.h2>
@@ -780,7 +780,7 @@ const CareerPage = () => {
         </section>
 
         {/* Connect With Us */}
-        <section className="py-32 bg-primary-navy text-white relative overflow-hidden">
+        <section className="py-16 md:py-32 bg-primary-navy text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-accent-orange/10 rounded-full blur-[150px] pointer-events-none" />
 
@@ -799,7 +799,7 @@ const CareerPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-7xl font-black mb-8 tracking-tight"
+              className="text-3xl md:text-5xl lg:text-7xl font-black mb-6 md:mb-8 tracking-tight"
             >
               Stay <span className="text-corporate-blue">Connected</span>
             </motion.h2>
@@ -808,7 +808,7 @@ const CareerPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-16 leading-relaxed font-medium"
+              className="text-base md:text-xl lg:text-2xl text-white/60 max-w-3xl mx-auto mb-10 md:mb-16 leading-relaxed font-medium"
             >
               Join our community to receive updates on high-impact roles,
               company culture, and event industry breakthroughs.
