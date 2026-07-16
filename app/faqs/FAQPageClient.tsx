@@ -287,7 +287,7 @@ export default function FAQPageClient() {
         titleMain="Frequently Asked"
         titleHighlight="Questions"
         subtitle="Find clear and accurate answers to the most common questions about Eventibe."
-        bgSrc="https://images.unsplash.com/photo-1454165833767-027ffea9e778?q=80&w=2070&auto=format&fit=crop"
+        bgSrc="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop"
         bgType="image"
       />
 
@@ -470,9 +470,9 @@ export default function FAQPageClient() {
                         >
                           <div
                             onClick={() => toggleFAQ(faq.id)}
-                            className="w-full cursor-pointer flex items-center justify-between gap-4 p-5 md:p-6 text-left transition-all"
+                            className="w-full cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 md:p-6 text-left transition-all"
                           >
-                            <div className="flex items-center gap-4 flex-1 text-slate-900">
+                            <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1 text-slate-900 w-full">
                               <div
                                 className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
                                   isOpen
@@ -484,16 +484,27 @@ export default function FAQPageClient() {
                                   {String(index + 1).padStart(2, "0")}
                                 </span>
                               </div>
-                              <span
-                                className={`font-bold text-base md:text-xl transition-colors duration-300 leading-tight ${
-                                  isOpen ? "text-slate-900" : "text-slate-700"
-                                }`}
-                              >
-                                {faq.question}
-                              </span>
+                              <div className="flex items-center justify-between w-full md:w-auto md:flex-1">
+                                <span
+                                  className={`font-bold text-base md:text-xl transition-colors duration-300 leading-tight ${
+                                    isOpen ? "text-slate-900" : "text-slate-700"
+                                  }`}
+                                >
+                                  {faq.question}
+                                </span>
+                                <div
+                                  className={`md:hidden flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 ${
+                                    isOpen
+                                      ? "bg-orange-600 text-white rotate-180"
+                                      : "bg-slate-100 text-slate-400"
+                                  }`}
+                                >
+                                  <ChevronDown className="w-4 h-4" />
+                                </div>
+                              </div>
                             </div>
                             <div
-                              className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 ${
+                              className={`hidden md:flex flex-shrink-0 w-8 h-8 rounded-full items-center justify-center transition-all duration-500 ${
                                 isOpen
                                   ? "bg-orange-600 text-white rotate-180"
                                   : "bg-slate-100 text-slate-400"
@@ -512,7 +523,7 @@ export default function FAQPageClient() {
                           >
                             <div className="overflow-hidden">
                               <div className="px-5 md:px-6 pb-5 pt-0">
-                                <p className="text-slate-500 text-sm md:text-base leading-relaxed pl-14 md:pl-16">
+                                <p className="text-slate-500 text-sm md:text-base leading-relaxed">
                                   {faq.answer}
                                 </p>
                               </div>
@@ -530,7 +541,7 @@ export default function FAQPageClient() {
       </section>
 
       {/* Support CTA Section */}
-      <section className="bg-white border-t border-slate-100 overflow-hidden relative py-24">
+      <section className="bg-white border-t border-slate-100 overflow-hidden relative py-8 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -544,35 +555,35 @@ export default function FAQPageClient() {
 
             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
               <div className="flex-1 text-center lg:text-left">
-                <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-[2rem] flex items-center justify-center border border-white/10 mb-10 mx-auto lg:mx-0 transform -rotate-12">
-                  <PhoneCall size={40} className="text-accent-orange" />
+                <div className="w-14 h-14 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center border border-white/10 mb-6 md:mb-10 mx-auto lg:mx-0 transform -rotate-12">
+                  <PhoneCall className="w-6 h-6 md:w-10 md:h-10 text-accent-orange" />
                 </div>
-                <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-[1.1]">
+                <h2 className="text-3xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tighter leading-[1.1]">
                   Still have <br /> unanswered questions?
                 </h2>
-                <p className="text-blue-100/70 text-xl font-bold max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-blue-100/70 text-base md:text-xl font-bold max-w-xl mx-auto lg:mx-0 leading-relaxed">
                   Our dedicated corporate support team is here to help you
                   navigate every aspect of the Eventibe ecosystem. Available
                   24/7.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-6 w-full lg:w-auto">
+              <div className="flex flex-col gap-4 md:gap-6 w-full lg:w-auto">
                 <MagneticButton className="w-full">
                   <Link
                     href="/contact"
-                    className="flex items-center justify-center gap-4 px-12 py-6 bg-cta-gradient text-white font-black rounded-3xl text-2xl transition-all shadow-2xl shadow-orange-500/40 hover:scale-[1.05] active:scale-95 group w-full"
+                    className="flex items-center justify-center gap-2 md:gap-4 px-6 py-4 md:px-12 md:py-6 bg-cta-gradient text-white font-black rounded-3xl text-lg md:text-2xl transition-all shadow-2xl shadow-orange-500/40 hover:scale-[1.05] active:scale-95 group w-full whitespace-nowrap"
                   >
                     Contact Support{" "}
                     <ArrowRight
-                      size={24}
-                      className="group-hover:translate-x-2 transition-transform"
+                      size={20}
+                      className="md:w-6 md:h-6 group-hover:translate-x-2 transition-transform"
                     />
                   </Link>
                 </MagneticButton>
                 <Link
                   href="/customer-support"
-                  className="flex items-center justify-center gap-4 px-12 py-6 bg-white/5 backdrop-blur-md text-white font-black rounded-3xl text-xl border border-white/10 hover:bg-white/10 transition-all active:scale-95 group w-full"
+                  className="flex items-center justify-center gap-2 md:gap-4 px-6 py-4 md:px-12 md:py-6 bg-white/5 backdrop-blur-md text-white font-black rounded-3xl text-base md:text-xl border border-white/10 hover:bg-white/10 transition-all active:scale-95 group w-full whitespace-nowrap"
                 >
                   Visit Help Center
                 </Link>

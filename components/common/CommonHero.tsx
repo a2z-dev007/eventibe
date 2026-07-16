@@ -142,7 +142,7 @@ export default function CommonHero({
             </div>
           )} */}
 
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-black tracking-tight mb-4 md:mb-6 max-w-5xl leading-[1.1] drop-shadow-xl">
             {titleMain}
             {titleHighlight && (
               <>
@@ -156,7 +156,7 @@ export default function CommonHero({
           </h1>
 
           {subtitle && (
-            <p className={`text-xs sm:text-sm md:text-base lg:text-lg text-white/95 mb-4 sm:mb-6 lg:mb-8 max-w-3xl font-medium drop-shadow-md leading-relaxed ${isLeft ? "text-left" : "text-center"}`}>
+            <p className={`text-sm sm:text-lg md:text-2xl lg:text-3xl text-white/95 mb-4 sm:mb-6 lg:mb-8 max-w-3xl font-bold drop-shadow-md leading-relaxed ${isLeft ? "text-left" : "text-center"}`}>
               {subtitle}
             </p>
           )}

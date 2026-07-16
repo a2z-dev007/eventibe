@@ -296,10 +296,10 @@ export default function CompanyDetailsPage() {
         bgType="image"
       >
         <div className="space-y-3 md:space-y-4">
-          <p className="text-lg md:text-xl text-white font-bold tracking-tight break-words">
+          <p className="text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-tight break-words">
             Homocation Asia Private Limited
           </p>
-          <p className="text-sm md:text-base text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-sm mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-orange-200/90 font-bold border-t-4 border-orange-500 pt-3 py-2 bg-orange-500/5 backdrop-blur-sm rounded-xl max-w-lg mx-auto">
             Parent Company of Eventibe.com & VenueForEvent.com
           </p>
         </div>
@@ -540,13 +540,13 @@ export default function CompanyDetailsPage() {
 
       {/* Brands Call to Action */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-100 overflow-hidden relative">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 xl:gap-16">
             <Link href="https://eventibe.com" target="_blank" className="group">
               <div className="p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] bg-primary-navy text-white hover:scale-[1.02] transition-all duration-700 shadow-lg md:shadow-[0_40px_80px_-24px_rgba(0,31,58,0.2)] overflow-hidden relative border border-white/5">
                 <div className="absolute inset-0 bg-gradient-to-br from-corporate-blue/30 via-transparent to-transparent"></div>
                 <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-accent-orange/10 rounded-full blur-3xl group-hover:bg-accent-orange/20 transition-all duration-700"></div>
-                <div className="relative z-10">
+                <div className="relative z-10 flex flex-col items-center text-center lg:items-start lg:text-left">
                   <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-8 border border-white/10 group-hover:rotate-6 transition-transform">
                     <Globe size={32} className="text-orange-400" />
                   </div>
@@ -556,7 +556,7 @@ export default function CompanyDetailsPage() {
                   <h3 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
                     Eventibe.com
                   </h3>
-                  <p className="text-gray-400 text-sm md:text-base mb-10 max-w-md leading-relaxed">
+                  <p className="text-gray-400 text-sm md:text-base mb-10 max-w-md leading-relaxed mx-auto lg:mx-0">
                     India's Premier Event & Venue Discovery Marketplace for
                     social and corporate segments.
                   </p>
@@ -573,7 +573,7 @@ export default function CompanyDetailsPage() {
             >
               <div className="p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] bg-white border-2 border-slate-100 text-primary-navy hover:border-corporate-blue/20 hover:scale-[1.02] transition-all duration-700 shadow-sm hover:shadow-[0_48px_96px_-24px_rgba(0,0,0,0.1)] overflow-hidden relative h-full">
                 <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-50 rounded-full blur-3xl group-hover:bg-blue-100 transition-all duration-700"></div>
-                <div className="relative z-10">
+                <div className="relative z-10 flex flex-col items-center text-center lg:items-start lg:text-left">
                   <div className="w-16 h-16 rounded-2xl bg-corporate-blue/5 flex items-center justify-center mb-8 border border-corporate-blue/10 group-hover:-rotate-6 transition-transform">
                     <Search size={32} className="text-corporate-blue" />
                   </div>
@@ -583,7 +583,7 @@ export default function CompanyDetailsPage() {
                   <h3 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
                     VenueForEvent.com
                   </h3>
-                  <p className="text-soft-slate text-sm md:text-base mb-10 max-w-md leading-relaxed">
+                  <p className="text-soft-slate text-sm md:text-base mb-10 max-w-md leading-relaxed mx-auto lg:mx-0">
                     Search-driven venue discovery platform designed for
                     city-level targeting and digital expansion.
                   </p>
@@ -599,7 +599,7 @@ export default function CompanyDetailsPage() {
 
       {/* Footer Contact Info */}
       <section className="bg-slate-50 pt-16 pb-6 md:py-24 border-t border-slate-200 relative overflow-hidden">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left Side: Map View */}
             <motion.div
