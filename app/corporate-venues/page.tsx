@@ -1,5 +1,6 @@
 import { getVenues } from '@/lib/api';
 import VenueCard from '@/components/VenueCard';
+import ListingGrid from '@/components/listings/ListingGrid';
 import CommonHero from '@/components/common/CommonHero';
 
 export const metadata = {
@@ -46,11 +47,11 @@ export default async function CorporateVenuesPage() {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ListingGrid>
             {venues.map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
+              <VenueCard key={venue.id} venue={venue} accent="blue" />
             ))}
-          </div>
+          </ListingGrid>
         </div>
       </div>
     </div>

@@ -1,29 +1,50 @@
-import { useEffect } from 'react'
+'use client'
 
+import { useEffect } from 'react'
+import { useLenis } from 'lenis/react'
+
+/** Locks page scroll (and Lenis) while a modal/drawer is open. */
 export function useScrollLock(isOpen: boolean) {
+  const lenis = useLenis()
+
   useEffect(() => {
     if (!isOpen) return
 
-    // Store original body and html styles
-    const originalOverflow = document.body.style.overflow
-    const originalHeight = document.body.style.height
-    
     const htmlEl = document.documentElement
-    const originalHtmlOverflow = htmlEl.style.overflow
-    const originalHtmlHeight = htmlEl.style.height
+    const body = document.body
 
-    // Prevent default browser scrolling on page container
-    document.body.style.overflow = 'hidden'
-    document.body.style.height = '100%'
-    htmlEl.style.overflow = 'hidden'
-    htmlEl.style.height = '100%'
+    const prev = {
+      bodyOverflow: body.style.overflow,
+      bodyHeight: body.style.height,
+      htmlOverflow: htmlEl.style.overflow,
+      htmlHeight: htmlEl.style.height,
+    }
+
+    htmlEl.style.setProperty('overflow', 'hidden', 'important')
+    htmlEl.style.setProperty('height', '100%', 'important')
+    body.style.setProperty('overflow', 'hidden', 'important')
+    body.style.setProperty('height', '100%', 'important')
+
+    lenis?.stop()
 
     return () => {
-      // Restore original styles on unmount/close
-      document.body.style.overflow = originalOverflow
-      document.body.style.height = originalHeight
-      htmlEl.style.overflow = originalHtmlOverflow
-      htmlEl.style.height = originalHtmlHeight
+      body.style.overflow = prev.bodyOverflow
+      body.style.height = prev.bodyHeight
+      htmlEl.style.overflow = prev.htmlOverflow
+      htmlEl.style.height = prev.htmlHeight
+      lenis?.start()
     }
-  }, [isOpen])
+  }, [isOpen, lenis])
+}
+
+/** Props for scrollable modal panels — keeps scroll inside the modal. */
+export const modalScrollAreaProps = {
+  'data-lenis-prevent': true,
+  className: 'overscroll-contain',
+  style: { overscrollBehavior: 'contain' as const },
+}
+
+/** Prevent wheel/touch scroll from reaching the page behind a modal overlay. */
+export function preventModalBackdropScroll(e: React.WheelEvent | React.TouchEvent) {
+  e.stopPropagation()
 }

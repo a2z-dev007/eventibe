@@ -1,5 +1,6 @@
 import { getVenues, getCityBySlug } from '@/lib/api';
 import VenueCard from '@/components/VenueCard';
+import ListingGrid from '@/components/listings/ListingGrid';
 import { notFound } from 'next/navigation';
 import CommonHero from '@/components/common/CommonHero';
 
@@ -40,14 +41,14 @@ export default async function CityVenuesPage({ params }: { params: Promise<{ cit
 
       <div className="bg-slate-50 py-20 border-t border-gray-100">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ListingGrid>
             {venues.map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
+              <VenueCard key={venue.id} venue={venue} accent="blue" />
             ))}
             {venues.length === 0 && (
               <p className="text-soft-slate col-span-full">No venues found in {cityData.name} at the moment.</p>
             )}
-          </div>
+          </ListingGrid>
         </div>
       </div>
     </div>

@@ -2,30 +2,29 @@
 
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Search, X, ChevronRight, Check } from 'lucide-react'
+import { Search, ChevronRight, Check } from 'lucide-react'
 import { fetchVenueTypes, fetchEventTypes } from '@/lib/api/eventsEndpoints'
 import { IMAGES } from '@/assets/images'
-import { Slider } from '@/components/ui/slider'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import PremiumLocationSelect from '@/components/ui/PremiumLocationSelect'
+import { useScrollLock, modalScrollAreaProps } from '@/hooks/useScrollLock'
 import type { Filters } from './types'
 
 interface VenueFilterSidebarProps {
   filters: Filters
-  location: any
-  setLocation: (loc: any) => void
   onChange: (f: Partial<Filters>) => void
   onClear: () => void
 }
 
-export function VenueFilterSidebar({ filters, location, setLocation, onChange, onClear }: VenueFilterSidebarProps) {
+export function VenueFilterSidebar({ filters, onChange, onClear }: VenueFilterSidebarProps) {
   const { data: vtData, isLoading: vtLoading } = useQuery({ queryKey: ['venueTypes'], queryFn: () => fetchVenueTypes() })
   const { data: etData, isLoading: etLoading } = useQuery({ queryKey: ['eventTypes'], queryFn: () => fetchEventTypes() })
 
   const [modalType, setModalType] = useState<'venue' | 'event' | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
+
+  useScrollLock(modalType !== null)
 
   const venueTypes = vtData?.records || []
   const eventTypes = etData?.records || []
@@ -79,24 +78,13 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
   }
 
   return (
-    <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-xl">
+    <div className="bg-white rounded-xl lg:rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 bg-orange-50 border-b border-[#FF9530]/20 rounded-t-xl lg:rounded-t-2xl">
-        <h2 className="font-bold text-gray-900">Filter Venues</h2>
+      <div className="flex items-center justify-between px-5 py-4 bg-orange-50 border-b border-[#FF9530]/20">
+        <h2 className="font-extrabold text-gray-900">Filter Venues</h2>
         <button onClick={onClear} className="text-xs font-bold text-[#FF9530] hover:bg-white px-2 py-1 rounded-lg transition-colors">
           Clear all
         </button>
-      </div>
-
-      {/* Location */}
-      <div className="px-5 py-4 border-b border-gray-100">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Search Location</p>
-        <PremiumLocationSelect
-          value={location}
-          onChange={setLocation}
-          placeholder="Search City..."
-          className="w-full"
-        />
       </div>
 
       {/* Dynamic Sections */}
@@ -168,7 +156,10 @@ export function VenueFilterSidebar({ filters, location, setLocation, onChange, o
               />
             </div>
 
-            <div className="max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+            <div
+              {...modalScrollAreaProps}
+              className={`max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar ${modalScrollAreaProps.className}`}
+            >
               <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                 {(modalType === 'venue' ? venueTypes : eventTypes)
                   .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))

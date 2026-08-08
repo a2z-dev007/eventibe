@@ -1,5 +1,6 @@
 import { getVenues, getVendors } from '@/lib/api';
 import VenueCard from '@/components/VenueCard';
+import ListingGrid from '@/components/listings/ListingGrid';
 import VendorCard from '@/components/VendorCard';
 import CommonHero from '@/components/common/CommonHero';
 
@@ -46,11 +47,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           {venues.length > 0 && (
             <div className="mb-16">
               <h2 className="text-2xl font-bold text-primary-navy mb-6">Venues</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <ListingGrid>
                 {venues.map((venue) => (
                   <VenueCard key={venue.id} venue={venue} />
                 ))}
-              </div>
+              </ListingGrid>
             </div>
           )}
 

@@ -1,5 +1,6 @@
 import { getVenues } from '@/lib/api';
 import VenueCard from '@/components/VenueCard';
+import ListingGrid from '@/components/listings/ListingGrid';
 import CommonHero from '@/components/common/CommonHero';
 
 export async function generateMetadata({ params }: { params: Promise<{ 'venue-type': string }> }) {
@@ -31,14 +32,14 @@ export default async function VenueTypePage({ params }: { params: Promise<{ 'ven
 
       <div className="bg-slate-50 py-20 border-t border-gray-100">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ListingGrid>
             {venues.map((venue) => (
               <VenueCard key={venue.id} venue={venue} />
             ))}
             {venues.length === 0 && (
               <p className="text-soft-slate col-span-full">No venues found for this category at the moment.</p>
             )}
-          </div>
+          </ListingGrid>
         </div>
       </div>
     </div>
