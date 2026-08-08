@@ -114,16 +114,15 @@ export default function ListYourServicePage() {
         }
         bgSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
         bgType="image"
-        alignment="left"
       >
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center mt-4">
           <div
             onClick={() =>
               document
                 .getElementById("submission-form")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            className="bg-cta-gradient text-white px-8 py-4 rounded-[1rem] font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 w-fit"
+            className="bg-cta-gradient text-white px-8 py-4 rounded-[1rem] font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300 w-full sm:w-auto"
           >
             List Your Service Today <ArrowRight size={20} />
           </div>
@@ -749,7 +748,7 @@ export default function ListYourServicePage() {
                     We are building a powerful command center for your business
                     growth. Planned features include:
                   </p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {[
                       "Real-time Inquiry Tracking",
                       "Rich Performance Analytics",

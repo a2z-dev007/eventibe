@@ -167,16 +167,21 @@ export default function InvestorRelationsClient() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-accent-orange/5 rounded-full -mr-32 -mt-32 blur-3xl transition-all duration-500 group-hover:bg-accent-orange/10" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-corporate-blue/5 rounded-full -ml-32 -mb-32 blur-3xl transition-all duration-500 group-hover:bg-corporate-blue/10" />
 
-              <div className="absolute top-0 right-0 p-8 lg:p-12">
+              <div className="absolute top-0 right-0 p-6 md:p-8 lg:p-12 hidden sm:block">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-orange-50 text-accent-orange shadow-sm">
                   <TrendingUp className="w-8 h-8" />
                 </div>
               </div>
 
               <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-primary-navy mb-8 leading-tight tracking-tight">
-                  Executive <span className="text-corporate-blue">Summary</span>
-                </h2>
+                <div className="flex items-center justify-between mb-8 sm:mb-0 gap-4">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-primary-navy leading-tight tracking-tight">
+                    Executive <span className="text-corporate-blue">Summary</span>
+                  </h2>
+                  <div className="sm:hidden inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-50 text-accent-orange shadow-sm shrink-0">
+                    <TrendingUp className="w-6 h-6" />
+                  </div>
+                </div>
 
                 <div className="space-y-6 text-soft-slate text-lg lg:text-xl leading-relaxed w-full">
                   <p>
@@ -856,7 +861,7 @@ export default function InvestorRelationsClient() {
                     <h3 className="text-2xl font-extrabold text-primary-navy mb-6">
                       Vendor Marketplace
                     </h3>
-                    <div className="grid grid-cols-2 gap-2 mb-8">
+                    <div className="flex flex-wrap gap-2 mb-8">
                       {[
                         "Catering",
                         "Photography",
@@ -1048,7 +1053,7 @@ export default function InvestorRelationsClient() {
                   <p className="font-bold text-[10px] xl:text-xs uppercase tracking-wider text-accent-orange mb-2">
                     Advantage {i + 1}
                   </p>
-                  <p className="text-[11px] xl:text-[13px] font-semibold text-white/95 whitespace-nowrap tracking-tight">
+                  <p className="text-[11px] xl:text-[13px] font-semibold text-white/95 whitespace-normal xl:whitespace-nowrap tracking-tight">
                     {text}
                   </p>
                 </div>

@@ -203,7 +203,7 @@ export default function ListYourVenuePage() {
                   <p className="text-xl md:text-2xl font-black text-primary-navy tracking-tight leading-none mb-1 group-hover:scale-105 transition-transform duration-300 origin-left">
                     {stat.value}
                   </p>
-                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-nowrap">
+                  <p className="text-[10px] md:text-xs font-bold text-soft-slate uppercase tracking-widest whitespace-normal md:whitespace-nowrap">
                     {stat.label}
                   </p>
                 </div>
