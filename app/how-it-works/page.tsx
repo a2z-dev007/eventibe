@@ -172,9 +172,9 @@ const faqs = [
 // ── Role Specific Steps Component (Static & Clean) ────────────────────
 function RoleSteps({ role }: { role: (typeof roles)[0] }) {
   return (
-    <div className="mb-20">
-      <div className="text-center mb-16">
-        <h3 className="text-2xl md:text-4xl font-bold text-primary-navy mb-4">
+    <div className="mb-12 md:mb-20">
+      <div className="text-center mb-10 md:mb-16">
+        <h3 className="text-xl md:text-3xl lg:text-4xl font-bold text-primary-navy mb-4">
           {role.title}
         </h3>
         <p className="text-lg text-soft-slate max-w-2xl mx-auto leading-relaxed">
@@ -237,17 +237,17 @@ export default function HowItWorksPage() {
       />
 
       {/* ── TABS NAVIGATION (Segmented Control UI) ────────────────────────────── */}
-      <div className="py-10">
+      <div className="py-6 md:py-10">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex justify-center">
-            <div className="bg-white p-2 rounded-[32px] shadow-xl border border-gray-100 flex flex-col md:flex-row items-center justify-center gap-1">
+            <div className="bg-white p-3 rounded-[32px] shadow-xl border border-gray-100 flex flex-col lg:flex-row items-stretch lg:items-center justify-start lg:justify-center gap-2 w-full max-w-xs md:max-w-sm lg:max-w-none mx-auto">
               {roles.map((role) => {
                 const isActive = activeTab === role.id;
                 return (
                   <button
                     key={role.id}
                     onClick={() => setActiveTab(role.id)}
-                    className={`relative flex items-center justify-center gap-3 px-6 py-3.5 rounded-[22px] font-bold transition-all duration-500 w-full md:w-auto min-w-[220px] md:min-w-[180px] overflow-hidden group ${
+                    className={`relative flex items-center justify-start lg:justify-center gap-4 px-6 py-4 rounded-[22px] font-bold transition-all duration-500 w-full lg:w-auto min-w-[220px] lg:min-w-[180px] overflow-hidden group ${
                       isActive
                         ? "text-white"
                         : "text-gray-500 hover:text-primary-navy hover:bg-gray-50/50"
@@ -279,29 +279,29 @@ export default function HowItWorksPage() {
 
       {/* ── STEPS SECTION ────────────────────────────── */}
       <div className="relative">
-        <section className="container mx-auto px-4 md:px-6 mb-32 relative z-10 pt-16">
+        <section className="container mx-auto px-4 md:px-6 mb-16 md:mb-32 relative z-10 pt-8 md:pt-16">
           <RoleSteps role={selectedRole} />
         </section>
       </div>
 
       {/* ── INQUIRY MODEL SECTION ────────────────────────────── */}
-      <section className="py-24 bg-gray-50 rounded-[60px] md:rounded-[100px] mx-4 md:mx-10 mb-16">
+      <section className="py-12 md:py-24 bg-gray-50 rounded-[60px] md:rounded-[100px] mx-4 md:mx-10 mb-8 md:mb-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-primary-navy mb-12 text-center tracking-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-primary-navy mb-8 md:mb-12 text-center tracking-tight">
               Our Inquiry-Based Model <br />
               <span className="text-corporate-blue">— Why It’s Different</span>
             </h2>
             <p className="text-lg text-soft-slate text-center mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
               Eventibe is not a direct booking OTA. We follow an inquiry-first
               model because event planning requires flexibility and custom
-              proposals that standard booking systems can't provide.
+              proposals that standard booking systems can&apos;t provide.
             </p>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-8 md:p-10 rounded-[40px] shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-xl transition-all duration-500">
-                <h3 className="text-2xl font-bold text-primary-navy mb-8 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-corporate-blue">
-                    <HelpCircle size={22} />
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-primary-navy mb-6 md:mb-8 flex items-center gap-2 md:gap-3 whitespace-nowrap">
+                  <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-corporate-blue">
+                    <HelpCircle size={20} className="md:w-[22px] md:h-[22px]" />
                   </div>
                   Why Inquiry-First?
                 </h3>
@@ -330,9 +330,9 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               <div className="bg-white p-8 md:p-10 rounded-[40px] shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-xl transition-all duration-500">
-                <h3 className="text-2xl font-bold text-primary-navy mb-8 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-accent-orange">
-                    <Zap size={22} />
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-primary-navy mb-6 md:mb-8 flex items-center gap-2 md:gap-3 whitespace-nowrap">
+                  <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 rounded-xl bg-orange-50 flex items-center justify-center text-accent-orange">
+                    <Zap size={20} className="md:w-[22px] md:h-[22px]" />
                   </div>
                   What This Ensures
                 </h3>
@@ -363,13 +363,13 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── VALUE PROPOSITION ────────────────────────────── */}
-      <section className="py-24 bg-primary-navy text-white rounded-[60px] md:rounded-[100px] mx-4 md:mx-10 my-16 overflow-hidden relative">
+      <section className="py-12 md:py-24 bg-primary-navy text-white rounded-[60px] md:rounded-[100px] mx-4 md:mx-10 my-8 md:my-16 overflow-hidden relative">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-8">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-6 md:mb-8">
                 What Makes Eventibe Different?
               </h2>
               <p className="text-white/80 mb-8 leading-relaxed">
@@ -446,7 +446,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── END-TO-END JOURNEY (Connected Path) ────────────────────────────── */}
-      <section className="py-32 bg-[#F8F9FF] relative overflow-hidden">
+      <section className="py-16 md:py-32 bg-[#F8F9FF] relative overflow-hidden">
         {/* Subtle background text */}
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none opacity-[0.03]">
           <span className="text-[20vw] font-black text-primary-navy whitespace-nowrap">
@@ -455,8 +455,8 @@ export default function HowItWorksPage() {
         </div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy mb-6 tracking-tight">
+          <div className="text-center mb-12 md:mb-24">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-primary-navy mb-4 md:mb-6 tracking-tight">
               End-to-End Event Journey
             </h2>
             <p className="text-lg text-soft-slate max-w-xl mx-auto">
@@ -554,7 +554,7 @@ export default function HowItWorksPage() {
             </div>
           </div>
 
-          <div className="mt-24 text-center">
+          <div className="mt-12 md:mt-24 text-center">
             <div className="inline-flex items-center gap-4 bg-white px-8 py-3 rounded-full border border-gray-100 shadow-sm">
               <span className="flex h-3 w-3 rounded-full bg-accent-orange animate-ping" />
               <span className="text-primary-navy font-bold text-sm tracking-wide uppercase">
@@ -570,7 +570,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── FAQ SECTION ────────────────────────────── */}
-      <section className="py-20 md:py-28 bg-gray-50/60 relative overflow-hidden">
+      <section className="py-12 md:py-28 bg-gray-50/60 relative overflow-hidden">
         {/* Background decorative */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-orange/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-corporate-blue/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none" />
@@ -583,7 +583,7 @@ export default function HowItWorksPage() {
                 <HelpCircle size={12} />
                 <span>Got Questions?</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary-navy tracking-tight leading-tight mb-6">
                 Frequently Asked{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-corporate-blue to-accent-orange">
                   Questions
@@ -702,7 +702,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────── */}
-      <section className="py-8 md:py-24 container mx-auto px-4 md:px-6 mb-6 md:mb-20">
+      <section className="py-8 md:py-24 container mx-auto px-4 md:px-6 mb-0">
         <div className="bg-primary-navy rounded-[40px] p-8 md:p-16 text-center text-white relative overflow-hidden">
           {/* Orange glow */}
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-orange/10 rounded-full blur-[100px]" />
@@ -725,10 +725,10 @@ export default function HowItWorksPage() {
               <Rocket size={14} />
               <span>Get Started Today</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6">
               Ready to Get Started?
             </h2>
-            <p className="text-xl text-blue-100/80 mb-10 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-blue-100/80 mb-10 max-w-2xl mx-auto text-left md:text-center">
               Whether you are planning a wedding celebration 💍, a corporate
               conference 🏢, a private party 🎉, or a business seminar 📊,
               Eventibe is built to guide you from search to success.

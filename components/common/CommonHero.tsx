@@ -64,7 +64,7 @@ export default function CommonHero({
       : badgeIcon;
 
   return (
-    <section className="relative z-20 w-full h-[100dvh] min-h-[550px] flex items-center justify-center text-white overflow-hidden">
+    <section className="relative z-20 w-full min-h-[calc(100dvh-64px)] flex items-center justify-center text-white overflow-hidden py-12 lg:h-[calc(100dvh-80px)] lg:min-h-[500px] lg:py-0">
       {/* Background Media Container */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
         <AnimatePresence mode="wait">
@@ -123,7 +123,7 @@ export default function CommonHero({
 
       {/* Content Container */}
       <div
-        className={`container mx-auto px-4 md:px-6 relative z-10 flex flex-col lg:mt-0 ${
+        className={`container mx-auto px-4 md:px-6 relative z-10 flex flex-col mt-0 sm:mt-12 lg:mt-0 ${
           isLeft ? "items-start text-left" : "items-center text-center"
         }`}
       >
@@ -142,13 +142,13 @@ export default function CommonHero({
             </div>
           )} */}
 
-          <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 md:mb-6 max-w-5xl leading-tight drop-shadow-xl">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-black tracking-tight mb-4 md:mb-6 max-w-5xl leading-[1.1] drop-shadow-xl">
             {titleMain}
             {titleHighlight && (
               <>
                 {" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-yellow-400">
-                  {titleHighlight}
+                   {titleHighlight}
                 </span>
               </>
             )}
@@ -156,7 +156,7 @@ export default function CommonHero({
           </h1>
 
           {subtitle && (
-            <p className="text-xs sm:text-sm md:text-lg lg:text-xl text-white/95 mb-4 sm:mb-6 md:mb-10 max-w-3xl font-medium drop-shadow-md leading-relaxed text-left sm:text-center">
+            <p className={`text-sm sm:text-lg md:text-2xl lg:text-3xl text-white/95 mb-4 sm:mb-6 lg:mb-8 max-w-3xl font-bold drop-shadow-md leading-relaxed ${isLeft ? "text-left" : "text-center"}`}>
               {subtitle}
             </p>
           )}

@@ -225,7 +225,7 @@
   }
 
   main {
-    padding-bottom: 5rem;
+    /* padding-bottom: 5rem; */ /* Commented out because MobileTabbar is disabled */
     /* Space for bottom navigation */
   }
 

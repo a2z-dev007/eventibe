@@ -289,21 +289,20 @@ export default function ContactUsPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 text-center md:text-left"
+            className="flex flex-col items-center justify-center mb-16 gap-8 text-center mx-auto"
           >
-            <div className="max-w-2xl">
+            <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-6">
-                Visit Our Office – <br className="hidden md:block" /> Regional
-                Presence
+                Visit Our Office – Regional Presence
               </h2>
-              <p className="text-soft-slate text-base md:text-lg lg:pr-10">
+              <p className="text-soft-slate text-base md:text-lg">
                 Eventibe is part of the growing event discovery ecosystem. Our
                 regional offices support local partnerships, venue onboarding,
                 and corporate collaborations. You are welcome to visit during
                 working hours.
               </p>
             </div>
-            <div className="md:shrink-0">
+            <div>
               <span className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl shadow-sm text-xs md:text-sm font-bold text-primary-navy">
                 <Clock className="w-4 h-4 text-accent-orange" />
                 Working Hours: 9:00 AM – 7:00 PM
@@ -397,6 +396,17 @@ export default function ContactUsPage() {
                       Our typical response time is within 3-4 business hours
                       during working days.
                     </p>
+                  </div>
+                </div>
+                <div className="pt-6 w-full mt-4">
+                  <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden shadow-lg border border-slate-100 group">
+                    <div className="absolute inset-0 bg-primary-navy/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                    <Image
+                      src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop"
+                      alt="Eventibe Support Team"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
                   </div>
                 </div>
               </div>
@@ -601,8 +611,8 @@ export default function ContactUsPage() {
               <div className="inline-block px-5 py-2 bg-orange-100 text-accent-orange rounded-full text-xs font-black mb-8 tracking-widest uppercase">
                 OUR VALUES
               </div>
-              <h2 className="text-2xl md:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-8">
-                Our Commitment <br className="hidden md:block" /> to You
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-primary-navy tracking-tight leading-tight uppercase mb-8">
+                Our Commitment to You
               </h2>
               <p className="text-soft-slate text-base md:text-lg mb-10 leading-relaxed font-medium">
                 At Eventibe, we value service and responsiveness. When you reach
