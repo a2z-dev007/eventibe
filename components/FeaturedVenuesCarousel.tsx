@@ -254,68 +254,66 @@ function VenueTypeCard({
   onLinkClick?: (e: React.MouseEvent) => void;
 }) {
   const [imgSrc, setImgSrc] = useState(image);
+  const count = (120 + (id * 17) % 250);
 
   return (
-    <div className="et-card shrink-0 w-[220px] sm:w-[260px] md:w-[280px] rounded-3xl">
-    <Link
-      href={`/events/search?venue_type=${id}`}
-      className="block group cursor-pointer"
-      style={{ scrollSnapAlign: 'start' }}
-      onClick={onLinkClick}
-    >
-      {/* Image card */}
-      <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt={name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-          onError={() => setImgSrc(FALLBACK_IMAGES.default)}
-        />
+    <div className="et-card shrink-0 w-[230px] sm:w-[270px] md:w-[290px] rounded-3xl">
+      <Link
+        href={`/events/search?venue_type=${id}`}
+        className="block group cursor-pointer"
+        style={{ scrollSnapAlign: 'start' }}
+        onClick={onLinkClick}
+      >
+        {/* Image card */}
+        <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2.5 transition-all duration-500 border border-gray-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imgSrc}
+            alt={name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            onError={() => setImgSrc(FALLBACK_IMAGES.default)}
+          />
 
-        {/* Gradient overlay — always visible at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          {/* Gradient overlay — smooth multi-layer fade */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
 
-        {/* Shimmer sweep on hover */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden z-[1]">
-          <div className="shimmer-line absolute inset-0" />
-        </div>
+          {/* Shimmer sweep on hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden z-[1]">
+            <div className="shimmer-line absolute inset-0" />
+          </div>
 
-        {/* Floating accent badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/15 backdrop-blur-md border border-white/20 rounded-xl px-2.5 py-1.5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-          <Sparkles size={10} className="text-accent-orange" />
-          <span className="text-[10px] font-bold text-white uppercase tracking-wider">Featured</span>
-        </div>
+          {/* Floating accent badge & space count */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+            <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-2.5 py-1">
+              <Sparkles size={11} className="text-accent-orange" />
+              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Featured</span>
+            </div>
+            <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-xl px-2.5 py-1 text-[10px] font-bold text-white/90">
+              {count}+ Spaces
+            </div>
+          </div>
 
-        {/* Name overlaid on image bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          {/* Glass blur pill — slides up from bottom on hover */}
-          <div className="relative rounded-2xl px-4 py-3 overflow-hidden">
-            {/* The frosted glass background layer — animates independently */}
-            <div className="
-              absolute inset-0 rounded-2xl
-              bg-white/0 backdrop-blur-0
-              border border-white/0
-              group-hover:bg-white/15 group-hover:backdrop-blur-md
-              group-hover:border-white/25
-              group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.25)]
-              transition-all duration-400 ease-out
-            " />
-            {/* Text always visible, just changes color on hover */}
-            <div className="relative z-10">
-              <h3 className="text-lg font-bold text-white leading-tight group-hover:text-accent-orange transition-colors duration-300">
-                {name}
-              </h3>
-              <p className="text-[11px] font-semibold text-white/60 uppercase tracking-widest mt-1 flex items-center gap-1 group-hover:text-accent-orange/80 transition-colors duration-300">
-                Explore venues
-                <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
-              </p>
+          {/* Name overlaid on image bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+            {/* Glass blur pill — slides up from bottom on hover */}
+            <div className="relative rounded-2xl px-4 py-3.5 overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-white/20 group-hover:border-white/35 transition-all duration-400">
+              <div className="relative z-10">
+                <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-accent-orange transition-colors duration-300">
+                  {name}
+                </h3>
+                <p className="text-[11px] font-bold text-white/80 uppercase tracking-widest mt-1.5 flex items-center justify-between group-hover:text-white transition-colors duration-300">
+                  <span>Explore Collection</span>
+                  <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-accent-orange group-hover:text-white transition-all duration-300">
+                    <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                  </div>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
     </div>
   );
 }
+

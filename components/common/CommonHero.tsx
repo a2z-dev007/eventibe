@@ -133,14 +133,14 @@ export default function CommonHero({
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className={`flex flex-col ${isLeft ? "items-start" : "items-center"} w-full`}
         >
-          {/* {badgeText && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-orange/15 border border-accent-orange/30 text-accent-orange text-[10px] md:text-sm font-bold mb-6 backdrop-blur-sm shadow-xl animate-fade-in">
+          {badgeText && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/25 text-white text-xs md:text-sm font-bold mb-4 md:mb-6 backdrop-blur-md shadow-xl">
               {BadgeIcon && (
                 <BadgeIcon size={14} className="text-accent-orange" />
               )}
-              <span className="uppercase tracking-widest">{badgeText}</span>
+              <span className="tracking-wide">{badgeText}</span>
             </div>
-          )} */}
+          )}
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-8xl font-black tracking-tight mb-4 md:mb-6 max-w-5xl leading-[1.1] drop-shadow-xl">
             {titleMain}

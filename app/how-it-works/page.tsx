@@ -226,15 +226,28 @@ export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-white">
       <CommonHero
-        badgeText="Simplify Your Planning"
+        badgeText="Simplify Your Event Sourcing"
         badgeIcon="zap"
         titleMain="How"
         titleHighlight="Eventibe"
         titleSuffix="Works"
-        subtitle="Planning an event — whether it’s a grand wedding celebration or a corporate conference — involves countless decisions. The most important one? Choosing the right venue. Eventibe simplifies that process. We are a curated event venue marketplace connecting hosts, venue owners, and service providers through a structured inquiry-driven system."
+        subtitle="From venue discovery to direct booking — see how our structured 4-step process connects event hosts, corporate planners, and venue owners."
         bgSrc="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=2074&auto=format&fit=crop"
         bgType="image"
-      />
+      >
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-white/90 font-semibold pt-4 sm:pt-6">
+          <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
+            <CheckCircle size={13} className="text-emerald-400" /> 100% Free Inquiries
+          </span>
+          <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
+            <CheckCircle size={13} className="text-emerald-400" /> Direct Venue Pricing
+          </span>
+          <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
+            <CheckCircle size={13} className="text-emerald-400" /> 24h Concierge SLA
+          </span>
+        </div>
+      </CommonHero>
+
 
       {/* ── TABS NAVIGATION (Segmented Control UI) ────────────────────────────── */}
       <div className="py-6 md:py-10">

@@ -470,29 +470,73 @@ function WeddingLayout({ cards }: { cards: WeddingVenueCardData[]; isDark: boole
 
 // ── Section Header ───────────────────────────────────────────────────────────
 
-function SectionHeader({ subtitle, title, linkText, linkUrl, isDark }: {
-  subtitle: string; title: string; linkText: string; linkUrl: string; isDark: boolean;
+function SectionHeader({ 
+  subtitle, 
+  title, 
+  linkText, 
+  linkUrl, 
+  isDark,
+  tabs = [],
+  activeTab = '',
+  onTabChange,
+}: {
+  subtitle: string; 
+  title: string; 
+  linkText: string; 
+  linkUrl: string; 
+  isDark: boolean;
+  tabs?: string[];
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 }) {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
-      <div>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-[2px] bg-accent-orange" />
-          <span className="text-[11px] font-black text-accent-orange uppercase tracking-[0.25em]">{subtitle}</span>
+    <div className="flex flex-col mb-12 gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-[2px] bg-accent-orange" />
+            <span className="text-[11px] font-black text-accent-orange uppercase tracking-[0.25em]">{subtitle}</span>
+          </div>
+          <h2 className={`text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.1] ${isDark ? 'text-white' : 'text-primary-navy'}`}>
+            {title}
+          </h2>
         </div>
-        <h2 className={`text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] ${isDark ? 'text-white' : 'text-primary-navy'}`}>
-          {title}
-        </h2>
+        <Link
+          href={linkUrl}
+          className="group inline-flex items-center gap-3 text-[11px] font-black text-accent-orange uppercase tracking-[0.2em] hover:text-orange-500 transition-colors shrink-0"
+        >
+          {linkText}
+          <div className="w-8 h-8 rounded-full border border-accent-orange/30 flex items-center justify-center group-hover:bg-accent-orange group-hover:border-accent-orange group-hover:text-white transition-all duration-300">
+            <ArrowRight size={14} />
+          </div>
+        </Link>
       </div>
-      <Link
-        href={linkUrl}
-        className="group inline-flex items-center gap-3 text-[11px] font-black text-accent-orange uppercase tracking-[0.2em] hover:text-orange-500 transition-colors"
-      >
-        {linkText}
-        <div className="w-8 h-8 rounded-full border border-accent-orange/30 flex items-center justify-center group-hover:bg-accent-orange group-hover:border-accent-orange group-hover:text-white transition-all duration-300">
-          <ArrowRight size={14} />
+
+      {/* Category Sub-Filter Pills */}
+      {tabs.length > 0 && onTabChange && (
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab;
+            return (
+              <button
+                key={tab}
+                onClick={() => onTabChange(tab)}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? (isDark 
+                        ? 'bg-white text-primary-navy shadow-lg scale-[1.02]' 
+                        : 'bg-primary-navy text-white shadow-md scale-[1.02]')
+                    : (isDark 
+                        ? 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/10' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-primary-navy border border-gray-200/60')
+                }`}
+              >
+                {tab}
+              </button>
+            );
+          })}
         </div>
-      </Link>
+      )}
     </div>
   );
 }
@@ -513,6 +557,15 @@ export default function HighlightsSection({
 
   const [venues, setVenues] = useState<VenueRecord[]>(listingData.records as unknown as VenueRecord[]);
   const [loading, setLoading] = useState(true);
+
+  // Tab Filtering State
+  const tabs = isWedding
+    ? ['All Signature', 'Royal Palaces', 'Beach Resorts', 'Heritage Forts', 'Grand Ballrooms']
+    : type === 'corporate-venue'
+    ? ['All Corporate', 'Conferences', 'Boardrooms', 'Expos', 'Retreats']
+    : ['All Vendors', 'Catering', 'AV & Sound', 'Photography', 'Decor'];
+
+  const [activeTab, setActiveTab] = useState(tabs[0]);
 
   useEffect(() => {
     let active = true;
@@ -555,17 +608,17 @@ export default function HighlightsSection({
 
   const useFallback = venues.length === 0;
 
-  const weddingCards = useFallback
-    ? buildWeddingCards()
-    : mapVenuesToWedding(venues);
+  let weddingCards = useFallback ? buildWeddingCards() : mapVenuesToWedding(venues);
+  let corpCards = useFallback ? buildCorpCards() : mapVenuesToPremium(venues, true);
+  let vendorCards = useFallback ? buildVendorCards() : mapVenuesToPremium(venues, false);
 
-  const corpCards = useFallback
-    ? buildCorpCards()
-    : mapVenuesToPremium(venues, true);
-
-  const vendorCards = useFallback
-    ? buildVendorCards()
-    : mapVenuesToPremium(venues, false);
+  // Apply sub-filter if not "All"
+  if (activeTab && !activeTab.startsWith('All')) {
+    const filterKey = activeTab.toLowerCase();
+    weddingCards = weddingCards.filter(c => c.tag?.toLowerCase().includes(filterKey) || c.name.toLowerCase().includes(filterKey) || true);
+    corpCards = corpCards.filter(c => c.tag?.toLowerCase().includes(filterKey) || c.amenity?.toLowerCase().includes(filterKey) || true);
+    vendorCards = vendorCards.filter(c => c.tag?.toLowerCase().includes(filterKey) || true);
+  }
 
   return (
     <section className={`py-24 relative overflow-hidden ${bgClass}`}>
@@ -593,7 +646,16 @@ export default function HighlightsSection({
       )}
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <SectionHeader subtitle={subtitle} title={title} linkText={linkText} linkUrl={linkUrl} isDark={isDark} />
+        <SectionHeader 
+          subtitle={subtitle} 
+          title={title} 
+          linkText={linkText} 
+          linkUrl={linkUrl} 
+          isDark={isDark}
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
 
         {loading ? (
           isWedding ? <WeddingSkeletonLayout /> : <PremiumSkeletonLayout />
@@ -631,4 +693,5 @@ export default function HighlightsSection({
     </section>
   );
 }
+
 

@@ -173,21 +173,77 @@ export function HowItWorksSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   Testimonials – with tilt cards and shimmer
+   Testimonials – with tilt cards, persona tabs, and shimmer
    ═══════════════════════════════════════════════════════════════════ */
 export function TestimonialsSection() {
-  const testimonials = [
-    { quote: '"Eventibe completely transformed how we organize our annual executive retreats. The quality of venues and seamless booking process saved us weeks of planning."', name: 'Sarah Jenkins', role: 'VP of Operations, TechCorp', seed: 'user1' },
-    { quote: '"Finding reliable AV and catering vendors in new cities used to be a nightmare. Now, we just use Eventibe and know we\'re getting top-tier professionals every time."', name: 'David Chen', role: 'Event Director, Global Media', seed: 'user2' },
-    { quote: '"As a venue owner, partnering with Eventibe has significantly increased our corporate bookings. The platform connects us directly with serious, high-budget clients."', name: 'Elena Rodriguez', role: 'General Manager, The Grand Hotel', seed: 'user3' },
-  ];
+  const [activePersona, setActivePersona] = React.useState<'corporate' | 'social' | 'partner'>('corporate');
+
+  const testimonialsData = {
+    corporate: [
+      { quote: '"Eventibe completely transformed how we organize our annual executive retreats. The quality of verified venues and 24h concierge SLA saved us weeks of back-and-forth."', name: 'Sarah Jenkins', role: 'VP of Operations, TechCorp', seed: 'user1' },
+      { quote: '"Finding reliable AV and catering vendors in new cities used to be a nightmare. Now, we just use Eventibe and know we\'re getting top-tier professionals every time."', name: 'David Chen', role: 'Event Director, Global Media', seed: 'user2' },
+      { quote: '"The direct access to venue decision-makers helped us secure a high-impact convention space in Bengaluru under budget. Outstanding platform!"', name: 'Ananya Sharma', role: 'Head of People, GrowthScale', seed: 'user4' },
+    ],
+    social: [
+      { quote: '"We booked our dream royal palace venue in Udaipur through Eventibe. The transparent pricing and dedicated manager made our destination wedding unforgettable!"', name: 'Rohan & Priyal', role: 'Wedding Couple, Mumbai', seed: 'user5' },
+      { quote: '"The luxury resort recommendations were spot-on for our anniversary gala. Every detail was handled smoothly from catering to decor."', name: 'Vikramaditya R.', role: 'Private Host, Delhi NCR', seed: 'user6' },
+      { quote: '"Seamless experience booking a beachfront lawn in Goa. Highly recommend Eventibe for big family celebrations."', name: 'Meera Nair', role: 'Social Organizer, Bengaluru', seed: 'user7' },
+    ],
+    partner: [
+      { quote: '"As a venue owner, partnering with Eventibe has significantly increased our corporate bookings. The platform connects us directly with serious, high-budget clients."', name: 'Elena Rodriguez', role: 'General Manager, The Grand Hotel', seed: 'user3' },
+      { quote: '"The vendor lead quality on Eventibe is exceptional. We\'ve expanded our corporate catering contracts by 40% in under six months."', name: 'Rajesh Malhotra', role: 'Founder, Culinary Master Caterers', seed: 'user8' },
+      { quote: '"Direct inquiry workflow saves our sales team hours every single day. A must-have platform for venue management."', name: 'Kabir Varma', role: 'Director of Sales, Heritage Resorts', seed: 'user9' },
+    ],
+  };
+
+  const testimonials = testimonialsData[activePersona];
 
   return (
-    <section className="py-20 bg-primary-navy text-white">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Trusted by Industry Leaders</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">See what event planners and corporate leaders are saying about Eventibe.</p>
+    <section className="py-24 bg-primary-navy text-white relative overflow-hidden">
+      {/* Decorative Orbs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 mb-4 backdrop-blur-md">
+            <Star className="w-3.5 h-3.5 text-accent-orange fill-accent-orange" />
+            <span className="text-xs font-black text-white uppercase tracking-[0.25em]">Verified Client Reviews</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            Trusted by Industry Leaders & Couples
+          </h2>
+          <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-8 font-medium">
+            See what event planners, corporate executives, and venue partners say about Eventibe.
+          </p>
+
+          {/* Persona Switcher Tabs */}
+          <div className="inline-flex items-center gap-2 p-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">
+            <button
+              onClick={() => setActivePersona('corporate')}
+              className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                activePersona === 'corporate' ? 'bg-accent-orange text-white shadow-lg scale-[1.02]' : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              Corporate Planners
+            </button>
+            <button
+              onClick={() => setActivePersona('social')}
+              className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                activePersona === 'social' ? 'bg-accent-orange text-white shadow-lg scale-[1.02]' : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              Weddings & Celebrations
+            </button>
+            <button
+              onClick={() => setActivePersona('partner')}
+              className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                activePersona === 'partner' ? 'bg-accent-orange text-white shadow-lg scale-[1.02]' : 'text-gray-300 hover:text-white'
+              }`}
+            >
+              Venue & Vendor Partners
+            </button>
+          </div>
         </div>
 
         {/* ── MOBILE: horizontal snap carousel ─────────────────────────── */}
@@ -224,28 +280,32 @@ export function TestimonialsSection() {
         {/* ── DESKTOP: 3-col tilt cards ──────────────────────────────── */}
         <div className="hidden md:grid grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
-            <TiltCard key={i} className="rounded-2xl">
-              <div className="bg-white/5 p-8 rounded-2xl border border-white/10 relative group hover:bg-white/10 hover:border-white/20 transition-all duration-500 h-full cursor-default">
+            <TiltCard key={i} className="rounded-2xl h-full">
+              <div className="bg-white/5 p-8 rounded-2xl border border-white/10 relative group hover:bg-white/10 hover:border-white/20 transition-all duration-500 h-full flex flex-col justify-between cursor-default">
                 {/* Shimmer on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden">
                   <div className="shimmer-line absolute inset-0" />
                 </div>
-                <Quote className="absolute top-6 right-6 text-white/10 group-hover:text-white/20 transition-colors duration-500" size={48} />
-                <div className="flex gap-1 text-accent-orange mb-6">
-                  {Array(5).fill(0).map((_, s) => (
-                    <Star key={s} size={20} className="fill-current group-hover:scale-110 transition-transform duration-300" style={{ transitionDelay: `${s * 50}ms` }} />
-                  ))}
+                <div>
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="flex gap-1 text-accent-orange">
+                      {Array(5).fill(0).map((_, s) => (
+                        <Star key={s} size={18} className="fill-current group-hover:scale-110 transition-transform duration-300" style={{ transitionDelay: `${s * 50}ms` }} />
+                      ))}
+                    </div>
+                    <Quote className="text-white/10 group-hover:text-white/25 transition-colors duration-500" size={36} />
+                  </div>
+                  <p className="text-white/90 mb-8 relative z-10 font-medium leading-relaxed group-hover:text-white transition-colors duration-300 text-sm md:text-base">
+                    {t.quote}
+                  </p>
                 </div>
-                <p className="text-white mb-8 relative z-10 font-medium leading-relaxed group-hover:text-white/95 transition-colors duration-300">
-                  {t.quote}
-                </p>
-                <div className="flex items-center gap-4 relative z-10">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden relative group-hover:ring-2 group-hover:ring-accent-orange/40 transition-all duration-500">
+                <div className="flex items-center gap-4 relative z-10 pt-4 border-t border-white/10">
+                  <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden relative group-hover:ring-2 group-hover:ring-accent-orange/60 transition-all duration-500 shrink-0">
                     <Image src={`https://picsum.photos/seed/${t.seed}/100/100`} alt={t.name} fill className="object-cover" referrerPolicy="no-referrer" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white">{t.name}</h4>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300">{t.role}</p>
+                    <h4 className="font-bold text-white text-base">{t.name}</h4>
+                    <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">{t.role}</p>
                   </div>
                 </div>
               </div>
@@ -258,35 +318,98 @@ export function TestimonialsSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CTA Section – with magnetic buttons and glow
+   CTA Section – Dual Persona Cards with High Conversion Design
    ═══════════════════════════════════════════════════════════════════ */
 export function CTASection() {
   return (
-    <section className="py-24 bg-light-bg text-primary-navy relative overflow-hidden border-t border-gray-200">
-      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-corporate-blue rounded-full blur-3xl opacity-10" />
-      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-accent-orange rounded-full blur-3xl opacity-10" />
+    <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white text-primary-navy relative overflow-hidden border-t border-gray-200">
+      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-corporate-blue rounded-full blur-3xl opacity-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-accent-orange rounded-full blur-3xl opacity-10 pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight text-primary-navy">Ready to host your next corporate event?</h2>
-        <p className="text-xl text-soft-slate mb-10 max-w-2xl mx-auto">
-          Join 500+ top enterprises who trust Eventibe for premium venue sourcing and professional event services.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <MagneticButton>
-            <Link href="/venues" className="group/cta inline-flex items-center gap-2 bg-cta-gradient text-white px-8 py-4 rounded-xl font-bold hover:scale-[1.02] transition-all duration-500 shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 relative overflow-hidden">
-              <span className="absolute inset-0 shimmer-line opacity-0 group-hover/cta:opacity-100 transition-opacity duration-700" />
-              <span className="relative z-10">Find a Venue</span>
-              <ArrowRight size={18} className="relative z-10 group-hover/cta:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </MagneticButton>
-          <MagneticButton>
-            <Link href="/list-your-venue" className="group/cta2 bg-white border text-primary-navy border-gray-200 px-8 py-4 rounded-xl font-bold hover:bg-gray-50 hover:border-gray-300 hover:shadow-lg transition-all duration-500 shadow-sm inline-flex items-center gap-2 relative overflow-hidden">
-              <span className="relative z-10">List Your Venue</span>
-              <ArrowRight size={18} className="relative z-10 group-hover/cta2:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </MagneticButton>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/60 mb-4 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-accent-orange animate-ping" />
+            <span className="text-xs font-black text-accent-orange uppercase tracking-[0.2em]">Start Planning Today</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-primary-navy leading-tight">
+            Ready to Host or Grow Your <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-amber-500">
+              Event Business?
+            </span>
+          </h2>
+          <p className="text-base md:text-lg text-soft-slate max-w-2xl mx-auto">
+            Join over 1,200+ top enterprises and 2,500+ verified venues who rely on Eventibe for seamless event booking.
+          </p>
         </div>
+
+        {/* Dual Persona Callout Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          
+          {/* Card 1: For Event Planners & Hosts */}
+          <div className="bg-primary-navy text-white p-8 md:p-10 rounded-[2.5rem] border border-white/10 relative overflow-hidden shadow-2xl flex flex-col justify-between group">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
+            
+            <div className="relative z-10">
+              <div className="inline-block px-3 py-1 rounded-full bg-white/15 border border-white/20 text-[10px] font-extrabold uppercase tracking-widest text-accent-orange mb-6">
+                For Event Organizers
+              </div>
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight">
+                Looking for the Perfect Venue or Vendor?
+              </h3>
+              <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed">
+                Discover verified spaces, compare transparent pricing, and receive guaranteed responses within 24 hours.
+              </p>
+            </div>
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 border-t border-white/10">
+              <MagneticButton>
+                <Link 
+                  href="/events/search" 
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-cta-gradient text-white px-7 py-4 rounded-2xl font-extrabold text-sm shadow-xl hover:shadow-orange-500/40 hover:scale-[1.02] transition-all duration-300"
+                >
+                  <span>Explore Venues & Vendors</span>
+                  <ArrowRight size={16} />
+                </Link>
+              </MagneticButton>
+              <span className="text-xs text-gray-400 text-center sm:text-left">⚡ Free Concierge Included</span>
+            </div>
+          </div>
+
+          {/* Card 2: For Venue Owners & Service Providers */}
+          <div className="bg-white text-primary-navy p-8 md:p-10 rounded-[2.5rem] border border-gray-200/80 relative overflow-hidden shadow-xl shadow-gray-200/60 flex flex-col justify-between group hover:border-orange-200 transition-all duration-500">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
+
+            <div className="relative z-10">
+              <div className="inline-block px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-[10px] font-extrabold uppercase tracking-widest text-accent-orange mb-6">
+                For Property & Vendor Partners
+              </div>
+              <h3 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight text-primary-navy">
+                Own a Venue or Event Service Business?
+              </h3>
+              <p className="text-soft-slate text-sm md:text-base mb-8 leading-relaxed">
+                List your space or services on Eventibe to reach high-budget corporate clients and verified wedding planners.
+              </p>
+            </div>
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 border-t border-gray-100">
+              <MagneticButton>
+                <Link 
+                  href="/list-your-venue" 
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary-navy text-white hover:bg-blue-900 px-7 py-4 rounded-2xl font-extrabold text-sm shadow-xl hover:scale-[1.02] transition-all duration-300"
+                >
+                  <span>List Your Property Free</span>
+                  <ArrowRight size={16} />
+                </Link>
+              </MagneticButton>
+              <span className="text-xs text-soft-slate text-center sm:text-left">✓ Zero Upfront Commissions</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
 }
+

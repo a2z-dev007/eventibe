@@ -46,30 +46,46 @@ export default function AboutUsPage() {
     <div className="flex flex-col min-h-screen  bg-white">
       {/* Hero Section */}
       <CommonHero
-        badgeText="India's Fastest Growing Venue Marketplace"
+        badgeText="India's Premier Event & Venue Marketplace"
         badgeIcon="sparkles"
-        titleMain="Welcome to Eventibe – India’s"
-        titleHighlight="Premier Event & Venue"
-        titleSuffix="Discovery Marketplace"
-        subtitle="At Eventibe, we believe every celebration — whether a dream wedding, an unforgettable corporate event, or a heartfelt social gathering — deserves the perfect canvas. Choosing the right venue can truly make or break the experience, and that’s where Eventibe steps in."
+        titleMain="Transforming How India"
+        titleHighlight="Discovers & Books"
+        titleSuffix="Event Spaces"
+        subtitle="Connecting event planners, corporate leaders, and couples with 2,500+ verified venues and top service providers across 45+ cities."
         bgSrc="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069&auto=format&fit=crop"
         alignment="center"
       >
-        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mt-3 sm:mt-6 w-full sm:w-auto justify-center">
-          <Link
-            href="/venues"
-            className="bg-cta-gradient text-white px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold hover:scale-[1.02] transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
-          >
-            Explore Venues <ArrowRight size={20} />
-          </Link>
-          <Link
-            href="/contact-us"
-            className="bg-white/5 border border-white/10 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold hover:bg-white/10 transition-colors flex items-center justify-center text-center backdrop-blur-sm"
-          >
-            Contact Our Team
-          </Link>
+        <div className="flex flex-col items-center gap-4 sm:gap-6 mt-4 sm:mt-6 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto justify-center">
+            <Link
+              href="/venues"
+              className="bg-cta-gradient text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold hover:scale-[1.02] transition-all shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 text-center"
+            >
+              Explore Venues <ArrowRight size={18} />
+            </Link>
+            <Link
+              href="/contact-us"
+              className="bg-white/15 border border-white/25 text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold hover:bg-white/25 transition-all flex items-center justify-center text-center backdrop-blur-md"
+            >
+              Talk to Concierge
+            </Link>
+          </div>
+
+          {/* Trust Chips Below Hero Action */}
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-white/90 font-semibold pt-2">
+            <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+              <CheckCircle2 size={13} className="text-emerald-400" /> 2,500+ Verified Spaces
+            </span>
+            <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+              <CheckCircle2 size={13} className="text-emerald-400" /> 1,200+ Corporate Clients
+            </span>
+            <span className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+              <CheckCircle2 size={13} className="text-emerald-400" /> 24h Concierge SLA
+            </span>
+          </div>
         </div>
       </CommonHero>
+
 
       {/* Intro Context */}
       <section className="flex items-center py-10 md:py-28 bg-light-bg overflow-hidden">
@@ -132,7 +148,7 @@ export default function AboutUsPage() {
               <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4 md:pt-6">
                 <div className="p-4 md:p-6 rounded-[10px] md:rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-corporate-blue/20 transition-all group">
                   <div className="text-3xl md:text-4xl font-black text-corporate-blue mb-1 md:mb-2 group-hover:scale-110 transition-transform origin-left">
-                    500+
+                    2,500+
                   </div>
                   <div className="text-[10px] text-soft-slate font-extrabold uppercase tracking-widest">
                     Verified Venues
@@ -140,12 +156,13 @@ export default function AboutUsPage() {
                 </div>
                 <div className="p-4 md:p-6 rounded-[10px] md:rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-accent-orange/20 transition-all group">
                   <div className="text-3xl md:text-4xl font-black text-accent-orange mb-1 md:mb-2 group-hover:scale-110 transition-transform origin-left">
-                    20+
+                    45+
                   </div>
                   <div className="text-[10px] text-soft-slate font-extrabold uppercase tracking-widest">
                     Cities Covered
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -363,9 +380,8 @@ export default function AboutUsPage() {
                 ].map((item, idx) => (
                   <li
                     key={item}
-                    className={`flex items-start gap-4 p-4 bg-white/5 rounded-[10px] md:rounded-xl border border-white/5 hover:border-white/20 transition-colors ${
-                      idx === 4 ? "sm:col-span-2 lg:col-span-1" : ""
-                    }`}
+                    className={`flex items-start gap-4 p-4 bg-white/5 rounded-[10px] md:rounded-xl border border-white/5 hover:border-white/20 transition-colors ${idx === 4 ? "sm:col-span-2 lg:col-span-1" : ""
+                      }`}
                   >
                     <div className="w-2 h-2 rounded-full bg-accent-orange shrink-0 mt-2"></div>
                     <span className="font-medium text-xs sm:text-sm text-left">{item}</span>
@@ -1088,11 +1104,11 @@ export default function AboutUsPage() {
               <div className="bg-white rounded-[10px] md:rounded-[3rem] p-8 md:p-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.08)] border border-gray-50 relative overflow-hidden group">
                 {/* Visual Accent */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-corporate-blue/5 rounded-full -mt-16 -mr-16 transition-transform group-hover:scale-150 duration-700"></div>
- 
+
                 <h4 className="text-2xl md:text-3xl font-black text-primary-navy mb-6 md:mb-10 tracking-tight text-center md:text-left">
                   Quick <span className="text-accent-orange">Inquiries</span>
                 </h4>
- 
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
                   {[
                     {
@@ -1120,9 +1136,8 @@ export default function AboutUsPage() {
                     <Link
                       key={idx}
                       href={item.href}
-                      className={`flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 p-6 rounded-[10px] md:rounded-[2rem] border border-gray-100 hover:border-corporate-blue/20 hover:bg-gray-50/50 transition-all group/item text-center md:text-left ${
-                        idx === 2 ? "sm:col-span-2 lg:col-span-1" : ""
-                      }`}
+                      className={`flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-6 p-6 rounded-[10px] md:rounded-[2rem] border border-gray-100 hover:border-corporate-blue/20 hover:bg-gray-50/50 transition-all group/item text-center md:text-left ${idx === 2 ? "sm:col-span-2 lg:col-span-1" : ""
+                        }`}
                     >
                       <div
                         className={`w-11 h-11 md:w-14 md:h-14 rounded-2xl ${item.color} flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform mx-auto md:mx-0`}
